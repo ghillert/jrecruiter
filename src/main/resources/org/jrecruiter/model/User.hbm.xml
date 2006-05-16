@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.jrecruiter.model.User" table="users">
+        <id name="username" type="string" unsaved-value="null"
+            column="user_name">
+            <generator class="assigned"/>
+        </id>
+        <property name="password"
+                  column="user_passwd"
+                  type="string"
+                  length="25"
+                  not-null="true"
+                />
+        <property name="firstName"
+                  column="first_name"
+                  type="string"
+                  length="50"
+                />
+        <property name="lastName"
+                  column="last_name"
+                  type="string"
+                  length="50"
+                />
+        <property name="company"
+                  column="company"
+                  type="string"
+                  length="50"
+                />
+        <property name="phone"
+                  column="phone"
+                  type="string"
+                  length="25"
+                />
+        <property name="fax"
+                  column="fax"
+                  type="string"
+                  length="25"
+                />
+        <property name="email"
+                  column="email"
+                  type="string"
+                  length="50"
+                />
+        <property name="registerDate"
+                  column="register_date"
+                  type="date"
+                />
+        <property name="updateDate"
+                  column="update_date"
+                  type="date"
+                />
+        <list name="userJobs" inverse="true" cascade="all">
+            <key column="user_name"/>
+                <index column="job_id"/>
+            <one-to-many class="org.jrecruiter.model.Job"/>
+        </list>   
+        <set name="roles" inverse="false" table="USER_ROLES" cascade="none">
+            <key>
+                <column name="USER_NAME" length="25" />
+            </key>
+            <many-to-many class="org.jrecruiter.model.UserRole" column="ROLE"/>
+        </set>
+    </class>
+</hibernate-mapping>
+
