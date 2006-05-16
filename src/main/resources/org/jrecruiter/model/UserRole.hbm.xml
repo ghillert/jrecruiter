@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="org.jrecruiter.model.UserRole" table="roles">
+        <id name="name" type="java.lang.String" length="55">
+            <column name="NAME" not-null="true"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="description"
+                  column="DESCRIPTION"
+                  type="java.lang.String"
+                  length="255"
+                  not-null="true"
+        />
+
+        <set    name="users" 
+                table="USER_ROLES"
+                cascade="none"
+                inverse="true">
+            
+            <key column="role"/>
+            <many-to-many class="org.jrecruiter.model.User" column="USER_NAME"/>
+        
+        </set>
+    </class>
+</hibernate-mapping>
+
