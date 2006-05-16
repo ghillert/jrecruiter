@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jrecruiter.dao;
 import org.jrecruiter.persistent.dao.JobsDAO;
@@ -14,20 +14,20 @@ import org.testng.annotations.Test;
  */
 public class TestJobs {
 
-	ApplicationContext ctx;
-	
-	  @Configuration(beforeTestClass = true)
-	  public void configure() {
-	    System.out.println("Initialization");
-	    ctx = new ClassPathXmlApplicationContext("testApplicationContext.xml");
-	  }
+    ApplicationContext ctx;
 
-	  @Test(groups = {"exec-group"})
-	    public void exec() {
-	    System.out.println("exec");
-	    JobsDAO jobs = (JobsDAO) ctx.getBean("jobsDAO");
-	    jobs.searchByKeyword("java");
-	    assert 1 == 1;
-	  }
+      @Configuration(beforeTestClass = true)
+      public void configure() {
+        System.out.println("Initialization");
+        ctx = new ClassPathXmlApplicationContext("testApplicationContext.xml");
+      }
+
+      @Test(groups = {"exec-group"})
+        public void exec() {
+        System.out.println("exec");
+        JobsDAO jobs = (JobsDAO) ctx.getBean("jobsDAO");
+        jobs.searchByKeyword("java");
+        assert 1 == 1;
+      }
 
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jrecruiter.dao;
 
@@ -26,60 +26,60 @@ import org.testng.annotations.Test;
  */
 public class TestJobsDAO {
 
-	ApplicationContext ctx;
-	SessionFactory sessionFactory;
-	/**
-	 *   Initialize Logging.
-	 */
-	public static final Logger LOGGER = Logger.getLogger(TestJobsDAO.class);
+    ApplicationContext ctx;
+    SessionFactory sessionFactory;
+    /**
+     *   Initialize Logging.
+     */
+    public static final Logger LOGGER = Logger.getLogger(TestJobsDAO.class);
 
-	@Configuration(beforeTestClass = true)
-	public void configure() {
-		System.out.println("Initialization");
-		ctx = new ClassPathXmlApplicationContext("testApplicationContext.xml");
+    @Configuration(beforeTestClass = true)
+    public void configure() {
+        System.out.println("Initialization");
+        ctx = new ClassPathXmlApplicationContext("testApplicationContext.xml");
 
-		sessionFactory = (SessionFactory) ctx
-				.getBean("sessionFactory");
-		Session s = sessionFactory.openSession();
-		TransactionSynchronizationManager.bindResource(sessionFactory,
-				new SessionHolder(s));
-	}
+        sessionFactory = (SessionFactory) ctx
+                .getBean("sessionFactory");
+        Session s = sessionFactory.openSession();
+        TransactionSynchronizationManager.bindResource(sessionFactory,
+                new SessionHolder(s));
+    }
 
-	@Configuration(afterTestClass = true)
-	public void shutdown() {
-		SessionHolder holder = (SessionHolder) TransactionSynchronizationManager
-				.getResource(sessionFactory);
-		Session s = holder.getSession();
-		s.flush();
-		TransactionSynchronizationManager.unbindResource(sessionFactory);
-		SessionFactoryUtils.closeSessionIfNecessary(s, sessionFactory);
-	}
+    @Configuration(afterTestClass = true)
+    public void shutdown() {
+        SessionHolder holder = (SessionHolder) TransactionSynchronizationManager
+                .getResource(sessionFactory);
+        Session s = holder.getSession();
+        s.flush();
+        TransactionSynchronizationManager.unbindResource(sessionFactory);
+        SessionFactoryUtils.closeSessionIfNecessary(s, sessionFactory);
+    }
 
-	@Test(groups = { "exec-group" })
-	public void getAllJobs() {
-		System.out.println("exec");
-		JobsDAO jobsDAO = (JobsDAO) ctx.getBean("jobsDAO");
-		
-		List<Job> jobs = jobsDAO.getAllJobs();
+    @Test(groups = { "exec-group" })
+    public void getAllJobs() {
+        System.out.println("exec");
+        JobsDAO jobsDAO = (JobsDAO) ctx.getBean("jobsDAO");
 
-		for (Job job : jobs) {
+        List<Job> jobs = jobsDAO.getAllJobs();
 
-			LOGGER.info(job.getId());
+        for (Job job : jobs) {
 
-		}
-	}
-	
-	@Test(groups = { "exec-group" })
-	public void getAllUsers() {
-		System.out.println("exec");
-		UserDAO jobsDAO = (UserDAO) ctx.getBean("userDAO");
-		
-		List<User> jobs = jobsDAO.getAllUsers();
+            LOGGER.info(job.getId());
 
-		for (User job : jobs) {
+        }
+    }
 
-			LOGGER.info(job.getUsername());
+    @Test(groups = { "exec-group" })
+    public void getAllUsers() {
+        System.out.println("exec");
+        UserDAO jobsDAO = (UserDAO) ctx.getBean("userDAO");
 
-		}
-	}
+        List<User> jobs = jobsDAO.getAllUsers();
+
+        for (User job : jobs) {
+
+            LOGGER.info(job.getUsername());
+
+        }
+    }
 }
