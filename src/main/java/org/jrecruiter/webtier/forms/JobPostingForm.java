@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,16 +10,16 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.webtier.forms;
 
 import org.apache.struts.validator.ValidatorForm;
 
 /**
  * Struts Action Form that holds a job posting
- * 
+ *
  * @author Gunnar Hillert
  * @version $Revision: 1.2 $, $Date: 2006/02/06 04:11:33 $, $Author: ghillert $
  */
@@ -111,7 +111,7 @@ public class JobPostingForm extends ValidatorForm {
     private String jobRestrictions = "";
 
     private String[] deleteIds;
-    
+
     /**
      * Constructor.
      */

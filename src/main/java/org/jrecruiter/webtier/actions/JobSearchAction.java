@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.webtier.actions;
 
 
@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 
+ *
  * @author Gunnar Hillert
  * @version $Revision: 1.3 $, $Date: 2006/02/06 04:07:13 $, $Author: ghillert $
  */
@@ -50,7 +50,7 @@ public class JobSearchAction extends Action {
         DynaBean dynaForm = (DynaBean) form;
 
         String keyword = (String) dynaForm.get("keyword");
-        
+
         List jobs = service.searchByKeyword(keyword.toLowerCase());
 
         request.setAttribute("JobList", jobs);

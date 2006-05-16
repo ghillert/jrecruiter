@@ -1,7 +1,7 @@
 /*
- *	http://www.jrecruiter.org	
+ *	http://www.jrecruiter.org
  *
- *	Disclaimer of Warranty. 
+ *	Disclaimer of Warranty.
  *
  *	Unless required by applicable law or agreed to in writing, Licensor provides
  *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,7 +10,7 @@
  *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
  *	solely responsible for determining the appropriateness of using or
  *	redistributing the Work and assume any risks associated with Your exercise of
- *	permissions under this License. 
+ *	permissions under this License.
  *
  */
 package org.jrecruiter.persistent.dao;
@@ -29,132 +29,132 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
- * This DAO provides job-related database methods. 
- * 
+ * This DAO provides job-related database methods.
+ *
  * @author Jerzy Puchala, Gunnar Hillert
  * @version $Revision: 1.11 $, $Date: 2006/04/12 03:07:08 $, $Author: ghillert $
  */
 public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
 
-	private static JobsDAOHibernate daoHibernate = null;
+    private static JobsDAOHibernate daoHibernate = null;
 
-	/**
-	 * User Dao.
-	 */
-	private UserDAO userDao;
+    /**
+     * User Dao.
+     */
+    private UserDAO userDao;
 
-	/**
-	 * @param userDao The userDao to set.
-	 */
-	public void setUserDao(UserDAO userDao) {
-		this.userDao = userDao;
-	}
+    /**
+     * @param userDao The userDao to set.
+     */
+    public void setUserDao(UserDAO userDao) {
+        this.userDao = userDao;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 */
-	private JobsDAOHibernate() {
-		super();
-	}
+    /**
+     * Constructor.
+     *
+     */
+    private JobsDAOHibernate() {
+        super();
+    }
 
-	/**
-	 * Returns a new instance of the JobsDAO.
-	 * @return JobsDAO
-	 */
-	public static JobsDAO getInstance() {
-		if (daoHibernate == null) {
-			daoHibernate = new JobsDAOHibernate();
-		}
-		return daoHibernate;
-	}
+    /**
+     * Returns a new instance of the JobsDAO.
+     * @return JobsDAO
+     */
+    public static JobsDAO getInstance() {
+        if (daoHibernate == null) {
+            daoHibernate = new JobsDAOHibernate();
+        }
+        return daoHibernate;
+    }
 
-	/**
-	 * Method for returning list of all jobs.
-	 *
-	 * @return List of Jobs
-	 *
-	 * @throws DAOException
-	 *
-	 */
-	public List<Job> getAllJobs() throws DAOException {
+    /**
+     * Method for returning list of all jobs.
+     *
+     * @return List of Jobs
+     *
+     * @throws DAOException
+     *
+     */
+    public List<Job> getAllJobs() throws DAOException {
 
-		List<Job> jobs = (List<Job>) getHibernateTemplate().find(
-				"select job from Job job " +
-				"left outer join fetch job.statistics order by job.updateDate DESC");
+        List<Job> jobs = (List<Job>) getHibernateTemplate().find(
+                "select job from Job job " +
+                "left outer join fetch job.statistics order by job.updateDate DESC");
 
-		return jobs;
-	}
+        return jobs;
+    }
 
-	/**
-	 * Update a job posting in the persistence store.
-	 */
-	public void update(Job job) {
+    /**
+     * Update a job posting in the persistence store.
+     */
+    public void update(Job job) {
 
-		getHibernateTemplate().saveOrUpdate(job);
+        getHibernateTemplate().saveOrUpdate(job);
 
-	}
+    }
 
-	/**
-	 * Get a gob from the persistence store.
-	 * 
-	 * @param jobId Id of the job posting.
-	 * @return A single job posting
-	 * 
-	 * @see org.jrecruiter.persistent.dao.JobReqDAO#get(java.lang.Integer)
-	 */
-	public Job get(Long jobId) throws DAOException {
+    /**
+     * Get a gob from the persistence store.
+     *
+     * @param jobId Id of the job posting.
+     * @return A single job posting
+     *
+     * @see org.jrecruiter.persistent.dao.JobReqDAO#get(java.lang.Integer)
+     */
+    public Job get(Long jobId) throws DAOException {
 
-		Job job = (Job) getHibernateTemplate().get(Job.class, jobId);
-		return job;
-	}
+        Job job = (Job) getHibernateTemplate().get(Job.class, jobId);
+        return job;
+    }
 
-	/**
-	 * @see org.jrecruiter.persistent.dao.JobReqDAO#delete(java.lang.Integer)
-	 */
-	public void delete(final Long jobId) throws DAOException {
+    /**
+     * @see org.jrecruiter.persistent.dao.JobReqDAO#delete(java.lang.Integer)
+     */
+    public void delete(final Long jobId) throws DAOException {
 
-		Job job = (Job) getHibernateTemplate().load(Job.class, jobId);
-		getHibernateTemplate().delete(job);
+        Job job = (Job) getHibernateTemplate().load(Job.class, jobId);
+        getHibernateTemplate().delete(job);
 
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see org.jrecruiter.persistent.dao.
-	 * JobReqDAO#getAllUserJobs(java.lang.String)
-	 */
-	public List<Job> getAllUserJobs(String username) {
+    /* (non-Javadoc)
+     * @see org.jrecruiter.persistent.dao.
+     * JobReqDAO#getAllUserJobs(java.lang.String)
+     */
+    public List<Job> getAllUserJobs(String username) {
 
-		List<Job> jobs;
+        List<Job> jobs;
 
-		User user = userDao.getUser(username);
+        User user = userDao.getUser(username);
 
-		boolean administrator = false;
+        boolean administrator = false;
 
-		Iterator it = user.getRoles().iterator();
+        Iterator it = user.getRoles().iterator();
 
-		while (it.hasNext()) {
+        while (it.hasNext()) {
 
-			UserRole userRole = (UserRole) it.next();
+            UserRole userRole = (UserRole) it.next();
 
-			if ("admin".equals(userRole.getName())) {
-				administrator = true;
-			}
+            if ("admin".equals(userRole.getName())) {
+                administrator = true;
+            }
 
-		}
+        }
 
-		if (administrator) {
-			jobs = this.getAllJobs();
-		} else {
+        if (administrator) {
+            jobs = this.getAllJobs();
+        } else {
 
-			jobs = getHibernateTemplate().find(
-					"from Job j where j.owner.username=?", username);
+            jobs = getHibernateTemplate().find(
+                    "from Job j where j.owner.username=?", username);
 
-		}
+        }
 
-		return jobs;
-	}
-    
+        return jobs;
+    }
+
     /* (non-Javadoc)
      * @see org.jrecruiter.persistent.dao.
      * JobReqDAO#getAllUserJobs(java.lang.String)
@@ -191,11 +191,11 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
         return jobs;
     }
 
-	/* (non-Javadoc)
+    /* (non-Javadoc)
      * @see org.jrecruiter.persistent.dao.JobsDAO#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
     public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
-        
+
         List < Job > jobs;
 
         User user = userDao.getUser(username);
@@ -213,9 +213,9 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
             }
 
         }
-        
+
         final Session session = getSession(false);
-        
+
         try {
 
             Query query = null;
@@ -223,10 +223,10 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
             if (statsMode == StatsMode.PAGE_HITS) {
 
                 if (administrator) {
-                    
+
                     query = session.createQuery("select j from Job j left outer join fetch j.statistics as stats "
                             + "order by stats.counter asc");
-                    
+
                 } else {
 
                     query = session
@@ -252,7 +252,7 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
             }
 
             query.setMaxResults(maxResult);
-            
+
 
             jobs = query.list();
 
@@ -265,31 +265,31 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
 
     /**
      * Perform a simple search within the persistence store.
-     * 
+     *
      * @param keyword
      *            The search keyword
      * @return List of job postings representing the search results.
      */
-	public List searchByKeyword(final String keyword) throws DAOException {
+    public List searchByKeyword(final String keyword) throws DAOException {
 
-		List list = (List) getHibernateTemplate().execute(
-				new HibernateCallback() {
+        List list = (List) getHibernateTemplate().execute(
+                new HibernateCallback() {
 
-					public Object doInHibernate(final Session session)
-							throws HibernateException {
-						Query q = session.createQuery("from Job j where "
-								+ "lower(j.jobTitle) like :keyword or "
-								+ "lower(j.description) like :keyword or "
-								+ "lower(j.jobRestrictions) like :keyword or "
-								+ "lower(j.businessLocation) like :keyword");
-						q.setString("keyword", "%" + keyword + "%");
+                    public Object doInHibernate(final Session session)
+                            throws HibernateException {
+                        Query q = session.createQuery("from Job j where "
+                                + "lower(j.jobTitle) like :keyword or "
+                                + "lower(j.description) like :keyword or "
+                                + "lower(j.jobRestrictions) like :keyword or "
+                                + "lower(j.businessLocation) like :keyword");
+                        q.setString("keyword", "%" + keyword + "%");
 
-						return q.list();
-					}
+                        return q.list();
+                    }
 
-				});
+                });
 
-		return list;
-	}
+        return list;
+    }
 
 }

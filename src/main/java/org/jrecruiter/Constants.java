@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jrecruiter;
 
@@ -10,7 +10,7 @@ package org.jrecruiter;
 public class Constants {
 
     /**
-     * 
+     *
      */
     public Constants() {
         super();

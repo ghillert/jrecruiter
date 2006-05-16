@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.service.impl;
 
 import java.util.Date;
@@ -69,7 +69,7 @@ public class UserService implements UserServiceInterface {
      * Access to settings.
      */
     private SettingsDAO settingsDao;
-    
+
     /**
      * @param userDao The userDao to set.
      */
@@ -103,29 +103,29 @@ public class UserService implements UserServiceInterface {
     public void setVelocityEngine(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
-   
-    /**
-	 * @param settingsDAO The settingsDAO to set.
-	 */
-	public final void setSettingsDao(SettingsDAO settingsDao) {
-		this.settingsDao = settingsDao;
-	}
 
-	public void addUser(User user) throws DuplicateUserException{
-        
+    /**
+     * @param settingsDAO The settingsDAO to set.
+     */
+    public final void setSettingsDao(SettingsDAO settingsDao) {
+        this.settingsDao = settingsDao;
+    }
+
+    public void addUser(User user) throws DuplicateUserException{
+
         Date registerDate = new Date();
         user.setRegisterDate(registerDate);
         user.setUpdateDate(registerDate);
         try {
         userDao.addUser(user, "manager");
         } catch (DataIntegrityViolationException e){
-        	LOGGER.warn("addUser() - A DataIntegrityViolationException was thrown - " + e.getMessage());
-        	throw new DuplicateUserException("User already exists", e);
+            LOGGER.warn("addUser() - A DataIntegrityViolationException was thrown - " + e.getMessage());
+            throw new DuplicateUserException("User already exists", e);
         }
     }
 
     public User getUser(String username) {
-        
+
         return userDao.getUser(username);
     }
 
@@ -136,7 +136,7 @@ public class UserService implements UserServiceInterface {
     }
 
     public List<User> getAllUsers() {
-        
+
         return userDao.getAllUsers();
     }
 
@@ -151,9 +151,9 @@ public class UserService implements UserServiceInterface {
 
         final SimpleMailMessage msg = new SimpleMailMessage(this.message);
         msg.setSubject(settingsDao.get("mail.password.subject").getText());
-        msg.setFrom(settingsDao.get("mail.from").getText());       
+        msg.setFrom(settingsDao.get("mail.from").getText());
         msg.setTo(user.getFirstName() + " " + user.getLastName()
-        		+ "<" + user.getEmail() + ">");
+                + "<" + user.getEmail() + ">");
 
         final Map < String, Object > model = new HashMap < String, Object > ();
         model.put("password", user.getPassword());
@@ -162,20 +162,20 @@ public class UserService implements UserServiceInterface {
         try {
 
             result = VelocityEngineUtils.mergeTemplateIntoString(
-            		velocityEngine, "mail.password.body", model);
+                    velocityEngine, "mail.password.body", model);
         } catch (VelocityException e) {
             e.printStackTrace();
         }
         msg.setText(result);
-        
+
         try {
-        	//JavaMailSenderImpl r = (JavaMailSenderImpl)mailSender;
-        	//r.getSession().setDebug(true);
+            //JavaMailSenderImpl r = (JavaMailSenderImpl)mailSender;
+            //r.getSession().setDebug(true);
             mailSender.send(msg);
         } catch (MailException ex) {
             LOGGER.error(ex.getMessage());
             throw new RuntimeException(ex);
         }
 
-    } 
+    }
 }
