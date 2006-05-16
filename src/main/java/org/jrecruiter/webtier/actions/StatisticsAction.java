@@ -1,7 +1,7 @@
 /*
- *	http://www.jrecruiter.org	
+ *	http://www.jrecruiter.org
  *
- *	Disclaimer of Warranty. 
+ *	Disclaimer of Warranty.
  *
  *	Unless required by applicable law or agreed to in writing, Licensor provides
  *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,7 +10,7 @@
  *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
  *	solely responsible for determining the appropriateness of using or
  *	redistributing the Work and assume any risks associated with Your exercise of
- *	permissions under this License. 
+ *	permissions under this License.
  *
  */
 package org.jrecruiter.webtier.actions;
@@ -60,148 +60,148 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  */
 public class StatisticsAction extends DispatchAction {
 
-	public static final Logger logger = Logger
-			.getLogger(StatisticsAction.class);
+    public static final Logger logger = Logger
+            .getLogger(StatisticsAction.class);
 
-	public ActionForward showStatistics(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward showStatistics(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		if (request.getUserPrincipal() != null) {
+        if (request.getUserPrincipal() != null) {
 
-			final ApplicationContext context = WebApplicationContextUtils
-					.getRequiredWebApplicationContext(servlet
-							.getServletContext());
+            final ApplicationContext context = WebApplicationContextUtils
+                    .getRequiredWebApplicationContext(servlet
+                            .getServletContext());
 
-			final JobServiceInterface service = (JobServiceInterface) context
-					.getBean("jobService");
+            final JobServiceInterface service = (JobServiceInterface) context
+                    .getBean("jobService");
 
-			final List jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
-			
-			request.setAttribute("jobs", jobs);
-            
+            final List jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
+
+            request.setAttribute("jobs", jobs);
+
             String ajaxCall = request.getParameter("displayAjax");
             if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
                 return mapping.findForward("ajax");
             }
-            
-			return mapping.findForward("success");
 
-		}
-		return mapping.findForward("sessionTimeout");
-	}
+            return mapping.findForward("success");
 
-	public ActionForward chartJobsHits(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+        }
+        return mapping.findForward("sessionTimeout");
+    }
+
+    public ActionForward chartJobsHits(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         String chartTitle = null;
-        
-		if (request.getUserPrincipal() != null) {
 
-			final ApplicationContext context = WebApplicationContextUtils
-					.getRequiredWebApplicationContext(servlet
-							.getServletContext());
+        if (request.getUserPrincipal() != null) {
 
-			final JobServiceInterface service = (JobServiceInterface) context
-					.getBean("jobService");
+            final ApplicationContext context = WebApplicationContextUtils
+                    .getRequiredWebApplicationContext(servlet
+                            .getServletContext());
 
-			String mode = request.getParameter("mode");
-			boolean createChart = true;
-			
-			if (mode != null && mode.equals("unique")) { mode = "unique";}
-			
-			else if (mode != null && mode.equals("all")) { mode = "all";}
-			
-			else { 
-				createChart = false;
-			}
-			
-			if (createChart){
-				
-				List < Job > jobs = null;
-                
+            final JobServiceInterface service = (JobServiceInterface) context
+                    .getBean("jobService");
+
+            String mode = request.getParameter("mode");
+            boolean createChart = true;
+
+            if (mode != null && mode.equals("unique")) { mode = "unique";}
+
+            else if (mode != null && mode.equals("all")) { mode = "all";}
+
+            else {
+                createChart = false;
+            }
+
+            if (createChart){
+
+                List < Job > jobs = null;
+
                 if (mode.equals("unique")){
                     jobs = service.getUsersJobsForStatistics(request.getRemoteUser(), 10, Constants.StatsMode.UNIQUE_HITS);
                 } else {
                     jobs = service.getUsersJobsForStatistics(request.getRemoteUser(), 10, Constants.StatsMode.PAGE_HITS);
                 }
-                
-				final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-				for (Job job : jobs) {
+                final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-					if (job.getStatistics() != null && job.getStatistics().getUniqueVisits().longValue()>0) {
+                for (Job job : jobs) {
 
-						if (mode.equals("unique")){
-							
-							dataset.addValue(job.getStatistics().getUniqueVisits(),
-									job.getJobTitle(), "");
+                    if (job.getStatistics() != null && job.getStatistics().getUniqueVisits().longValue()>0) {
+
+                        if (mode.equals("unique")){
+
+                            dataset.addValue(job.getStatistics().getUniqueVisits(),
+                                    job.getJobTitle(), "");
                             chartTitle = "Job Statistics Top 10 - Unique Hits";
-						} else {
-							
-							dataset.addValue(job.getStatistics().getCounter(), job.getJobTitle(), ""
-									);
+                        } else {
+
+                            dataset.addValue(job.getStatistics().getCounter(), job.getJobTitle(), ""
+                                    );
                             chartTitle = "Job Statistics Top 10 - Page Hits";
-						}
+                        }
 
-					} 
-				}
+                    }
+                }
 
-				final JFreeChart chart = createChart(dataset, chartTitle);
+                final JFreeChart chart = createChart(dataset, chartTitle);
 
-				final OutputStream out = response.getOutputStream();
-				ChartUtilities.writeChartAsPNG(out, chart, 400, 300);
+                final OutputStream out = response.getOutputStream();
+                ChartUtilities.writeChartAsPNG(out, chart, 400, 300);
 
-				out.close();
+                out.close();
 
-			}
-			
-			return null;
+            }
 
-		}
-		return mapping.findForward("sessionTimeout");
-	}
+            return null;
 
-	private static JFreeChart createChart(final CategoryDataset categorydataset,
+        }
+        return mapping.findForward("sessionTimeout");
+    }
+
+    private static JFreeChart createChart(final CategoryDataset categorydataset,
                                           final String chartTitle) {
-		final JFreeChart chart = ChartFactory.createBarChart(
+        final JFreeChart chart = ChartFactory.createBarChart(
                         chartTitle,
-						"Jobs", "Number of Hits", categorydataset,
-						PlotOrientation.VERTICAL, true, true, false);
-		
+                        "Jobs", "Number of Hits", categorydataset,
+                        PlotOrientation.VERTICAL, true, true, false);
+
         final CategoryPlot categoryplot = (CategoryPlot)chart.getPlot();
         categoryplot.setNoDataMessage("NO DATA!");
 
-		chart.setBackgroundPaint(new Color(245,245,255));
-		chart.setBorderPaint(new Color(204,204,204));
-		chart.setBorderStroke(new BasicStroke(1f));
-		
-		final LegendTitle legend = chart.getLegend();
-		legend.setWidth(1000);
-		legend.setPosition(RectangleEdge.BOTTOM);
+        chart.setBackgroundPaint(new Color(245,245,255));
+        chart.setBorderPaint(new Color(204,204,204));
+        chart.setBorderStroke(new BasicStroke(1f));
 
-		final BlockBorder border = new BlockBorder(new Color(204,204,204));
-		legend.setBorder(border);
-		
-		final CategoryPlot categoryPlot = (CategoryPlot) chart.getPlot();
-		categoryPlot.setBackgroundPaint(Color.WHITE);
-		categoryPlot.setRangeGridlinePaint(new Color(204,204,204));
-		categoryPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-		final NumberAxis numberaxis = (NumberAxis) categoryPlot.getRangeAxis();
+        final LegendTitle legend = chart.getLegend();
+        legend.setWidth(1000);
+        legend.setPosition(RectangleEdge.BOTTOM);
 
-		numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		final BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
-		renderer.setDrawBarOutline(true);
-		
-		final ItemLabelPosition itemlabelposition = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER);
-		renderer.setPositiveItemLabelPosition(itemlabelposition);
+        final BlockBorder border = new BlockBorder(new Color(204,204,204));
+        legend.setBorder(border);
 
-		renderer.setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        final CategoryPlot categoryPlot = (CategoryPlot) chart.getPlot();
+        categoryPlot.setBackgroundPaint(Color.WHITE);
+        categoryPlot.setRangeGridlinePaint(new Color(204,204,204));
+        categoryPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+        final NumberAxis numberaxis = (NumberAxis) categoryPlot.getRangeAxis();
 
-		
-		renderer.setItemLabelsVisible(true);
-		return chart;
-	}
+        numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        final BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+        renderer.setDrawBarOutline(true);
+
+        final ItemLabelPosition itemlabelposition = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER);
+        renderer.setPositiveItemLabelPosition(itemlabelposition);
+
+        renderer.setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+
+
+        renderer.setItemLabelsVisible(true);
+        return chart;
+    }
 
 }

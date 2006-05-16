@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.persistent.dao;
 
 import java.util.List;
@@ -22,22 +22,22 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 
 /**
- * 
+ *
  * @author Gunnar Hillert
  * @version $Revision: 1.1 $, $Date: 2006/03/01 05:23:52 $, $Author: ghillert $
  */
 public class UserRoleDAOHibernate extends HibernateDaoSupport implements UserRoleDAO {
 
-    
+
     /**
      * Constructor.
      *
      */
     private UserRoleDAOHibernate() {
-    	super();
+        super();
     }
 
-    
 
-    
+
+
 }

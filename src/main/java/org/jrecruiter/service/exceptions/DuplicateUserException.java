@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.service.exceptions;
 
 /**
@@ -20,18 +20,18 @@ package org.jrecruiter.service.exceptions;
  * @version $Revision: 1.1 $, $Date: 2006/03/19 22:56:43 $, $Author: ghillert $
  */
 public class DuplicateUserException extends Exception {
-    
 
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = -5935393816289263497L;
 
-	/**
-	 * Constructor.
-	 */
-	public DuplicateUserException() {
-		super();
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = -5935393816289263497L;
+
+    /**
+     * Constructor.
+     */
+    public DuplicateUserException() {
+        super();
     }
 
     public DuplicateUserException(String message) {

@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.persistent.dao;
 
 import org.jrecruiter.model.User;
@@ -25,19 +25,19 @@ import java.util.List;
  * @version $Revision: 1.5 $, $Date: 2006/03/19 21:56:07 $, $Author: ghillert $
  */
 public interface UserDAO {
-    
-	/**
+
+    /**
      * Add a user to persistence store.
      * @param role Role of the user
      * @param user User object
-	 */
-	void addUser(User user, String role);
+     */
+    void addUser(User user, String role);
 
-	/**
+    /**
      * Get a user from persistence store.
      * @param username
      * @return A single user
-	 */
+     */
     User getUser(String username);
 
     /**
@@ -54,11 +54,11 @@ public interface UserDAO {
 
     /**
      * Delete an array of users from persistence store.
-     * 
-     * @param usernameList list of user names. 
+     *
+     * @param usernameList list of user names.
      */
     void deleteUser(String[] usernameList);
-    
+
     /**
      * Retrieve all roles from persistence store. Currently only used for testing.
      * @return List of user roles.

@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.webtier.actions;
 
 
@@ -37,19 +37,19 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- * 
+ *
  * @author Jerzy Puchala
  * @version $Revision: 1.4 $, $Date: 2006/04/12 02:37:19 $, $Author: ghillert $
  */
 public class JobDetailAction extends Action {
-	
-	public static final Logger LOGGER = Logger.getLogger(JobPostingAction.class);
-	
+
+    public static final Logger LOGGER = Logger.getLogger(JobPostingAction.class);
+
     public ActionForward execute(ActionMapping mapping,
                                  ActionForm form,
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws Exception {
-    	    	
+
         ApplicationContext context = WebApplicationContextUtils.
         getRequiredWebApplicationContext(servlet.getServletContext());
 
@@ -58,71 +58,71 @@ public class JobDetailAction extends Action {
 
         Long id = Long.valueOf(request.getParameter("id"));
         Job jobDetail = service.getJobForId(id);
-        
+
         if (jobDetail==null){
-        	           
-        	ActionMessages errors = new ActionMessages();
+
+            ActionMessages errors = new ActionMessages();
             errors.add("notfound", new ActionMessage("error.jobposting.not.found", id.toString()));
             saveErrors(request.getSession(), errors);
-            
+
             LOGGER.warn("Requested jobposting with id " + id + " was not found.");
-            
-        	return mapping.findForward("jobList");
-        	
+
+            return mapping.findForward("jobList");
+
         }
-        
+
         Statistics statistics = jobDetail.getStatistics();
-        
+
         if (statistics == null) {
-        	
-        	statistics = new Statistics();
-        	statistics.setJob(jobDetail);
-        	statistics.setCounter(new Long(0));
-        	statistics.setUniqueVisits(new Long(0));
-        	jobDetail.setStatistics(statistics);
+
+            statistics = new Statistics();
+            statistics.setJob(jobDetail);
+            statistics.setCounter(new Long(0));
+            statistics.setUniqueVisits(new Long(0));
+            jobDetail.setStatistics(statistics);
         }
-        
+
         Set viewedPostings = new HashSet<Long>();
-        
+
         if (request.getSession().getAttribute("visited") != null){
-        	
-        	viewedPostings = (Set)request.getSession().getAttribute("visited");
-        	
-        	if (viewedPostings.contains(id)){
-        		
-        		
-        	} else {
-        		long counter = statistics.getUniqueVisits().longValue() + 1 ;
-        		statistics.setUniqueVisits(new Long (counter));
-        		viewedPostings.add(id);
-        	}
-        	
+
+            viewedPostings = (Set)request.getSession().getAttribute("visited");
+
+            if (viewedPostings.contains(id)){
+
+
+            } else {
+                long counter = statistics.getUniqueVisits().longValue() + 1 ;
+                statistics.setUniqueVisits(new Long (counter));
+                viewedPostings.add(id);
+            }
+
         } else {
-        	
-        	long counter;
-        	
-        	if (statistics.getUniqueVisits() != null)
-        	{
-        		counter = statistics.getUniqueVisits().longValue() + 1 ;
-        	} else {
-        		counter = 1;
-        	}
-    		
-        	
-    		statistics.setUniqueVisits(new Long (counter));
-    		
-    		viewedPostings.add(id);
-    		request.getSession().setAttribute("visited", viewedPostings);
-        	
+
+            long counter;
+
+            if (statistics.getUniqueVisits() != null)
+            {
+                counter = statistics.getUniqueVisits().longValue() + 1 ;
+            } else {
+                counter = 1;
+            }
+
+
+            statistics.setUniqueVisits(new Long (counter));
+
+            viewedPostings.add(id);
+            request.getSession().setAttribute("visited", viewedPostings);
+
         }
-        
+
         Long counter = statistics.getCounter().longValue();
         counter ++;
-        
+
         statistics.setCounter(new Long(counter));
         statistics.setLastAccess(new Date());
         service.updateJob(jobDetail);
-        
+
         request.setAttribute("jobDetail", jobDetail);
 
         return mapping.findForward("success");

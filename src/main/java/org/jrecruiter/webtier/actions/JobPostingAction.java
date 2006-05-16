@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.webtier.actions;
 
 import java.sql.Date;
@@ -42,7 +42,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * Struts action class for handling job postings.
- * 
+ *
  * @author Gunnar Hillert
  * @version $Revision: 1.6 $, $Date: 2006/03/01 05:26:55 $, $Author: ghillert $
  */
@@ -85,7 +85,7 @@ public class JobPostingAction extends DispatchAction {
             job.setUsername(request.getRemoteUser());
             job.setRegisterDate(new Date(new java.util.Date().getTime()));
             job.setUpdateDate(new Date(new java.util.Date().getTime()));
-            
+
             User owner = new User();
             owner.setUsername(job.getUsername());
             job.setOwner(owner);
@@ -136,9 +136,9 @@ public class JobPostingAction extends DispatchAction {
 
         Job job = service.getJobForId(id);
         BeanUtils.copyProperties(form, job);
-        
+
         request.setAttribute("statistics", job.getStatistics());
-        
+
         return mapping.findForward("success");
     }
 
@@ -168,11 +168,11 @@ public class JobPostingAction extends DispatchAction {
             DynaValidatorForm dvf = (DynaValidatorForm) form;
 
             Job job = service.getJobForId(new Long((String)dvf.get("id")));
-            
+
             if (job != null) {
-                
+
                 String jobDescription = (String) dvf.get("description");
-                
+
                 job.setBusinessName((String) dvf.get("businessName"));
                 job.setBusinessLocation((String) dvf.get("businessLocation"));
                 job.setJobTitle((String) dvf.get("jobTitle"));
@@ -193,7 +193,7 @@ public class JobPostingAction extends DispatchAction {
             } else {
                 throw new IllegalArgumentException("Job with id " + dvf.get("id") + " does not exist.");
             }
-            
+
             messages.add("info", new ActionMessage("jobposting.edit.success"));
             saveMessages(request, messages);
 
@@ -213,7 +213,7 @@ public class JobPostingAction extends DispatchAction {
 
         JobServiceInterface service = (JobServiceInterface) context.
         getBean("jobService");
-        
+
         if (isCancelled(request)) {
 
             messages.add("info", new ActionMessage("errors.cancel"));

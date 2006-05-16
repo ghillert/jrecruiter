@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.persistent.dao;
 
 import java.util.List;
@@ -25,8 +25,8 @@ import org.jrecruiter.model.Job;
  * @version $Revision: 1.2 $, $Date: 2006/02/06 04:08:35 $, $Author: ghillert $
  */
 public interface SettingsDAO {
-    
-	/**
+
+    /**
      * Method for returning list of all jobs.
      *
      * @return
@@ -52,5 +52,5 @@ public interface SettingsDAO {
      * @throws org.jrecruiter.persistent.dao.DAOException
      */
     Configuration get(String key) throws DAOException;
-    
+
 }
