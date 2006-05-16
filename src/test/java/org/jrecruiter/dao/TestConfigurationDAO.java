@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jrecruiter.dao;
 import java.util.List;
@@ -18,30 +18,30 @@ import org.testng.annotations.Test;
  */
 public class TestConfigurationDAO {
 
-	ApplicationContext ctx;
-	
-	/**
+    ApplicationContext ctx;
+
+    /**
      *   Initialize Logging.
      */
     public static final Logger LOGGER = Logger.getLogger(TestConfigurationDAO.class);
 
-	  @Configuration(beforeTestClass = true)
-	  public void configure() {
-	    System.out.println("Initialization");
-	    ctx = new ClassPathXmlApplicationContext("testApplicationContext.xml");
-	  }
+      @Configuration(beforeTestClass = true)
+      public void configure() {
+        System.out.println("Initialization");
+        ctx = new ClassPathXmlApplicationContext("testApplicationContext.xml");
+      }
 
-	  @Test(groups = {"exec-group"})
-	    public void getAllJobs() {
-	    System.out.println("exec");
-	    SettingsDAO settingsDAO = (SettingsDAO) ctx.getBean("settingsDAO");
-	    List < org.jrecruiter.model.Configuration > conf = settingsDAO.getAllConfigurations();
-	    
-	    for (org.jrecruiter.model.Configuration setting : conf) {
-	    	
-	    	LOGGER.info(setting);
-	    	
-	    }
-	  }
+      @Test(groups = {"exec-group"})
+        public void getAllJobs() {
+        System.out.println("exec");
+        SettingsDAO settingsDAO = (SettingsDAO) ctx.getBean("settingsDAO");
+        List < org.jrecruiter.model.Configuration > conf = settingsDAO.getAllConfigurations();
+
+        for (org.jrecruiter.model.Configuration setting : conf) {
+
+            LOGGER.info(setting);
+
+        }
+      }
 
 }
