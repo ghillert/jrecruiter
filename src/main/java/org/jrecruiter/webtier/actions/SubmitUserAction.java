@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.webtier.actions;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -36,12 +36,12 @@ import java.text.SimpleDateFormat;
  * @version $Revision: 1.7 $, $Date: 2006/03/19 22:58:01 $, $Author: ghillert $
  */
 public class SubmitUserAction extends DispatchAction {
-	
+
     /**
      *   Initialize Logging.
      */
     public static final Logger LOGGER = Logger.getLogger(SubmitUserAction.class);
-    
+
     public ActionForward add(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -54,7 +54,7 @@ public class SubmitUserAction extends DispatchAction {
 
         ActionMessages messages = new ActionMessages();
         ActionMessages errors = new ActionMessages();
-       
+
         if (isCancelled(request)) {
 
             messages.add("info", new ActionMessage("errors.cancel"));
@@ -66,8 +66,8 @@ public class SubmitUserAction extends DispatchAction {
         try {
             userService.addUser(user);
         } catch (DuplicateUserException e) {
-        	
-        	LOGGER.warn(e.getMessage());
+
+            LOGGER.warn(e.getMessage());
 
                 errors.add("duplicateUsername", new ActionMessage(
                         "error.duplicateUsername"));
@@ -75,7 +75,7 @@ public class SubmitUserAction extends DispatchAction {
                 return mapping.getInputForward();
 
         }
-        
+
         messages.add("info", new ActionMessage("user.add.success"));
         saveMessages(request.getSession(), messages);
         return mapping.findForward("successAdd");

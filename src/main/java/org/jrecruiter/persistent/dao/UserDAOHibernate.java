@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.persistent.dao;
 
 import java.util.HashSet;
@@ -37,14 +37,14 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @author Dorota Puchala
  * @version $Revision: 1.8 $, $Date: 2006/03/21 03:56:10 $, $Author: ghillert $
  */
-public class UserDAOHibernate extends HibernateDaoSupport 
-			implements UserDAO, UserDetailsService {
+public class UserDAOHibernate extends HibernateDaoSupport
+            implements UserDAO, UserDetailsService {
 
     /**
      *   Initialize Logging.
      */
     public static final Logger LOGGER = Logger.getLogger(UserDAOHibernate.class);
-    
+
     /**
      * Constructor.
      *
@@ -76,29 +76,29 @@ public class UserDAOHibernate extends HibernateDaoSupport
      * @return A single user
      */
     public User getUser(String username) {
-       
+
         final Session session = getSession(false);
         final User user;
-        
+
         try {
-            
+
             final Query query = session.createQuery("from User user left join fetch user.roles "
                     + "where user.username= :username");
             query.setString("username", username);
-            
+
             user = (User) query.uniqueResult();
-                    
+
         } catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);
-        } 
-        
+        }
+
         return user;
     }
-    
+
     /**
      * Update a user in persistence store.
      * @param A user object
-     * 
+     *
      */
     public void updateUser(User user) {
 
@@ -110,9 +110,9 @@ public class UserDAOHibernate extends HibernateDaoSupport
      * Return all users from persistence store.
      * @return List of users
      */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public List < User > getAllUsers() {
-        
+
          List < User >  users = getHibernateTemplate().find(
                 "from User as user order by user.username");
 
@@ -121,8 +121,8 @@ public class UserDAOHibernate extends HibernateDaoSupport
 
     /**
      * Delete an array of users from persistence store.
-     * 
-     * @param usernameList list of user names. 
+     *
+     * @param usernameList list of user names.
      */
     public void deleteUser(final String[] usernameList) {
 
@@ -146,44 +146,44 @@ public class UserDAOHibernate extends HibernateDaoSupport
     }
 
 
-	/**
-	 * This method is used by ACEGI security to load user details for authentication.
-	 * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-	 * 
-	 * @param username Username
-	 * @return Details of the user
-	 * @throws DataAccessException
-	 * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
-	 */
-    @SuppressWarnings("unchecked") 
+    /**
+     * This method is used by ACEGI security to load user details for authentication.
+     * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+     *
+     * @param username Username
+     * @return Details of the user
+     * @throws DataAccessException
+     * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
+     */
+    @SuppressWarnings("unchecked")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		
-		UserDetails user;
-		
-    	user = this.getUser(username);
-			
-		if (user==null){
-			
-			LOGGER.warn("loadUserByUsername() - No user with id " + username + " found.");
-			throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + username + " found.");
-		}
 
-		LOGGER.info(user.getAuthorities());
+        UserDetails user;
 
-		return user;
-	}
-    
+        user = this.getUser(username);
+
+        if (user==null){
+
+            LOGGER.warn("loadUserByUsername() - No user with id " + username + " found.");
+            throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + username + " found.");
+        }
+
+        LOGGER.info(user.getAuthorities());
+
+        return user;
+    }
+
     /**
      * Retrieve all roles from persistence store. Currently only used for testing.
      * @return List of user roles.
      */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public List < UserRole > getAllRoles() {
-        
+
         List < UserRole >  userRoles = getHibernateTemplate().find(
                "from UserRole as role order by role.name ASC");
 
        return userRoles;
    }
-    
+
 }

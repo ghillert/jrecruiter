@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.persistent.dao;
 
 import org.jrecruiter.Constants;
@@ -21,7 +21,7 @@ import org.jrecruiter.model.Job;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Jerzy Puchala
  * @version $Revision: 1.5 $, $Date: 2006/03/19 21:56:07 $, $Author: ghillert $
  */
@@ -62,7 +62,7 @@ public interface JobsDAO {
      * @throws org.jrecruiter.persistent.dao.DAOException
      */
     List searchByKeyword(String keyword) throws DAOException;
-    
+
     /**
      * Method for getting a job posting.
      *
@@ -79,7 +79,7 @@ public interface JobsDAO {
      * @return List of Job objects for given User
      */
     List getAllUserJobs(String username);
-    
+
     /**
      * Method for getting users jobs for statistical purposes.
      *
@@ -87,7 +87,7 @@ public interface JobsDAO {
      * @return List of Job objects for given User
      */
     List getAllUserJobsForStatistics(String username);
-    
+
     /**
      * Method for returning list of jobs owned by the user for statistical
      * purposes.

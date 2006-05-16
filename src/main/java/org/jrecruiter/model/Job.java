@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.model;
 
 import java.io.Serializable;
@@ -27,20 +27,20 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 * @version $Revision: 1.3 $, $Date: 2006/03/01 05:19:15 $, $Author: ghillert $
 */
 public class Job implements Serializable {
-    
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = 6520479176825887240L;
 
-	/**
-	 * Job posting id.
-	 */
-	private Long id;
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = 6520479176825887240L;
 
-	/**
-	 * Business name.
-	 */
+    /**
+     * Job posting id.
+     */
+    private Long id;
+
+    /**
+     * Business name.
+     */
     private String businessName;
 
     /**
@@ -146,10 +146,10 @@ public class Job implements Serializable {
     /**
      * Statistics of this particuliar job posting.
      */
-    private Statistics statistics; 
+    private Statistics statistics;
 
     private User user;
-    
+
     /**
      * Delete Flag.
      */
@@ -340,75 +340,75 @@ public class Job implements Serializable {
     }
 
     /**
-	 * @return Returns the statistics.
-	 */
-	public Statistics getStatistics() {
-		return statistics;
-	}
+     * @return Returns the statistics.
+     */
+    public Statistics getStatistics() {
+        return statistics;
+    }
 
-	/**
-	 * @param statistics The statistics to set.
-	 */
-	public void setStatistics(Statistics statistics) {
-		this.statistics = statistics;
-	}
+    /**
+     * @param statistics The statistics to set.
+     */
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
 
-	/**
-	 * @return Returns the user.
-	 */
-	public final User getUser() {
-		return user;
-	}
+    /**
+     * @return Returns the user.
+     */
+    public final User getUser() {
+        return user;
+    }
 
-	/**
-	 * @param user The user to set.
-	 */
-	public final void setUser(User user) {
-		this.user = user;
-	}
+    /**
+     * @param user The user to set.
+     */
+    public final void setUser(User user) {
+        this.user = user;
+    }
 
-	
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object other) {
-		if (!(other instanceof Job))
-			return false;
-		Job castOther = (Job) other;
-		return new EqualsBuilder().append(businessName, castOther.businessName)
-				.append(jobTitle, castOther.jobTitle).append(salary,
-						castOther.salary).append(description,
-						castOther.description).append(website,
-						castOther.website).append(businessAddress1,
-						castOther.businessAddress1).append(businessAddress2,
-						castOther.businessAddress2).append(businessCity,
-						castOther.businessCity).append(businessState,
-						castOther.businessState).append(businessZip,
-						castOther.businessZip).append(businessPhone,
-						castOther.businessPhone).append(businessEmail,
-						castOther.businessEmail).append(jobRestrictions,
-						castOther.jobRestrictions).append(registerDate,
-						castOther.registerDate).append(updateDate,
-						castOther.updateDate).isEquals();
-	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder(-136820741, -2007964787)
-				.append(businessName).append(jobTitle).append(salary).append(
-						description).append(website).append(businessAddress1)
-				.append(businessAddress2).append(businessCity).append(
-						businessState).append(businessZip)
-				.append(businessPhone).append(businessEmail).append(
-						jobRestrictions).append(registerDate)
-				.append(updateDate).toHashCode();
-	}
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object other) {
+        if (!(other instanceof Job))
+            return false;
+        Job castOther = (Job) other;
+        return new EqualsBuilder().append(businessName, castOther.businessName)
+                .append(jobTitle, castOther.jobTitle).append(salary,
+                        castOther.salary).append(description,
+                        castOther.description).append(website,
+                        castOther.website).append(businessAddress1,
+                        castOther.businessAddress1).append(businessAddress2,
+                        castOther.businessAddress2).append(businessCity,
+                        castOther.businessCity).append(businessState,
+                        castOther.businessState).append(businessZip,
+                        castOther.businessZip).append(businessPhone,
+                        castOther.businessPhone).append(businessEmail,
+                        castOther.businessEmail).append(jobRestrictions,
+                        castOther.jobRestrictions).append(registerDate,
+                        castOther.registerDate).append(updateDate,
+                        castOther.updateDate).isEquals();
+    }
 
-	
-	
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(-136820741, -2007964787)
+                .append(businessName).append(jobTitle).append(salary).append(
+                        description).append(website).append(businessAddress1)
+                .append(businessAddress2).append(businessCity).append(
+                        businessState).append(businessZip)
+                .append(businessPhone).append(businessEmail).append(
+                        jobRestrictions).append(registerDate)
+                .append(updateDate).toHashCode();
+    }
+
+
+
 }
 

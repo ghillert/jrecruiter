@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.webtier.actions;
 
 import java.util.GregorianCalendar;
@@ -35,7 +35,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * Struts action class for handling job postings.
- * 
+ *
  * @author Gunnar Hillert
  * @version $Revision: 1.2 $, $Date: 2006/02/06 04:07:13 $, $Author: ghillert $
  */
@@ -46,28 +46,28 @@ public class SettingsAction extends DispatchAction {
     public ActionForward openEditSettings(ActionMapping mapping,
                                             ActionForm form, HttpServletRequest request,
                                             HttpServletResponse response) throws Exception {
-    	
-    	if (request.getUserPrincipal() != null) {
-    		
-	        ApplicationContext context = WebApplicationContextUtils.
-	        getRequiredWebApplicationContext(servlet.getServletContext());
-	
-	        JobServiceInterface service = (JobServiceInterface) context.
-	        getBean("jobService");
-	
-	        DynaValidatorForm settingsForm = (DynaValidatorForm)form; 
-	        
-	        settingsForm.set("mailingListSubject",  ((Configuration)service.getJRecruiterSetting("mail.jobposting.subject")).getText());
-	        settingsForm.set("mailingListTemplate", ((Configuration)service.getJRecruiterSetting("mail.jobposting.body")).getText());
-	        settingsForm.set("mailingListEmail",    ((Configuration)service.getJRecruiterSetting("mail.jobposting.email")).getText());
-	        settingsForm.set("passwordSubject",     ((Configuration)service.getJRecruiterSetting("mail.password.subject")).getText());
-	        settingsForm.set("passwordTemplate",    ((Configuration)service.getJRecruiterSetting("mail.password.body")).getText());
-	
-	        return mapping.findForward("openEditSuccess");
-	        
-    	} else {
-    		return mapping.findForward("sessionTimeout");
-    	}
+
+        if (request.getUserPrincipal() != null) {
+
+            ApplicationContext context = WebApplicationContextUtils.
+            getRequiredWebApplicationContext(servlet.getServletContext());
+
+            JobServiceInterface service = (JobServiceInterface) context.
+            getBean("jobService");
+
+            DynaValidatorForm settingsForm = (DynaValidatorForm)form;
+
+            settingsForm.set("mailingListSubject",  ((Configuration)service.getJRecruiterSetting("mail.jobposting.subject")).getText());
+            settingsForm.set("mailingListTemplate", ((Configuration)service.getJRecruiterSetting("mail.jobposting.body")).getText());
+            settingsForm.set("mailingListEmail",    ((Configuration)service.getJRecruiterSetting("mail.jobposting.email")).getText());
+            settingsForm.set("passwordSubject",     ((Configuration)service.getJRecruiterSetting("mail.password.subject")).getText());
+            settingsForm.set("passwordTemplate",    ((Configuration)service.getJRecruiterSetting("mail.password.body")).getText());
+
+            return mapping.findForward("openEditSuccess");
+
+        } else {
+            return mapping.findForward("sessionTimeout");
+        }
     }
 
     public ActionForward editSettings(ActionMapping mapping, ActionForm form,
@@ -85,7 +85,7 @@ public class SettingsAction extends DispatchAction {
         }
 
         if (request.getUserPrincipal() != null) {
-        	
+
             ApplicationContext context = WebApplicationContextUtils.
             getRequiredWebApplicationContext(servlet.getServletContext());
 
@@ -95,32 +95,32 @@ public class SettingsAction extends DispatchAction {
             DynaValidatorForm settingsForm = (DynaValidatorForm) form;
 
             Configuration configuration = new Configuration();
-            
+
             configuration.setKey("mail.jobposting.subject");
             configuration.setText((String) settingsForm.get("mailingListSubject"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
-            
+
             configuration.setKey("mail.jobposting.body");
             configuration.setText((String) settingsForm.get("mailingListTemplate"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
-            
+
             configuration.setKey("mail.jobposting.email");
             configuration.setText((String) settingsForm.get("mailingListEmail"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
-            
+
             configuration.setKey("mail.password.subject");
             configuration.setText((String) settingsForm.get("passwordSubject"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
-            
+
             configuration.setKey("mail.password.body");
             configuration.setText((String) settingsForm.get("passwordTemplate"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
-            
+
             messages.add("info", new ActionMessage("settings.edit.success"));
             saveMessages(request, messages);
 

@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.service;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
 
 /**
- * 
+ *
  * @author Jerzy Puchala
  * @version $Revision: 1.5 $, $Date: 2006/03/19 21:58:05 $, $Author: ghillert $
  */
@@ -41,7 +41,7 @@ public interface JobServiceInterface {
      * @return List of jobs.
      */
     List < Job > getUsersJobs(String username);
-    
+
     /**
      * Method for returning list of jobs owned by the user for statistical
      * purposes.
@@ -59,7 +59,7 @@ public interface JobServiceInterface {
      * @return List of jobs.
      */
     List < Job > getUsersJobsForStatistics(String username, Integer maxResult, Constants.StatsMode statsMode);
-    
+
     /**
      * Method for adding a job posting.
      *
@@ -103,7 +103,7 @@ public interface JobServiceInterface {
      * @param keyword search keyword
      */
     List < Job > searchByKeyword(String keyword);
-  
+
     /**
      * Method for getting a List of the jRecruiter Settings.
      *
@@ -119,7 +119,7 @@ public interface JobServiceInterface {
      * @return JobReq
      */
     Configuration getJRecruiterSetting(String key);
-    
+
     /**
      * Method for saving a jRecruiter Setting to the persistence store..
      *

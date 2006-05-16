@@ -1,7 +1,7 @@
 /*
-*	http://www.jrecruiter.org	
+*	http://www.jrecruiter.org
 *
-*	Disclaimer of Warranty. 
+*	Disclaimer of Warranty.
 *
 *	Unless required by applicable law or agreed to in writing, Licensor provides
 *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -10,9 +10,9 @@
 *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
 *	solely responsible for determining the appropriateness of using or
 *	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License. 
+*	permissions under this License.
 *
-*/	
+*/
 package org.jrecruiter.service.impl;
 
 
@@ -65,29 +65,29 @@ public class JobService implements JobServiceInterface {
      * Job Dao.
      */
     private JobsDAO jobsDao;
-    
+
     /**
      * Settings Dao.
      */
     private SettingsDAO settingsDao;
-    
+
     /**
      * @param jobsDao The jobsDao to set.
      */
     public void setJobsDao(final JobsDAO jobsDao) {
         this.jobsDao = jobsDao;
     }
-    
-	/**
-	 * @param settingsDao The settingsDao to set.
-	 */
-	public final void setSettingsDao(final SettingsDAO settingsDao) {
-		this.settingsDao = settingsDao;
-	}
+
+    /**
+     * @param settingsDao The settingsDao to set.
+     */
+    public final void setSettingsDao(final SettingsDAO settingsDao) {
+        this.settingsDao = settingsDao;
+    }
 
 
 
-	/**
+    /**
      * Sets the mail sender.
      * @param mailSender
      */
@@ -113,7 +113,7 @@ public class JobService implements JobServiceInterface {
     public void setVelocityEngine(final VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
-   
+
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
@@ -134,7 +134,7 @@ public class JobService implements JobServiceInterface {
     public List getUsersJobsForStatistics(final String username) {
         return jobsDao.getAllUserJobsForStatistics(username);
     }
-    
+
     /* (non-Javadoc)
      * @see org.jrecruiter.service.JobServiceInterface#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
@@ -161,15 +161,15 @@ public class JobService implements JobServiceInterface {
     * @see org.ajug.service.JobServiceInterface#getJobForId(java.lang.Long)
     */
     public Job getJobForId(final Long jobId) {
-        
+
         return jobsDao.get(jobId);
     }
 
     public List searchByKeyword(final String keyword) {
-    	return jobsDao.searchByKeyword(keyword);
-	}
-    
-	/* (non-Javadoc)
+        return jobsDao.searchByKeyword(keyword);
+    }
+
+    /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#deleteJobForId(java.lang.Long)
      */
     public void deleteJobForId(final Long jobId) {
@@ -206,11 +206,11 @@ public class JobService implements JobServiceInterface {
         } catch (VelocityException e) {
             e.printStackTrace();
         }
-        
+
         msg.setText(result);
-        
+
         msg.setSubject(subject);
-        msg.setFrom(settingsDao.get("mail.from").getText());    
+        msg.setFrom(settingsDao.get("mail.from").getText());
 
         try {
             mailSender.send(msg);
@@ -220,19 +220,19 @@ public class JobService implements JobServiceInterface {
         }
 
     }
-    
-	public List getJRecruiterSettings() {
-		return settingsDao.getAllConfigurations();
-	}
-	
-	public Configuration getJRecruiterSetting(final String key) {
-		return settingsDao.get(key);
-	}
-	
-	public void saveJRecruiterSetting(final Configuration configuration) {
-		settingsDao.update(configuration);
-		
-	}
-    
-    
+
+    public List getJRecruiterSettings() {
+        return settingsDao.getAllConfigurations();
+    }
+
+    public Configuration getJRecruiterSetting(final String key) {
+        return settingsDao.get(key);
+    }
+
+    public void saveJRecruiterSetting(final Configuration configuration) {
+        settingsDao.update(configuration);
+
+    }
+
+
 }
