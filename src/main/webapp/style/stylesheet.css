@@ -1,0 +1,475 @@
+@import url(displaytag.css);
+
+html {
+
+
+}
+
+
+
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 17px;
+  background-color: #BED5D9;
+}
+
+
+th {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  padding: 5px;
+  background-color: #ccccef;
+  text-align: left;
+}
+
+td {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  padding: 5px;
+}
+
+input.selected {
+  border-color: #ff0000;
+  background-color: #F7F7F7;
+
+}
+textarea.selected {
+  border-color: #ff0000;
+  background-color: #F7F7F7;
+}
+
+input.error {
+  background-color: #FF9999;
+  border-color: #ff0000;
+}
+
+button.selected {
+  border-color: #ff0000;
+}
+button.error {
+  background-color: #FF9999;
+  border-color: #ff0000;
+}
+
+
+textarea.error {
+  background-color: #FF9999;
+  border-color: #ff0000;
+}
+
+th {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+}
+
+h1 {
+
+  text-align: center;
+  vertical-align: middle;
+  width: 650px;
+  height: 40px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: #90B5E6;
+
+  background-image: url("../images/musa_header.jpg");
+
+  background-position: left;
+  background-repeat: no-repeat;
+
+
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+}
+
+h2 {
+  margin-left: auto;
+  margin-right: auto;
+  width: 610px;
+  text-align: left;
+  vertical-align: middle;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+}
+
+#header_menu{
+
+  text-align: left;
+
+  vertical-align: middle;
+  width: 538px;
+  height: 20px;
+  padding-top: 0px;
+  padding-left: 112px;
+  padding-bottom: 0px;
+
+
+  border-top: 1px solid #FF3C00;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: #0076CC;
+
+}
+
+#main {
+
+  width: 628px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  padding-top: 20px;
+  margin-bottom: auto;
+  background-color: #F5F5FF;
+  border: 1px solid #0076CC;
+  padding: 30px 10px 10px 10px;
+
+  }
+
+#footer{
+  text-align: center;
+  width: 650px;
+  height: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  padding-top:  0px;
+  padding-bottom:  0px;
+  margin-bottom: auto;
+  background-color: #0076CC;
+
+}
+
+
+input {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: #333333;
+  border-right-color: #999999;
+  border-bottom-color: #999999;
+  border-left-color: #333333;
+  background-color: #EEEEEE;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+}
+
+button {
+
+  height: 18px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: #333333;
+  border-right-color: #999999;
+  border-bottom-color: #999999;
+  border-left-color: #333333;
+  background-color: #EEEEEE;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+}
+
+textarea {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: #333333;
+  border-right-color: #999999;
+  border-bottom-color: #999999;
+  border-left-color: #333333;
+  background-color: #EEEEEE;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+
+}
+
+
+
+table.jobposting {
+  width: 610px;
+}
+
+table.joblist td.column1 {
+  width: 250px;
+}
+table.joblist td.column2 {
+  width: 200px;
+}
+table.joblist td.column3 {
+  width: 125px;
+}
+table.joblist td.column4 {
+  width: 125px;
+}
+table.joblist td.textfield {
+
+  margin-top: 0px;
+  margin-bottom: 1px;
+  margin-left: 0px;
+  margin-right: 0px;
+
+  border-top: 0px;
+  border-bottom:1px solid #ccccef;
+  border-left:0px;
+  border-right:0px;
+
+  padding-left: 40px;
+  padding-right: 40px;
+
+  background-color: #fafaff;
+  width: 500px;
+  height: 40px;
+}
+table.joblist td.textfieldlabel {
+
+  margin-top: 1px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+
+  border-top: 1px solid #ccccef;
+  border-bottom:0px;
+  border-left:0px;
+  border-right:0px;
+
+  background-color: #f6f6ff;
+  width: 100px;
+}
+
+div.error{
+  padding-left: 10px;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: auto;
+  background-color: #FFFFFF;
+  border: 1px solid #FF0000;
+
+}
+
+div.success{
+  padding-left: 10px;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: #FFFFFF;
+  color: #00AA00;
+  border: 1px solid #0076CC;
+
+}
+
+a:active {  color: #6666EE; text-decoration: none; }
+a:visited {  color: #6666EE; text-decoration: none}
+a:link { color: #6666EE; text-decoration: none;}
+a:hover { color: #6666EE; text-decoration: underline;}
+
+
+#footer{
+  text-align: center;
+  height: 18px;
+  width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  padding-top:  2px;
+  padding-bottom:  2px;
+  margin-bottom: 0px;
+  background-color: #0076CC;
+
+
+}
+
+
+div.back {
+
+  width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+
+  }
+
+li {
+  list-style-image: url("../images/arrow_li.gif");
+  list-style-position: inherit;
+  list-style-type: square;
+  padding: 5px;
+
+}
+
+.hover {
+
+  cursor: pointer;
+  background-color: #F0F0FF;
+
+}
+
+#container {
+  width: 650px;
+  padding-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+
+table.joblist td.joblist1 {
+  width: 75px;
+}
+table.joblist td.joblist2 {
+  width: 280px;
+}
+table.joblist td.joblist3 {
+  width: 150px;
+}
+table.joblist td.joblist4 {
+  width: 130px;
+}
+table.joblist td.joblist5 {
+  text-align: center;
+  width: 40px;
+}
+
+td.userlist1 {
+  width: 120px;
+}
+td.userlist2 {
+  width: 120px;
+}
+td.userlist3 {
+  width: 120px;
+}
+td.userlist4 {
+  width: 90px;
+}
+td.userlist5 {
+  text-align: center;
+  width: 50px;
+}
+
+a.button, a:visited.button {
+
+  display: block;
+  text-align:center;
+  width: 60px;
+  height:16px;
+  background-color: #90B5E6;
+  padding:2px;
+  float: left;
+
+}
+a:hover.button {
+  display: block;
+  background-color: #eeeeee;
+
+  }
+
+.headerForm {
+
+  display: block;
+  text-align: left ;
+  vertical-align: middle;
+  width: 120px;
+  height:15px;
+  background-color: #F5F5FF;
+  padding: 2px;
+  float: left;
+
+
+  }
+
+  .headerFormSelected {
+
+  display: block;
+  text-align: left ;
+  vertical-align: middle;
+  width: 120px;
+  height:15px;
+  background-color: #ffffff;
+  padding: 2px;
+  float: left;
+
+
+  }
+
+a.footerLogo {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80px;
+  heigth: 40px;
+  display:block;
+  background-image: url("../images/jrecruiter_logo_small.gif");
+
+  text-decoration: none;
+  padding: 0px;
+
+  text-indent: -6000px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.adminMain {
+
+  padding-top: 15px;
+  background-image: url("../images/colocasia.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+
+}
+.welcomeMain {
+    position: relative;
+    float: right;
+    top: 0px;
+
+    margin-left: 0px;
+    margin-right: 50px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #333333;
+
+}
+.center {
+    padding-top: 10px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}

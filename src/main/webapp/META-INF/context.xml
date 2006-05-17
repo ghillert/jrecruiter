@@ -1,0 +1,4 @@
+<Context reloadable="true">
+    <ResourceLink name="jdbc/postgres" type="javax.sql.DataSource" global="jdbc/postgres"/>
+    <ResourceLink name="mail/session" type="javax.sql.DataSource" global="mail/session"/>
+</Context>

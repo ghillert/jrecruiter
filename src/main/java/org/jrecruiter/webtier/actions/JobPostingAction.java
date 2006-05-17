@@ -69,7 +69,7 @@ public class JobPostingAction extends DispatchAction {
         if (isCancelled(request)) {
 
             messages.add("info", new ActionMessage("errors.cancel"));
-            saveMessages(request, messages);
+            saveMessages(request.getSession(), messages);
 
             return mapping.findForward("cancel");
         }
@@ -93,7 +93,7 @@ public class JobPostingAction extends DispatchAction {
             service.sendJobPostingToMailingList(job);
 
             messages.add("info", new ActionMessage("jobposting.add.success"));
-            saveMessages(request, messages);
+            saveMessages(request.getSession(), messages);
 
             return mapping.findForward("success");
         }
@@ -117,6 +117,10 @@ public class JobPostingAction extends DispatchAction {
 
             request.setAttribute("JobList", jobs);
 
+            String ajaxCall = request.getParameter("displayAjax");
+            if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
+                return mapping.findForward("ajax");
+            }
             return mapping.findForward("showJobList");
         }
         return mapping.findForward("sessionTimeout");
@@ -151,7 +155,7 @@ public class JobPostingAction extends DispatchAction {
         if (isCancelled(request)) {
 
             messages.add("info", new ActionMessage("errors.cancel"));
-            saveMessages(request, messages);
+            saveMessages(request.getSession(), messages);
 
             return mapping.findForward("cancel");
 
@@ -195,7 +199,7 @@ public class JobPostingAction extends DispatchAction {
             }
 
             messages.add("info", new ActionMessage("jobposting.edit.success"));
-            saveMessages(request, messages);
+            saveMessages(request.getSession(), messages);
 
             return mapping.findForward("success");
         }
@@ -217,7 +221,7 @@ public class JobPostingAction extends DispatchAction {
         if (isCancelled(request)) {
 
             messages.add("info", new ActionMessage("errors.cancel"));
-            saveMessages(request, messages);
+            saveMessages(request.getSession(), messages);
 
             return mapping.findForward("cancel");
         }
@@ -235,7 +239,7 @@ public class JobPostingAction extends DispatchAction {
             }
         }
         messages.add("info", new ActionMessage("jobposting.delete.success"));
-        saveMessages(request, messages);
+        saveMessages(request.getSession(), messages);
 
         return mapping.findForward("success");
     }
