@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jrecruiter.web</groupId>
-	<artifactId>jrecruiter-web</artifactId>
-	<packaging>war</packaging>
-	<version>1.2</version>
-	<name>jRecruiter</name>
-	<url>http://www.jrecruiter.org</url>
-	<description>jRecruiter is a J2EE-based job posting solution. It is implemented in Java and uses Jakarta Struts and Hibernate.</description>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jrecruiter.web</groupId>
+  <artifactId>jrecruiter-web</artifactId>
+  <packaging>war</packaging>
+  <version>1.2</version>
+  <name>jRecruiter</name>
+  <url>http://www.jrecruiter.org</url>
+  <description>jRecruiter is a J2EE-based job posting solution. It is implemented in Java and uses Jakarta Struts and Hibernate.</description>
 
     <profiles>
         <profile>
@@ -36,35 +36,35 @@
             </properties>
         </profile>
     </profiles>
-	<distributionManagement>
-	  <site>
-	    <id>website</id>
-	    <url>scp://shell.sourceforge.net/home/groups/j/jr/jrecruiter/htdocs</url>
-	  </site>
-	</distributionManagement>
+  <distributionManagement>
+    <site>
+      <id>website</id>
+      <url>scp://shell.sourceforge.net/home/groups/j/jr/jrecruiter/htdocs</url>
+    </site>
+  </distributionManagement>
 
-	<issueManagement>
-	  <system>Bugzilla</system>
-	  <url><![CDATA[    
-	    http://sourceforge.net/tracker/?group_id=145457&atid=761996  
-	  ]]></url>
-	</issueManagement>
-	
-	<build>
-		<finalName>jrecruiter-web</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-		</plugins>
+  <issueManagement>
+    <system>Bugzilla</system>
+    <url><![CDATA[
+      http://sourceforge.net/tracker/?group_id=145457&atid=761996
+    ]]></url>
+  </issueManagement>
 
-		<defaultGoal>package</defaultGoal>
-		<sourceDirectory>src</sourceDirectory>
+  <build>
+    <finalName>jrecruiter-web</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <defaultGoal>package</defaultGoal>
+    <sourceDirectory>src</sourceDirectory>
 
     <extensions>
       <extension>
@@ -73,77 +73,77 @@
       </extension>
     </extensions>
 
-	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>surefire-report-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<artifactId>maven-pmd-plugin</artifactId>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>surefire-report-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
                 <configuration>
                     <targetJdk>1.5</targetJdk>
                 </configuration>
-			</plugin>
-			<plugin>
+      </plugin>
+  <!-- 		<plugin>
                  <groupId>org.codehaus.mojo</groupId>
-                 <artifactId>jdepend-maven-plugin</artifactId>      
-            </plugin>
- 		<plugin>
+                 <artifactId>jdepend-maven-plugin</artifactId>
+            </plugin> -->
+     <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-checkstyle-plugin</artifactId>
-        	</plugin>
+          </plugin>
 
-		</plugins>
-	</reporting>
+    </plugins>
+  </reporting>
 
-	<licenses>
-		<license>
-			<name>GNU GENERAL PUBLIC LICENSE</name>
-			<url>http://www.gnu.org/licenses/gpl.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+  <licenses>
+    <license>
+      <name>GNU GENERAL PUBLIC LICENSE</name>
+      <url>http://www.gnu.org/licenses/gpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-	<developers>
-		<developer>
-			<id>ghillert</id>
-			<name>Gunnar Hillert</name>
-			<email>gunnar at hillert dot com</email>
-			<url>http://www.hillert.com</url>
-			<roles>
-				<role>Admin</role>
-			</roles>
-			<timezone>-5</timezone>
-		</developer>
-	</developers>
+  <developers>
+    <developer>
+      <id>ghillert</id>
+      <name>Gunnar Hillert</name>
+      <email>gunnar at hillert dot com</email>
+      <url>http://www.hillert.com</url>
+      <roles>
+        <role>Admin</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
 
-	<scm>
-		<connection>
-			scm:svn:https://svn.sourceforge.net/svnroot/jrecruiter/trunk/jrecruiter
-		</connection>
-		<developerConnection>
-			scm:svn:https://svn.sourceforge.net/svnroot/jrecruiter/trunk/jrecruiter
-		</developerConnection>
-		<url>http://svn.sourceforge.net/viewcvs.cgi/jrecruiter/trunk/jrecruiter/</url>
-	</scm>
+  <scm>
+    <connection>
+      scm:svn:https://svn.sourceforge.net/svnroot/jrecruiter/trunk/jrecruiter
+    </connection>
+    <developerConnection>
+      scm:svn:https://svn.sourceforge.net/svnroot/jrecruiter/trunk/jrecruiter
+    </developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jrecruiter/trunk/jrecruiter/</url>
+  </scm>
 
-	<repositories>
+  <repositories>
             <repository>
                 <id>java.net</id>
                 <name>Java.net - contains e.g. mail.jar and activation.jar</name>
                 <url>https://maven-repository.dev.java.net/nonav/repository</url>
             </repository>
-    		<repository>
-      			<id>jrecruiter</id>
-      			<name>jREcruiter Maven repository</name>
-      			<url>http://www.jrecruiter.org/repository</url>
-    		</repository>
-	</repositories>
+        <repository>
+            <id>jrecruiter</id>
+            <name>jREcruiter Maven repository</name>
+            <url>http://www.jrecruiter.org/repository</url>
+        </repository>
+  </repositories>
     <pluginRepositories>
       <pluginRepository>
         <id>jrecrutier</id>
@@ -157,217 +157,217 @@
       </pluginRepository>
     </pluginRepositories>
 
-	<!-- Begin of dependencies -->
-	<dependencies>
+  <!-- Begin of dependencies -->
+  <dependencies>
 
-		<!-- Junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- Hibernate -->
-		<dependency>
-			<artifactId>hibernate</artifactId>
-			<groupId>org.hibernate</groupId>
-			<version>3.1.2</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>ant</artifactId>
-					<groupId>ant</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>avalon-framework</artifactId>
-					<groupId>avalon-framework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>concurrent</artifactId>
-					<groupId>concurrent</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jacc</artifactId>
-					<groupId>javax.security</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-cache</artifactId>
-					<groupId>jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-common</artifactId>
-					<groupId>jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-j2se</artifactId>
-					<groupId>jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-minimal</artifactId>
-					<groupId>jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-system</artifactId>
-					<groupId>jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>logkit</artifactId>
-					<groupId>logkit</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>odmg</artifactId>
-					<groupId>odmg</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>proxool</artifactId>
-					<groupId>proxool</groupId>
-				</exclusion>
-				<exclusion>
-					<groupId>c3p0</groupId>
-					<artifactId>c3p0</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>jgroups</groupId>
-					<artifactId>jgroups-all</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>opensymphony</groupId>
-					<artifactId>oscache</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>swarmcache</groupId>
-					<artifactId>swarmcache</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
+    <!-- Junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Hibernate -->
+    <dependency>
+      <artifactId>hibernate</artifactId>
+      <groupId>org.hibernate</groupId>
+      <version>3.1.2</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>ant</artifactId>
+          <groupId>ant</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>avalon-framework</artifactId>
+          <groupId>avalon-framework</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>concurrent</artifactId>
+          <groupId>concurrent</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jacc</artifactId>
+          <groupId>javax.security</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jboss-cache</artifactId>
+          <groupId>jboss</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jboss-common</artifactId>
+          <groupId>jboss</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jboss-j2se</artifactId>
+          <groupId>jboss</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jboss-minimal</artifactId>
+          <groupId>jboss</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jboss-system</artifactId>
+          <groupId>jboss</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>logkit</artifactId>
+          <groupId>logkit</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>odmg</artifactId>
+          <groupId>odmg</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>proxool</artifactId>
+          <groupId>proxool</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>c3p0</groupId>
+          <artifactId>c3p0</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jgroups</groupId>
+          <artifactId>jgroups-all</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>opensymphony</groupId>
+          <artifactId>oscache</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>swarmcache</groupId>
+          <artifactId>swarmcache</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
                 <exclusion>
                     <artifactId>jta</artifactId>
                     <groupId>javax.transaction</groupId>
                 </exclusion>
-			</exclusions>
-		</dependency>
+      </exclusions>
+    </dependency>
 
-		<dependency>
-			<artifactId>spring</artifactId>
-			<groupId>org.springframework</groupId>
-			<version>1.2.6</version>
-			<exclusions>
-				<exclusion>
-      					<groupId>javax.resource</groupId>
-					<artifactId>connector</artifactId> 
-				</exclusion>
-			</exclusions>
-		</dependency>
+    <dependency>
+      <artifactId>spring</artifactId>
+      <groupId>org.springframework</groupId>
+      <version>1.2.6</version>
+      <exclusions>
+        <exclusion>
+                <groupId>javax.resource</groupId>
+          <artifactId>connector</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-		<dependency>
-			<artifactId>displaytag</artifactId>
-			<groupId>displaytag</groupId>
-			<version>1.1</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-beanutils</artifactId>
-					<groupId>commons-beanutils</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>tools</artifactId>
-					<groupId>jdk</groupId>
-				</exclusion>
-				<exclusion>
-					<groupId>avalon-framework</groupId>
-					<artifactId>avalon-framework</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>jstl</groupId>
-					<artifactId>jstl</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xalan</groupId>
-					<artifactId>xalan</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+    <dependency>
+      <artifactId>displaytag</artifactId>
+      <groupId>displaytag</groupId>
+      <version>1.1</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-beanutils</artifactId>
+          <groupId>commons-beanutils</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>tools</artifactId>
+          <groupId>jdk</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>avalon-framework</groupId>
+          <artifactId>avalon-framework</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jstl</groupId>
+          <artifactId>jstl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>logkit</groupId>
+          <artifactId>logkit</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>springframework</groupId>
+          <artifactId>spring</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xalan</groupId>
+          <artifactId>xalan</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-		<!-- Struts -->
+    <!-- Struts -->
 
-		<dependency>
-			<groupId>struts</groupId>
-			<artifactId>struts</artifactId>
-			<version>1.2.8</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>servletapi</artifactId>
-					<groupId>servletapi</groupId>
-				</exclusion>
-				<exclusion>
-					<groupId>myfaces</groupId>
-					<artifactId>myfaces-jsf-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>portlet-api</groupId>
-					<artifactId>portlet-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-				</exclusion>
+    <dependency>
+      <groupId>struts</groupId>
+      <artifactId>struts</artifactId>
+      <version>1.2.8</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>servletapi</artifactId>
+          <groupId>servletapi</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>myfaces</groupId>
+          <artifactId>myfaces-jsf-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>portlet-api</groupId>
+          <artifactId>portlet-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
                 <exclusion>
                     <groupId>commons-validator</groupId>
                     <artifactId>commons-validator</artifactId>
                 </exclusion>
-			</exclusions>
-		</dependency>
+      </exclusions>
+    </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>1.2.0</version>
         </dependency>
-		<!-- Others -->
-        
+    <!-- Others -->
+
         <!-- mvn install:install-file -Dfile=velocity-1.5-dev.jar -DgroupId=velocity -DartifactId=velocity -Dversion=1.5-dev -Dpackaging=jar -->
-		<dependency>
-			<groupId>velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.5-dev</version>
-			<exclusions>
-				<exclusion>
-					<groupId>velocity</groupId>
-					<artifactId>velocity-dep</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+    <dependency>
+      <groupId>velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.5-dev</version>
+      <exclusions>
+        <exclusion>
+          <groupId>velocity</groupId>
+          <artifactId>velocity-dep</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-		<dependency>
-			<groupId>org.acegisecurity</groupId>
-			<artifactId>acegi-security</artifactId>
-			<version>1.0.0-RC1</version>
-		</dependency>
+    <dependency>
+      <groupId>org.acegisecurity</groupId>
+      <artifactId>acegi-security</artifactId>
+      <version>1.0.0-RC1</version>
+    </dependency>
 
-		<dependency>
-			<artifactId>log4j</artifactId>
-			<groupId>log4j</groupId>
-			<version>1.2.12</version>
-		</dependency>
+    <dependency>
+      <artifactId>log4j</artifactId>
+      <groupId>log4j</groupId>
+      <version>1.2.12</version>
+    </dependency>
 
-		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>8.0-312.jdbc3</version>
-			<scope>compile</scope>
-		</dependency>
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>8.0-312.jdbc3</version>
+      <scope>compile</scope>
+    </dependency>
 
         <dependency>
           <groupId>javax.servlet</groupId>
@@ -375,27 +375,27 @@
           <version>2.4</version>
           <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>jstl</artifactId>
           <version>1.1.2</version>
           <scope>runtime</scope>
         </dependency>
-        
+
         <dependency>
           <groupId>taglibs</groupId>
           <artifactId>standard</artifactId>
           <version>1.1.2</version>
           <scope>runtime</scope>
-        </dependency> 
+        </dependency>
 
-        <!-- Needs to be downloaded manually 
+        <!-- Needs to be downloaded manually
              mail.jar (version 1.3.3_01) and activation.jar (1.0.2)
-         
+
              mvn install:install-file -Dfile=mail.jar -DgroupId=javax.mail -DartifactId=mail -Dversion=1.3.3_01 -Dpackaging=jar
              mvn install:install-file -Dfile=activation.jar -DgroupId=javax.activation -DartifactId=activation -Dversion=1.0.2 -Dpackaging=jar
-         
+
              Go to http://java.sun.com/products/javamail/downloads/index.html in order to download 'javamail'
              Go to http://java.sun.com/products/javabeans/glasgow/jaf.html in order to download 'activation'
         -->
@@ -403,17 +403,18 @@
           <groupId>javax.mail</groupId>
           <artifactId>mail</artifactId>
           <version>1.4</version>
+          <scope>provided</scope>
         </dependency>
 
 
-<!--  Testng dependency needs to be installed 
+<!--  Testng dependency needs to be installed
  manually since testng is not yet available in the Mave2 repository
- 
-mvn install:install-file 
--Dfile=testng-4.2-jdk15.jar 
--DgroupId=org.testng 
--DartifactId=testng 
--Dversion=4.2 
+
+mvn install:install-file
+-Dfile=testng-4.2-jdk15.jar
+-DgroupId=org.testng
+-DartifactId=testng
+-Dversion=4.2
 -Dpackaging=jar
  -->
         <dependency>
@@ -421,7 +422,7 @@ mvn install:install-file
             <artifactId>testng-jdk14</artifactId>
             <version>4.4.7</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng-jdk15</artifactId>
@@ -445,11 +446,11 @@ mvn install:install-file
         <dependency>
             <groupId>org.ajaxtags</groupId>
             <artifactId>ajaxtags</artifactId>
-            <version>1.2-beta1</version>
+            <version>1.2-beta2</version>
             <scope>compile</scope>
 
         </dependency>
-	<!-- End of dependencies -->
+  <!-- End of dependencies -->
     </dependencies>
 
 </project>
