@@ -1,0 +1,17 @@
+<project name="jREcruiter">
+  <bannerLeft>
+    <name>jRecruiter</name>
+    <src>http://www.jrecruiter.org/images/logo.png</src>
+    <href>http://www.jrecruiter.org</href>
+  </bannerLeft>
+  <body>
+    <links>
+    </links>
+
+    <menu name="Menu">
+      <item name="Overview" href="index.html"/>
+      <item name="Installation" href="installation.html"/>
+    </menu>
+    ${reports}
+  </body>
+</project>
