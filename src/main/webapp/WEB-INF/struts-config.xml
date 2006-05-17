@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+    <!-- ================================================ Form Bean Definitions -->
+
+    <form-beans>
+        <!--<form-bean name="jobPostingForm"-->
+        <!--type="org.ajug.webtier.forms.JobPostingForm"/>-->
+        <form-bean name="AddEditJobPostingForm"
+                   type="org.apache.struts.validator.DynaValidatorForm">
+            <form-property name="id" type="java.lang.String"/>
+            <form-property name="businessName" type="java.lang.String"/>
+            <form-property name="businessLocation" type="java.lang.String"/>
+            <form-property name="jobTitle" type="java.lang.String"/>
+            <form-property name="salary" type="java.lang.Double"/>
+            <form-property name="description" type="java.lang.String"/>
+            <form-property name="website" type="java.lang.String"/>
+            <form-property name="businessAddress1" type="java.lang.String"/>
+            <form-property name="businessAddress2" type="java.lang.String"/>
+            <form-property name="businessCity" type="java.lang.String"/>
+            <form-property name="businessState" type="java.lang.String"/>
+            <form-property name="businessZip" type="java.lang.String"/>
+            <form-property name="businessPhone" type="java.lang.String"/>
+            <form-property name="businessEmail" type="java.lang.String"/>
+            <form-property name="industry" type="java.lang.String"/>
+            <form-property name="jobRestrictions" type="java.lang.String"/>
+        </form-bean>
+
+        <form-bean name="EditListJobPostingForm"
+                   type="org.apache.struts.validator.LazyValidatorForm">
+            <form-property name="delete" type="java.lang.Long[]" />
+        </form-bean>
+
+         <form-bean name="UserListForm"
+                   type="org.apache.struts.validator.LazyValidatorForm">
+            <form-property name="delete" type="java.lang.String[]" />
+        </form-bean>
+
+        <form-bean name="jobPostingFormDelete"
+                   type="org.jrecruiter.webtier.forms.JobPostingForm"/>
+
+        <form-bean name="EmailPasswordForm"
+                   type="org.apache.struts.validator.DynaValidatorForm">
+            <form-property name="username" type="java.lang.String"/>
+        </form-bean>
+        <form-bean name="UserForm"
+                   type="org.apache.struts.validator.DynaValidatorForm">
+            <form-property name="username" type="java.lang.String"/>
+            <form-property name="password" type="java.lang.String"/>
+            <form-property name="password2" type="java.lang.String"/>
+            <form-property name="firstName" type="java.lang.String"/>
+            <form-property name="lastName" type="java.lang.String"/>
+            <form-property name="company" type="java.lang.String"/>
+            <form-property name="phone" type="java.lang.String"/>
+            <form-property name="fax" type="java.lang.String"/>
+            <form-property name="email" type="java.lang.String"/>
+            <form-property name="update" type="java.lang.Boolean"/>
+            <form-property name="registerDateDF" type="java.lang.String"/>
+            <form-property name="updateDateDF" type="java.lang.String"/>
+        </form-bean>
+
+        <form-bean name="SettingsForm"
+                   type="org.apache.struts.validator.DynaValidatorForm">
+            <form-property name="mailingListEmail" type="java.lang.String"/>
+            <form-property name="mailingListSubject" type="java.lang.String"/>
+            <form-property name="mailingListTemplate" type="java.lang.String"/>
+            <form-property name="passwordSubject" type="java.lang.String"/>
+            <form-property name="passwordTemplate" type="java.lang.String"/>
+        </form-bean>
+
+        <form-bean name="JobSearchForm"
+                   type="org.apache.struts.validator.DynaValidatorForm">
+            <form-property name="keyword" type="java.lang.String"/>
+        </form-bean>
+    </form-beans>
+
+
+    <!-- ========================================= Global Exception Definitions -->
+
+    <global-exceptions>
+    <!--     <exception key="exception.unknown" type="java.lang.Throwable" path="/pages/error/unknown.jsp"/> -->
+    </global-exceptions>
+
+
+    <!-- =========================================== Global Forward Definitions -->
+
+    <global-forwards>
+        <forward name="welcome" path="/welcome.do"/>
+        <forward name="sessionTimeout" path="/login.do"/>
+    </global-forwards>
+
+
+    <!-- =========================================== Action Mapping Definitions -->
+
+    <action-mappings>
+        <action path="/welcome" forward="welcome.view"/>
+
+        <action path="/adminMain" forward="adminMain.view"/>
+
+    <action path="/backToWelcomePage" forward="/welcome.do"/>
+
+        <action path="/login" forward="login.view"/>
+
+        <action path="/loginError" forward="loginError.view"/>
+
+        <action path="/logout"
+            type="org.jrecruiter.webtier.actions.LogoutAction">
+            <forward name="success" path="/welcome.do"/>
+        </action>
+
+        <action path="/forgotYourPassword"
+                forward="forgotYourPassword.view"/>
+
+        <action path="/emailPassword" name="EmailPasswordForm"
+                input="forgotYourPassword.view"
+                validate="true"
+                scope="request"
+                type="org.jrecruiter.webtier.actions.EmailPasswordAction">
+            <forward name="success" path="sentPassword.view"/>
+            <forward name="cancel" path="/welcome.do"/>
+        </action>
+
+        <action path="/addUser" name="UserForm"
+                input="user.view"
+                validate="false"
+                scope="request"
+                type="org.apache.struts.actions.ForwardAction"
+                parameter="user.view">
+        </action>
+
+        <action path="/editUser"
+            name="UserForm"
+      input="user.view"
+            validate="false"
+            scope="request"
+      type="org.jrecruiter.webtier.actions.EditUserAction">
+      <forward name="success" path="user.view" redirect="true"/>
+      <forward name="cancel" path="/adminMain.do" redirect="true"/>
+    </action>
+
+        <action path="/userSubmit"
+            name="UserForm"
+      input="user.view"
+            validate="true"
+            scope="request"
+            parameter="dispatch"
+            type="org.jrecruiter.webtier.actions.SubmitUserAction">
+      <forward name="successAdd" path="/welcome.do" />
+      <forward name="successEdit" path="/adminMain.do" />
+      <forward name="error" path="user.view" />
+      <forward name="cancel" path="/welcome.do" redirect="true"/>
+      <forward name="cancelToAdmin" path="/adminMain.do" redirect="true"/>
+    </action>
+
+         <action path="/userList"
+            name="UserListForm"
+            input="userList.view"
+            validate="false"
+            scope="request"
+            type="org.jrecruiter.webtier.actions.UserListAction">
+            <forward name="success" path="userList.view"/>
+            <forward name="cancel" path="/adminMain.do" redirect="false"/>
+            <forward name="ajax" path="/pages/user/userListTable.jsp"/>
+        </action>
+
+        <action path="/deleteUser"
+            name="UserListForm"
+            input="userList.view"
+            validate="false"
+            scope="request"
+            type="org.jrecruiter.webtier.actions.DeleteUserAction">
+            <forward name="success" path="/userList.do" redirect="true"/>
+            <forward name="cancel" path="/adminMain.do" redirect="true"/>
+        </action>
+
+
+        <action path="/showJobs"
+                type="org.jrecruiter.webtier.actions.JobListAction">
+            <forward name="success" path="showJobs.view"/>
+            <forward name="ajax" path="/pages/jobsTable.jsp"/>
+        </action>
+
+        <action path="/searchJobs" name="JobSearchForm"
+                input="/showJobs.do"
+                validate="false"
+                scope="request"
+                type="org.jrecruiter.webtier.actions.JobSearchAction">
+            <forward name="success" path="showJobs.view"/>
+        </action>
+
+
+
+        <action path="/openAddJobPosting"
+                name="AddEditJobPostingForm"
+                validate="false"
+                scope="request"
+                type="org.jrecruiter.webtier.actions.JobPostingAction"
+                parameter="method">
+            <forward name="success" path="addJobPosting.view"/>
+        </action>
+
+        <action path="/addJobPosting"
+                name="AddEditJobPostingForm"
+                input="/openAddJobPosting.do?method=openAddJobPosting"
+                validate="true"
+                scope="request"
+                type="org.jrecruiter.webtier.actions.JobPostingAction"
+                parameter="method">
+            <forward name="success" path="/adminMain.do"/>
+            <forward name="cancel" path="/adminMain.do" redirect="false"/>
+        </action>
+
+        <action path="/deleteJobPosting"
+                name="EditListJobPostingForm"
+                input="/openEditJobPosting.do?method=openEditJobPosting"
+                validate="false" scope="request"
+                type="org.jrecruiter.webtier.actions.JobPostingAction"
+                parameter="method">
+            <forward name="showJobList" path="userJobList.view"/>
+            <forward name="success" path="/openEditJobPosting.do?method=listJobPostings" redirect="true"/>
+            <forward name="cancel" path="/adminMain.do" redirect="true"/>
+        </action>
+
+        <action path="/openEditJobPostingList"
+                scope="request"
+                type="org.apache.struts.actions.ForwardAction"
+                parameter="/openEditJobPosting.do?method=listJobPostings">
+        </action>
+
+        <action path="/openEditJobPosting"
+                name="AddEditJobPostingForm"
+                validate="false"
+                scope="request"
+                type="org.jrecruiter.webtier.actions.JobPostingAction"
+                parameter="method">
+
+            <forward name="showJobList" path="userJobList.view"/>
+            <forward name="success" path="editJobPosting.view"/>
+            <forward name="ajax" path="/pages/admin/joblistTable.jsp"/>
+        </action>
+
+
+        <action path="/editJobPosting"
+                name="AddEditJobPostingForm"
+                input="/openEditJobPosting.do?method=openEditJobPosting"
+                validate="true"
+                scope="request"
+                type="org.jrecruiter.webtier.actions.JobPostingAction"
+                parameter="method">
+            <forward name="success" path="/adminMain.do" redirect="true"/>
+            <forward name="cancel" path="/openEditJobPosting.do?method=listJobPostings" redirect="true"/>
+        </action>
+
+        <action path="/editSettings"
+                name="SettingsForm"
+                input="/editSettings.do?method=openEditSettings"
+                validate="true"
+                scope="request"
+                type="org.jrecruiter.webtier.actions.SettingsAction"
+                parameter="method">
+            <forward name="success" path="/adminMain.do" redirect="false"/>
+            <forward name="openEditSuccess" path="editSettings.view"/>
+            <forward name="cancel" path="/adminMain.do" redirect="false"/>
+        </action>
+
+        <action path="/showJobDetail"
+                type="org.jrecruiter.webtier.actions.JobDetailAction">
+            <forward name="success" path="showJobDetail.view"/>
+            <forward name="jobList" path="/showJobs.do" redirect="true"/>
+        </action>
+
+        <action path="/showStatistics"
+                type="org.jrecruiter.webtier.actions.StatisticsAction"
+                parameter="method">
+                <forward name="success" path="showStatistics.view" redirect="false"/>
+                <forward name="ajax" path="/pages/admin/showStatisticsTable.jsp"/>
+        </action>
+
+    </action-mappings>
+
+    <!-- ============================================= Controller Configuration -->
+
+    <controller
+            processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+
+    <!-- ======================================== Message Resources Definitions -->
+
+    <message-resources parameter="MessageResources"/>
+
+
+    <!-- =============================================== Plug Ins Configuration -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin">
+
+        <!-- Path to XML definition file -->
+        <set-property property="definitions-config"
+                      value="/WEB-INF/tiles-defs.xml"/>
+        <!-- Set Module-awareness to true -->
+        <set-property property="moduleAware" value="true"/>
+    </plug-in>
+
+
+    <!-- =================================================== Validator plugin -->
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+
+</struts-config>
+
