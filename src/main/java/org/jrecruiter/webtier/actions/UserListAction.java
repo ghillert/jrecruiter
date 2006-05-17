@@ -43,6 +43,11 @@ public class UserListAction extends Action {
         List users = userService.getAllUsers();
 
         request.setAttribute("userList", users);
+
+        String ajaxCall = request.getParameter("displayAjax");
+        if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
+            return mapping.findForward("ajax");
+        }
         return mapping.findForward("success");
     }
 }
