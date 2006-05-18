@@ -123,26 +123,29 @@ public class StatisticsAction extends DispatchAction {
 
                 if (mode.equals("unique")){
                     jobs = service.getUsersJobsForStatistics(request.getRemoteUser(), 10, Constants.StatsMode.UNIQUE_HITS);
+                    chartTitle = "Job Statistics Top 10 - Unique Hits";
                 } else {
                     jobs = service.getUsersJobsForStatistics(request.getRemoteUser(), 10, Constants.StatsMode.PAGE_HITS);
+                    chartTitle = "Job Statistics Top 10 - Page Hits";
                 }
 
                 final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
                 for (Job job : jobs) {
 
-                    if (job.getStatistics() != null && job.getStatistics().getUniqueVisits().longValue()>0) {
+                    if (job.getStatistics() != null) {
 
                         if (mode.equals("unique")){
-
-                            dataset.addValue(job.getStatistics().getUniqueVisits(),
+                            if (job.getStatistics().getUniqueVisits().longValue()>0){
+                                dataset.addValue(job.getStatistics().getUniqueVisits(),
                                     job.getJobTitle(), "");
-                            chartTitle = "Job Statistics Top 10 - Unique Hits";
-                        } else {
+                            }
 
-                            dataset.addValue(job.getStatistics().getCounter(), job.getJobTitle(), ""
+                        } else {
+                            if (job.getStatistics().getCounter().longValue()>0){
+                                dataset.addValue(job.getStatistics().getCounter(), job.getJobTitle(), ""
                                     );
-                            chartTitle = "Job Statistics Top 10 - Page Hits";
+                            }
                         }
 
                     }
