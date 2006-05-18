@@ -32,7 +32,7 @@ import org.jrecruiter.webtier.actions.StatisticsAction;
  * bubbling up from the action.
  *
  * @author Gunnar Hillert
- * @version $id$
+ * @version $Id$
  */
 public class GeneralExceptionHandler extends ExceptionHandler {
 
