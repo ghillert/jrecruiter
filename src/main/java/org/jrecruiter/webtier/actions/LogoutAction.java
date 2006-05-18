@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Dorota Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class LogoutAction extends Action {
  public ActionForward execute(ActionMapping mapping,

@@ -27,7 +27,7 @@ import java.io.Serializable;
  * This is the base class for all model objects.
  *
  * @author Gunnar Hillert
- * @version $Revision$, $Date$, $Author$
+ * @version @version $Id$
  */
 public class BaseObject implements Serializable {
 

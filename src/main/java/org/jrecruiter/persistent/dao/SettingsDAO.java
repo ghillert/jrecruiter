@@ -22,7 +22,7 @@ import org.jrecruiter.model.Job;
 
 /**
  * @author Gunnar Hillert
- * @version $Revision$, $Date$, $Author$
+ * @version @version $Id$
  */
 public interface SettingsDAO {
 

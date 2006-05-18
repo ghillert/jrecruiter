@@ -31,7 +31,7 @@ import java.util.List;
 /**
  *
  * @author Jerzy Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class JobListAction extends Action {
     public ActionForward execute(ActionMapping mapping,

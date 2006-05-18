@@ -24,7 +24,7 @@ import org.jrecruiter.model.Job;
 /**
  *
  * @author Jerzy Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public interface JobServiceInterface {
     /**

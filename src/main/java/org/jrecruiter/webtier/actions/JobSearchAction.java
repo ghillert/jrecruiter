@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author Gunnar Hillert
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class JobSearchAction extends Action {
     public ActionForward execute(ActionMapping mapping,
