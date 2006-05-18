@@ -23,7 +23,7 @@ import java.util.List;
 /**
  *
  * @author Jerzy Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version @version $Id$
  */
 public interface JobsDAO {
     /**

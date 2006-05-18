@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 * This class represents configuration data.
 *
 * @author Gunnar Hillert
-* @version $Revision$, $Date$, $Author$
+* @version @version $Id$
 */
 public class Configuration extends BaseObject implements Serializable {
 

@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * @author Dorota Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class UserListAction extends Action {
     public ActionForward execute(ActionMapping mapping,

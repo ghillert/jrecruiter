@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * @author Dorota Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public interface UserServiceInterface {
 

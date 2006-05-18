@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * @author Dorota Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class EditUserAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,

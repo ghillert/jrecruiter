@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 * This class represents a job posting.
 *
 * @author Jerzy Pucala, Gunnar Hillert
-* @version $Revision$, $Date$, $Author$
+* @version @version $Id$
 */
 public class Job implements Serializable {
 
