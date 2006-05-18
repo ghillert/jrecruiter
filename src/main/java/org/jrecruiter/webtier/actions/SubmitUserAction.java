@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * @author Dorota Puchala
- * @version $Revision: 1.7 $, $Date: 2006/03/19 22:58:01 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class SubmitUserAction extends DispatchAction {
 

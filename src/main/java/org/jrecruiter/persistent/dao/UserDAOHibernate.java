@@ -35,7 +35,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
  * @author Dorota Puchala
- * @version $Revision: 1.8 $, $Date: 2006/03/21 03:56:10 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class UserDAOHibernate extends HibernateDaoSupport
             implements UserDAO, UserDetailsService {

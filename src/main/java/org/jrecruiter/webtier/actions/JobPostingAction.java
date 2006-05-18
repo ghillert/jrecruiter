@@ -44,7 +44,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * Struts action class for handling job postings.
  *
  * @author Gunnar Hillert
- * @version $Revision: 1.6 $, $Date: 2006/03/01 05:26:55 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class JobPostingAction extends DispatchAction {
 

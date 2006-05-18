@@ -37,7 +37,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  * @author Jerzy Puchala
- * @version $Revision: 1.5 $, $Date: 2006/03/19 21:58:07 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class JobService implements JobServiceInterface {
 

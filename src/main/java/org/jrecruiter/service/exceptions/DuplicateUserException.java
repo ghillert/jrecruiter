@@ -17,7 +17,7 @@ package org.jrecruiter.service.exceptions;
 
 /**
  * @author Gunnar Hillert
- * @version $Revision: 1.1 $, $Date: 2006/03/19 22:56:43 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class DuplicateUserException extends Exception {
 

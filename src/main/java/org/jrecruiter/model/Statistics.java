@@ -25,7 +25,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * Holds statistical information about a job posting.
  *
  * @author Gunnar Hillert
- * @version $Revision: 1.4 $, $Date: 2006/04/12 02:24:49 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class Statistics extends BaseObject implements Serializable {
 

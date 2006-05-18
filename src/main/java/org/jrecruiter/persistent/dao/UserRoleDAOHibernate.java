@@ -24,7 +24,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 /**
  *
  * @author Gunnar Hillert
- * @version $Revision: 1.1 $, $Date: 2006/03/01 05:23:52 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class UserRoleDAOHibernate extends HibernateDaoSupport implements UserRoleDAO {
 

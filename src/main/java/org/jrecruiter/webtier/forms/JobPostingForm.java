@@ -21,7 +21,7 @@ import org.apache.struts.validator.ValidatorForm;
  * Struts Action Form that holds a job posting
  *
  * @author Gunnar Hillert
- * @version $Revision: 1.2 $, $Date: 2006/02/06 04:11:33 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class JobPostingForm extends ValidatorForm {
 

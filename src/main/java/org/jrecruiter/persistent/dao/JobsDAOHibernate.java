@@ -32,7 +32,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * This DAO provides job-related database methods.
  *
  * @author Jerzy Puchala, Gunnar Hillert
- * @version $Revision: 1.11 $, $Date: 2006/04/12 03:07:08 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
 
