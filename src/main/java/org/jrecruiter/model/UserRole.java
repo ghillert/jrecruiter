@@ -25,7 +25,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  * @author Dorota Puchala, Gunnar Hillert
- * @version $Revision: 1.4 $, $Date: 2006/03/01 05:19:15 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class UserRole extends BaseObject implements Serializable, GrantedAuthority {
 

@@ -29,7 +29,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  * This class represents a user.
  *
  * @author Dorota Puchala, Gunnar Hillert
- * @version $Revision: 1.5 $, $Date: 2006/03/19 21:55:18 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class User extends BaseObject implements Serializable, UserDetails{
 

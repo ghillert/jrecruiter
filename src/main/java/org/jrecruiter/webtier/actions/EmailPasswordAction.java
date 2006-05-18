@@ -33,7 +33,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * @author Dorota Puchala
- * @version $Revision: 1.4 $, $Date: 2006/03/19 22:00:40 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class EmailPasswordAction extends Action {
 

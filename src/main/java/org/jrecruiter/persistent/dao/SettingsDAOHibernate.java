@@ -24,7 +24,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 /**
  *
  * @author Gunnar Hillert
- * @version $Revision: 1.2 $, $Date: 2006/02/06 04:08:35 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class SettingsDAOHibernate extends HibernateDaoSupport implements SettingsDAO {
 

@@ -17,7 +17,7 @@ package org.jrecruiter.persistent.dao;
 
 /**
  * @author Gunnar Hillert
- * @version $Revision: 1.1 $, $Date: 2006/03/01 05:23:52 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public interface UserRoleDAO {
 

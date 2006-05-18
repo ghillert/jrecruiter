@@ -24,7 +24,7 @@ import org.jrecruiter.model.Job;
 /**
  *
  * @author Jerzy Puchala
- * @version $Revision: 1.5 $, $Date: 2006/03/19 21:58:05 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public interface JobServiceInterface {
     /**

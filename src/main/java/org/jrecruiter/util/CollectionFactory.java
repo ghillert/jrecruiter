@@ -21,7 +21,7 @@ import java.util.List;
 /**
  *
  * @author Jerzy Puchala
- * @version $Revision: 1.2 $, $Date: 2006/02/06 04:09:47 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class CollectionFactory {
     public static List getListInstance() {

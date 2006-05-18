@@ -17,7 +17,7 @@ package org.jrecruiter.persistent.dao;
 
 /**
  * @author Jerzy Puchala
- * @version $Revision: 1.4 $, $Date: 2006/02/06 04:08:35 $, $Author: ghillert $
+ * @version $Revision$, $Date$, $Author$
  */
 public class DAOException extends RuntimeException {
 
