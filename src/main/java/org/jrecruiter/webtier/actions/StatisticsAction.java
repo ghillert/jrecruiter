@@ -56,7 +56,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * statistics purposes.
  *
  * @author Gunnar Hillert
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class StatisticsAction extends DispatchAction {
 

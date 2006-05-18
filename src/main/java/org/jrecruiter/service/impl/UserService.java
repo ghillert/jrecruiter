@@ -36,7 +36,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  * @author Dorota Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class UserService implements UserServiceInterface {
 

@@ -39,7 +39,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 /**
  *
  * @author Jerzy Puchala
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class JobDetailAction extends Action {
 

@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Gunnar Hillert
- * @version $Revision$, $Date$, $Author$
+ * @version $Id$
  */
 public class Util {
 

@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * @author Dorota Puchala, Gunnar Hillert
- * @version $Revision$, $Date$, $Author$
+ * @version @version $Id$
  */
 public interface UserDAO {
 
