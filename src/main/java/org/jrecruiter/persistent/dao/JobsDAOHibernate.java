@@ -184,7 +184,7 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
         } else {
 
             jobs = getHibernateTemplate().find(
-                    "from Job j outer join fetch j.statistics where j.owner.username=?", username);
+                    "from Job j left outer join fetch j.statistics where j.owner.username=?", username);
 
         }
 

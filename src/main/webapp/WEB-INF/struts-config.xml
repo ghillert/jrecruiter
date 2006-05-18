@@ -82,7 +82,12 @@
     <!-- ========================================= Global Exception Definitions -->
 
     <global-exceptions>
-    <!--     <exception key="exception.unknown" type="java.lang.Throwable" path="/pages/error/unknown.jsp"/> -->
+    <exception
+        handler="org.jrecruiter.webtier.GeneralExceptionHandler"
+        key="exception.unknown"
+        path="/pages/error/unknown.jsp"
+        scope="request"
+        type="java.lang.Throwable"/>
     </global-exceptions>
 
 
