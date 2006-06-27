@@ -5,28 +5,36 @@
 jRecruiter - A job posting service
 
   This project provides a J2EE-based job posting solution. jREcruiter uses
-  the following main framworks and libraries:
-  
-  * Struts
-  
+  the following main frameworks and libraries:
+
+  * Struts (May be replaced by Spring-MVC or JSF in the future)
+
   * Spring (core)
-  
+
   * Hibernate
-  
+
   * Acegi Security
-  
+
   * Displaytag
 
+  * AjaxTags
+
+  * Rico
+
+  * JFreeChart
+
+  * Velocity
+
 []
-  
+
   As database backend Postgres is used. However, support for other databases may be easily
-  added in the future. 
+  added in the future.
 
-  The project website is located at: 
+  The project website is located at:
 
-  {{http://sourceforge.net/projects/jrecruiter}} 
+  {{http://sourceforge.net/projects/jrecruiter}}
 
-  This site can be accessed through: 
+  This site can be accessed through:
 
   {{http://jrecruiter.sourceforge.net}}
 
