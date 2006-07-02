@@ -4,7 +4,7 @@
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html:html xhtml="false" >
+<html:html xhtml="true" >
 
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
@@ -16,12 +16,16 @@
     <script type="text/javascript" src="<c:url value='/js/scriptaculous.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/js/overlibmws.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/js/ajaxtags.js'/>"></script>
-    <script type="text/javascript" src="${ctx}/js/global.js"></script>
+    <script type="text/javascript" src="<c:url value='/js/global.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/js/rico.js'/>"></script>
+
+    <link rel="icon" href="<c:url value='/favicon.ico'/>" type="image/x-icon" />
+    <link rel="shortcut icon" href="<c:url value='/favicon.ico'/>" type="image/x-icon" />
 
     <title>
        <fmt:message >
-      <tiles:getAsString name="pageTitle"/>
-  </fmt:message >
+            <tiles:getAsString name="pageTitle"/>
+       </fmt:message >
     </title>
     <link href="<c:url value='/style/stylesheet.css'/>"  rel="stylesheet" type="text/css" />
 
