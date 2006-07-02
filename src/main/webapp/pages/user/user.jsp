@@ -19,7 +19,7 @@
 
   <html:form target="" action="/userSubmit" focus="username" onsubmit="return validateUserForm(this);" >
 
-  <table>
+  <table class="default">
       <tr>
           <td><bean:message key="user.username" />*</td>
           <td>

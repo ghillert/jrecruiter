@@ -1,7 +1,7 @@
 <%@ include file="/taglibs.jsp"%>
 
     <div  id="header_menu">
-      <html:form style="margin-bottom:0;margin-top:0;" action="searchJobs" method="POST">
+      <html:form style="margin-bottom:0;margin-top:0;" action="searchJobs" method="POST" >
         <html:text property="keyword" styleClass="headerForm" onblur="javascript:this.className='headerForm';"
                        onfocus="javascript:this.className='headerFormSelected';" />
         <a href="javascript:document.forms[0].submit();" class="button">Search</a>
