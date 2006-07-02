@@ -4,33 +4,33 @@
 
 <hibernate-mapping>
     <class name="org.jrecruiter.model.Job" table="jobs">
-        <id name="id" type="long">
+        <id name="id" type="long" unsaved-value="null">
             <column name="job_id"/>
             <generator class="sequence">
                 <param name="sequence">public.jobs_job_id_seq</param>
             </generator>
         </id>
         <many-to-one name="owner" class="org.jrecruiter.model.User" fetch="select"
-        			 not-null="true" cascade="none">
+               not-null="true" cascade="none">
             <column name="user_name" length="25" />
         </many-to-one>
         <property name="businessName" type="string">
-        	<column name="business_name" length="50" not-null="true" />
+          <column name="business_name" length="50" not-null="true" />
         </property>
         <property name="businessLocation" type="string">
-        	<column name="business_location" length="50" />
+          <column name="business_location" length="50" />
         </property>
         <property name="jobTitle" type="string">
-        	<column name="job_title" length="50" not-null="true" />
+          <column name="job_title" length="50" not-null="true" />
         </property>
         <property name="salary" type="double">
             <column name="salary" precision="18" scale="0" />
         </property>
         <property name="description" type="string">
-        	<column name="description" length="0" not-null="true" />
+          <column name="description" length="0" not-null="true" />
         </property>
         <property name="website" type="string">
-        	<column name="web_site" length="50" />
+          <column name="web_site" length="50" />
         </property>
         <property name="businessAddress1" type="string">
             <column name="business_address1" length="50" />
@@ -71,6 +71,6 @@
         <property name="status" type="int">
             <column name="status" not-null="true" />
         </property>
-        <one-to-one name="statistics" class="org.jrecruiter.model.Statistics" cascade="all"/>
+        <one-to-one name="statistics" class="org.jrecruiter.model.Statistics" cascade="all" />
     </class>
 </hibernate-mapping>

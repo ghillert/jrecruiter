@@ -5,15 +5,15 @@
 <hibernate-mapping>
     <class name="org.jrecruiter.model.Statistics" table="statistics">
 
-        <id name="id" column="JOB_ID" type="long">
+        <id name="id" column="JOB_ID" type="long" unsaved-value="null">
             <generator class="foreign">
                 <param name="property">job</param>
             </generator>
         </id>
-        
+
         <one-to-one name="job" class="org.jrecruiter.model.Job" constrained="true"/>
 
-     	<property name="counter" type="long">
+       <property name="counter" type="long">
             <column name="counter" not-null="true" />
         </property>
         <property name="lastAccess" type="timestamp">
@@ -21,6 +21,6 @@
         </property>
         <property name="uniqueVisits" type="long">
             <column name="unique_visits" not-null="true" />
-        </property>   
+        </property>
     </class>
 </hibernate-mapping>
