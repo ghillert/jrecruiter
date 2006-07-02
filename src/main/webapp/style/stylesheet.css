@@ -1,24 +1,22 @@
 @import url(displaytag.css);
+@import url(jobDetail.css);
+@import url(jobList.css);
+@import url(showStatistics.css);
+@import url(userList.css);
 
 html {
 
-
 }
-
-
 
 body {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  line-height: 17px;
   background-color: #BED5D9;
 }
-
 
 th {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  padding: 5px;
   background-color: #ccccef;
   text-align: left;
 }
@@ -26,36 +24,6 @@ th {
 td {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  padding: 5px;
-}
-
-input.selected {
-  border-color: #ff0000;
-  background-color: #F7F7F7;
-
-}
-textarea.selected {
-  border-color: #ff0000;
-  background-color: #F7F7F7;
-}
-
-input.error {
-  background-color: #FF9999;
-  border-color: #ff0000;
-}
-
-button.selected {
-  border-color: #ff0000;
-}
-button.error {
-  background-color: #FF9999;
-  border-color: #ff0000;
-}
-
-
-textarea.error {
-  background-color: #FF9999;
-  border-color: #ff0000;
 }
 
 th {
@@ -82,8 +50,6 @@ h1 {
 
   background-position: left;
   background-repeat: no-repeat;
-
-
 
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -117,7 +83,6 @@ h2 {
   padding-top: 0px;
   padding-left: 112px;
   padding-bottom: 0px;
-
 
   border-top: 1px solid #FF3C00;
   margin-left: auto;
@@ -156,6 +121,36 @@ h2 {
 
 }
 
+/* Form input field definitions */
+
+input.selected {
+  border-color: #ff0000;
+  background-color: #F7F7F7;
+
+}
+textarea.selected {
+  border-color: #ff0000;
+  background-color: #F7F7F7;
+}
+
+input.error {
+  background-color: #FF9999;
+  border-color: #ff0000;
+}
+
+button.selected {
+  border-color: #ff0000;
+}
+
+button.error {
+  background-color: #FF9999;
+  border-color: #ff0000;
+}
+
+textarea.error {
+  background-color: #FF9999;
+  border-color: #ff0000;
+}
 
 input {
   border-top-width: 1px;
@@ -218,79 +213,6 @@ textarea {
   font-size: 11px;
   font-style: normal;
 
-}
-
-
-
-table.jobposting {
-  width: 610px;
-}
-
-table.joblist td.column1 {
-  width: 250px;
-}
-table.joblist td.column2 {
-  width: 200px;
-}
-table.joblist td.column3 {
-  width: 125px;
-}
-table.joblist td.column4 {
-  width: 125px;
-}
-table.joblist td.textfield {
-
-  margin-top: 0px;
-  margin-bottom: 1px;
-  margin-left: 0px;
-  margin-right: 0px;
-
-  border-top: 0px;
-  border-bottom:1px solid #ccccef;
-  border-left:0px;
-  border-right:0px;
-
-  padding-left: 40px;
-  padding-right: 40px;
-
-  background-color: #fafaff;
-  width: 500px;
-  height: 40px;
-}
-table.joblist td.textfieldlabel {
-
-  margin-top: 1px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-  margin-right: 0px;
-
-  border-top: 1px solid #ccccef;
-  border-bottom:0px;
-  border-left:0px;
-  border-right:0px;
-
-  background-color: #f6f6ff;
-  width: 100px;
-}
-
-table.jobStatistics td.column1 {
-  width: 70px;
-}
-
-table.jobStatistics td.column2 {
-  width: 200px;
-}
-
-table.jobStatistics td.column3 {
-  width: 125px;
-}
-
-table.jobStatistics td.column4 {
-  width: 125px;
-}
-
-table.jobStatistics td.column5 {
-  width: 125px;
 }
 
 div.error{
@@ -371,41 +293,6 @@ li {
   margin-right: auto;
   }
 
-
-table.joblist td.joblist1 {
-  width: 75px;
-}
-table.joblist td.joblist2 {
-  width: 280px;
-}
-table.joblist td.joblist3 {
-  width: 150px;
-}
-table.joblist td.joblist4 {
-  width: 130px;
-}
-table.joblist td.joblist5 {
-  text-align: center;
-  width: 40px;
-}
-
-td.userlist1 {
-  width: 120px;
-}
-td.userlist2 {
-  width: 120px;
-}
-td.userlist3 {
-  width: 120px;
-}
-td.userlist4 {
-  width: 90px;
-}
-td.userlist5 {
-  text-align: center;
-  width: 50px;
-}
-
 a.button, a:visited.button {
 
   display: block;
@@ -475,6 +362,7 @@ a.footerLogo {
   background-position: right;
 
 }
+
 .welcomeMain {
     position: relative;
     float: right;
@@ -493,3 +381,24 @@ a.footerLogo {
     margin-left: auto;
     margin-right: auto;
 }
+
+#login {
+        margin: 0px auto 0px auto;
+        border: 1px solid #ccccef;
+        width: 300px;
+    }
+    #login td {
+            padding: 3px 10px 3px 10px;
+    }
+
+    #login td.top {
+        padding: 20px 10px 3px 10px;
+    }
+
+table.default {
+        margin: 0px auto 0px auto;
+        border: 1px solid #ccccef;
+        padding: 3px 10px 3px 10px;
+        width: 400px;
+    }
+
