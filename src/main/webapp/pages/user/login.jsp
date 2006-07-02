@@ -19,17 +19,12 @@
       </div>
   </c:if>
   <form  name="j_acegi_security_check" method="POST" action="j_acegi_security_check">
-      <table>
+      <table id="login">
           <tr>
-              <td colspan="2">
-                  <br/>
-              </td>
-          </tr>
-          <tr>
-              <td>
+              <td class="top">
                   <bean:message key="user.username" />
               </td>
-              <td>
+              <td class="top">
                   <input type="text" name="j_username" tabindex="1" onblur="javascript:this.className='';"
                          onfocus="javascript:this.className='selected';"/>
               </td>
@@ -52,7 +47,7 @@
               </td>
           </tr>
           <tr>
-              <td colspan="2" align="left">
+              <td colspan="2">
                 <br/>
                 <ul>
                 <li><html:link action="addUser"><bean:message key="link.login.addUser"/></html:link></li>
