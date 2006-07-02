@@ -225,14 +225,14 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
                 if (administrator) {
 
                     query = session.createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                            + "order by stats.counter asc");
+                            + "where stats is not null order by stats.counter desc");
 
                 } else {
 
                     query = session
                             .createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                                    + "where j.owner.username=:username "
-                                    + "order by stats.counter asc");
+                                    + "where j.owner.username=:username and stats is not null "
+                                    + "order by stats.counter desc");
                     query.setString("username", username);
                 }
             } else {
@@ -240,13 +240,13 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
                 if (administrator) {
                     query = session
                     .createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                               + "order by stats.uniqueVisits asc");
+                               + "where stats is not null order by stats.uniqueVisits desc");
                 } else {
 
                     query = session
                             .createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                                    + "where j.owner.username=:username "
-                                    + "order by stats.uniqueVisits asc");
+                                    + "where j.owner.username=:username and stats is not null "
+                                    + "order by stats.uniqueVisits desc");
                     query.setString("username", username);
                 }
             }
