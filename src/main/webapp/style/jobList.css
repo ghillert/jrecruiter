@@ -1,0 +1,22 @@
+#joblist {
+  width: 610px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+    #joblist td {
+      padding: 2px 2px 2px 2px;
+    }
+
+    #joblist td.column1 {
+      width: 245px;
+    }
+    #joblist td.column2 {
+      width: 160px;
+    }
+    #joblist td.column3 {
+      width: 125px;
+    }
+    #joblist td.column4 {
+      width: 80px;
+    }
