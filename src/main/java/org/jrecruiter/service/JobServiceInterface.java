@@ -28,11 +28,63 @@ import org.jrecruiter.model.Job;
  */
 public interface JobServiceInterface {
     /**
+     * Method for adding a job posting.
+     *
+     * @param jobs
+     */
+    void addJob(Job jobs);
+
+    /**
+     * Method for deleting a job posting for a job id.
+     *
+     * @param jobId ID number of a job posting
+     */
+    void deleteJobForId(Long jobId);
+
+    /**
+     * Method for getting a job posting for a job id.
+     *
+     * @param jobId ID number of a job posting
+     * @return JobReq
+     */
+    Job getJobForId(Long jobId);
+
+    /**
      * Method for returning list of available job postings.
      *
      * @return List of jobs.
      */
     List < Job > getJobs();
+
+    /**
+     * Method for returning list of available job postings.
+     *
+     * @return List of jobs.
+     */
+    List < Job > getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder);
+
+    /**
+     * Returns the number of totally available jobs in the system.
+     *
+     * @return Total number of jobs
+     */
+    Integer getJobsCount();
+
+    /**
+     * Method for getting a single jRecruiter Setting.
+     *
+     * @param jobId ID number of a job posting
+     * @return JobReq
+     */
+    Configuration getJRecruiterSetting(String key);
+
+    /**
+     * Method for getting a List of the jRecruiter Settings.
+     *
+     * @param jobId ID number of a job posting
+     * @return JobReq
+     */
+    List < Configuration > getJRecruiterSettings();
 
     /**
      * Method for returning list of jobs owned by the user.
@@ -61,40 +113,11 @@ public interface JobServiceInterface {
     List < Job > getUsersJobsForStatistics(String username, Integer maxResult, Constants.StatsMode statsMode);
 
     /**
-     * Method for adding a job posting.
+     * Method for saving a jRecruiter Setting to the persistence store..
      *
-     * @param jobs
+     * @param configuration A Configuration Element
      */
-    void addJob(Job jobs);
-
-    /**
-     * Method for update a job posting.
-     *
-     * @param jobs
-     */
-    void updateJob(Job jobs);
-
-    /**
-     * Method for getting a job posting for a job id.
-     *
-     * @param jobId ID number of a job posting
-     * @return JobReq
-     */
-    Job getJobForId(Long jobId);
-
-    /**
-     * Method for deleting a job posting for a job id.
-     *
-     * @param jobId ID number of a job posting
-     */
-    void deleteJobForId(Long jobId);
-
-    /**
-     * Method for sending a job posting to the mailing list.
-     *
-     * @param jobs
-     */
-    void sendJobPostingToMailingList(Job jobs);
+    void saveJRecruiterSetting(Configuration configuration);
 
     /**
      * Method for getting a jobs postings
@@ -105,25 +128,16 @@ public interface JobServiceInterface {
     List < Job > searchByKeyword(String keyword);
 
     /**
-     * Method for getting a List of the jRecruiter Settings.
+     * Method for sending a job posting to the mailing list.
      *
-     * @param jobId ID number of a job posting
-     * @return JobReq
+     * @param jobs
      */
-    List < Configuration > getJRecruiterSettings();
+    void sendJobPostingToMailingList(Job jobs);
 
     /**
-     * Method for getting a single jRecruiter Setting.
+     * Method for update a job posting.
      *
-     * @param jobId ID number of a job posting
-     * @return JobReq
+     * @param jobs
      */
-    Configuration getJRecruiterSetting(String key);
-
-    /**
-     * Method for saving a jRecruiter Setting to the persistence store..
-     *
-     * @param configuration A Configuration Element
-     */
-    void saveJRecruiterSetting(Configuration configuration);
+    void updateJob(Job jobs);
 }

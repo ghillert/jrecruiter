@@ -81,6 +81,20 @@ public interface JobsDAO {
     List getAllUserJobs(String username);
 
     /**
+     * Method for returning list of available job postings.
+     *
+     * @return List of jobs.
+     */
+    List < Job > getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder);
+
+    /**
+     * Returns the number of totally available jobs in the system.
+     *
+     * @return Total number of jobs
+     */
+    Integer getJobsCount();
+
+    /**
      * Method for getting users jobs for statistical purposes.
      *
      * @param username name of user owning the job.
