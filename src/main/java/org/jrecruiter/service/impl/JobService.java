@@ -122,6 +122,20 @@ public class JobService implements JobServiceInterface {
     }
 
     /* (non-Javadoc)
+     * @see org.jrecruiter.service.JobServiceInterface#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     */
+    public List<Job> getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder) {
+        return jobsDao.getJobs(pageSize, pageNumber, fieldSorted, sortOrder);
+    }
+
+    /* (non-Javadoc)
+     * @see org.jrecruiter.service.JobServiceInterface#getJobsCount()
+     */
+    public Integer getJobsCount() {
+        return jobsDao.getJobsCount();
+    }
+
+    /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
      */
     public List getUsersJobs(final String username) {

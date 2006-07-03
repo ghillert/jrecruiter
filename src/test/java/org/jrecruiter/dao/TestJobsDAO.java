@@ -70,6 +70,20 @@ public class TestJobsDAO {
     }
 
     @Test(groups = { "exec-group" })
+    public void getJobsPaginated() {
+        System.out.println("exec");
+        JobsDAO jobsDAO = (JobsDAO) ctx.getBean("jobsDAO");
+
+        List<Job> jobs = jobsDAO.getJobs(20, 1, null, null);
+
+        for (Job job : jobs) {
+
+            LOGGER.info(job.getId());
+
+        }
+    }
+
+    @Test(groups = { "exec-group" })
     public void getAllUsers() {
         System.out.println("exec");
         UserDAO jobsDAO = (UserDAO) ctx.getBean("userDAO");

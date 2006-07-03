@@ -16,11 +16,16 @@
 package org.jrecruiter.webtier.actions;
 
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.displaytag.properties.SortOrderEnum;
+import org.jfree.util.SortOrder;
+import org.jrecruiter.dao.TestJobsDAO;
 import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.webtier.JobsForDisplaytagSorting;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -34,6 +39,12 @@ import java.util.List;
  * @version $Id$
  */
 public class JobListAction extends Action {
+
+    /**
+     *   Initialize Logging.
+     */
+    public static final Logger LOGGER = Logger.getLogger(JobListAction.class);
+
     public ActionForward execute(ActionMapping mapping,
                                  ActionForm form,
                                  HttpServletRequest request,
@@ -45,12 +56,51 @@ public class JobListAction extends Action {
         JobServiceInterface service = (JobServiceInterface) context.
         getBean("jobService");
 
-        List jobs = service.getJobs();
+        JobsForDisplaytagSorting jobsDisplaytag = new JobsForDisplaytagSorting();
 
-        request.setAttribute("JobList", jobs);
+        String sortDirection = null;
+        String sortField = null;
+        Integer page = 1;
+
+        if (request.getParameter("sort") != null) {
+            sortField = request.getParameter("sort");
+            jobsDisplaytag.setSortCriterion(sortField);
+        }
+        if (request.getParameter("dir") != null) {
+            sortDirection = request.getParameter("dir");
+
+            if (sortDirection.equalsIgnoreCase("ASC")) {
+                jobsDisplaytag.setSortOrder(SortOrderEnum.ASCENDING);
+            } else if (sortDirection.equalsIgnoreCase("DESC")) {
+                jobsDisplaytag.setSortOrder(SortOrderEnum.DESCENDING);
+            }
+
+        }
+        if (request.getParameter("page") != null) {
+            page = new Integer(request.getParameter("page"));
+            jobsDisplaytag.setPageNumber(page);
+        }
+
+        request.getParameterNames();
+        jobsDisplaytag.setFullListSize(service.getJobsCount());
+
+        LOGGER.info("Retrieving all jobs - "
+                        + ";Total Size: " + jobsDisplaytag.getFullListSize()
+                        + ";Results per Page: " + jobsDisplaytag.getObjectsPerPage()
+                        + ";Page: " + jobsDisplaytag.getPageNumber()
+                        + ";Sort Field: " + jobsDisplaytag.getSortCriterion()
+                        + ";Direction: " + sortDirection);
+
+        List jobs = service.getJobs(jobsDisplaytag.getObjectsPerPage(),
+                                    jobsDisplaytag.getPageNumber(),
+                                    jobsDisplaytag.getSortCriterion(),
+                                    sortDirection);
+        jobsDisplaytag.setJobs(jobs);
+
+        request.setAttribute("JobList", jobsDisplaytag);
 
         String ajaxCall = request.getParameter("displayAjax");
-
+        request.getParameterNames();
         if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
             return mapping.findForward("ajax");
         }
