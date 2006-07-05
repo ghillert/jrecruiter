@@ -21,19 +21,18 @@ import org.jrecruiter.model.Job;
 import java.util.List;
 
 /**
+ * Interface for any job-related persistence calls.
  *
- * @author Jerzy Puchala
+ * @author Jerzy Puchala, Gunnar Hillert
  * @version @version $Id$
  */
 public interface JobsDAO {
     /**
      * Method for returning list of all jobs.
      *
-     * @return
-     *
-     * @throws org.jrecruiter.persistent.dao.DAOException
+     * @return List of jobs
      */
-    List<Job> getAllJobs() throws DAOException;
+    List < Job > getAllJobs();
 
     /**
      * Method for adding or updating a job posting.
@@ -42,16 +41,16 @@ public interface JobsDAO {
      *
      * @throws org.jrecruiter.persistent.dao.DAOException
      */
-    void update(Job job) throws DAOException;
+    void update(Job job);
 
     /**
      * Method for getting a job posting.
      *
      * @param jobId job posting id
      *
-     * @throws org.jrecruiter.persistent.dao.DAOException
+     * @return Job
      */
-    Job get(Long jobId) throws DAOException;
+    Job get(Long jobId);
 
     /**
      * Method for getting a jobs postings
@@ -59,9 +58,9 @@ public interface JobsDAO {
      *
      * @param keyword search keyword
      *
-     * @throws org.jrecruiter.persistent.dao.DAOException
+     * @return List of jobs
      */
-    List searchByKeyword(String keyword) throws DAOException;
+    List < Job > searchByKeyword(String keyword);
 
     /**
      * Method for getting a job posting.
@@ -70,7 +69,7 @@ public interface JobsDAO {
      *
      * @throws org.jrecruiter.persistent.dao.DAOException
      */
-    void delete(Long jobId) throws DAOException;
+    void delete(Long jobId);
 
     /**
      * Method for getting users jobs.
@@ -82,10 +81,14 @@ public interface JobsDAO {
 
     /**
      * Method for returning list of available job postings.
-     *
+     * @param pageSize Max number of results returned
+     * @param pageNumber Which page are you one?
+     * @param fieldSorted Which field shall be sorted
+     * @param sortOrder What is the sort order?
      * @return List of jobs.
      */
-    List < Job > getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder);
+    List < Job > getJobs(Integer pageSize, Integer pageNumber,
+                         String fieldSorted, String sortOrder);
 
     /**
      * Returns the number of totally available jobs in the system.
@@ -106,8 +109,12 @@ public interface JobsDAO {
      * Method for returning list of jobs owned by the user for statistical
      * purposes.
      *
-     * @param username
+     * @param username username for which statistics shall be obtained
+     * @param maxResult maximum number of statistics objects returned
+     * @param statsMode  what type of statistical information to be generated
      * @return List of jobs.
      */
-    List < Job > getUsersJobsForStatistics(String username, Integer maxResult, Constants.StatsMode statsMode);
+    List < Job > getUsersJobsForStatistics(String username,
+                                           Integer maxResult,
+                                           Constants.StatsMode statsMode);
 }

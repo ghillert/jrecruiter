@@ -18,9 +18,12 @@ package org.jrecruiter.persistent.dao;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
@@ -32,22 +35,10 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * This DAO provides job-related database methods.
  *
  * @author Jerzy Puchala, Gunnar Hillert
- * @version @version $Id$
+ * @version $Id$
  */
-public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
-
-    private static JobsDAOHibernate daoHibernate = null;
-
-    /**
-     * Returns a new instance of the JobsDAO.
-     * @return JobsDAO
-     */
-    public static JobsDAO getInstance() {
-        if (daoHibernate == null) {
-            daoHibernate = new JobsDAOHibernate();
-        }
-        return daoHibernate;
-    }
+public final class JobsDAOHibernate extends HibernateDaoSupport
+                                        implements JobsDAO {
 
     /**
      * User Dao.
@@ -63,9 +54,12 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
     }
 
     /**
+     * Deletes a job posting.
+     *
+     * @param jobId Id of the job to be deleted
      * @see org.jrecruiter.persistent.dao.JobReqDAO#delete(java.lang.Integer)
      */
-    public void delete(final Long jobId) throws DAOException {
+    public void delete(final Long jobId) {
 
         Job job = (Job) getHibernateTemplate().load(Job.class, jobId);
         getHibernateTemplate().delete(job);
@@ -75,12 +69,13 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
     /**
      * Get a gob from the persistence store.
      *
-     * @param jobId Id of the job posting.
+     * @param jobId
+     *            Id of the job posting.
      * @return A single job posting
      *
      * @see org.jrecruiter.persistent.dao.JobReqDAO#get(java.lang.Integer)
      */
-    public Job get(Long jobId) throws DAOException {
+    public Job get(final Long jobId) {
 
         Job job = (Job) getHibernateTemplate().get(Job.class, jobId);
         return job;
@@ -94,22 +89,28 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
      * @throws DAOException
      *
      */
-    public List<Job> getAllJobs() throws DAOException {
+    public List < Job > getAllJobs() {
 
-        List<Job> jobs = (List<Job>) getHibernateTemplate().find(
-                "select job from Job job " +
-                "left outer join fetch job.statistics order by job.updateDate DESC");
+        List < Job > jobs = (List < Job >) getHibernateTemplate()
+                .find(
+                        "select job from Job job "
+                                + "left outer join fetch job.statistics"
+                                + "order by job.updateDate DESC");
 
         return jobs;
     }
 
-    /* (non-Javadoc)
+    /**
+     * Method for getting users jobs.
+     *
+     * @param username name of user owning the job.
+     * @return List of Job objects for given User
      * @see org.jrecruiter.persistent.dao.
-     * JobReqDAO#getAllUserJobs(java.lang.String)
+     *      JobReqDAO#getAllUserJobs(java.lang.String)
      */
-    public List<Job> getAllUserJobs(String username) {
+    public List < Job > getAllUserJobs(final String username) {
 
-        List<Job> jobs;
+        List < Job > jobs;
 
         User user = userDao.getUser(username);
 
@@ -139,11 +140,13 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
         return jobs;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.jrecruiter.persistent.dao.
-     * JobReqDAO#getAllUserJobs(java.lang.String)
+     *      JobReqDAO#getAllUserJobs(java.lang.String)
      */
-    public List<Job> getAllUserJobsForStatistics(String username) {
+    public List < Job > getAllUserJobsForStatistics(String username) {
 
         List < Job > jobs;
 
@@ -167,18 +170,31 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
             jobs = this.getAllJobs();
         } else {
 
-            jobs = getHibernateTemplate().find(
-                    "from Job j left outer join fetch j.statistics where j.owner.username=?", username);
+            jobs = getHibernateTemplate()
+                    .find(
+                            "from Job j left outer join fetch j.statistics where j.owner.username=?",
+                            username);
 
         }
 
         return jobs;
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.persistent.dao.JobsDAO#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
+    /**
+     * Method for returning list of jobs owned by the user for statistical
+     * purposes.
+     *
+     * @param username username for which statistics shall be obtained
+     * @param maxResult maximum number of statistics objects returned
+     * @param statsMode  what type of statistical information to be generated
+     * @return List of jobs.
+     *
+     * @see org.jrecruiter.persistent.dao.JobsDAO#getUsersJobsForStatistics(java.lang.String,
+     *      java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
-    public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
+    public List < Job > getUsersJobsForStatistics(final String username,
+                                                 final Integer maxResult,
+                                                 final StatsMode statsMode) {
 
         List < Job > jobs;
 
@@ -208,8 +224,9 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
 
                 if (administrator) {
 
-                    query = session.createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                            + "where stats is not null order by stats.counter desc");
+                    query = session
+                            .createQuery("select j from Job j left outer join fetch j.statistics as stats "
+                                    + "where stats is not null order by stats.counter desc");
 
                 } else {
 
@@ -223,8 +240,8 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
 
                 if (administrator) {
                     query = session
-                    .createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                               + "where stats is not null order by stats.uniqueVisits desc");
+                            .createQuery("select j from Job j left outer join fetch j.statistics as stats "
+                                    + "where stats is not null order by stats.uniqueVisits desc");
                 } else {
 
                     query = session
@@ -236,7 +253,6 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
             }
 
             query.setMaxResults(maxResult);
-
 
             jobs = query.list();
 
@@ -254,7 +270,7 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
      *            The search keyword
      * @return List of job postings representing the search results.
      */
-    public List searchByKeyword(final String keyword) throws DAOException {
+    public List searchByKeyword(final String keyword) {
 
         List list = (List) getHibernateTemplate().execute(
                 new HibernateCallback() {
@@ -277,9 +293,10 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
     }
 
     /**
-     * @param userDao The userDao to set.
+     * @param userDao
+     *            The userDao to set.
      */
-    public void setUserDao(UserDAO userDao) {
+    public void setUserDao(final UserDAO userDao) {
         this.userDao = userDao;
     }
 
@@ -294,33 +311,47 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
 
     /**
      * Method for returning list of available job postings.
-     *
+     * @param pageSize Max number of results returned
+     * @param pageNumber Which page are you one?
+     * @param fieldSorted Which field shall be sorted
+     * @param sortOrder What is the sort order?
      * @return List of jobs.
      */
-    public List < Job > getJobs(Integer pageSize, Integer pageNumber,
-                                String fieldSorted, String sortOrder) {
+    public List < Job > getJobs(
+                            final Integer pageSize,
+                            final Integer pageNumber,
+                                  String fieldSorted,
+                                  String sortOrder) {
 
         final Session session = getSession(false);
         List < Job > jobs;
 
-        if (fieldSorted == null) {
-            fieldSorted="job.updateDate";
+        if (fieldSorted == null || fieldSorted.length() == 0) {
+            fieldSorted = "updateDate";
         }
 
         if (sortOrder == null) {
+            sortOrder = "DESC";
+        } else if (!sortOrder.equalsIgnoreCase("ASC")
+                && !sortOrder.equalsIgnoreCase("DESC")) {
             sortOrder = "DESC";
         }
 
         try {
 
-            Query query = session.createQuery("select job from Job job " +
-            "left outer join fetch job.statistics order by :fieldSorted");
+            final Criteria criteria = session.createCriteria(Job.class);
+            criteria.setFetchMode("statistics", FetchMode.JOIN);
 
-            query.setFirstResult(pageNumber * pageSize);
-            query.setMaxResults(pageSize);
-            query.setString("fieldSorted", fieldSorted + " " + sortOrder);
-            //query.setString("sortOrder", sortOrder);
-            jobs = query.list();
+            if (sortOrder.equalsIgnoreCase("DESC")) {
+                criteria.addOrder(Order.desc(fieldSorted));
+            } else if (sortOrder.equalsIgnoreCase("ASC")) {
+                criteria.addOrder(Order.asc(fieldSorted));
+            }
+
+            criteria.setFirstResult((pageNumber - 1) * pageSize);
+            criteria.setMaxResults(pageSize);
+
+            jobs = criteria.list();
 
         } catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);
@@ -341,8 +372,8 @@ public class JobsDAOHibernate extends HibernateDaoSupport implements JobsDAO {
         Integer numberOfJobs = null;
 
         try {
-             Query query = session.createQuery("select count(*) from Job");
-             numberOfJobs = (Integer) query.uniqueResult();
+            Query query = session.createQuery("select count(*) from Job");
+            numberOfJobs = (Integer) query.uniqueResult();
         } catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);
         }
