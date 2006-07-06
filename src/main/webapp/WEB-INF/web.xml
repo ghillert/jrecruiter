@@ -33,7 +33,7 @@
         </filter>
   <filter>
     <filter-name>Charset Filter</filter-name>
-    <filter-class>org.jrecruiter.webtier.CharsetFilter</filter-class>
+    <filter-class>org.jrecruiter.webtier.filter.CharsetFilter</filter-class>
       <init-param>
         <param-name>requestEncoding</param-name>
         <param-value>UTF-8</param-value>
