@@ -94,8 +94,8 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
         List < Job > jobs = (List < Job >) getHibernateTemplate()
                 .find(
                         "select job from Job job "
-                                + "left outer join fetch job.statistics"
-                                + "order by job.updateDate DESC");
+                                + "left outer join fetch job.statistics "
+                                + " order by job.updateDate DESC");
 
         return jobs;
     }
