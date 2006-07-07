@@ -66,6 +66,7 @@
         <form-bean name="SettingsForm"
                    type="org.apache.struts.validator.DynaValidatorForm">
             <form-property name="mailingListEmail" type="java.lang.String"/>
+            <form-property name="mailFrom" type="java.lang.String"/>
             <form-property name="mailingListSubject" type="java.lang.String"/>
             <form-property name="mailingListTemplate" type="java.lang.String"/>
             <form-property name="passwordSubject" type="java.lang.String"/>

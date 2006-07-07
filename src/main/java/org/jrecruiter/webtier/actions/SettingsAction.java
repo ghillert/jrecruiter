@@ -34,18 +34,33 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- * Struts action class for handling job postings.
+ * Struts action class for handling general settings of the application.
  *
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class SettingsAction extends DispatchAction {
+public final class SettingsAction extends DispatchAction {
 
+    /**
+     * The logger declaration.
+     */
     public static final Logger logger = Logger.getLogger(SettingsAction.class);
 
-    public ActionForward openEditSettings(ActionMapping mapping,
-                                            ActionForm form, HttpServletRequest request,
-                                            HttpServletResponse response) throws Exception {
+    /**
+     * Initializes the edit settings page.
+     *
+     * @param mapping ActionMapping
+     * @param form ActionForm
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @return ActionForward
+     * @throws Exception
+     */
+    public ActionForward openEditSettings(final ActionMapping mapping,
+                                          final ActionForm form,
+                                          final HttpServletRequest request,
+                                          final HttpServletResponse response)
+                            throws Exception {
 
         if (request.getUserPrincipal() != null) {
 
@@ -60,6 +75,7 @@ public class SettingsAction extends DispatchAction {
             settingsForm.set("mailingListSubject",  ((Configuration)service.getJRecruiterSetting("mail.jobposting.subject")).getText());
             settingsForm.set("mailingListTemplate", ((Configuration)service.getJRecruiterSetting("mail.jobposting.body")).getText());
             settingsForm.set("mailingListEmail",    ((Configuration)service.getJRecruiterSetting("mail.jobposting.email")).getText());
+            settingsForm.set("mailFrom",            ((Configuration)service.getJRecruiterSetting("mail.from")).getText());
             settingsForm.set("passwordSubject",     ((Configuration)service.getJRecruiterSetting("mail.password.subject")).getText());
             settingsForm.set("passwordTemplate",    ((Configuration)service.getJRecruiterSetting("mail.password.body")).getText());
 
@@ -95,27 +111,36 @@ public class SettingsAction extends DispatchAction {
             DynaValidatorForm settingsForm = (DynaValidatorForm) form;
 
             Configuration configuration = new Configuration();
-
             configuration.setKey("mail.jobposting.subject");
             configuration.setText((String) settingsForm.get("mailingListSubject"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
 
+            configuration = new Configuration();
             configuration.setKey("mail.jobposting.body");
             configuration.setText((String) settingsForm.get("mailingListTemplate"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
 
+            configuration = new Configuration();
             configuration.setKey("mail.jobposting.email");
             configuration.setText((String) settingsForm.get("mailingListEmail"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
 
+            configuration = new Configuration();
+            configuration.setKey("mail.from");
+            configuration.setText((String) settingsForm.get("mailFrom"));
+            configuration.setLastModified(GregorianCalendar.getInstance().getTime());
+            service.saveJRecruiterSetting(configuration);
+
+            configuration = new Configuration();
             configuration.setKey("mail.password.subject");
             configuration.setText((String) settingsForm.get("passwordSubject"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
             service.saveJRecruiterSetting(configuration);
 
+            configuration = new Configuration();
             configuration.setKey("mail.password.body");
             configuration.setText((String) settingsForm.get("passwordTemplate"));
             configuration.setLastModified(GregorianCalendar.getInstance().getTime());
