@@ -66,6 +66,13 @@ The following Variables are available when creating the templates below.
           </td>
     </tr>
     <tr>
+          <td><bean:message key="jsp.editSettings.field.mail.from"/>*</td>
+          <td>
+              <html:text tabindex="1" onblur="javascript:this.className='';" style="width: 250px;"
+                         onfocus="javascript:this.className='selected';" property="mailFrom" errorStyleClass="error"/>
+          </td>
+    </tr>
+    <tr>
           <td><bean:message key="jsp.editSettings.field.jobposting.subject"/>*</td>
           <td>
               <html:text tabindex="2" property="mailingListSubject" onblur="javascript:this.className='';" style="width: 250px;"
