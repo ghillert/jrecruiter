@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+   <properties>
+      <title>jRecruiter</title>
+      <author email="gunnar at hillert dot com">Gunnar Hillert</author>
+   </properties>
+   <body>
+      <release version="1.2.1" date="2006-07-08" description="Minor fixes and features">
+           <action dev="Gunnar Hillert" type="add">
+               Displaytag is now using partial lists to retrieve paginated and/or sorted data.
+               For this the new class JobsForDisplaytagSorting implements the org.displaytag.pagination.PaginatedList
+               interface.
+           </action>
+           <action dev="Gunnar Hillert" type="fix">
+               Fixed an Unicopde/UTF issue. Implemented a filer (CharsetFilter) in order to provide the expected encoding.
+           </action>
+           <action dev="Gunnar Hillert" type="fix">
+               A field on the settings screen was missing. Added the field.
+           </action>
+         </release>
+   </body>
+</document>
