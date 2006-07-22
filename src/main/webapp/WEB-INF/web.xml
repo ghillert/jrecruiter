@@ -8,7 +8,7 @@
     <description>
       jRecruiter is a job posting service.
     </description>
-    <display-name>jRecruiter 1.1</display-name>
+    <display-name>jRecruiter 1.2.1</display-name>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
