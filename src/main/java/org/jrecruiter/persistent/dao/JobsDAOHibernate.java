@@ -369,16 +369,16 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
     public Integer getJobsCount() {
 
         final Session session = getSession(false);
-        Integer numberOfJobs = null;
+        Long numberOfJobs = null;
 
         try {
             Query query = session.createQuery("select count(*) from Job");
-            numberOfJobs = (Integer) query.uniqueResult();
+            numberOfJobs = (Long) query.uniqueResult();
         } catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);
         }
-
-        return numberOfJobs;
+        //FIXME
+        return Integer.valueOf(numberOfJobs.toString());
     }
 
 }
