@@ -52,7 +52,7 @@ public class TestJobsDAO {
         Session s = holder.getSession();
         s.flush();
         TransactionSynchronizationManager.unbindResource(sessionFactory);
-        SessionFactoryUtils.closeSessionIfNecessary(s, sessionFactory);
+        SessionFactoryUtils.closeSession(s);
     }
 
     @Test(groups = { "exec-group" })
