@@ -1,17 +1,27 @@
-<project name="jREcruiter">
-  <bannerLeft>
-    <name>jRecruiter</name>
-    <src>http://www.jrecruiter.org/images/logo.png</src>
-    <href>http://www.jrecruiter.org</href>
-  </bannerLeft>
-  <body>
-    <links>
-    </links>
+<project name="jRecruiter">
+	<bannerLeft>
+		<name>jRecruiter</name>
+		<src>images/logo.png</src>
+		<href>http://www.jrecruiter.org</href>
+	</bannerLeft>
 
-    <menu name="Menu">
-      <item name="Overview" href="index.html"/>
-      <item name="Installation" href="installation.html"/>
-    </menu>
-    ${reports}
-  </body>
+	<body>
+    	<links>
+      		<item name="AJUG Job Postings" href="http://www.ajug.org/ajugjobs/" alt="Job Postings of the Atlanta Java 		User Group"/>
+    	</links>
+		<head>
+		<script src="http://www.google-analytics.com/urchin.js"
+			type="text/javascript">
+		</script>
+		<script type="text/javascript">
+			_uacct = "UA-177507-2"; urchinTracker();
+		</script>
+	</head>
+		
+		<menu name="Menu">
+			<item name="Overview" href="index.html" />
+			<item name="Installation" href="installation.html" />
+		</menu>
+		${reports}
+	</body>
 </project>
