@@ -15,9 +15,6 @@
 */
 package org.jrecruiter.persistent.dao;
 
-import java.util.List;
-
-import org.jrecruiter.model.Configuration;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 

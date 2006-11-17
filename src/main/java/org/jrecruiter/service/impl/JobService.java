@@ -208,6 +208,7 @@ public class JobService implements JobServiceInterface {
         model.put("description", jobs.getDescription());
         model.put("jobRestrictions", jobs.getJobRestrictions());
         model.put("updateDate", jobs.getUpdateDate());
+        model.put("businessEmail", jobs.getBusinessEmail());
 
         String result = null;
         String subject = null;
