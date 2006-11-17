@@ -31,4 +31,4 @@
           </td>
       </tr>
   </table>
-</div id="main">
+</div>

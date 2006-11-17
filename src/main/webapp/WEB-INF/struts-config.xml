@@ -95,7 +95,7 @@
     <!-- =========================================== Global Forward Definitions -->
 
     <global-forwards>
-        <forward name="welcome" path="/welcome.do"/>
+        <forward name="welcome" path="/welcome.html"/>
         <forward name="sessionTimeout" path="/login.do"/>
     </global-forwards>
 
@@ -103,11 +103,10 @@
     <!-- =========================================== Action Mapping Definitions -->
 
     <action-mappings>
-        <action path="/welcome" forward="welcome.view"/>
 
         <action path="/adminMain" forward="adminMain.view"/>
 
-    <action path="/backToWelcomePage" forward="/welcome.do"/>
+    	<action path="/backToWelcomePage" forward="/welcome.do"/>
 
         <action path="/login" forward="login.view"/>
 

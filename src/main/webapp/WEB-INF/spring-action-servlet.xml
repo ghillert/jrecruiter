@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean id="exceptionResolver" 
+        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.dao.DataAccessException">        
+                    dataAccessFailure
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
+    <bean id="beanValidator" class="org.springmodules.validation.commons.DefaultBeanValidator">
+        <property name="validatorFactory" ref="validatorFactory"/>
+    </bean>
+    
+        
+    <!-- View Resolver for JSPs -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+	<bean id="urlMapping" 
+        class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <value>
+            	/showJobs.html=jobListController
+            </value>
+        </property>
+    </bean>
+
+    <!-- How to resolve methods for multi-action controllers -->
+    <bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+	    <property name="paramName" value="action"/>
+	    <property name="defaultMethodName" value="view"/>
+    </bean>
+
+<!-- Controller Definitions -->
+
+    <bean id="jobListController" class="org.jrecruiter.webtier.controller.JobListController">
+        <property name="methodNameResolver" ref="methodNameResolver"/>
+        <property name="service" ref="jobService"/>
+        <property name="successView" value="/pages/jobs"/>
+        <property name="ajaxView" value="/pages/jobsTable"/>
+    </bean>
+
+<!-- Forward directly to views -->
+
+<bean id="urlViewMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/> 
+
+<bean name="/welcome.html" class="org.springframework.web.servlet.mvc.ParameterizableViewController"> 
+    <property name="viewName"><value>pages/welcome</value></property> 
+</bean> 
+
+</beans>
