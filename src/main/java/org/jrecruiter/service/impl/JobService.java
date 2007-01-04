@@ -16,7 +16,6 @@
 package org.jrecruiter.service.impl;
 
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +24,10 @@ import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.jrecruiter.Constants.StatsMode;
+import org.jrecruiter.dao.JobsDAO;
+import org.jrecruiter.dao.SettingsDAO;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.persistent.dao.JobsDAO;
-import org.jrecruiter.persistent.dao.SettingsDAO;
 import org.jrecruiter.service.JobServiceInterface;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
