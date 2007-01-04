@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+  <!--
+    - The message source for this context, loaded from localized "messages_xx" files
+    - in the classpath, i.e. "/WEB-INF/classes/messages.properties" or
+    - "/WEB-INF/classes/messages_fr.properties".
+    -
+    - "getMessage" calls to this context will use this source.
+    - Child contexts can have their own message sources, inheriting all messages from this
+    - source, being able to define new messages and override ones defined in this source.
+    -
+    - We have no need for application messages in this tiny application, so this
+    - definition will simply be used by the next level (countries-servlet.xml).
+    -->
+  <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basename"><value>messages</value></property>
+  </bean>
+
+    <aop:config>
+        <aop:advisor id="serviceTx" advice-ref="txAdvice" pointcut="execution(* org.jrecruiter.service.*.*(..))"/>
+    </aop:config>
+    
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+  <!-- The central service facade of this application -->
+  <bean id="userService" class="org.jrecruiter.service.impl.UserService">
+    <property name="velocityEngine"><ref bean="velocityEngine"/></property>
+    <property name="mailSender"><ref bean="mailSender"/></property>
+    <property name="message"><ref bean="mailMessage"/></property>
+    <property name="userDao"><ref bean="userDao"/></property>
+    <property name="settingsDao"><ref bean="settingDao"/></property>
+  </bean>
+
+  <bean id="jobService" class="org.jrecruiter.service.impl.JobService">
+    <property name="velocityEngine"><ref bean="velocityEngine"/></property>
+    <property name="mailSender"><ref bean="mailSender"/></property>
+    <property name="message"><ref bean="mailMessage"/></property>
+    <property name="jobsDao"><ref bean="jobDao"/></property>
+    <property name="settingsDao"><ref bean="settingDao"/></property>
+  </bean>
+
+  <bean id="mailSession" class="org.springframework.jndi.JndiObjectFactoryBean">
+      <property name="jndiName"><value>java:comp/env/mail/session</value></property>
+  </bean>
+
+
+  <!-- Configure Mail without JNDI
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host"><value>smtp.mailhost.com</value></property>
+      <property name="username"><value>user</value></property>
+      <property name="password"><value>pw</value></property>
+      <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">15000</prop>
+            </props>
+        </property>
+  </bean>
+    -->
+
+  <!-- Configure Mail using JNDI -->
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="session"><ref bean="mailSession"/></property>
+  </bean>
+
+  <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"/>
+
+  <!-- Velocity - Configure Velocity for sending e-mail -->
+  <bean id="velocityEngine" 
+      class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="velocityPropertiesMap">
+          <map>
+              <entry key="resource.loader"><value>ds</value></entry>
+              <entry key="ds.resource.loader.instance">
+                  <ref bean="templateLoader"/>
+              </entry>
+              <entry key="ds.resource.loader.resource.table">
+                  <value>configuration</value>
+              </entry>
+              <entry key="ds.resource.loader.resource.keycolumn">
+                  <value>message_key</value>
+              </entry>
+              <entry key="ds.resource.loader.resource.templatecolumn">
+                  <value>message_text</value>
+              </entry>
+              <entry key="ds.resource.loader.resource.timestampcolumn">
+                  <value>last_modified</value>
+              </entry>
+              <entry key="velocimacro.library">
+                  <value></value>
+              </entry>
+          </map>
+      </property>
+  </bean>
+
+  <!-- Velocity Database Template Loader -->
+  <bean id="templateLoader"
+      class="org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader">
+      <property name="dataSource"><ref bean="dataSource"/></property>
+  </bean>
+
+  <!-- When loading the Velocity from the class path use this
+  <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="velocityProperties">
+          <props>
+              <prop key="resource.loader">class</prop>
+              <prop key="class.resource.loader.class">
+                  org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+              </prop>
+          </props>
+      </property>
+  </bean>
+  -->
+
+  	<bean id="baseDao" abstract="true">
+  		<property name="sessionFactory"><ref bean="sessionFactory" /></property>
+    </bean>
+  
+    <bean id="jobDao" class="org.jrecruiter.dao.hibernate.JobsDAOHibernate" parent="baseDao"/>
+
+    <bean id="userDao" class="org.jrecruiter.dao.hibernate.UserDAOHibernate" parent="baseDao"/>
+
+    <bean id="settingDao" class="org.jrecruiter.dao.hibernate.SettingsDAOHibernate" parent="baseDao"/>
+
+</beans>
