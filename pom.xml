@@ -79,6 +79,27 @@
 				</configuration>
 			</plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.8-SNAPSHOT</version>
+                <configuration>
+                    <groups>daoIntegrationTest</groups>
+                </configuration>
+            </plugin>
+
 		</plugins>
 
 		<defaultGoal>package</defaultGoal>
@@ -119,6 +140,14 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>changes-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>surefire-report-maven-plugin</artifactId>
+                <configuration>
+                    <childDelegation>true</childDelegation>
+                </configuration>
+            </plugin>
+			
 		</plugins>
 	</reporting>
 
@@ -170,6 +199,15 @@
 			<name>jRecruiter Maven repository</name>
 			<url>http://www.jrecruiter.org/repository</url>
 		</repository>
+		
+        <repository>
+            <id>apache.snapshots</id>
+            <url>http://cvs.apache.org/maven-snapshot-repository</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+		
 	</repositories>
 	<pluginRepositories>
 
@@ -194,6 +232,17 @@
 				<enabled>false</enabled>
 			</releases>
 		</pluginRepository>
+	        <pluginRepository>
+            <id>tapestry.javaforge</id>
+            <url>http://howardlewisship.com/repository</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+	
 	</pluginRepositories>
 
 	<!-- Begin of dependencies -->
@@ -225,12 +274,55 @@
             <version>3.2.0.ga</version>
         </dependency>
 
-		<!-- Spring -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.2.0.ga</version>
+        </dependency>
+	
+	<!-- Spring -->
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
             <version>2.0</version>
+        </dependency>
+        
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-mock</artifactId>
+            <version>2.0</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jdbc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jpa</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -362,11 +454,13 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>5.1</version>
+            <scope>test</scope>
+            <classifier>jdk15</classifier>
+        </dependency>
 
 		<dependency>
 			<groupId>jfree</groupId>
