@@ -17,14 +17,13 @@
                   not-null="true"
         />
 
-        <set    name="users" 
-                table="USER_ROLES"
-                cascade="none"
-                inverse="true">
-            
-            <key column="role"/>
-            <many-to-many class="org.jrecruiter.model.User" column="USER_NAME"/>
-        
+         <set name="users" inverse="true" table="user_roles">
+            <key>
+                <column name="role" length="25" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.jrecruiter.model.User">
+                <column name="user_name" length="25" not-null="true" />
+            </many-to-many>
         </set>
     </class>
 </hibernate-mapping>
