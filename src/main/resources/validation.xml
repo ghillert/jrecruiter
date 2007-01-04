@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_2_0.dtd">
+
+<form-validation>
+
+  <global>
+
+    <!-- An example global constant
+      <constant>
+      <constant-name>postalCode</constant-name>
+      <constant-value>^\d{5}\d*$</constant-value>
+      </constant>
+      end example-->
+
+  </global>
+
+  <formset>
+
+    <!-- Job posting form -->
+    <form name="AddEditJobPostingForm">
+      <field property="jobTitle" depends="required, maxlength">
+        <arg key="field.jobTitle" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+      </field>
+      <field property="businessName" depends="required, maxlength">
+        <arg key="field.businessName" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+      </field>
+            <field property="businessLocation" depends="maxlength">
+                <arg key="field.location" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+            </field>
+            <field property="industry" depends="maxlength">
+                <arg key="field.industry" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>30</var-value>
+                </var>
+            </field>
+            <field property="businessAddress1" depends="maxlength">
+                <arg key="field.address" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+            </field>
+            <field property="businessAddress2" depends="maxlength">
+                <arg key="field.address" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+            </field>
+            <field property="businessState" depends="maxlength">
+                <arg key="field.state" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>20</var-value>
+                </var>
+            </field>
+            <field property="businessCity" depends="maxlength">
+                <arg key="field.city" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>30</var-value>
+                </var>
+            </field>
+            <field property="businessZip" depends="maxlength">
+                <arg key="field.zip" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>10</var-value>
+                </var>
+            </field>
+
+      <field property="salary" depends="double">
+        <arg key="field.jobDescription" />
+      </field>
+      <field property="businessEmail" depends="required,maxlength,email">
+        <arg key="field.email" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+      </field>
+            <field property="businessPhone" depends="maxlength">
+                <arg key="field.phone" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>15</var-value>
+                </var>
+            </field>
+      <field property="website" depends="maxlength,url">
+        <msg name="mask" key="errors.url"/>
+        <arg key="field.website" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+                <var>
+                   <var-name>nofragments</var-name>
+                   <var-value>true</var-value>
+                </var>
+                <var>
+                   <var-name>allowallschemes</var-name>
+                   <var-value>true</var-value>
+                </var>
+
+      </field>
+      <field property="description" depends="required">
+        <arg key="field.jobDescription" />
+      </field>
+    </form>
+
+        <!-- Job posting form -->
+    <form name="EmailPasswordForm">
+      <field property="username" depends="required,maxlength">
+        <arg key="user.username" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>25</var-value>
+                </var>
+      </field>
+    </form>
+
+    <form name="UserForm">
+      <field property="username" depends="required,maxlength">
+        <arg name="required" key="user.username" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>25</var-value>
+                </var>
+      </field>
+      <field property="password" depends="required,maxlength">
+        <arg name="required" key="user.userPassword" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>25</var-value>
+                </var>
+      </field>
+
+      <field property="password2"
+        depends="required,maxlength,validwhen">
+        <arg name="required" key="user.userPassword2" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+        <msg name="validwhen" key="user.userPasword.errors" />
+        <var>
+          <var-name>test</var-name>
+          <var-value>(password == *this*)</var-value>
+        </var>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>25</var-value>
+                </var>
+      </field>
+      <field property="firstName" depends="required,maxlength">
+        <arg key="user.firstName" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+      </field>
+      <field property="lastName" depends="required,maxlength">
+        <arg key="user.lastName" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+      </field>
+            <field property="company" depends="maxlength">
+                <arg key="user.company" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>25</var-value>
+                </var>
+            </field>
+            <field property="phone" depends="maxlength">
+                <arg key="user.phone" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>25</var-value>
+                </var>
+            </field>
+            <field property="fax" depends="maxlength">
+                <arg key="user.fax" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>25</var-value>
+                </var>
+            </field>
+      <field property="email" depends="required,maxlength,email">
+        <arg key="user.email" />
+                <arg name="maxlength" key="${var:maxlength}" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>50</var-value>
+                </var>
+      </field>
+    </form>
+
+  </formset>
+
+</form-validation>
