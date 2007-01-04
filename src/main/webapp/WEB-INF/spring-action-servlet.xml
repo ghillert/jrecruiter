@@ -3,11 +3,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
     <bean id="exceptionResolver" 
-        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        class="org.jrecruiter.webtier.CustomMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="org.springframework.dao.DataAccessException">        
-                    dataAccessFailure
+                <prop key="java.lang.Throwable">        
+                    error
                 </prop>
             </props>
         </property>
@@ -34,6 +34,7 @@
         class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <value>
+            	/addUser.html=addUserFormController
             	/showJobs.html=jobListController
             </value>
         </property>
@@ -47,11 +48,19 @@
 
 <!-- Controller Definitions -->
 
-    <bean id="jobListController" class="org.jrecruiter.webtier.controller.JobListController">
+    <bean id="jobListController" class="org.jrecruiter.web.controller.JobListController">
         <property name="methodNameResolver" ref="methodNameResolver"/>
         <property name="service" ref="jobService"/>
         <property name="successView" value="/pages/jobs"/>
+        <property name="successViewShowDetails" value="/pages/jobDetail"/>
         <property name="ajaxView" value="/pages/jobsTable"/>
+    </bean>
+
+    <bean id="addUserFormController" class="org.appfuse.web.UserFormController">
+        <property name="validator" ref="beanValidator"/>
+        <property name="formView" value="userForm"/>
+        <property name="successView" value="redirect:/welcome.html"/>
+        <property name="userManager" ref="userManager"/>
     </bean>
 
 <!-- Forward directly to views -->
