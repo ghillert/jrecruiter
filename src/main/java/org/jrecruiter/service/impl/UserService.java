@@ -17,15 +17,21 @@ package org.jrecruiter.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.management.relation.Role;
 
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.jrecruiter.dao.SettingsDAO;
+import org.jrecruiter.dao.UserDAO;
+import org.jrecruiter.dao.UserRoleDAO;
 import org.jrecruiter.model.User;
-import org.jrecruiter.persistent.dao.SettingsDAO;
-import org.jrecruiter.persistent.dao.UserDAO;
+import org.jrecruiter.model.UserRole;
 import org.jrecruiter.service.UserServiceInterface;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -66,6 +72,11 @@ public class UserService implements UserServiceInterface {
     private UserDAO userDao;
 
     /**
+     * UserRole Dao.
+     */
+    private UserRoleDAO userRoleDao;
+    
+    /**
      * Access to settings.
      */
     private SettingsDAO settingsDao;
@@ -76,8 +87,15 @@ public class UserService implements UserServiceInterface {
     public void setUserDao(UserDAO userDao) {
         this.userDao = userDao;
     }
-
+    
     /**
+	 * @param userRoleDao the userRoleDao to set
+	 */
+	public void setUserRoleDao(UserRoleDAO userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+
+	/**
      * Sets the mail sender.
      * @param mailSender
      */
@@ -117,7 +135,13 @@ public class UserService implements UserServiceInterface {
         user.setRegisterDate(registerDate);
         user.setUpdateDate(registerDate);
         try {
-        userDao.addUser(user, "manager");
+        
+        	UserRole role = userRoleDao.getRole("manager");
+        	Set<UserRole> roles = new HashSet<UserRole>();
+        	roles.add(role);
+        	user.setRoles(roles);
+        	
+        	userDao.addUser(user);
         } catch (DataIntegrityViolationException e){
             LOGGER.warn("addUser() - A DataIntegrityViolationException was thrown - " + e.getMessage());
             throw new DuplicateUserException("User already exists", e);
