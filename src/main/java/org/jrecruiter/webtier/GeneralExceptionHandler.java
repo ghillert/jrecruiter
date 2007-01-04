@@ -25,7 +25,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
-import org.jrecruiter.webtier.actions.StatisticsAction;
 
 /**
  * This struts exception will handle any uncaught exceptions that were
