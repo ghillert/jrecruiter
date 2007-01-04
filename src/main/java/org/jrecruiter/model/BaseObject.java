@@ -15,12 +15,10 @@
 */
 package org.jrecruiter.model;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-
-import java.io.Serializable;
 
 
 /**
@@ -36,14 +34,5 @@ public class BaseObject implements Serializable {
      * serialVersionUID.
      */
     private static final long serialVersionUID = -566337534712446489L;
-
-    /**
-     * The toString method.
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this,
-                ToStringStyle.MULTI_LINE_STYLE);
-    }
 
 }
