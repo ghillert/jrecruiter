@@ -22,7 +22,7 @@ public class ConfigurationDaoTest extends BaseDaoTest {
 	public static final Logger LOGGER = Logger
 			.getLogger(ConfigurationDaoTest.class);
 
-	@Test(groups = { "dao-integration-test" })
+	@Test(groups = { "daoIntegrationTest" })
 	public void getAllConfigurations() {
 
 		List<org.jrecruiter.model.Configuration> conf = settingDao
