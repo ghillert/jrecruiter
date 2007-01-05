@@ -33,7 +33,7 @@ public class UserDaoTest extends BaseDaoTest {
      */
     public static final Logger LOGGER = Logger.getLogger(UserDaoTest.class);
 
-      @Test(groups = {"dao-integration-test"})
+      @Test(groups = {"daoIntegrationTest"})
         public void getAllUsersTest() {
         System.out.println("exec");
 
@@ -43,7 +43,7 @@ public class UserDaoTest extends BaseDaoTest {
         LOGGER.info("Details des ersten users: " + users.get(0));
       }
 
-      @Test(groups = {"dao-integration-test"})
+      @Test(groups = {"daoIntegrationTest"})
         public void getSingleUserTest() {
         System.out.println("exec");
 

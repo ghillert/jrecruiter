@@ -31,7 +31,7 @@ public abstract class BaseDaoTest extends AbstractTransactionalDataSourceSpringC
     	   String driver="org.postgresql.Driver";
     	   String url="jdbc:postgresql://10.10.0.102/postgres";
     	   String username="postgres";
-    	   String password="postgres";
+    	   String password="hillert";
     	   
     	   SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
     	   
@@ -40,7 +40,7 @@ public abstract class BaseDaoTest extends AbstractTransactionalDataSourceSpringC
     	   ds.setUrl(url);
     	   ds.setUsername(username);
     	   ds.setPassword(password);
-    	       	   
+    	   
     	   builder.bind("java:comp/env/jdbc/postgres", ds);
 
     	   Properties props = System.getProperties();

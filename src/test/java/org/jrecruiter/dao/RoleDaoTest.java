@@ -24,7 +24,7 @@ public class RoleDaoTest extends BaseDaoTest {
 		this.userDao = userDao;
 	}
 
-      @Test(groups = {"dao-integration-test"})
+      @Test(groups = {"daoIntegrationTest"})
         public void getAllRolesTest() {
 
         List < UserRole > roles = userDao.getAllRoles();

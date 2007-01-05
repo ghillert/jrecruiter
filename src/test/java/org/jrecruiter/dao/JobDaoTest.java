@@ -23,7 +23,7 @@ public class JobDaoTest extends BaseDaoTest {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(JobDaoTestNG.class);
+    public static final Logger LOGGER = Logger.getLogger(JobDaoTest.class);
 
     public JobsDAO getJobDao() {
 		return jobDao;
@@ -45,7 +45,7 @@ public class JobDaoTest extends BaseDaoTest {
         }
     }
 
-    @Test(groups = {"dao-integration-test"})
+    @Test(groups = {"daoIntegrationTest"})
     public void getJobsPaginated() {
 
         List<Job> jobs = jobDao.getJobs(20, 1, null, null);
@@ -57,7 +57,7 @@ public class JobDaoTest extends BaseDaoTest {
         }
     }
     
-    @Test(groups = {"dao-integration-test"})
+    @Test(groups = {"daoIntegrationTest"})
     public void searchByKeyword() {
 
     jobDao.searchByKeyword("java");
