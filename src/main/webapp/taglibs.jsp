@@ -22,6 +22,6 @@ response.setHeader("Expires","0");
 <%@ taglib uri="http://ajaxtags.org/tags/ajax" prefix="ajax" %>
 
 <c:set var="datePattern"><fmt:message key="date.format"/></c:set>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="ctx" value="${pageContext['request'].contextPath}"/>
 
 
