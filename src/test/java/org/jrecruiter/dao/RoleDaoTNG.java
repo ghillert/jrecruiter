@@ -8,13 +8,14 @@ import org.jrecruiter.model.UserRole;
 import org.testng.annotations.Test;
 
 /**
- * @author Gunnar Hillert
+ * @author Gunnar Hillert 
  *
  */
-public class RoleDaoTest extends BaseDaoTest {
+public class RoleDaoTNG extends BaseDaoTNG {
 
 	private UserDAO userDao;
 	
+	private UserRoleDAO userRoleDao;
 	
 	public UserDAO getUserDao() {
 		return userDao;
@@ -24,6 +25,10 @@ public class RoleDaoTest extends BaseDaoTest {
 		this.userDao = userDao;
 	}
 
+	/**
+	 * 
+	 *
+	 */
       @Test(groups = {"daoIntegrationTest"})
         public void getAllRolesTest() {
 
