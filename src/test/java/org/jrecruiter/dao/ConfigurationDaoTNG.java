@@ -2,7 +2,7 @@
  *
  */
 package org.jrecruiter.dao;
-
+ 
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
  * @author Gunnar Hillert
  * 
  */
-public class ConfigurationDaoTest extends BaseDaoTest {
+public class ConfigurationDaoTNG extends BaseDaoTNG {
 
 	private SettingsDAO settingDao;
 
@@ -20,7 +20,7 @@ public class ConfigurationDaoTest extends BaseDaoTest {
 	 * Initialize Logging.
 	 */
 	public static final Logger LOGGER = Logger
-			.getLogger(ConfigurationDaoTest.class);
+			.getLogger(ConfigurationDaoTNG.class);
 
 	@Test(groups = { "daoIntegrationTest" })
 	public void getAllConfigurations() {
@@ -33,6 +33,7 @@ public class ConfigurationDaoTest extends BaseDaoTest {
 			LOGGER.info(setting);
 
 		}
+
 	}
 
 	public SettingsDAO getSettingDao() {

@@ -2,7 +2,7 @@
  *
  */
 package org.jrecruiter.dao;
-
+ 
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
  * @author Gunnar Hillert
  *
  */
-public class JobDaoTest extends BaseDaoTest {
+public class JobDaoTNG extends BaseDaoTNG {
 
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class JobDaoTest extends BaseDaoTest {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(JobDaoTest.class);
+    public static final Logger LOGGER = Logger.getLogger(JobDaoTNG.class);
 
     public JobsDAO getJobDao() {
 		return jobDao;
