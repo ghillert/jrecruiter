@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
  * @author Gunnar Hillert
  *
  */
-public class UserDaoTest extends BaseDaoTest {
+public class UserDaoTNG extends BaseDaoTNG {
 
 	private UserDAO userDao;
 	
@@ -31,7 +31,7 @@ public class UserDaoTest extends BaseDaoTest {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(UserDaoTest.class);
+    public static final Logger LOGGER = Logger.getLogger(UserDaoTNG.class);
 
       @Test(groups = {"daoIntegrationTest"})
         public void getAllUsersTest() {

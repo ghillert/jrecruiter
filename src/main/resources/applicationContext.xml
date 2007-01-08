@@ -49,30 +49,6 @@
     <property name="settingsDao"><ref bean="settingDao"/></property>
   </bean>
 
-  <bean id="mailSession" class="org.springframework.jndi.JndiObjectFactoryBean">
-      <property name="jndiName"><value>java:comp/env/mail/session</value></property>
-  </bean>
-
-
-  <!-- Configure Mail without JNDI
-  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-      <property name="host"><value>smtp.mailhost.com</value></property>
-      <property name="username"><value>user</value></property>
-      <property name="password"><value>pw</value></property>
-      <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.auth">true</prop>
-                <prop key="mail.smtp.timeout">15000</prop>
-            </props>
-        </property>
-  </bean>
-    -->
-
-  <!-- Configure Mail using JNDI -->
-  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-      <property name="session"><ref bean="mailSession"/></property>
-  </bean>
-
   <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"/>
 
   <!-- Velocity - Configure Velocity for sending e-mail -->

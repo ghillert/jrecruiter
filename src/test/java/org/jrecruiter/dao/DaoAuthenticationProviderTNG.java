@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
  * @author Gunnar Hillert
  *
  */
-public class DaoAuthenticationProviderTest extends BaseDaoTest {
+public class DaoAuthenticationProviderTNG extends BaseDaoTNG {
 
     ApplicationContext ctx;
 
@@ -30,7 +30,7 @@ public class DaoAuthenticationProviderTest extends BaseDaoTest {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(DaoAuthenticationProviderTest.class);
+    public static final Logger LOGGER = Logger.getLogger(DaoAuthenticationProviderTNG.class);
 
       @Test(groups = {"daoIntegrationTest"})
         public void getUser() {
