@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.displaytag.properties.SortOrderEnum;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistics;
-import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.service.JobService;
 import org.jrecruiter.webtier.JobsForDisplaytagSorting;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -35,7 +35,7 @@ public class JobListController extends MultiActionController  {
     /**
      * The service layer reference.
      */
-    private JobServiceInterface service;
+    private JobService service;
 
     /**
      * Success View
@@ -56,7 +56,7 @@ public class JobListController extends MultiActionController  {
      * Inject the service layer reference.
      * @param service 
      */
-    public void setService(JobServiceInterface service) {
+    public void setService(JobService service) {
 		this.service = service;
 	}
 
