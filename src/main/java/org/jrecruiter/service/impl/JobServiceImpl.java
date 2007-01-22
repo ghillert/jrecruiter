@@ -28,7 +28,7 @@ import org.jrecruiter.dao.JobsDAO;
 import org.jrecruiter.dao.SettingsDAO;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.service.JobService;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -38,12 +38,12 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  * @author Jerzy Puchala
  * @version $Id$
  */
-public class JobService implements JobServiceInterface {
+public class JobServiceImpl implements JobService {
 
     /**
      *   Initialize Logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(JobService.class);
+    private static final Logger LOGGER = Logger.getLogger(JobServiceImpl.class);
 
     /**
      *   Used for creating the Apache-Velocity-based Email template.
@@ -121,14 +121,14 @@ public class JobService implements JobServiceInterface {
     }
 
     /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobServiceInterface#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     * @see org.jrecruiter.service.JobService#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     public List<Job> getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder) {
         return jobsDao.getJobs(pageSize, pageNumber, fieldSorted, sortOrder);
     }
 
     /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobServiceInterface#getJobsCount()
+     * @see org.jrecruiter.service.JobService#getJobsCount()
      */
     public Integer getJobsCount() {
         return jobsDao.getJobsCount();
@@ -149,7 +149,7 @@ public class JobService implements JobServiceInterface {
     }
 
     /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobServiceInterface#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
+     * @see org.jrecruiter.service.JobService#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
     public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
         return jobsDao.getUsersJobsForStatistics(username, maxResult, statsMode);
