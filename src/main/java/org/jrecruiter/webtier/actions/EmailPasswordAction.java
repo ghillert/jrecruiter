@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.jrecruiter.model.User;
-import org.jrecruiter.service.UserServiceInterface;
+import org.jrecruiter.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -57,7 +57,7 @@ public class EmailPasswordAction extends Action {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(servlet.getServletContext());
-        UserServiceInterface userService = (UserServiceInterface) context.getBean("userService");
+        UserService userService = (UserService) context.getBean("userService");
 
         User user = userService.getUser((String) dynaForm.get("username"));
         if (user == null) {
