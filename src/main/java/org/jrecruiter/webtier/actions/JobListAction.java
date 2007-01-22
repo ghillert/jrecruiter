@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.displaytag.properties.SortOrderEnum;
-import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.service.JobService;
 import org.jrecruiter.webtier.JobsForDisplaytagSorting;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -52,7 +52,7 @@ public class JobListAction extends Action {
         ApplicationContext context = WebApplicationContextUtils.
         getRequiredWebApplicationContext(servlet.getServletContext());
 
-        JobServiceInterface service = (JobServiceInterface) context.
+        JobService service = (JobService) context.
         getBean("jobService");
 
         JobsForDisplaytagSorting jobsDisplaytag = new JobsForDisplaytagSorting();

@@ -18,7 +18,7 @@ package org.jrecruiter.webtier.actions;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.LazyDynaBean;
 import org.apache.struts.action.*;
-import org.jrecruiter.service.UserServiceInterface;
+import org.jrecruiter.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -60,7 +60,7 @@ public class DeleteUserAction extends Action {
             String[] usernamerArray = (String[]) usernameList.toArray(new String[usernameList.size()]);
 
             ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(servlet.getServletContext());
-            UserServiceInterface userService = (UserServiceInterface) context.getBean("userService");
+            UserService userService = (UserService) context.getBean("userService");
 
             userService.deleteUser(usernamerArray);
         }

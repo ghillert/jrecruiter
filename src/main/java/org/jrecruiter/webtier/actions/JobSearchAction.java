@@ -26,7 +26,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.service.JobService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -43,7 +43,7 @@ public class JobSearchAction extends Action {
         ApplicationContext context = WebApplicationContextUtils.
         getRequiredWebApplicationContext(servlet.getServletContext());
 
-        JobServiceInterface service = (JobServiceInterface) context.
+        JobService service = (JobService) context.
         getBean("jobService");
 
         DynaBean dynaForm = (DynaBean) form;

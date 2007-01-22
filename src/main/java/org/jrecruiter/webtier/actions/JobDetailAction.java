@@ -32,7 +32,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistics;
-import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.service.JobService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -53,7 +53,7 @@ public class JobDetailAction extends Action {
         ApplicationContext context = WebApplicationContextUtils.
         getRequiredWebApplicationContext(servlet.getServletContext());
 
-        JobServiceInterface service = (JobServiceInterface) context.
+        JobService service = (JobService) context.
         getBean("jobService");
 
         Long id = Long.valueOf(request.getParameter("id"));

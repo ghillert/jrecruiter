@@ -19,7 +19,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.jrecruiter.service.UserServiceInterface;
+import org.jrecruiter.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -38,7 +38,7 @@ public class UserListAction extends Action {
                                  HttpServletResponse response) throws Exception {
 
         ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(servlet.getServletContext());
-        UserServiceInterface userService = (UserServiceInterface) context.getBean("userService");
+        UserService userService = (UserService) context.getBean("userService");
 
         List users = userService.getAllUsers();
 

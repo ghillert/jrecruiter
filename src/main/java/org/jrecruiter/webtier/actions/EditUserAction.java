@@ -18,7 +18,7 @@ package org.jrecruiter.webtier.actions;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.*;
 import org.jrecruiter.model.User;
-import org.jrecruiter.service.UserServiceInterface;
+import org.jrecruiter.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -55,7 +55,7 @@ public class EditUserAction extends Action {
         }
 
         ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(servlet.getServletContext());
-        UserServiceInterface userService = (UserServiceInterface) context.getBean("userService");
+        UserService userService = (UserService) context.getBean("userService");
 
         User user = userService.getUser(username);
         DynaActionForm dynaForm = (DynaActionForm) form;
