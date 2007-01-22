@@ -24,7 +24,7 @@ import java.util.List;
  * @author Dorota Puchala
  * @version $Id$
  */
-public interface UserServiceInterface {
+public interface UserService {
 
     void addUser(User user) throws DuplicateUserException;
 

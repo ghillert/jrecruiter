@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.management.relation.Role;
-
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
@@ -32,7 +30,7 @@ import org.jrecruiter.dao.UserDAO;
 import org.jrecruiter.dao.UserRoleDAO;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserRole;
-import org.jrecruiter.service.UserServiceInterface;
+import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
@@ -44,12 +42,12 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  * @author Dorota Puchala
  * @version $Id$
  */
-public class UserService implements UserServiceInterface {
+public class UserServiceImpl implements UserService {
 
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(UserService.class);
+    public static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     /**
      *   Used for creating the Apache-Velocity-based Email template.
