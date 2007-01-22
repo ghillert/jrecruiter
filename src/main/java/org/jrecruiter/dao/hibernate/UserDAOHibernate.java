@@ -15,9 +15,7 @@
 */
 package org.jrecruiter.dao.hibernate;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.acegisecurity.userdetails.UserDetails;
 import org.acegisecurity.userdetails.UserDetailsService;
