@@ -33,7 +33,7 @@
     </tx:advice>
 
   <!-- The central service facade of this application -->
-  <bean id="userService" class="org.jrecruiter.service.impl.UserService">
+  <bean id="userService" class="org.jrecruiter.service.impl.UserServiceImpl">
     <property name="velocityEngine"><ref bean="velocityEngine"/></property>
     <property name="mailSender"><ref bean="mailSender"/></property>
     <property name="message"><ref bean="mailMessage"/></property>
@@ -41,7 +41,7 @@
     <property name="settingsDao"><ref bean="settingDao"/></property>
   </bean>
 
-  <bean id="jobService" class="org.jrecruiter.service.impl.JobService">
+  <bean id="jobService" class="org.jrecruiter.service.impl.JobServiceImpl">
     <property name="velocityEngine"><ref bean="velocityEngine"/></property>
     <property name="mailSender"><ref bean="mailSender"/></property>
     <property name="message"><ref bean="mailMessage"/></property>
