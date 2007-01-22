@@ -162,6 +162,11 @@
         <servlet-name>spring-action</servlet-name>
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>spring-action</servlet-name>
+        <url-pattern>/dwr/*</url-pattern>
+    </servlet-mapping>
      
 	<!-- The Usual Welcome File List -->
 	<welcome-file-list>

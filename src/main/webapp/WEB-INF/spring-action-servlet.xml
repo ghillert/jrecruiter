@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans" 
+		   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr" 
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	                           http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
     <bean id="exceptionResolver" 
         class="org.jrecruiter.webtier.CustomMappingExceptionResolver">
@@ -31,14 +34,23 @@
 
 
 	<bean id="urlMapping" 
-        class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <value>
-            	/addUser.html=addUserFormController
             	/showJobs.html=jobListController
             </value>
         </property>
     </bean>
+
+	<bean id="dwrUrlMapping" 
+	      class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	<property name="alwaysUseFullPath" value="true"/>
+	  <property name="mappings">
+	  <props>
+	 <prop key="/dwr/**/*">dwrController</prop>
+	 </props>
+	</property>
+	</bean>
 
     <!-- How to resolve methods for multi-action controllers -->
     <bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
@@ -56,13 +68,6 @@
         <property name="ajaxView" value="/pages/jobsTable"/>
     </bean>
 
-    <bean id="addUserFormController" class="org.appfuse.web.UserFormController">
-        <property name="validator" ref="beanValidator"/>
-        <property name="formView" value="userForm"/>
-        <property name="successView" value="redirect:/welcome.html"/>
-        <property name="userManager" ref="userManager"/>
-    </bean>
-
 <!-- Forward directly to views -->
 
 <bean id="urlViewMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/> 
@@ -70,5 +75,18 @@
 <bean name="/welcome.html" class="org.springframework.web.servlet.mvc.ParameterizableViewController"> 
     <property name="viewName"><value>pages/welcome</value></property> 
 </bean> 
+ 
+<!-- Configuring DWR (Ajax) -->
+
+  <dwr:controller id="dwrController" debug="true"/>
+  <dwr:configuration>
+    <dwr:convert type="bean"
+        class="org.jrecruiter.model.Job"/>
+  </dwr:configuration>
+  
+  <bean id="dwrAction" class="org.jrecruiter.web.ajax.DwrAction" scope="prototype">
+    <property name="service" ref="jobService"/>
+    <dwr:remote javascript="ajaxService"><dwr:include method="getJob"/></dwr:remote>
+  </bean>
 
 </beans>
