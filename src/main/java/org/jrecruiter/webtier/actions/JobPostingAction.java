@@ -35,7 +35,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
-import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.service.JobService;
 import org.jrecruiter.webtier.Util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -78,7 +78,7 @@ public class JobPostingAction extends DispatchAction {
             Job job = new Job();
             BeanUtils.copyProperties(job, form);
 
-            JobServiceInterface service = (JobServiceInterface) context.
+            JobService service = (JobService) context.
             getBean("jobService");
 
             job.setStatus(1);
@@ -109,7 +109,7 @@ public class JobPostingAction extends DispatchAction {
             ApplicationContext context = WebApplicationContextUtils.
             getRequiredWebApplicationContext(servlet.getServletContext());
 
-            JobServiceInterface service = (JobServiceInterface) context.
+            JobService service = (JobService) context.
             getBean("jobService");
 
             List jobs = service.
@@ -135,7 +135,7 @@ public class JobPostingAction extends DispatchAction {
         ApplicationContext context = WebApplicationContextUtils.
         getRequiredWebApplicationContext(servlet.getServletContext());
 
-        JobServiceInterface service = (JobServiceInterface) context.
+        JobService service = (JobService) context.
         getBean("jobService");
 
         Job job = service.getJobForId(id);
@@ -166,7 +166,7 @@ public class JobPostingAction extends DispatchAction {
             ApplicationContext context = WebApplicationContextUtils.
             getRequiredWebApplicationContext(servlet.getServletContext());
 
-            JobServiceInterface service = (JobServiceInterface) context.
+            JobService service = (JobService) context.
             getBean("jobService");
 
             DynaValidatorForm dvf = (DynaValidatorForm) form;
@@ -215,7 +215,7 @@ public class JobPostingAction extends DispatchAction {
         ApplicationContext context = WebApplicationContextUtils.
         getRequiredWebApplicationContext(servlet.getServletContext());
 
-        JobServiceInterface service = (JobServiceInterface) context.
+        JobService service = (JobService) context.
         getBean("jobService");
 
         if (isCancelled(request)) {

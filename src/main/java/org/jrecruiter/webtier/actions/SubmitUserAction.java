@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.jrecruiter.model.User;
-import org.jrecruiter.service.UserServiceInterface;
+import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -54,7 +54,7 @@ public class SubmitUserAction extends DispatchAction {
         User user = new User();
         BeanUtils.copyProperties(user, dynaForm);
         ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(servlet.getServletContext());
-        UserServiceInterface userService = (UserServiceInterface) context.getBean("userService");
+        UserService userService = (UserService) context.getBean("userService");
 
         ActionMessages messages = new ActionMessages();
         ActionMessages errors = new ActionMessages();
@@ -111,7 +111,7 @@ public class SubmitUserAction extends DispatchAction {
 
         ApplicationContext context = WebApplicationContextUtils
                 .getRequiredWebApplicationContext(servlet.getServletContext());
-        UserServiceInterface userService = (UserServiceInterface) context
+        UserService userService = (UserService) context
                 .getBean("userService");
 
         userService.updateUser(user);

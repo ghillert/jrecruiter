@@ -47,7 +47,7 @@ import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
 import org.jrecruiter.Constants;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.service.JobServiceInterface;
+import org.jrecruiter.service.JobService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -73,7 +73,7 @@ public class StatisticsAction extends DispatchAction {
                     .getRequiredWebApplicationContext(servlet
                             .getServletContext());
 
-            final JobServiceInterface service = (JobServiceInterface) context
+            final JobService service = (JobService) context
                     .getBean("jobService");
 
             final List jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
@@ -103,7 +103,7 @@ public class StatisticsAction extends DispatchAction {
                     .getRequiredWebApplicationContext(servlet
                             .getServletContext());
 
-            final JobServiceInterface service = (JobServiceInterface) context
+            final JobService service = (JobService) context
                     .getBean("jobService");
 
             String mode = request.getParameter("mode");
