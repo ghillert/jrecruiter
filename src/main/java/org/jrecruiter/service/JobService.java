@@ -26,7 +26,7 @@ import org.jrecruiter.model.Job;
  * @author Jerzy Puchala
  * @version $Id$
  */
-public interface JobServiceInterface {
+public interface JobService {
     /**
      * Method for adding a job posting.
      *
