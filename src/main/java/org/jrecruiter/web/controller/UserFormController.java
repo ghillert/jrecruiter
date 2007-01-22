@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.User;
-import org.jrecruiter.service.UserServiceInterface;
+import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +29,7 @@ public class UserFormController extends SimpleFormController  {
     /**
      * The service layer reference.
      */
-    private UserServiceInterface service;
+    private UserService service;
     
     /**
      * Ajax View 
@@ -40,7 +40,7 @@ public class UserFormController extends SimpleFormController  {
      * Inject the service layer reference.
      * @param service 
      */
-    public void setService(UserServiceInterface service) {
+    public void setService(UserService service) {
 		this.service = service;
 	}
 
