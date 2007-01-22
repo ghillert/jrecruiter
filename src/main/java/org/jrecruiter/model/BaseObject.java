@@ -17,9 +17,6 @@ package org.jrecruiter.model;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
 
 /**
  * This is the base class for all model objects.
