@@ -16,15 +16,23 @@
 package org.jrecruiter.web.ajax;
 
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
+
 
 /**
  * @author Gunnar Hillert
  * @version $Id: JobServiceImpl.java 78 2007-01-04 03:07:40Z ghillert $
  */
-public class DwrAction {
+public class DwrAction extends BaseDwrAction {
 
     /**
      *   Initialize Logging.
@@ -40,8 +48,23 @@ public class DwrAction {
 	/* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
-    public Job getJob(Long jobId) {
-        return service.getJobForId(jobId);
+    public String getJob(Long jobId) {
+    	
+    	WebContext context = WebContextFactory.get();
+    	HttpServletRequest request = context.getHttpServletRequest();
+    	
+    	Job job = service.getJobForId(jobId);
+    	request.setAttribute("jobDetail", job);
+    	String ret = "";
+    	try {
+    		ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
+    	} catch (ServletException e) {
+    		LOGGER.error(e.getMessage(), e);
+    	} catch (IOException e) {
+    		LOGGER.error(e.getMessage(), e);
+    	}
+        return ret;
+        
     }
 
 }
