@@ -1,10 +1,10 @@
-<%@include file="/taglibs.jsp"%>
+<%@ include file="/includes/taglibs.jsp"%>
 
     <div  id="header_menu">
       <html:form style="margin-bottom:0;margin-top:0;" action="searchJobs" method="POST">
-          <html:link action="backToWelcomePage" styleClass="button">
+          <a href="<c:url value='/welcome.html'/>" class="button">
             <fmt:message key="all.back.to.welcome.page"/>
-          </html:link>
+          </a>
         <html:text property="keyword" styleClass="headerForm" onblur="javascript:this.className='headerForm';"
                        onfocus="javascript:this.className='headerFormSelected';" />
         <a href="javascript:document.forms[0].submit();" class="button">Search</a>
@@ -22,5 +22,8 @@
         </div><br/>
     </logic:messagesPresent>
 <%@include file="/pages/jobsTable.jsp"%>
+
+ <div id="jobDetailContainer" style="display: none;"></div>
 </div>
+
 
