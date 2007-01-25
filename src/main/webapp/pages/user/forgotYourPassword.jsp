@@ -1,4 +1,4 @@
-<%@ include file="/taglibs.jsp"%>
+<%@ include file="/includes/taglibs.jsp"%>
 
 <div  id="header_menu">
   <html:form style="margin-bottom:0;margin-top:0;" action="searchJobs" method="POST">

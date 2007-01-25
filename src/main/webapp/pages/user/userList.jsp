@@ -1,4 +1,4 @@
-<%@ include file="/taglibs.jsp"%>
+<%@ include file="/includes/taglibs.jsp"%>
 
 <script type="text/javascript">
 function openJob(id)

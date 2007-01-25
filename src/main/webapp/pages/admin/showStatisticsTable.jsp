@@ -1,4 +1,4 @@
-<%@include file="/taglibs.jsp"%>
+<%@ include file="/includes/taglibs.jsp"%>
 
 <ajax:displayTag id="displayTagFrame" ajaxFlag="displayAjax" baseUrl="${ctx}/showStatistics.do" postFunction="h()">
     <display:table name="jobs" pagesize="20" requestURI="" id="jobStatistics" class="displaytag" export="false" sort="list" defaultsort="3" defaultorder="descending">

@@ -1,4 +1,4 @@
-<%@ include file="/taglibs.jsp"%>
+<%@ include file="/includes/taglibs.jsp"%>
     <ajax:displayTag id="displayTagFrame" ajaxFlag="displayAjax" baseUrl="${ctx}/userList.do" postFunction="h()">
         <display:table name="userList" pagesize="15" requestURI="" id="user" class="displaytag" export="false" sort="list">
           <display:column class="userlist1" property="username" titleKey="user.username" sortable="true" media="html csv xml excel pdf"/>

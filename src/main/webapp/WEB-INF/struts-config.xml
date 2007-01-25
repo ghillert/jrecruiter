@@ -95,7 +95,6 @@
     <!-- =========================================== Global Forward Definitions -->
 
     <global-forwards>
-        <forward name="welcome" path="/welcome.html"/>
         <forward name="sessionTimeout" path="/login.do"/>
     </global-forwards>
 
@@ -108,7 +107,7 @@
 
     	<action path="/backToWelcomePage" forward="/welcome.do"/>
 
-        <action path="/login" forward="login.view"/>
+        <action path="/login" forward="/pages/user/login.jsp"/>
 
         <action path="/loginError" forward="loginError.view"/>
 
@@ -180,13 +179,6 @@
             type="org.jrecruiter.webtier.actions.DeleteUserAction">
             <forward name="success" path="/userList.do" redirect="true"/>
             <forward name="cancel" path="/adminMain.do" redirect="true"/>
-        </action>
-
-
-        <action path="/showJobs"
-                type="org.jrecruiter.webtier.actions.JobListAction">
-            <forward name="success" path="showJobs.view"/>
-            <forward name="ajax" path="/pages/jobsTable.jsp"/>
         </action>
 
         <action path="/searchJobs" name="JobSearchForm"
@@ -270,12 +262,6 @@
             <forward name="success" path="/adminMain.do" redirect="false"/>
             <forward name="openEditSuccess" path="editSettings.view"/>
             <forward name="cancel" path="/adminMain.do" redirect="false"/>
-        </action>
-
-        <action path="/showJobDetail"
-                type="org.jrecruiter.webtier.actions.JobDetailAction">
-            <forward name="success" path="showJobDetail.view"/>
-            <forward name="jobList" path="/showJobs.do" redirect="true"/>
         </action>
 
         <action path="/showStatistics"
