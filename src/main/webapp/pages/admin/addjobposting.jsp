@@ -1,5 +1,4 @@
-<%@include file="/taglibs.jsp"%>
-
+<%@ include file="/includes/taglibs.jsp"%>
 <div  id="header_menu">
   <html:link action="adminMain" styleClass="button">
         <fmt:message key="all.back.to.welcome.page"/>
