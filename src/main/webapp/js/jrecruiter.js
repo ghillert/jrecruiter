@@ -27,3 +27,30 @@ function highlightTableRows(tableId) {
 
 // Show the document's title on the status bar
 window.defaultStatus=document.title;
+
+
+function init() {
+    DWRUtil.useLoadingMessage();
+}
+
+function showJobDetail(id) {
+	ajaxService.getJob(id, handleData);
+	
+	function handleData(data) {
+
+		$('jobDetailContainer').innerHTML = data;
+
+		$('displayTagFrame').style.display = 'none';
+		new Effect.Appear($('jobDetailContainer'));
+				
+		Rico.Corner.round('rounddiv1', {corners:'all', color:'#ccccef'} );
+	   	Rico.Corner.round('rounddiv2', {corners:'all', color:'#ccccef'} );
+	}
+}
+
+function closeJobDetail() {
+
+		$('jobDetailContainer').style.display = 'none';
+		new Effect.Appear($('displayTagFrame'));
+		
+}
