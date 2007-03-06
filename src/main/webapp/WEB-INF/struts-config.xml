@@ -102,83 +102,66 @@
     <!-- =========================================== Action Mapping Definitions -->
 
     <action-mappings>
-
-        <action path="/adminMain" forward="adminMain.view"/>
-
-    	<action path="/backToWelcomePage" forward="/welcome.do"/>
-
-        <action path="/login" forward="/pages/user/login.jsp"/>
-
-        <action path="/loginError" forward="loginError.view"/>
-
-        <action path="/logout"
-            type="org.jrecruiter.webtier.actions.LogoutAction">
-            <forward name="success" path="/welcome.do"/>
-        </action>
-
-        <action path="/forgotYourPassword"
-                forward="forgotYourPassword.view"/>
-
         <action path="/emailPassword" name="EmailPasswordForm"
-                input="forgotYourPassword.view"
+                input="/pages/user/forgotYourPassword.jsp"
                 validate="true"
                 scope="request"
                 type="org.jrecruiter.webtier.actions.EmailPasswordAction">
-            <forward name="success" path="sentPassword.view"/>
-            <forward name="cancel" path="/welcome.do"/>
+            <forward name="success" path="/pages/user/sentPassword.jsp"/>
+            <forward name="cancel" path="/welcome.html"/>
         </action>
 
         <action path="/addUser" name="UserForm"
-                input="user.view"
+                input="/pages/user/user.jsp"
                 validate="false"
                 scope="request"
                 type="org.apache.struts.actions.ForwardAction"
-                parameter="user.view">
+                parameter="/pages/user/user.jsp">
         </action>
 
         <action path="/editUser"
             name="UserForm"
-      input="user.view"
+      input="/pages/user/user.jsp"
             validate="false"
             scope="request"
       type="org.jrecruiter.webtier.actions.EditUserAction">
-      <forward name="success" path="user.view" redirect="true"/>
-      <forward name="cancel" path="/adminMain.do" redirect="true"/>
+      <forward name="success" path="/pages/user/user.jsp" redirect="true"/>
+      <forward name="cancel" path="/admin/admin.html" redirect="true"/>
     </action>
 
         <action path="/userSubmit"
             name="UserForm"
-      input="user.view"
+      input="/pages/user/user.jsp"
             validate="true"
             scope="request"
             parameter="dispatch"
             type="org.jrecruiter.webtier.actions.SubmitUserAction">
-      <forward name="successAdd" path="/welcome.do" />
-      <forward name="successEdit" path="/adminMain.do" />
-      <forward name="error" path="user.view" />
-      <forward name="cancel" path="/welcome.do" redirect="true"/>
-      <forward name="cancelToAdmin" path="/adminMain.do" redirect="true"/>
+      <forward name="successAdd" path="/welcome.html" />
+      <forward name="successEdit" path="/admin/admin.html" />
+      <forward name="error" path="/pages/user/user.jsp" />
+      <forward name="cancel" path="/welcome.html" redirect="true"/>
+      <forward name="cancelToAdmin" path="/admin/admin.html" redirect="true"/>
     </action>
 
          <action path="/userList"
             name="UserListForm"
-            input="userList.view"
+            input="/pages/user/userList.jsp"
             validate="false"
             scope="request"
             type="org.jrecruiter.webtier.actions.UserListAction">
-            <forward name="success" path="userList.view"/>
-            <forward name="cancel" path="/adminMain.do" redirect="false"/>
+            <forward name="success" path="/pages/user/userList.jsp"/>
+            <forward name="cancel" path="/admin/admin.html" redirect="false"/>
             <forward name="ajax" path="/pages/user/userListTable.jsp"/>
         </action>
 
         <action path="/deleteUser"
             name="UserListForm"
-            input="userList.view"
+            input="/pages/user/userList.jsp"
             validate="false"
             scope="request"
             type="org.jrecruiter.webtier.actions.DeleteUserAction">
             <forward name="success" path="/userList.do" redirect="true"/>
-            <forward name="cancel" path="/adminMain.do" redirect="true"/>
+            <forward name="cancel" path="/admin/admin.html" redirect="true"/>
         </action>
 
         <action path="/searchJobs" name="JobSearchForm"
@@ -186,7 +169,7 @@
                 validate="false"
                 scope="request"
                 type="org.jrecruiter.webtier.actions.JobSearchAction">
-            <forward name="success" path="showJobs.view"/>
+            <forward name="success" path="/pages/jobs.jsp"/>
         </action>
 
 
@@ -197,7 +180,7 @@
                 scope="request"
                 type="org.jrecruiter.webtier.actions.JobPostingAction"
                 parameter="method">
-            <forward name="success" path="addJobPosting.view"/>
+            <forward name="success" path="/pages/admin/addjobposting.jsp"/>
         </action>
 
         <action path="/addJobPosting"
@@ -207,8 +190,8 @@
                 scope="request"
                 type="org.jrecruiter.webtier.actions.JobPostingAction"
                 parameter="method">
-            <forward name="success" path="/adminMain.do"/>
-            <forward name="cancel" path="/adminMain.do" redirect="false"/>
+            <forward name="success" path="/admin/admin.html"/>
+            <forward name="cancel" path="/admin/admin.html" redirect="false"/>
         </action>
 
         <action path="/deleteJobPosting"
@@ -217,9 +200,9 @@
                 validate="false" scope="request"
                 type="org.jrecruiter.webtier.actions.JobPostingAction"
                 parameter="method">
-            <forward name="showJobList" path="userJobList.view"/>
+            <forward name="showJobList" path="/pages/admin/joblist.jsp"/>
             <forward name="success" path="/openEditJobPosting.do?method=listJobPostings" redirect="true"/>
-            <forward name="cancel" path="/adminMain.do" redirect="true"/>
+            <forward name="cancel" path="/admin/admin.html" redirect="true"/>
         </action>
 
         <action path="/openEditJobPostingList"
@@ -235,8 +218,8 @@
                 type="org.jrecruiter.webtier.actions.JobPostingAction"
                 parameter="method">
 
-            <forward name="showJobList" path="userJobList.view"/>
-            <forward name="success" path="editJobPosting.view"/>
+            <forward name="showJobList" path="/pages/admin/joblist.jsp"/>
+            <forward name="success" path="/pages/admin/editjobposting.jsp"/>
             <forward name="ajax" path="/pages/admin/joblistTable.jsp"/>
         </action>
 
@@ -248,7 +231,7 @@
                 scope="request"
                 type="org.jrecruiter.webtier.actions.JobPostingAction"
                 parameter="method">
-            <forward name="success" path="/adminMain.do" redirect="true"/>
+            <forward name="success" path="/admin/admin.html" redirect="true"/>
             <forward name="cancel" path="/openEditJobPosting.do?method=listJobPostings" redirect="true"/>
         </action>
 
@@ -259,15 +242,15 @@
                 scope="request"
                 type="org.jrecruiter.webtier.actions.SettingsAction"
                 parameter="method">
-            <forward name="success" path="/adminMain.do" redirect="false"/>
-            <forward name="openEditSuccess" path="editSettings.view"/>
-            <forward name="cancel" path="/adminMain.do" redirect="false"/>
+            <forward name="success" path="/admin/admin.html" redirect="false"/>
+            <forward name="openEditSuccess" path="/pages/admin/editSettings.jsp"/>
+            <forward name="cancel" path="/admin/admin.html" redirect="false"/>
         </action>
 
         <action path="/showStatistics"
                 type="org.jrecruiter.webtier.actions.StatisticsAction"
                 parameter="method">
-                <forward name="success" path="showStatistics.view" redirect="false"/>
+                <forward name="success" path="/pages/admin/showStatistics.jsp" redirect="false"/>
                 <forward name="ajax" path="/pages/admin/showStatisticsTable.jsp"/>
         </action>
 
@@ -275,26 +258,14 @@
 
     <!-- ============================================= Controller Configuration -->
 
-    <controller
-            processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
-
+    <controller processorClass="org.apache.struts.action.RequestProcessor"/>
 
     <!-- ======================================== Message Resources Definitions -->
 
-    <message-resources parameter="MessageResources"/>
+    <message-resources parameter="messageResources"/>
 
 
     <!-- =============================================== Plug Ins Configuration -->
-    <plug-in className="org.apache.struts.tiles.TilesPlugin">
-
-        <!-- Path to XML definition file -->
-        <set-property property="definitions-config"
-                      value="/WEB-INF/tiles-defs.xml"/>
-        <!-- Set Module-awareness to true -->
-        <set-property property="moduleAware" value="true"/>
-    </plug-in>
-
-
     <!-- =================================================== Validator plugin -->
 
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

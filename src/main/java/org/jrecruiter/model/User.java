@@ -33,7 +33,10 @@ import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.hibernate.validator.Email;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Email;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
 /**
  * This class represents a user.
@@ -41,6 +44,7 @@ import org.hibernate.validator.Email;
  * @author Gunnar Hillert
  * @version @version $Id$
  */
+
 @Entity
 @Table(name="users"
     ,schema="public"
@@ -57,20 +61,40 @@ public class User extends BaseObject implements Serializable, UserDetails{
     private boolean accountLocked;
     //~~ Acegi
     private GrantedAuthority[] authorities;
+    
+    @Length(min = 0, max = 25)
     private String company;
     private boolean credentialsExpired;
+    
+    @NotBlank
+    @Email
+    @MaxLength(value=50)
     private String email;
     private boolean enabled = true;
+    
+    @Length(min = 0, max = 25)
     private String fax;
+    
+    @Length(min = 0, max = 50)
     private String firstName;
+    
+    @Length(min = 0, max = 50)
     private String lastName;
 
+    @NotBlank
+    @Length(min = 1, max = 25)
     private String password;
+    
+    @Length(min = 0, max = 25)
     private String phone;
+    
     private Date registerDate;
     private Set < UserRole > roles;
     private Date updateDate;
     private List < Job > jobs;
+    
+    @NotBlank
+    @Length(min = 1, max = 25)
     private String username;
 
 
@@ -127,6 +151,7 @@ public class User extends BaseObject implements Serializable, UserDetails{
     /**
      * @return Returns the company.
      */
+    
     @Column(name="company", unique=false, nullable=true, insertable=true, updatable=true, length=25)
     public String getCompany() {
         return company;
@@ -137,7 +162,6 @@ public class User extends BaseObject implements Serializable, UserDetails{
      * @return
      */
     @Column(name="email", unique=false, nullable=true, insertable=true, updatable=true, length=50)
-    @Email
     public String getEmail() {
         return email;
     }
