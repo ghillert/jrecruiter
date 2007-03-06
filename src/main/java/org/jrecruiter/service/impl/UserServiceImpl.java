@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
         user.setRegisterDate(registerDate);
         user.setUpdateDate(registerDate);
         try {
-        
+
         	UserRole role = userRoleDao.getRole("manager");
         	Set<UserRole> roles = new HashSet<UserRole>();
         	roles.add(role);

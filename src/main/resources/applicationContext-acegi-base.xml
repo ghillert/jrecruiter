@@ -32,10 +32,10 @@
       <ref bean="authenticationManager"/>
     </property>
     <property name="authenticationFailureUrl">
-      <value>/login.do?status=error</value>
+      <value>/login.html?status=error</value>
     </property>
     <property name="defaultTargetUrl">
-      <value>/adminMain.do</value>
+      <value>/admin.html</value>
     </property>
     <property name="filterProcessesUrl">
       <value>/j_acegi_security_check</value>
@@ -62,7 +62,7 @@
   <bean id="authenticationProcessingFilterEntryPoint"
       class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
     <property name="loginFormUrl">
-      <value>/login.do</value>
+      <value>/login.html</value>
     </property>
     <property name="forceHttps">
       <value>false</value>
@@ -81,7 +81,7 @@
       <value>
             CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
             PATTERN_TYPE_APACHE_ANT
-            /**adminmain.do**=ROLE_admin,ROLE_manager
+            /**admin/admin.html**=ROLE_admin,ROLE_manager
             /**deletejobposting.do**=ROLE_admin,ROLE_manager
             /**openaddjobposting.do**=ROLE_admin,ROLE_manager
             /**addjobposting.do**=ROLE_admin,ROLE_manager

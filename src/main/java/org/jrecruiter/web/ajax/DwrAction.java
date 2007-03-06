@@ -17,14 +17,20 @@ package org.jrecruiter.web.ajax;
 
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Statistics;
 import org.jrecruiter.service.JobService;
 
 
@@ -48,22 +54,89 @@ public class DwrAction extends BaseDwrAction {
 	/* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
-    public String getJob(Long jobId) {
+    public String getJob(Long jobId) throws Exception {
     	
     	WebContext context = WebContextFactory.get();
     	HttpServletRequest request = context.getHttpServletRequest();
     	
-    	Job job = service.getJobForId(jobId);
-    	request.setAttribute("jobDetail", job);
     	String ret = "";
-    	try {
-    		ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
-    	} catch (ServletException e) {
-    		LOGGER.error(e.getMessage(), e);
-    	} catch (IOException e) {
-    		LOGGER.error(e.getMessage(), e);
-    	}
+    	
+    	final Job job = service.getJobForId(jobId);
+    	
+        if (job==null){
+
+            ActionMessages errors = new ActionMessages();
+            errors.add("notfound", new ActionMessage("error.jobposting.not.found", jobId.toString()));
+            
+            request.setAttribute("errors", errors);
+
+            LOGGER.warn("Requested jobposting with id " + jobId + " was not found.");
+
+            //TODO FIX forward
+            ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
+
+        } else {
+        	
+        	 Statistics statistics = job.getStatistics();
+
+             if (statistics == null) {
+
+                 statistics = new Statistics();
+                 statistics.setJob(job);
+                 statistics.setCounter(new Long(0));
+                 statistics.setUniqueVisits(new Long(0));
+                 job.setStatistics(statistics);
+             }
+
+             Set viewedPostings = new HashSet<Long>();
+
+             if (request.getSession().getAttribute("visited") != null){
+
+                 viewedPostings = (Set)request.getSession().getAttribute("visited");
+
+                 if (viewedPostings.contains(jobId)){
+
+
+                 } else {
+                     long counter = statistics.getUniqueVisits().longValue() + 1 ;
+                     statistics.setUniqueVisits(new Long (counter));
+                     viewedPostings.add(jobId);
+                 }
+
+             } else {
+
+                 long counter;
+
+                 if (statistics.getUniqueVisits() != null)
+                 {
+                     counter = statistics.getUniqueVisits().longValue() + 1 ;
+                 } else {
+                     counter = 1;
+                 }
+
+
+                 statistics.setUniqueVisits(new Long (counter));
+
+                 viewedPostings.add(jobId);
+                 request.getSession().setAttribute("visited", viewedPostings);
+
+             }
+
+             Long counter = statistics.getCounter().longValue();
+             counter ++;
+
+             statistics.setCounter(new Long(counter));
+             statistics.setLastAccess(new Date());
+             service.updateJob(job);
+         
+             
+             request.setAttribute("jobDetail", job);
+         	
+         		ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
+
+            }
         return ret;
+        
         
     }
 

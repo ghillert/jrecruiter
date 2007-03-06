@@ -19,12 +19,12 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
  *
  */
-public class UserFormController extends SimpleFormController  {
+public class AddUserFormController extends SimpleFormController  {
 	
 	/**
 	 * Logger Declaration.
 	 */
-    private final Log LOGGER = LogFactory.getLog(UserFormController.class);
+    private final Log LOGGER = LogFactory.getLog(AddUserFormController.class);
     
     /**
      * The service layer reference.
@@ -51,6 +51,15 @@ public class UserFormController extends SimpleFormController  {
 		this.ajaxView = ajaxView;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.mvc.BaseCommandController#onBindAndValidate(javax.servlet.http.HttpServletRequest, java.lang.Object, org.springframework.validation.BindException)
+	 */
+	@Override
+	protected void onBindAndValidate(HttpServletRequest request, Object command, BindException errors) throws Exception {
+		// TODO Auto-generated method stub
+		super.onBindAndValidate(request, command, errors);
+	}
+
 	/**
 	 * 
 	 */
@@ -63,9 +72,11 @@ public class UserFormController extends SimpleFormController  {
 			if (request.getParameter("cancel") != null) {
 				return new ModelAndView(getSuccessView());
 			}
-			
+
 			return super.processFormSubmission(request, response, command, errors);
 	}
+    
+    
     
     /**
      * 
@@ -75,9 +86,8 @@ public class UserFormController extends SimpleFormController  {
             BindException errors)
 	throws Exception {
 		LOGGER.debug("entering 'onSubmit' method...");
-		
+
 		User user = (User) command;
-		
         try {
            service.addUser(user);
         } catch (DuplicateUserException e) {
