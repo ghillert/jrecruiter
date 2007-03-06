@@ -19,7 +19,7 @@
     - definition will simply be used by the next level (countries-servlet.xml).
     -->
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-    <property name="basename"><value>messages</value></property>
+    <property name="basename"><value>messageResources</value></property>
   </bean>
 
     <aop:config>
@@ -39,6 +39,8 @@
     <property name="message"><ref bean="mailMessage"/></property>
     <property name="userDao"><ref bean="userDao"/></property>
     <property name="settingsDao"><ref bean="settingDao"/></property>
+    <property name="userRoleDao"><ref bean="userRoleDao"/></property>
+    
   </bean>
 
   <bean id="jobService" class="org.jrecruiter.service.impl.JobServiceImpl">
@@ -107,5 +109,7 @@
     <bean id="userDao" class="org.jrecruiter.dao.hibernate.UserDAOHibernate" parent="baseDao"/>
 
     <bean id="settingDao" class="org.jrecruiter.dao.hibernate.SettingsDAOHibernate" parent="baseDao"/>
+    
+    <bean id="userRoleDao" class="org.jrecruiter.dao.hibernate.UserRoleDAOHibernate" parent="baseDao"/>
 
 </beans>

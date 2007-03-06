@@ -13,7 +13,7 @@
 		<param-name>
 			javax.servlet.jsp.jstl.fmt.localizationContext
 		</param-name>
-		<param-value>MessageResources</param-value>
+		<param-value>messageResources</param-value>
 	</context-param>
 	
 	<filter>
@@ -90,7 +90,12 @@
         <filter-name>lazyLoadingFilter</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
-	
+    
+    <filter-mapping>
+        <filter-name>lazyLoadingFilter</filter-name>
+        <url-pattern>/j_acegi_security_check</url-pattern>
+    </filter-mapping>
+    
     <filter-mapping>
         <filter-name>exportFilter</filter-name>
         <url-pattern>*.html</url-pattern>
@@ -180,15 +185,6 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<error-page>
-		<error-code>403</error-code>
-		<location>/pages/error/403.jsp</location>
-	</error-page>
-
-	<error-page>
-		<error-code>404</error-code>
-		<location>/pages/error/404.jsp</location>
-	</error-page>
 
 	<resource-ref>
 		<description>postgreSQL Datasource</description>

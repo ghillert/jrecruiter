@@ -402,3 +402,10 @@ table.default {
         width: 400px;
     }
 
+.formError {
+		display: block;
+        margin: 0px auto 1em auto;
+        border: 1px solid red;
+        padding: 3px 10px 3px 10px;
+        width: 378px;
+}

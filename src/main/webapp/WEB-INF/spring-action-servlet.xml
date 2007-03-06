@@ -5,6 +5,14 @@
 	       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 	                           http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
+	<bean id="validator" 
+	class="org.springmodules.validation.bean.BeanValidator">
+			<property name="configurationLoader" ref="configurationLoader"/>
+		</bean>
+		<bean id="configurationLoader" 
+	class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" 
+	/>
+ 
     <bean id="exceptionResolver" 
         class="org.jrecruiter.webtier.CustomMappingExceptionResolver">
         <property name="exceptionMappings">
@@ -17,13 +25,9 @@
     </bean>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="messages"/>
+        <property name="basename" value="messageResources"/>
     </bean>
 
-    <bean id="beanValidator" class="org.springmodules.validation.commons.DefaultBeanValidator">
-        <property name="validatorFactory" ref="validatorFactory"/>
-    </bean>
-    
         
     <!-- View Resolver for JSPs -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -32,12 +36,13 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-
 	<bean id="urlMapping" 
           class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <value>
+            	/logOut.html=logOutController
             	/showJobs.html=jobListController
+            	/addUser.html=userFormController
             </value>
         </property>
     </bean>
@@ -60,6 +65,15 @@
 
 <!-- Controller Definitions -->
 
+    <bean id="userFormController" class="org.jrecruiter.web.controller.AddUserFormController">
+        <property name="validator" ref="validator"/>
+        <property name="formView"  value="pages/user/addUser"/>
+        <property name="successView" value="redirect:/welcome.html"/>
+        <property name="service" ref="userService"/>
+        <property name="commandClass" value="org.jrecruiter.model.User"/>
+    </bean>
+
+
     <bean id="jobListController" class="org.jrecruiter.web.controller.JobListController">
         <property name="methodNameResolver" ref="methodNameResolver"/>
         <property name="service" ref="jobService"/>
@@ -68,6 +82,11 @@
         <property name="ajaxView" value="/pages/jobsTable"/>
     </bean>
 
+    <bean id="logOutController" class="org.jrecruiter.web.controller.LogOutController">
+        <property name="methodNameResolver" ref="methodNameResolver"/>
+        <property name="successView" value="redirect:/"/>
+    </bean>
+    
 <!-- Forward directly to views -->
 
 <bean id="urlViewMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/> 
@@ -75,7 +94,8 @@
 <bean name="/welcome.html" class="org.springframework.web.servlet.mvc.ParameterizableViewController"> 
     <property name="viewName"><value>pages/welcome</value></property> 
 </bean> 
- 
+
+
 <!-- Configuring DWR (Ajax) -->
 
   <dwr:controller id="dwrController" debug="true"/>
@@ -88,5 +108,20 @@
     <property name="service" ref="jobService"/>
     <dwr:remote javascript="ajaxService"><dwr:include method="getJob"/></dwr:remote>
   </bean>
+
+
+<bean name="/admin/admin.html" class="org.springframework.web.servlet.mvc.ParameterizableViewController"> 
+    <property name="viewName"><value>/pages/admin/adminmain</value></property> 
+</bean> 
+
+<bean name="/login.html" class="org.springframework.web.servlet.mvc.ParameterizableViewController"> 
+    <property name="viewName"><value>/pages/user/login</value></property> 
+</bean> 
+
+<bean name="/forgotYourPassword.html" class="org.springframework.web.servlet.mvc.ParameterizableViewController"> 
+    <property name="viewName"><value>/pages/user/forgotYourPassword</value></property> 
+</bean> 
+
+
 
 </beans>

@@ -1,5 +1,6 @@
 <decorators defaultdir="/decorators">
     <decorator name="default" page="default.jsp">
         <pattern>/*.html</pattern>
+        <pattern>/*.do</pattern>
     </decorator>
 </decorators>
