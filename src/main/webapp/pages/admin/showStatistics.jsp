@@ -14,7 +14,7 @@
                 </html:messages>
         </div>
   </logic:messagesPresent>
-    <bean:message key="admin.main.welcome"/> ${pageContext.request.userPrincipal.principal.username}!
+    <fmt:message key="admin.main.welcome"/> ${pageContext.request.userPrincipal.principal.username}!
 
     <%@include file="/pages/admin/showStatisticsTable.jsp"%>
 

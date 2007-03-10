@@ -1,33 +1,21 @@
-/*
- *	http://www.jrecruiter.org
- *
- *	Disclaimer of Warranty.
- *
- *	Unless required by applicable law or agreed to in writing, Licensor provides
- *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
- *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
- *	including, without limitation, any warranties or conditions of TITLE,
- *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
- *	solely responsible for determining the appropriateness of using or
- *	redistributing the Work and assume any risks associated with Your exercise of
- *	permissions under this License.
- *
- */
-package org.jrecruiter.webtier.actions;
+package org.jrecruiter.web.controller.admin;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
+import org.displaytag.properties.SortOrderEnum;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -48,63 +36,104 @@ import org.jfree.ui.TextAnchor;
 import org.jrecruiter.Constants;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
+import org.jrecruiter.web.JobsForDisplaytagSorting;
+import org.jrecruiter.web.controller.rss.views.JobsRSSView;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 /**
- * This struts action will generate charts for job
- * statistics purposes.
- *
+ * List all the jobs. 
+ * 
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ *
  */
-public class StatisticsAction extends DispatchAction {
+public class ShowStatisticsChartController extends MultiActionController  {
+	
+	/**
+	 * Logger Declaration.
+	 */
+    private final Log LOGGER = LogFactory.getLog(ShowStatisticsChartController.class);
+    
+    /**
+     * The service layer reference.
+     */
+    private JobService service;
 
-    public static final Logger logger = Logger
-            .getLogger(StatisticsAction.class);
+    /**
+     * Success View
+     */
+    private String successView;
+    
+    /**
+     * Success View for showing the job details
+     */
+    private String successViewShowDetails;
+    
+    /**
+     * Ajax View 
+     */
+    private String ajaxView;
+    
+    /**
+     * Inject the service layer reference.
+     * @param service 
+     */
+    public void setService(JobService service) {
+		this.service = service;
+	}
 
-    public ActionForward showStatistics(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
+    /**
+	 * @param ajaxView the ajaxView to set
+	 */
+	public void setAjaxView(String ajaxView) {
+		this.ajaxView = ajaxView;
+	}
+
+	public void setSuccessViewShowDetails(String successViewShowDetails) {
+		this.successViewShowDetails = successViewShowDetails;
+	}
+
+	/**
+	 * @param successView the successView to set
+	 */
+	public void setSuccessView(String successView) {
+		this.successView = successView;
+	}
+
+
+    /**
+     * Default view for this controller.
+     *
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @return ModelAndView
+     * @throws Exception Let Exceptions bubble up
+     */
+    public final ModelAndView view(final HttpServletRequest request,
+                                   final HttpServletResponse response)
             throws Exception {
 
-        if (request.getUserPrincipal() != null) {
+final List jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
 
-            final ApplicationContext context = WebApplicationContextUtils
-                    .getRequiredWebApplicationContext(servlet
-                            .getServletContext());
+request.setAttribute("jobs", jobs);
 
-            final JobService service = (JobService) context
-                    .getBean("jobService");
+String ajaxCall = request.getParameter("displayAjax");
+if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
+    return new ModelAndView("ajax");
+}
 
-            final List jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
-
-            request.setAttribute("jobs", jobs);
-
-            String ajaxCall = request.getParameter("displayAjax");
-            if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
-                return mapping.findForward("ajax");
-            }
-
-            return mapping.findForward("success");
-
-        }
-        return mapping.findForward("sessionTimeout");
+return new ModelAndView("success");
     }
-
-    public ActionForward chartJobsHits(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
+    
+    
+    
+        public final ModelAndView chartJobsHits(final HttpServletRequest request,
+                final HttpServletResponse response) throws Exception {
+        
         String chartTitle = null;
-
-        if (request.getUserPrincipal() != null) {
-
-            final ApplicationContext context = WebApplicationContextUtils
-                    .getRequiredWebApplicationContext(servlet
-                            .getServletContext());
-
-            final JobService service = (JobService) context
-                    .getBean("jobService");
 
             String mode = request.getParameter("mode");
             boolean createChart = true;
@@ -161,9 +190,6 @@ public class StatisticsAction extends DispatchAction {
             }
 
             return null;
-
-        }
-        return mapping.findForward("sessionTimeout");
     }
 
     private static JFreeChart createChart(final CategoryDataset categorydataset,
@@ -207,4 +233,32 @@ public class StatisticsAction extends DispatchAction {
         return chart;
     }
 
+    
+    
+    
+    /**
+     * Convenient method for getting a i18n key's value with a single
+     * string argument.
+     *
+     * @param msgKey
+     * @param arg
+     * @return
+     */
+    public String getText(String msgKey, String arg) {
+        return getText(msgKey, new Object[] { arg });
+    }
+    
+    /**
+     * Convenience method for getting a i18n key's value with arguments.
+     *
+     * @param msgKey
+     * @param args
+     * @return
+     */
+    public String getText(String msgKey, Object[] args) {
+        return getMessageSourceAccessor().getMessage(msgKey, args);
+    }
+
+    
+    
 }

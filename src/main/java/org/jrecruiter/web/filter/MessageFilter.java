@@ -1,4 +1,4 @@
-package org.jrecruiter.webtier.filter;
+package org.jrecruiter.web.filter;
 
 import java.io.IOException;
 

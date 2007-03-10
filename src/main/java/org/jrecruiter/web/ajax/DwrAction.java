@@ -16,17 +16,13 @@
 package org.jrecruiter.web.ajax;
 
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.jrecruiter.model.Job;
@@ -65,10 +61,11 @@ public class DwrAction extends BaseDwrAction {
     	
         if (job==null){
 
-            ActionMessages errors = new ActionMessages();
-            errors.add("notfound", new ActionMessage("error.jobposting.not.found", jobId.toString()));
+        	//FIXME      	
+            //ActionMessages errors = new ActionMessages();
+            //errors.add("notfound", new ActionMessage("error.jobposting.not.found", jobId.toString()));
             
-            request.setAttribute("errors", errors);
+            //request.setAttribute("errors", errors);
 
             LOGGER.warn("Requested jobposting with id " + jobId + " was not found.");
 
