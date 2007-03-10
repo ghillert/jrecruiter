@@ -46,7 +46,7 @@ function checkDelete(){
       </logic:notEmpty>
 
       <logic:empty name="userList">
-                      <bean:message key="message.noAvailableJobs"/>
+                      <fmt:message key="message.noAvailableJobs"/>
       </logic:empty>
         <br/><br/>
         <html:cancel><bean:message key="jobposting.button.cancel"/></html:cancel>

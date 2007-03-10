@@ -46,7 +46,7 @@ function checkDelete(){
       <br/><br/>
       <html:cancel><bean:message key="jobposting.button.cancel"/></html:cancel>
           <logic:notEmpty name="JobList">
-            <html:submit onclick="javascript:return checkDelete();"><bean:message key="jobposting.button.delete"/></html:submit>
+            <html:submit onclick="javascript:return checkDelete();"><fmt:message key="jobposting.button.delete"/></html:submit>
           </logic:notEmpty>
   </html:form>
 </div>

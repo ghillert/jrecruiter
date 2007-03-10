@@ -9,7 +9,7 @@
 
 <div id="main">
 
-  <h2><bean:message key="jsp.editSettings.title"/></h2>
+  <h2><fmt:message key="jsp.editSettings.title"/></h2>
   <logic:messagesPresent>
       <div class="error">
           <html:messages id="error">
@@ -59,28 +59,28 @@ The following Variables are available when creating the templates below.
   <html:form target="" action="/editSettings?method=editSettings" focus="jobTitle">
   <table class="jobposting">
       <tr>
-          <td><bean:message key="jsp.editSettings.field.jobposting.to"/>*</td>
+          <td><fmt:message key="jsp.editSettings.field.jobposting.to"/>*</td>
           <td>
               <html:text tabindex="1" onblur="javascript:this.className='';" style="width: 250px;"
                          onfocus="javascript:this.className='selected';" property="mailingListEmail" errorStyleClass="error"/>
           </td>
     </tr>
     <tr>
-          <td><bean:message key="jsp.editSettings.field.mail.from"/>*</td>
+          <td><fmt:message key="jsp.editSettings.field.mail.from"/>*</td>
           <td>
               <html:text tabindex="1" onblur="javascript:this.className='';" style="width: 250px;"
                          onfocus="javascript:this.className='selected';" property="mailFrom" errorStyleClass="error"/>
           </td>
     </tr>
     <tr>
-          <td><bean:message key="jsp.editSettings.field.jobposting.subject"/>*</td>
+          <td><fmt:message key="jsp.editSettings.field.jobposting.subject"/>*</td>
           <td>
               <html:text tabindex="2" property="mailingListSubject" onblur="javascript:this.className='';" style="width: 250px;"
                          onfocus="javascript:this.className='selected';" errorStyleClass="error"/>
           </td>
       </tr>
       <tr>
-          <td><bean:message key="jsp.editSettings.field.jobposting.template"/></td>
+          <td><fmt:message key="jsp.editSettings.field.jobposting.template"/></td>
           <td>
               <html:textarea tabindex="14" property="mailingListTemplate" style="width: 500px" rows="15"
                              onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"
@@ -88,14 +88,14 @@ The following Variables are available when creating the templates below.
           </td>
     <tr>
     <tr>
-          <td><bean:message key="jsp.editSettings.field.password.subject"/></td>
+          <td><fmt:message key="jsp.editSettings.field.password.subject"/></td>
           <td>
               <html:text tabindex="4" property="passwordSubject" onblur="javascript:this.className='';" style="width: 250px;"
                          onfocus="javascript:this.className='selected';" errorStyleClass="error"/>
           </td>
       </tr>
        <tr>
-          <td><bean:message key="jsp.editSettings.field.password.template"/>*</td>
+          <td><fmt:message key="jsp.editSettings.field.password.template"/>*</td>
           <td>
               <html:textarea tabindex="14" property="passwordTemplate" style="width: 500px" rows="15"
                              onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"
@@ -105,16 +105,16 @@ The following Variables are available when creating the templates below.
           <td>&nbsp;</td>
           <td>
               <html:submit>
-              <bean:message key="jobposting.button.save"/>
+              <fmt:message key="jobposting.button.save"/>
               </html:submit>
               <html:cancel>
-              <bean:message key="jobposting.button.cancel"/>
+              <fmt:message key="jobposting.button.cancel"/>
               </html:cancel></td>
       </tr>
       <tr>
           <td>&nbsp; </td>
           <td>
-              <bean:message key="jobposting.add.label.mandatory"/></td>
+              <fmt:message key="jobposting.add.label.mandatory"/></td>
       </tr>
   </table>
   </html:form>

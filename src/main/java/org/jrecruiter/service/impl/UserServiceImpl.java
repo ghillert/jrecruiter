@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -36,6 +37,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
@@ -190,6 +192,7 @@ public class UserServiceImpl implements UserService {
         }
         msg.setText(result);
 
+        //JavaMailSenderImpl sender=(JavaMailSenderImpl) this.mailSender;
         try {
             //JavaMailSenderImpl r = (JavaMailSenderImpl)mailSender;
             //r.getSession().setDebug(true);

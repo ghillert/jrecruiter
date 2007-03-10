@@ -127,5 +127,13 @@ public class UserRole extends BaseObject implements Serializable, GrantedAuthori
                 description).toHashCode();
     }
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {	
+		return this.getAuthority();
+	}
+
 }
 
