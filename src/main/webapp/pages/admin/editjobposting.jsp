@@ -9,7 +9,7 @@
 
 <div id="main">
 
-  <h2><bean:message key="admin.edit.job.title"/></h2>
+  <h2><fmt:message key="admin.edit.job.title"/></h2>
   <logic:messagesPresent>
       <div class="error">
           <html:messages id="error">

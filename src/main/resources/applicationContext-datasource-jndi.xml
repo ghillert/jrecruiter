@@ -15,7 +15,11 @@
 	
 	<!-- Configure Mail using JNDI -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="session"><ref bean="mailSession"/></property>
-	</bean>
+		   
+      <property name="host" value="mail.hillert.com"/>
+      <property name="password" value="babhill01"/>
+      <property name="username" value="gunnar@hillert.com"/>
+   </bean>
+
 
 </beans>

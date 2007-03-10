@@ -13,21 +13,21 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.webtier;
+package org.jrecruiter.web;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: Util.java 24 2006-05-18 03:09:15Z ghillert $
  */
-public class Util {
+public class WebUtil {
 
     /**
      * Constructor.
      */
-    public Util() {
+    public WebUtil() {
         super();
     }
 

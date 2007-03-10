@@ -81,7 +81,7 @@
       <value>
             CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
             PATTERN_TYPE_APACHE_ANT
-            /**admin/admin.html**=ROLE_admin,ROLE_manager
+            /**admin/admin.html**=admin,ROLE_manager
             /**deletejobposting.do**=ROLE_admin,ROLE_manager
             /**openaddjobposting.do**=ROLE_admin,ROLE_manager
             /**addjobposting.do**=ROLE_admin,ROLE_manager

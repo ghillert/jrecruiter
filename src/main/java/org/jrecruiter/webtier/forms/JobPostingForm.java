@@ -15,15 +15,13 @@
 */
 package org.jrecruiter.webtier.forms;
 
-import org.apache.struts.validator.ValidatorForm;
-
 /**
  * Struts Action Form that holds a job posting
  *
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class JobPostingForm extends ValidatorForm {
+public class JobPostingForm {
 
     /**
      * Comment for <code>serialVersionUID.</code>

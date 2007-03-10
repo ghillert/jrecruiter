@@ -13,33 +13,28 @@
 
 <div id="main">
 
-  <logic:messagesPresent>
-      <div class="error">
-          <html:messages id="error">
-          <bean:write name="error"/><br/>
-          </html:messages>
-      </div>
-  </logic:messagesPresent>
-
-  <html:form target="" action="/emailPassword" focus="username">
+	<h2>Forgot Password</h2>
+	<form:form commandName="command" method="post" action="getPassword.html" id="userForm">
+	<form:errors path="*" cssClass="formError"/>
 
   <table>
      <tr>
           <td colspan="2">
-              <bean:message key="user.forgot.password.text"/>
+              <fmt:message key="user.forgot.password.text"/>
           </td>
       </tr>
       <tr>
-          <td><bean:message key="user.username" /></td>
+          <td><label for="username"><fmt:message key="user.username" /></label></td>
           <td>
-            <html:text tabindex="1" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';" property="username" errorStyleClass="error"/>
+            <form:input path="username" id="username" maxlength="25" tabindex="2" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+        	<form:errors path="username" cssClass="fieldError"/>
           </td>
     </tr>
     <tr>
       <td >&nbsp;</td>
-      <td colspan="2"><html:submit/> <html:cancel /></td>
+      <td colspan="2"><input type="submit" class="button" name="submit" value="Submit"/><input type="button" value="Cancel" onClick="location.href='<c:url value='/'/>';"></td>
     </tr>
   </table>
 
-  </html:form>
+  </form:form>
 </div>

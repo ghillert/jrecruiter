@@ -1,9 +1,8 @@
 package org.jrecruiter.web.controller;
 
-import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +11,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.displaytag.properties.SortOrderEnum;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Statistics;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.web.JobsForDisplaytagSorting;
+import org.jrecruiter.web.controller.rss.views.JobsRSSView;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -25,12 +24,12 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
  * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
  *
  */
-public class JobListController extends MultiActionController  {
+public class JobsRSSController extends MultiActionController  {
 	
 	/**
 	 * Logger Declaration.
 	 */
-    private final Log LOGGER = LogFactory.getLog(JobListController.class);
+    private final Log LOGGER = LogFactory.getLog(JobsRSSController.class);
     
     /**
      * The service layer reference.
@@ -140,92 +139,11 @@ public class JobListController extends MultiActionController  {
 	    	return new ModelAndView(ajaxView, "JobList", jobsDisplaytag);
 	    }
 	    
-	    request.setAttribute("JobList", jobsDisplaytag);
-        return new ModelAndView(successView);
+	    Map <String, Object>model = new HashMap<String, Object>();
+	    model.put("jobs", jobs);
+        return new ModelAndView(new JobsRSSView(), model);
     }
     
-    /**
-     * Default view for this controller.
-     *
-     * @param request HttpServletRequest
-     * @param response HttpServletResponse
-     * @return ModelAndView
-     * @throws Exception Let Exceptions bubble up
-     */
-    public final ModelAndView details(final HttpServletRequest request,
-                                   final HttpServletResponse response)
-            throws Exception {
-
-            final Long id = Long.valueOf(request.getParameter("id"));
-            final Job jobDetail = service.getJobForId(id);
-
-            if (jobDetail==null){
-                
-                request.getSession().setAttribute("message",
-                        getText("error.jobposting.not.found", id.toString()));
-
-                LOGGER.warn("Requested jobposting with id " + id + " was not found.");
-
-                return new ModelAndView(successView);
-            }
-
-            Statistics statistics = jobDetail.getStatistics();
-
-            if (statistics == null) {
-
-                statistics = new Statistics();
-                statistics.setJob(jobDetail);
-                statistics.setCounter(new Long(0));
-                statistics.setUniqueVisits(new Long(0));
-                jobDetail.setStatistics(statistics);
-            }
-
-            Set < Long > viewedPostings = new HashSet < Long >();
-
-            if (request.getSession().getAttribute("visited") != null){
-
-                viewedPostings = (Set)request.getSession().getAttribute("visited");
-
-                if (viewedPostings.contains(id)){
-
-
-                } else {
-                    long counter = statistics.getUniqueVisits().longValue() + 1 ;
-                    statistics.setUniqueVisits(new Long (counter));
-                    viewedPostings.add(id);
-                }
-
-            } else {
-
-                long counter;
-
-                if (statistics.getUniqueVisits() != null)
-                {
-                    counter = statistics.getUniqueVisits().longValue() + 1 ;
-                } else {
-                    counter = 1;
-                }
-
-
-                statistics.setUniqueVisits(new Long (counter));
-
-                viewedPostings.add(id);
-                request.getSession().setAttribute("visited", viewedPostings);
-
-            }
-
-            Long counter = statistics.getCounter().longValue();
-            counter ++;
-
-            statistics.setCounter(new Long(counter));
-            statistics.setLastAccess(new Date());
-            service.updateJob(jobDetail);
-
-            request.setAttribute("jobDetail", jobDetail);
-
-            return new ModelAndView(successViewShowDetails);
-        }
-
     /**
      * Convenient method for getting a i18n key's value with a single
      * string argument.

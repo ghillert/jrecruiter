@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.jrecruiter.webtier;
+package org.jrecruiter.web;
 
 import java.util.List;
 

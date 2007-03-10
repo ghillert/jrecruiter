@@ -31,7 +31,7 @@
 		</li>
 	</ul>
 </div>
-<p><bean:message key="welcome.introduction.text.bottom" /></p>
-<p><bean:message key="welcome.introduction.text.support" /></p>
+<p><fmt:message key="welcome.introduction.text.bottom" /></p>
+<p><fmt:message key="welcome.introduction.text.support" /></p>
 </div>
 

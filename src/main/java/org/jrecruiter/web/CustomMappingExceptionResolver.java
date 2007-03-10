@@ -13,7 +13,7 @@
  *  permissions under this License.
  *
  */
-package org.jrecruiter.webtier;
+package org.jrecruiter.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
