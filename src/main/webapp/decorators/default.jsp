@@ -1,4 +1,4 @@
-<%@include file="/includes/taglibs.jsp"%>
+<%@include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -39,9 +39,24 @@
 	
 	</head>
 <body onload="init();">
-    <%@ include file="/pages/global/header.jsp"%>
-    <decorator:body/>
-    <%@ include file="/pages/global/footer.jsp"%>
+    <%@ include file="/WEB-INF/jsp/pages/global/header.jsp"%>
+	<div id="header_menu">
+		  <a href="<c:url value='/'/>" class="button" title="Back to the start page.">
+		        <fmt:message key="all.back.to.welcome.page"/>
+		  </a>
+		<form
+			style="margin-bottom:0;margin-top:0;" action="<c:url value='/searchJobs.html'/>" method="post">
+			<input type="text" id="keyword" name="keyword" class="headerForm"
+				onblur="javascript:this.className='headerForm';"
+				onfocus="javascript:this.className='headerFormSelected';" />
+			<a href="javascript:document.forms[0].submit();" class="button">Search</a>
+		</form>
+	</div>
+    <div id="main"> 
+	    <%@ include file="/WEB-INF/jsp/includes/messages.jsp"%>
+	    <decorator:body/>
+    </div>
+    <%@ include file="/WEB-INF/jsp/pages/global/footer.jsp"%>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
     </script>
