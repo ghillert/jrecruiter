@@ -31,7 +31,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
@@ -103,10 +103,10 @@
 	<bean id="searchJobsFormController"
 		class="org.jrecruiter.web.controller.SearchJobsFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
-		<property name="successView" value="redirect:/welcome.html" />
+		<property name="formView" value="pages/search" />
+		<property name="successView" value="pages/jobs" />
 		<property name="service" ref="jobService" />
-		<property name="commandClass" value="org.jrecruiter.model.User" />
+		<property name="commandClass" value="org.jrecruiter.web.forms.SearchForm" />
 	</bean>
 
 	<bean id="jobListController"
