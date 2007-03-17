@@ -1,34 +1,20 @@
-<%@ include file="/includes/taglibs.jsp"%>
+<%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-    <div  id="header_menu">
-      <html:link action="backToWelcomePage" styleClass="button">
-            <fmt:message key="all.back.to.welcome.page"/>
-      </html:link>
-      </div>
-
-<div id="main">
-  <logic:messagesPresent message="true">
-        <div class="success">
-                <html:messages id="message" property="info" message="true">
-                     <bean:write name="message"/><br/>
-                </html:messages>
-        </div>
-  </logic:messagesPresent>
     <fmt:message key="admin.main.welcome"/> ${pageContext.request.userPrincipal.principal.username}!
 
     <div class="adminMain">
       <ul>
-          <li><html:link action="editUser" ><fmt:message key="admin.main.label.edit.registration"/></html:link></li>
-          <li><html:link action="openEditJobPosting?method=listJobPostings" ><fmt:message key="admin.main.label.edit.jobs"/></html:link></li>
-          <li><html:link action="openAddJobPosting?method=openAddJobPosting" ><fmt:message key="admin.main.label.add.job"/></html:link></li>
-            <li><html:link action="showStatistics?method=showStatistics" ><fmt:message key="admin.main.label.show.statistics"/></html:link></li>
+          <li><a href="<c:url value='/editUser.html'/>" ><fmt:message key="admin.main.label.edit.registration"/></a></li>
+          <li><a href="<c:url value='/openEditJobPosting?method=listJobPostings.html'/>" ><fmt:message key="admin.main.label.edit.jobs"/></a></li>
+          <li><a href="<c:url value='/openAddJobPosting?method=openAddJobPosting.html'/>" ><fmt:message key="admin.main.label.add.job"/></a></li>
+          <li><a href="<c:url value='/showStatistics?method=showStatistics.html'/>" ><fmt:message key="admin.main.label.show.statistics"/></a></li>
           <logic:present role="admin">
-            <li><html:link action="userList" ><fmt:message key="admin.main.label.edit.user"/></html:link></li>
-            <li><html:link action="addUser" ><fmt:message key="admin.main.label.add.user"/></html:link></li>
-           <li><html:link action="editSettings?method=openEditSettings" ><fmt:message key="admin.main.label.edit.settings"/></html:link></li>
-        </logic:present>
-          <li><html:link action="showJobs" ><fmt:message key="admin.main.label.view.jobs"/></html:link></li>
-          <li><html:link action="logout" ><fmt:message key="admin.main.label.logout"/></html:link></li>
+          <li><a href="<c:url value='/userList.html'/>" ><fmt:message key="admin.main.label.edit.user"/></a></li>
+          <li><a href="<c:url value='/addUser.html'/>" ><fmt:message key="admin.main.label.add.user"/></a></li>
+          <li><a href="<c:url value='/editSettings.html?method=openEditSettings'/>" ><fmt:message key="admin.main.label.edit.settings"/></a></li>
+          </logic:present>
+          <li><a href="<c:url value='/showJobs.html'/>" ><fmt:message key="admin.main.label.view.jobs"/></a></li>
+          <li><a href="<c:url value='/logout.html'/>" ><fmt:message key="admin.main.label.logout"/></a></li>
       </ul>
     </div>
-</div>
+
