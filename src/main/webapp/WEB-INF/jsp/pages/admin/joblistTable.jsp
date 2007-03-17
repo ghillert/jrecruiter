@@ -1,4 +1,4 @@
-<%@ include file="/includes/taglibs.jsp"%>
+<%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <ajax:displayTag id="displayTagFrame" ajaxFlag="displayAjax" baseUrl="${ctx}/openEditJobPostingList.do" postFunction="h()">
       <display:table name="JobList" pagesize="15" requestURI="" id="job" class="displaytag" export="false" sort="list">
