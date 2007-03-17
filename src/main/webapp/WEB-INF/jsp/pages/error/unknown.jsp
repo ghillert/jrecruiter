@@ -1,4 +1,4 @@
-<%@ include file="/includes/taglibs.jsp"%>
+<%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"

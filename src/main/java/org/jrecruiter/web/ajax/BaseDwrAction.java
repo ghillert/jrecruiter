@@ -30,6 +30,6 @@ public class BaseDwrAction {
      */
     private static final Logger LOGGER = Logger.getLogger(BaseDwrAction.class);
 
-    final String TEMPLATE_DIRECTORY = "/includes/dwr";
+    final String TEMPLATE_DIRECTORY = "/WEB-INF/jsp/includes/dwr";
 
 }
