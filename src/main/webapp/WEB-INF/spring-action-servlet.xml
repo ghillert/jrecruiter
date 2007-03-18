@@ -79,7 +79,7 @@
 	<bean id="addUserFormController"
 		class="org.jrecruiter.web.controller.AddUserFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/addUser" />
+		<property name="formView" value="user/addUser" />
 		<property name="successView" value="redirect:/welcome.html" />
 		<property name="service" ref="userService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
@@ -88,7 +88,7 @@
 	<bean id="getPasswordFormController"
 		class="org.jrecruiter.web.controller.GetPasswordFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
+		<property name="formView" value="user/getPassword" />
 		<property name="successView" value="redirect:/welcome.html" />
 		<property name="service" ref="userService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
@@ -103,8 +103,8 @@
 	<bean id="searchJobsFormController"
 		class="org.jrecruiter.web.controller.SearchJobsFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/search" />
-		<property name="successView" value="pages/jobs" />
+		<property name="formView" value="search" />
+		<property name="successView" value="jobs" />
 		<property name="service" ref="jobService" />
 		<property name="commandClass" value="org.jrecruiter.web.forms.SearchForm" />
 	</bean>
@@ -113,10 +113,10 @@
 		class="org.jrecruiter.web.controller.JobListController">
 		<property name="methodNameResolver" ref="methodNameResolver" />
 		<property name="service" ref="jobService" />
-		<property name="successView" value="/pages/jobs" />
+		<property name="successView" value="jobs" />
 		<property name="successViewShowDetails"
-			value="/pages/jobDetail" />
-		<property name="ajaxView" value="/pages/jobsTable" />
+			value="/jobDetail" />
+		<property name="ajaxView" value="/jobsTable" />
 	</bean>
 
 	<bean id="jobsRSSController"
@@ -132,8 +132,8 @@
 	<bean id="addJobFormController"
 		class="org.jrecruiter.web.controller.admin.AddJobFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
-		<property name="successView" value="redirect:/welcome.html" />
+		<property name="formView" value="admin/addJob" />
+		<property name="successView" value="redirect:/admin/admin.html" />
 		<property name="service" ref="jobService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
 	</bean>
@@ -141,8 +141,8 @@
 	<bean id="editConfigurationFormController"
 		class="org.jrecruiter.web.controller.admin.EditConfigurationFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
-		<property name="successView" value="redirect:/welcome.html" />
+		<property name="formView" value="user/getPassword" />
+		<property name="successView" value="redirect:/admin/admin.html" />
 		<property name="service" ref="jobService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
 	</bean> 
@@ -150,8 +150,8 @@
 	<bean id="editUserFormController"
 		class="org.jrecruiter.web.controller.admin.EditUserFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
-		<property name="successView" value="redirect:/welcome.html" />
+		<property name="formView" value="admin/editUser" />
+		<property name="successView" value="redirect:/admin/admin.html" />
 		<property name="service" ref="userService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
 	</bean>
@@ -159,8 +159,8 @@
 	<bean id="editJobFormController"
 		class="org.jrecruiter.web.controller.admin.EditJobFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
-		<property name="successView" value="redirect:/welcome.html" />
+		<property name="formView" value="user/getPassword" />
+		<property name="successView" value="redirect:/admin/admin.html" />
 		<property name="service" ref="jobService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
 	</bean>
@@ -169,26 +169,26 @@
 		class="org.jrecruiter.web.controller.admin.ShowStatisticsChartController">
 		<property name="methodNameResolver" ref="methodNameResolver" />
 		<property name="service" ref="jobService" />
-		<property name="successView" value="/pages/jobs" />
+		<property name="successView" value="redirect:/admin/admin.html" />
 		<property name="successViewShowDetails"
-			value="/pages/jobDetail" />
-		<property name="ajaxView" value="/pages/jobsTable" />
+			value="jobDetail" />
+		<property name="ajaxView" value="/jobsTable" />
 	</bean>
 
 	<bean id="showStatisticsController"
 		class="org.jrecruiter.web.controller.admin.ShowStatisticsController">
 		<property name="methodNameResolver" ref="methodNameResolver" />
 		<property name="service" ref="jobService" />
-		<property name="successView" value="/pages/jobs" />
+		<property name="successView" value="redirect:/admin/admin.html" />
 		<property name="successViewShowDetails"
-			value="/pages/jobDetail" />
-		<property name="ajaxView" value="/pages/jobsTable" />
+			value="/jobDetail" />
+		<property name="ajaxView" value="/jobsTable" />
 	</bean>
 
 	<bean id="showJobsFormController"
 		class="org.jrecruiter.web.controller.admin.ShowJobsFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
+		<property name="formView" value="user/getPassword" />
 		<property name="successView" value="redirect:/welcome.html" />
 		<property name="service" ref="jobService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
@@ -197,7 +197,7 @@
 	<bean id="showUsersFormController"
 		class="org.jrecruiter.web.controller.admin.ShowUsersFormController">
 		<property name="validator" ref="validator" />
-		<property name="formView" value="pages/user/getPassword" />
+		<property name="formView" value="user/getPassword" />
 		<property name="successView" value="redirect:/welcome.html" />
 		<property name="service" ref="userService" />
 		<property name="commandClass" value="org.jrecruiter.model.User" />
@@ -211,7 +211,7 @@
 	<bean name="/welcome.html"
 		class="org.springframework.web.servlet.mvc.ParameterizableViewController">
 		<property name="viewName">
-			<value>pages/welcome</value>
+			<value>welcome</value>
 		</property>
 	</bean>
 
@@ -233,14 +233,14 @@
 	<bean name="/admin/admin.html"
 		class="org.springframework.web.servlet.mvc.ParameterizableViewController">
 		<property name="viewName">
-			<value>/pages/admin/adminmain</value>
+			<value>/admin/adminmain</value>
 		</property>
 	</bean>
 
 	<bean name="/login.html"
 		class="org.springframework.web.servlet.mvc.ParameterizableViewController">
 		<property name="viewName">
-			<value>/pages/user/login</value>
+			<value>/user/login</value>
 		</property>
 	</bean>
 </beans>

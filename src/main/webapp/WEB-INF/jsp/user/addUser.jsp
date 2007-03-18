@@ -1,13 +1,5 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<div  id="header_menu">
-  <a href="<c:url value='/'/>" class="button" title="Bach to the start page.">
-        <fmt:message key="all.back.to.welcome.page"/>
-  </a>
-</div>
-
-<div id="main">
-
 	<h2>Add a user</h2>
 	<form:form commandName="command" method="post" action="addUser.html" id="userForm">
 	<form:errors path="*" cssClass="formError"/>
@@ -98,9 +90,6 @@
   </table>
 
   </form:form>
-
-</div>
-
 
 <script type="text/javaccript">
 <!--

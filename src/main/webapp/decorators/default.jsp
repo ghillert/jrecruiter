@@ -39,7 +39,7 @@
 	
 	</head>
 <body onload="init();">
-    <%@ include file="/WEB-INF/jsp/pages/global/header.jsp"%>
+    <%@ include file="/WEB-INF/jsp/global/header.jsp"%>
 	<div id="header_menu">
 		  <a href="<c:url value='/'/>" class="button" title="Back to the start page.">
 		        <fmt:message key="all.back.to.welcome.page"/>
@@ -56,7 +56,7 @@
 	    <%@ include file="/WEB-INF/jsp/includes/messages.jsp"%>
 	    <decorator:body/>
     </div>
-    <%@ include file="/WEB-INF/jsp/pages/global/footer.jsp"%>
+    <%@ include file="/WEB-INF/jsp/global/footer.jsp"%>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
     </script>

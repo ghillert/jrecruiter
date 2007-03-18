@@ -75,9 +75,11 @@ public class User extends BaseObject implements Serializable, UserDetails{
     @Length(min = 0, max = 25)
     private String fax;
     
+    @NotBlank
     @Length(min = 0, max = 50)
     private String firstName;
     
+    @NotBlank
     @Length(min = 0, max = 50)
     private String lastName;
 
