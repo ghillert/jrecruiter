@@ -3,6 +3,7 @@ package org.jrecruiter.web.controller.admin;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.acegisecurity.context.SecurityContextHolder;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,17 +48,20 @@ public class EditUserFormController extends BaseSimpleFormController  {
             HttpServletResponse response, Object command,
             BindException errors)
 	throws Exception {
-		LOGGER.debug("entering 'onSubmit' method...");
 
-        User form = (User) command;
-        User user = service.getUser(form.getUsername());
+        final User form = (User) command;
+        final User user = service.getUser(form.getUsername());
 
         user.setCompany(form.getCompany());
         user.setEmail(form.getEmail());
         user.setFax(form.getFax());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
-        user.setPassword(form.getPassword());
+        
+        if (form.getPassword() != null) {
+        	user.setPassword(form.getPassword());
+        }
+        
         user.setPhone(form.getPhone());
 
         service.updateUser(user);
@@ -71,18 +75,19 @@ public class EditUserFormController extends BaseSimpleFormController  {
 	@Override
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		
-        String username;
+        final String username;
+        final User userPrincipal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
         if ((request.getParameter("username") != null)
          && (request.isUserInRole("admin"))) {
             username = request.getParameter("username");
         } else {
-            username = request.getRemoteUser();
+        	username = userPrincipal.getUsername();
         }
 
         final User user = service.getUser(username);
-        UserForm form = new UserForm();
-        
-        form.setPassword2(user.getPassword());
+
+        final UserForm form = new UserForm();
 
         if (user.getRegisterDate() != null) {
         	form.setRegisterDate(user.getRegisterDate());
@@ -92,7 +97,9 @@ public class EditUserFormController extends BaseSimpleFormController  {
         }
         
         BeanUtils.copyProperties(form, user);
-			
-		return user;
+		form.setPassword(null);
+
+		LOGGER.info("Retrieved user " + user.getFirstName() + " " + user.getLastName() + "(" + user.getUsername() + ") for editing.");
+		return form;
 	}
 }
