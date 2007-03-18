@@ -16,6 +16,8 @@ response.setHeader("Expires","0");
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://ajaxtags.org/tags/ajax" prefix="ajax" %>
+<%@ taglib uri="http://acegisecurity.org/authz" prefix="authz" %>
+
 
 <c:set var="datePattern"><fmt:message key="date.format"/></c:set>
 <c:set var="ctx" value="${pageContext['request'].contextPath}"/>
