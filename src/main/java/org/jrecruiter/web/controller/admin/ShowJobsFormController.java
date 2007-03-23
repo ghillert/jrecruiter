@@ -1,21 +1,15 @@
 package org.jrecruiter.web.controller.admin;
 
-import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jrecruiter.service.JobService;
+import org.jrecruiter.web.controller.BaseSimpleFormController;
+import org.springframework.validation.BindException;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jrecruiter.model.User;
-import org.jrecruiter.service.JobService;
-import org.jrecruiter.service.UserService;
-import org.jrecruiter.service.exceptions.DuplicateUserException;
-import org.jrecruiter.web.controller.BaseSimpleFormController;
-import org.springframework.context.ApplicationContext;
-import org.springframework.validation.BindException;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.servlet.ModelAndView;
+import java.util.List;
 
 /**
  * List all the jobs. 

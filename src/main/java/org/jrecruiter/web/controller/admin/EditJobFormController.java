@@ -15,11 +15,6 @@
 */
 package org.jrecruiter.web.controller.admin;
 
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.Job;
@@ -28,6 +23,10 @@ import org.jrecruiter.web.WebUtil;
 import org.jrecruiter.web.controller.BaseSimpleFormController;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * List all the jobs. 
