@@ -135,7 +135,7 @@
 		<property name="formView" value="admin/addJob" />
 		<property name="successView" value="redirect:/admin/admin.html" />
 		<property name="service" ref="jobService" />
-		<property name="commandClass" value="org.jrecruiter.model.User" />
+		<property name="commandClass" value="org.jrecruiter.model.Job" />
 	</bean>
  
 	<bean id="editConfigurationFormController"
