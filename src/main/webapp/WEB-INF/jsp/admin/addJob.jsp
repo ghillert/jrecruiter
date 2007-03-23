@@ -1,14 +1,14 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <h2><fmt:message key="admin.add.job.title" /></h2>
-<form:form method="post" id="addJobForm" focus="jobTitle">
+<form:form method="post" id="addJobForm">
 	<form:errors path="*" cssClass="formError"/>
 
 	<table class="jobposting">
 	    <tr>
 	      	<td><label for="jobTitle"><fmt:message key="field.jobTitle" /></label>*</td>
 	      	<td>
-	      		<form:input  path="jobTitle" id="jobTitle" size="11" tabindex="1" onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
+	      		<form:input  path="jobTitle" id="jobTitle" size="11" tabindex="1"   onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
 	      		<form:errors path="jobTitle" cssClass="fieldError"/>
 	      	</td>
 	      	<td><label for="businessName"><fmt:message key="field.businessName" /></label>*</td>
@@ -93,14 +93,14 @@
 	    <tr>
 	      	<td><label for="description"><fmt:message key="field.jobDescription" /></label>*</td>
 	      	<td colspan="3">
-	      		<form:textarea  path="description" id="description" rows="15" tabindex="14" style="width: 500px" onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
+	      		<form:textarea  path="description" id="description" rows="15" tabindex="14" cssStyle="width: 500px" onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
 				<form:errors    path="description" cssClass="fieldError"/>
 			</td>
 	    </tr>
 	    <tr>
 	      	<td><label for="jobRestrictions"><fmt:message key="field.jobRestrictions" /></label></td>
 	      	<td colspan="3">
-	      		<form:textarea  path="jobRestrictions" id="jobRestrictions" rows="10" tabindex="15" style="width: 500px"  onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
+	      		<form:textarea  path="jobRestrictions" id="jobRestrictions" rows="10" tabindex="15" cssStyle="width: 500px"  onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
 				<form:errors    path="jobRestrictionsy" cssClass="fieldError"/>
 			</td>
 	    </tr>
@@ -123,4 +123,3 @@
 	    </tr>
 	  </table>
   </form:form>
-</div>
