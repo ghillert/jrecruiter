@@ -1,21 +1,7 @@
 package org.jrecruiter.web.controller.admin;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.displaytag.properties.SortOrderEnum;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -36,12 +22,14 @@ import org.jfree.ui.TextAnchor;
 import org.jrecruiter.Constants;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
-import org.jrecruiter.web.JobsForDisplaytagSorting;
-import org.jrecruiter.web.controller.rss.views.JobsRSSView;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * List all the jobs. 

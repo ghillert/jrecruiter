@@ -1,8 +1,5 @@
 package org.jrecruiter.web.controller.admin;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.acegisecurity.context.SecurityContextHolder;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
@@ -13,6 +10,9 @@ import org.jrecruiter.web.controller.BaseSimpleFormController;
 import org.jrecruiter.web.forms.UserForm;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * List all the jobs. 
