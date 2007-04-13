@@ -14,7 +14,7 @@
 				<a href="<c:url value='/addUser.html'/>"><fmt:message key="link.createNewUser" /></a>
 			</li>
 		</ul>
-	</div>
+	</div>          
 	<p><fmt:message key="welcome.introduction.text.bottom" /></p>
 	<p><fmt:message key="welcome.introduction.text.support" /></p>
 
