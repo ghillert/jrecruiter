@@ -6,7 +6,9 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.web.controller.BaseSimpleFormController;
+import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,10 +41,22 @@ public class AddJobFormController extends BaseSimpleFormController  {
     public void setService(JobService service) {
 		this.service = service;
 	}
-    
+
+    /**
+     * Set up a custom property editor for converting Longs
+     */
+    protected void initBinder(HttpServletRequest request,
+                              ServletRequestDataBinder binder) {
+
+        // convert java.lang.Long
+        binder.registerCustomEditor(Double.class, null,
+                new CustomNumberEditor(Double.class, null, true));
+    }
+
     /**
      * 
      */
+    @Override
     public ModelAndView onSubmit(HttpServletRequest request,
             HttpServletResponse response, Object command,
             BindException errors)

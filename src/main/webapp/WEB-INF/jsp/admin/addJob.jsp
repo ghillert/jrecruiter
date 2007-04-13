@@ -101,7 +101,7 @@
 	      	<td><label for="jobRestrictions"><fmt:message key="field.jobRestrictions" /></label></td>
 	      	<td colspan="3">
 	      		<form:textarea  path="jobRestrictions" id="jobRestrictions" rows="10" tabindex="15" cssStyle="width: 500px"  onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
-				<form:errors    path="jobRestrictionsy" cssClass="fieldError"/>
+				<form:errors    path="jobRestrictions" cssClass="fieldError"/>
 			</td>
 	    </tr>
 	    <tr>
@@ -111,8 +111,8 @@
 	    <tr>
 	      	<td>&nbsp;</td>
 	      	<td>
-	      		<input type="button" name="submit" value="<fmt:message key='jobposting.button.add'/>"    onClick="$('addJobForm').submit();">
-	      		<input type="button" name="cancel" value="<fmt:message key='jobposting.button.cancel'/>" onClick="$('addJobForm').submit();"/>
+	      		<input type="submit" name="submit" value="<fmt:message key='jobposting.button.add'/>"    onclick="$('addJobForm').submit();"/>
+	      		<input type="submit" name="cancel" value="<fmt:message key='jobposting.button.cancel'/>" onclick="$('addJobForm').submit();"/>
 		  	</td>
 	      	<td>&nbsp;</td>
 	      	<td>&nbsp;</td>
