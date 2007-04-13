@@ -200,7 +200,7 @@
 		<property name="formView" value="user/getPassword" />
 		<property name="successView" value="redirect:/welcome.html" />
 		<property name="service" ref="userService" />
-		<property name="commandClass" value="org.jrecruiter.model.User" />
+		<property name="commandClass" value="org.jrecruiter.web.forms.UserForm" />
 	</bean>
 
 	<!-- Forward directly to views -->

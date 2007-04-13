@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author Gunnar Hillert
  * @version @version $Id$
  */
-public class BaseObject implements Serializable {
+public class    BaseObject implements Serializable {
 
 
     /**

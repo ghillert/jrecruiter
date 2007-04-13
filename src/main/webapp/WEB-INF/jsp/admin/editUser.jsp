@@ -22,13 +22,22 @@
           	<form:input  path="password" id="password" maxlength="25" tabindex="2" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
         	<form:errors path="password" cssClass="fieldError"/>
           </td>
-      </tr>      
+      </tr>
+      <tr>
+      	  <td>
+          	<label for="password2"><fmt:message key="user.password2" /></label>*
+          </td>
+          <td>
+          	<form:input  path="password2" id="password2" maxlength="25" tabindex="3" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+        	<form:errors path="password2" cssClass="fieldError"/>
+          </td>
+      </tr>
       <tr>
       <td>
           	<label for="firstName"><fmt:message key="user.firstName" /></label>*
           </td>
           <td>        
-          	<form:input  path="firstName" id="firstName" maxlength="50" tabindex="3" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+          	<form:input  path="firstName" id="firstName" maxlength="50" tabindex="4" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
         	<form:errors path="firstName" cssClass="fieldError"/>
           </td>
       </tr>      
@@ -37,7 +46,7 @@
           	<label for="lastName"><fmt:message key="user.lastName" /></label>*
           </td>
           <td>        
-          	<form:input  path="lastName" id="lastName" maxlength="50" tabindex="4" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+          	<form:input  path="lastName" id="lastName" maxlength="50" tabindex="5" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
         	<form:errors path="lastName" cssClass="fieldError"/>
           </td>
       </tr>
@@ -46,7 +55,7 @@
           	<label for="company"><fmt:message key="user.company" /></label>*
           </td>
           <td>        
-          	<form:input  path="company" id="company" maxlength="50" tabindex="5" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+          	<form:input  path="company" id="company" maxlength="50" tabindex="6" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
         	<form:errors path="company" cssClass="fieldError"/>
           </td>
       </tr>
@@ -55,7 +64,7 @@
           	<label for="phone"><fmt:message key="user.phone" /></label>*
           </td>
           <td>        
-          	<form:input  path="phone" id="phone" maxlength="25" tabindex="6" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+          	<form:input  path="phone" id="phone" maxlength="25" tabindex="7" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
         	<form:errors path="phone" cssClass="fieldError"/>
           </td>
       </tr>
@@ -64,7 +73,7 @@
           	<label for="fax"><fmt:message key="user.fax" /></label>*
           </td>
           <td>        
-          	<form:input  path="fax" id="fax" maxlength="25" tabindex="7" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+          	<form:input  path="fax" id="fax" maxlength="25" tabindex="8" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
         	<form:errors path="fax" cssClass="fieldError"/>
           </td>
       </tr>
@@ -73,7 +82,7 @@
           	<label for="email"><fmt:message key="user.email" /></label>*
           </td>
           <td>        
-          	<form:input  path="email" id="email" maxlength="50" tabindex="8" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+          	<form:input  path="email" id="email" maxlength="50" tabindex="9" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
         	<form:errors path="email" cssClass="fieldError"/>
           </td>
       </tr>      
@@ -81,7 +90,7 @@
       <tr>
           <td>&nbsp;</td>
           <td >
-              <input type="submit" class="button" name="add" value="Add"/><input type="submit" class="button" name="cancel" value="Cancel"/>
+              <input type="submit" class="button" name="save" value="Save"/><input type="submit" class="button" name="cancel" value="Cancel"/>
           </td>
       </tr>
       <tr>

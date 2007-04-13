@@ -15,10 +15,12 @@
 */
 package org.jrecruiter.model;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
 * This class represents a job posting.
@@ -163,6 +165,7 @@ public class Job implements Serializable {
         this.id = id;
     }
 
+     @Column(name="businessName", unique=false, nullable=false, insertable=true, updatable=true, length=25)    
     public String getBusinessName() {
         return businessName;
     }
@@ -187,11 +190,11 @@ public class Job implements Serializable {
         this.jobTitle = jobTitle;
     }
 
-    public double getSalary() {
+    public Double getSalary() {
         return salary;
     }
 
-    public void setSalary(final double salary) {
+    public void setSalary(final Double salary) {
         this.salary = salary;
     }
 
