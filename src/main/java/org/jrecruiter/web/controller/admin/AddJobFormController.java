@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * List all the jobs. 
@@ -45,12 +46,15 @@ public class AddJobFormController extends BaseSimpleFormController  {
     /**
      * Set up a custom property editor for converting Longs
      */
+    @Override
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) {
 
         // convert java.lang.Long
         binder.registerCustomEditor(Double.class, null,
                 new CustomNumberEditor(Double.class, null, true));
+        binder.registerCustomEditor(BigDecimal.class, null,
+                new CustomNumberEditor(BigDecimal.class, null, true));
     }
 
     /**

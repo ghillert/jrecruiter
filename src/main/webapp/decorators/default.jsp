@@ -36,8 +36,12 @@
 	
 	    <title><decorator:title default="Welcome to jRecruiter"/></title>
 	    <link href="<c:url value='/style/stylesheet.css'/>"  rel="stylesheet" type="text/css" />
-	
-	</head>
+
+        <!-- Google Maps -->
+        <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORRDnPHMi8enZNdcVVCphbEA7JeURRRhskeG0Rbs1V5Bog4q8OVhIFC3Ww"
+                type="text/javascript"></script>
+
+    </head>
 <body onload="init();">
     <%@ include file="/WEB-INF/jsp/global/header.jsp"%>
 	<div id="header_menu">

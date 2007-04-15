@@ -32,4 +32,45 @@ public class Constants {
 
     public enum StatsMode { PAGE_HITS, UNIQUE_HITS }
 
+    public enum OfferedBy {
+
+        recruiter(1, "Recruiter", "offeredBy.recruiter.description"),
+        company  (2,   "Company",   "offeredBy.company.description");
+
+        Integer id;
+        String name;
+        String descriptionKey;
+
+        OfferedBy(final Integer id,
+                  final String name,
+                  final String descriptionKey) {
+            this.id = id;
+            this.name = name;
+            this.descriptionKey = descriptionKey;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescriptionKey() {
+            return descriptionKey;
+        }
+
+        public void setDescriptionKey(String descriptionKey) {
+            this.descriptionKey = descriptionKey;
+        }
+    }
 }
