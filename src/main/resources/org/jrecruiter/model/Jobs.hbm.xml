@@ -71,6 +71,13 @@
         <property name="status" type="int">
             <column name="status" not-null="true" />
         </property>
+        <property name="longitude" type="big_decimal">
+            <column name="longitude"/>
+        </property>
+        <property name="latitude" type="big_decimal">
+            <column name="latitude"/>
+        </property>
+
         <one-to-one name="statistics" class="org.jrecruiter.model.Statistics" cascade="all" />
     </class>
 </hibernate-mapping>

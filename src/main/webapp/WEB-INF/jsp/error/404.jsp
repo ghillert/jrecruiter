@@ -16,8 +16,6 @@
       <link href="<html:rewrite page="/style/stylesheet.css" />"  rel="stylesheet" type="text/css" />
   </head>
   <body>
-      <%@ include file="/pages/global/header.jsp"%>
-
       <div  id="header_menu">
         <html:link action="backToWelcomePage" styleClass="button">
           <fmt:message key="all.back.to.welcome.page"/>
@@ -29,7 +27,6 @@
           <fmt:message key="404.message"/>
         </p>
         </div>
-        <%@ include file="/pages/global/footer.jsp"%>
   </body>
 </html>
 
