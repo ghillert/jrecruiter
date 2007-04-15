@@ -77,8 +77,13 @@
 			</td>
 	    </tr>
 	    <tr>
-	      	<td>&nbsp;</td>
-	      	<td>&nbsp;</td>
+	      	<td>Longitude/Latitude</td>
+	      	<td>
+	      		<form:input  path="longitude" id="longitude" size="5" tabindex="12" onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
+				<form:errors path="longitude" cssClass="fieldError"/>
+                <form:input  path="latitude" id="latitude" size="5" tabindex="12" onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
+				<form:errors path="latitude" cssClass="fieldError"/>
+            </td>
 	      	<td><label for="website"><fmt:message key="field.website" /></label></td>
 	      	<td>
 	      		<form:input  path="website" id="website" size="11" tabindex="13" onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
@@ -87,7 +92,7 @@
 	    </tr>
 	    <tr>
 	      	<td>&nbsp;</td>
-	      	<td>&nbsp;</td>
+	      	<td><input type="button" value="Generate" onclick="getLocation();"/><input type="button" value="Show" onclick="getLocation();"/></td>
 	      	<td colspan="2"><fmt:message key="field.website.note" /></td>
 	    </tr>
 	    <tr>
@@ -122,4 +127,51 @@
 	      	<td colspan="3"><fmt:message key="jobposting.add.label.mandatory" /></td>
 	    </tr>
 	  </table>
+
+<div id="map" style="width: 500px; height: 300px"></div>
+
+<script type="text/javascript">
+
+    var map;
+    var geocoder;
+
+        function load() {
+      if (GBrowserIsCompatible()) {
+          map = new GMap2(document.getElementById("map"));
+          map.addControl(new GSmallMapControl());
+          map.addControl(new GMapTypeControl());
+          
+          map.setCenter(new GLatLng(33.74, -84.38), 13);
+          geocoder = new GClientGeocoder();
+      }
+    }    
+         load();
+
+     function addAddressToMap(response) {
+      map.clearOverlays();
+      if (!response || response.Status.code != 200) {
+        alert("Sorry, we were unable to geocode that address");
+      } else {
+        place = response.Placemark[0];
+          alert(place);
+        point = new GLatLng(place.Point.coordinates[1],
+                            place.Point.coordinates[0]);
+        $('longitude').value=place.Point.coordinates[1];
+        $('latitude').value=place.Point.coordinates[0];
+
+        marker = new GMarker(point);
+        map.addOverlay(marker);
+        marker.openInfoWindowHtml(place.address + '<br>' +
+          '<b>Country code:</b> ' + place.AddressDetails.Country.CountryNameCode);
+      }
+    }
+
+    function getLocation() {
+      var address = $F('businessAddress1') + ',' + $F('businessCity') + ',' +  $F('businessState') + ',' + $F('businessZip');
+      alert(address);
+      geocoder.getLocations(address, addAddressToMap);
+    }
+
+
+</script>
   </form:form>

@@ -17,10 +17,12 @@ package org.jrecruiter.model;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
 
 import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
 * This class represents a job posting.
@@ -146,6 +148,18 @@ public class Job implements Serializable {
     private User owner;
 
     /**
+     * Used to map the Location of the job.
+     */
+    @Length(min = 2, max = 10)
+    private BigDecimal longitude;
+
+    /**
+     * Used to map the Location of the job.
+     */
+    @Length(min = 2, max = 10)
+    private BigDecimal latitude;
+
+    /**
      * Statistics of this particuliar job posting.
      */
     private Statistics statistics;
@@ -165,7 +179,6 @@ public class Job implements Serializable {
         this.id = id;
     }
 
-     @Column(name="businessName", unique=false, nullable=false, insertable=true, updatable=true, length=25)    
     public String getBusinessName() {
         return businessName;
     }
@@ -340,6 +353,22 @@ public class Job implements Serializable {
 
     public void setDelete(final Long delete) {
         this.delete = delete;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 
     /**
