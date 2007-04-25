@@ -19,6 +19,7 @@ import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.userdetails.UserDetails;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.hibernate.validator.NotNull;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Email;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
@@ -75,8 +76,6 @@ public class User extends BaseObject implements Serializable, UserDetails{
     @Length(min = 0, max = 50)
     private String lastName;
 
-    @NotBlank
-    @Length(min = 1, max = 25)
     private String password;
     
     @Length(min = 0, max = 25)
@@ -190,6 +189,7 @@ public class User extends BaseObject implements Serializable, UserDetails{
      * @see org.acegisecurity.userdetails.UserDetails#getPassword()
      * @return Returns the password.
      */
+    @NotNull
     @Column(name="user_passwd", unique=false, nullable=false, insertable=true, updatable=true, length=25)
     public String getPassword() {
         return password;

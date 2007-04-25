@@ -4,7 +4,7 @@
 <form:form method="post" id="addJobForm">
 	<form:errors path="*" cssClass="formError"/>
 
-	<table class="jobposting">
+	<table id="jobposting">
 	    <tr>
 	      	<td><label for="jobTitle"><fmt:message key="field.jobTitle" /></label>*</td>
 	      	<td>
@@ -96,6 +96,11 @@
 	      	<td colspan="2"><fmt:message key="field.website.note" /></td>
 	    </tr>
 	    <tr>
+		    <td colspan="4" style="text-align: center;">
+		    	<div id="map" style="width: 500px; height: 300px; margin: 0 auto 0 auto; border: 1px solid black;"></div>
+		    </td>
+	    </tr>
+	    <tr>
 	      	<td><label for="description"><fmt:message key="field.jobDescription" /></label>*</td>
 	      	<td colspan="3">
 	      		<form:textarea  path="description" id="description" rows="15" tabindex="14" cssStyle="width: 500px" onfocus="javascript:this.className='selected';" onblur="javascript:this.className='';" cssErrorClass="error"/>
@@ -127,8 +132,6 @@
 	      	<td colspan="3"><fmt:message key="jobposting.add.label.mandatory" /></td>
 	    </tr>
 	  </table>
-
-<div id="map" style="width: 500px; height: 300px"></div>
 
 <script type="text/javascript">
 
