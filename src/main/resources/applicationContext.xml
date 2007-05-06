@@ -51,6 +51,10 @@
     <property name="settingsDao"><ref bean="settingDao"/></property>
   </bean>
 
+  <bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction">
+    <property name="service"><ref bean="jobService"/></property>
+  </bean>
+
   <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"/>
 
   <!-- Velocity - Configure Velocity for sending e-mail -->
