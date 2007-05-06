@@ -43,12 +43,52 @@ body {
 
 #container #header_menu{
   width: 100%;	
-  text-align: left;
   border-top: 1px solid #FF3C00;
   background-color: #0076CC;
-  padding: 0.5em 0 0.5em 0; 
+  padding: 0; 
 
 }
+
+#header_menu ul
+{
+padding: 0;
+margin: 0;
+background-color: #036;
+color: White;
+float: left;
+width: 100%;
+font-family: arial, helvetica, sans-serif;
+}
+
+#header_menu ul li { display: inline; }
+
+#header_menu ul li a
+{
+padding: 0.2em 1em;
+background-color: #036;
+color: White;
+text-decoration: none;
+float: left;
+border-right: 1px solid #fff;
+}
+
+#header_menu ul li a:hover
+{
+background-color: #369;
+color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 #container #content {
 
@@ -247,14 +287,6 @@ div.back {
   margin-bottom: auto;
 
   }
-
-li {
-  list-style-image: url("../images/arrow_li.gif");
-  list-style-position: inherit;
-  list-style-type: square;
-  padding: 5px;
-
-}
 
 .hover {
 

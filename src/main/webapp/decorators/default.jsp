@@ -55,7 +55,12 @@
 	<body onload="init();">
 		<div id="container">
 			<div id="header">AJUG Jobs</div>
-			<div id="header_menu">&nbsp;</div>
+			<div id="header_menu">
+					<ul><li><a href="<c:url value='/'/>">Home</a></li>
+						<li><a href="#">Search Jobs</a></li>
+						<li><a href="#">Admin</a></li>
+						<li><a href="#">Contact</a></li></ul>
+			</div>
 			<div id="content"><%@ include
 				file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
 			</div>
