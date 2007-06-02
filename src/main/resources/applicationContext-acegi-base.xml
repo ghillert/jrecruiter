@@ -14,7 +14,7 @@
       <value>
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
-        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
       </value>
     </property>
   </bean>
@@ -39,16 +39,6 @@
     </property>
     <property name="filterProcessesUrl">
       <value>/j_acegi_security_check</value>
-    </property>
-  </bean>
-
-  <bean id="anonymousProcessingFilter"
-      class="org.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
-    <property name="key">
-      <value>foobar</value>
-    </property>
-    <property name="userAttribute">
-      <value>anonymousUser,ROLE_ANONYMOUS</value>
     </property>
   </bean>
 
@@ -81,14 +71,14 @@
       <value>
             CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
             PATTERN_TYPE_APACHE_ANT
-            /**admin/admin.html**=admin,ROLE_manager
-            /**deletejobposting.do**=ROLE_admin,ROLE_manager
-            /**openaddjobposting.do**=ROLE_admin,ROLE_manager
-            /**addjobposting.do**=ROLE_admin,ROLE_manager
-            /**edituser.do**=ROLE_admin,ROLE_manager
-            /**userlist.do**=ROLE_admin
-            /**deleteuser.do**=ROLE_admin
-            /**editsettings.do**=ROLE_admin
+            /admin/admin.html**=admin,manager
+            /admin/deletejobposting.html**=admin,manager
+            /admin/openaddjobposting.html**=admin,manager
+            /admin/addjobposting.html**=admin,manager
+            /admin/edituser.html**=admin,manager
+            /admin/userlist.html**=admin,manager
+            /admin/deleteuser.html**=admin,manager
+            /admin/editsettings.html**=admin,manager
       </value>
     </property>
   </bean>

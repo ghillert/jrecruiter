@@ -72,6 +72,19 @@ float: left;
 border-right: 1px solid #fff;
 }
 
+#header_menu ul li a.icon
+{
+	background: url(../images/icons/feed-icon-14x14.png) no-repeat center;
+	
+}
+#header_menu ul li a.icon span
+{
+position: absolute;
+left: -5000px;
+width: 4000px;
+}
+
+
 #header_menu ul li a:hover
 {
 background-color: #369;
@@ -92,6 +105,7 @@ color: #fff;
 
 #container #content {
 
+  clear: both;
   background-color: #F5F5FF;
   border: 1px solid #0076CC;
   padding: 1em;
@@ -397,3 +411,8 @@ table.default {
         padding: 3px 10px 3px 10px;
         width: 378px;
 }
+
+/* Social bookmarks */
+	small { font-size:10px; }
+	#socialinks { border: 1px solid #ccccef; margin: 1em auto 1em auto; width: 20%;}
+	#socialinks td {text-align: center; vertical-align: middle; width: 5%}
