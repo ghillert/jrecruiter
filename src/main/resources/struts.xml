@@ -4,7 +4,7 @@
 <struts>
     <!-- Include Struts defaults -->
     <include file="struts-default.xml"/>
-
+    
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
         <interceptors>
@@ -37,8 +37,33 @@
             <exception-mapping exception="org.springframework.dao.DataAccessException"
                 result="dataAccessFailure" />
         </global-exception-mappings>
-
     </package>
+
+    <!-- Configuration for the default package. -->
+    <package name="basic" extends="default">
+    	<action name="login"><result name="success">/WEB-INF/jsp/user/login.jsp</result></action>
+    	<action name="getPassword-input" method="input" >
+    		<result name="success">/WEB-INF/jsp/user/getPassword.jsp</result>
+    	</action>
+    	<action name="getPassword" class="">
+    		<result name="success">/WEB-INF/jsp/user/getPassword.jsp</result>
+    	</action>
+    </package>
+
+    <package name="admin" extends="default" namespace="/admin" >
+		<action  name="admin"><result name="success">/WEB-INF/jsp/admin/adminmain.jsp</result></action>
+    </package>    
+    
+    <package name="rss" extends="rss-default" namespace="/rss">
+	    <action name="jobs" class="org.jrecruiter.web.actions.JobsRssAction">
+	        <result type="rss" name="success">
+	            <param name="feedName">rssFeed</param>
+	            <!-- this is not required: defaults to rss 0.9 -->
+	            <param name="feedType">rss_1.0</param>
+	        </result>
+	    </action>
+	</package>
     
     <constant name="struts.codebehind.pathPrefix" value="/WEB-INF/jsp/"/>
+    
 </struts>

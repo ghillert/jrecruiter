@@ -95,46 +95,10 @@
         <filter-name>lazyLoadingFilter</filter-name>
         <url-pattern>*.html</url-pattern>
     </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>exportFilter</filter-name>
-        <url-pattern>*.html</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>struts-cleanup</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>sitemesh</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>struts</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>messageFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>lazyLoadingFilter</filter-name>
-        <url-pattern>*.html</url-pattern>
-    </filter-mapping>
-     
     <filter-mapping>
         <filter-name>lazyLoadingFilter</filter-name>
         <url-pattern>/rss/*</url-pattern>
     </filter-mapping> 
-    
     <filter-mapping>
         <filter-name>lazyLoadingFilter</filter-name>
         <url-pattern>/j_acegi_security_check</url-pattern>
@@ -144,29 +108,25 @@
         <filter-name>exportFilter</filter-name>
         <url-pattern>*.html</url-pattern>
     </filter-mapping>
- 
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>struts-cleanup</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
     <filter-mapping>
         <filter-name>sitemesh</filter-name>
-        <url-pattern>*.html</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+       
 	<filter-mapping>
 		<filter-name>Acegi Filter Chain Proxy</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.html</url-pattern>
 	</filter-mapping>
-
     <filter-mapping>
         <filter-name>struts</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+	
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
