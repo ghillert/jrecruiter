@@ -5,6 +5,17 @@
       <author email="gunnar at hillert dot com">Gunnar Hillert</author>
    </properties>
    <body>
+      <release version="2.0" date="2007-07-1" description="New Major Featurer Release">
+           <action dev="Gunnar Hillert" type="add">
+               RSS support
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Social bookmarks on the job posting list
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Application is now Struts 2 based
+           </action>
+      </release>
       <release version="1.2.1" date="2006-07-08" description="Minor fixes and features">
            <action dev="Gunnar Hillert" type="add">
                Displaytag is now using partial lists to retrieve paginated and/or sorted data.
@@ -17,6 +28,6 @@
            <action dev="Gunnar Hillert" type="fix">
                A field on the settings screen was missing. Added the field.
            </action>
-         </release>
+      </release>
    </body>
 </document>
