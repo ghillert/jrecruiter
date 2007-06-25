@@ -3,17 +3,18 @@
  */
 package org.jrecruiter.dao;
  
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jrecruiter.model.Job;
-import org.testng.annotations.Test;
+import org.jrecruiter.test.BaseTest;
 
 /**
  * @author Gunnar Hillert
  *
  */
-public class JobDaoTNG extends BaseDaoTNG {
+public class JobDaoTest extends BaseTest {
 
 	/**
 	 * 
@@ -23,17 +24,12 @@ public class JobDaoTNG extends BaseDaoTNG {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(JobDaoTNG.class);
-
-    public JobsDAO getJobDao() {
-		return jobDao;
-	}
+    public static final Logger LOGGER = Logger.getLogger(JobDaoTest.class);
 
 	public void setJobDao(JobsDAO jobDao) {
 		this.jobDao = jobDao;
 	}
 
-	@Test(groups = {"daoIntegrationTest"})
     public void getAllJobs() {
         
         List<Job> jobs = jobDao.getAllJobs();
@@ -45,7 +41,6 @@ public class JobDaoTNG extends BaseDaoTNG {
         }
     }
 
-    @Test(groups = {"daoIntegrationTest"})
     public void getJobsPaginated() {
 
         List<Job> jobs = jobDao.getJobs(20, 1, null, null);
@@ -57,10 +52,8 @@ public class JobDaoTNG extends BaseDaoTNG {
         }
     }
     
-    @Test(groups = {"daoIntegrationTest"})
     public void searchByKeyword() {
 
     jobDao.searchByKeyword("java");
-    assert 1 == 1;
   }
 }
