@@ -26,13 +26,13 @@ import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Statistics;
+import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
 
 
 /**
  * @author Gunnar Hillert
- * @version $Id: JobServiceImpl.java 78 2007-01-04 03:07:40Z ghillert $
+ * @version $Id$
  */
 public class DwrAction extends BaseDwrAction {
 
@@ -51,20 +51,20 @@ public class DwrAction extends BaseDwrAction {
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
     public String getJob(Long jobId) throws Exception {
-    	
+
     	WebContext context = WebContextFactory.get();
     	HttpServletRequest request = context.getHttpServletRequest();
-    	
+
     	String ret = "";
-    	
+
     	final Job job = service.getJobForId(jobId);
-    	
+
         if (job==null){
 
-        	//FIXME      	
+        	//FIXME
             //ActionMessages errors = new ActionMessages();
             //errors.add("notfound", new ActionMessage("error.jobposting.not.found", jobId.toString()));
-            
+
             //request.setAttribute("errors", errors);
 
             LOGGER.warn("Requested jobposting with id " + jobId + " was not found.");
@@ -73,16 +73,17 @@ public class DwrAction extends BaseDwrAction {
             ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
 
         } else {
-        	
-        	 Statistics statistics = job.getStatistics();
+
+        	 Statistic statistics = job.getStatistic();
 
              if (statistics == null) {
 
-                 statistics = new Statistics();
+                 statistics = new Statistic();
                  statistics.setJob(job);
+                 statistics.setId(job.getId());
                  statistics.setCounter(new Long(0));
                  statistics.setUniqueVisits(new Long(0));
-                 job.setStatistics(statistics);
+                 job.setStatistic(statistics);
              }
 
              Set viewedPostings = new HashSet<Long>();
@@ -125,16 +126,16 @@ public class DwrAction extends BaseDwrAction {
              statistics.setCounter(new Long(counter));
              statistics.setLastAccess(new Date());
              service.updateJob(job);
-         
-             
+
+
              request.setAttribute("jobDetail", job);
-         	
+
          		ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
 
             }
         return ret;
-        
-        
+
+
     }
 
 }

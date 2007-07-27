@@ -15,32 +15,32 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 
 /**
- * List all the jobs. 
- * 
+ * List all the jobs.
+ *
  * @author Gunnar Hillert
- * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ * @version $Id$
  *
  */
 public class ShowUsersFormController extends BaseSimpleFormController  {
-	
+
 	/**
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(ShowUsersFormController.class);
-    
+
     /**
      * The service layer reference.
      */
     private UserService service;
-    
+
     /**
-     * Ajax View 
+     * Ajax View
      */
     private String ajaxView;
-    
+
     /**
      * Inject the service layer reference.
-     * @param service 
+     * @param service
      */
     public void setService(UserService service) {
 		this.service = service;
@@ -52,9 +52,9 @@ public class ShowUsersFormController extends BaseSimpleFormController  {
 	public void setAjaxView(String ajaxView) {
 		this.ajaxView = ajaxView;
 	}
-  
+
     /**
-     * 
+     *
      */
     public ModelAndView onSubmit(HttpServletRequest request,
             HttpServletResponse response, Object command,
@@ -89,13 +89,13 @@ public class ShowUsersFormController extends BaseSimpleFormController  {
         return new ModelAndView("success");
 	}
 
-    
+
     /* (non-Javadoc)
 	 * @see org.springframework.web.servlet.mvc.AbstractFormController#formBackingObject(javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		
+
         String username;
         if ((request.getParameter("username") != null)
          && (request.isUserInRole("admin"))) {
@@ -106,24 +106,24 @@ public class ShowUsersFormController extends BaseSimpleFormController  {
 
         User user = service.getUser(username);
         UserForm form = new UserForm();
-        
+
         form.setPassword2(user.getPassword());
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        if (user.getRegisterDate() != null) {
-        	form.setRegisterDate(user.getRegisterDate());
+        if (user.getRegistrationDate() != null) {
+        	form.setRegistrationDate(user.getRegistrationDate());
         }
         if (user.getUpdateDate() != null) {
         	form.setUpdateDate(user.getUpdateDate());
         }
-        
+
         BeanUtils.copyProperties(form, user);
-			
+
 		return user;
 	}
 
-	
-	
+
+
 //    List users = userService.getAllUsers();
 //
 //    request.setAttribute("userList", users);

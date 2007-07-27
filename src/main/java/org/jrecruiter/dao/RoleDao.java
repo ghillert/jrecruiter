@@ -13,23 +13,20 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.web.ajax;
+package org.jrecruiter.dao;
 
-
-import org.apache.log4j.Logger;
-
+import org.jrecruiter.model.Industry;
+import org.jrecruiter.model.Role;
 
 /**
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class BaseDwrAction {
-
+public interface RoleDao extends GenericDao < Role, Long >{
     /**
-     *   Initialize Logging.
+     * Get a role from persistence store.
+     * @param roleName
+     * @return A single role
      */
-    private static final Logger LOGGER = Logger.getLogger(BaseDwrAction.class);
-
-    final String TEMPLATE_DIRECTORY = "/WEB-INF/jsp/includes/dwr";
-
+    Role getRole(String roleName);
 }

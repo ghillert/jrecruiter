@@ -13,23 +13,15 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.model;
+package org.jrecruiter.dao;
 
-import java.io.Serializable;
-
+import org.jrecruiter.model.Industry;
+import org.jrecruiter.model.Role;
+import org.jrecruiter.model.Statistic;
 
 /**
- * This is the base class for all model objects.
- *
  * @author Gunnar Hillert
- * @version @version $Id$
+ * @version $Id: UserRoleDAO.java 24 2006-05-18 03:09:15Z ghillert $
  */
-public class    BaseObject implements Serializable {
-
-
-    /**
-     * serialVersionUID.
-     */
-    private static final long serialVersionUID = -566337534712446489L;
-
+public interface StatisticDao extends GenericDao < Statistic, Long >{
 }

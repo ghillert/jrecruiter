@@ -15,23 +15,13 @@
 */
 package org.jrecruiter.dao;
 
-import java.util.List;
-
 import org.jrecruiter.model.Configuration;
 
 /**
  * @author Gunnar Hillert
- * @version @version $Id: SettingsDAO.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version @version $Id$
  */
-public interface SettingsDAO {
-
-    /**
-     * Method for returning list of all jobs.
-     *
-     * @return
-     *
-     */
-    List<Configuration> getAllConfigurations();
+public interface ConfigurationDao extends GenericDao < Configuration, String >{
 
     /**
      * Method for adding or updating a job posting.

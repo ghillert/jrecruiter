@@ -24,8 +24,8 @@ import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.jrecruiter.Constants.StatsMode;
-import org.jrecruiter.dao.JobsDAO;
-import org.jrecruiter.dao.SettingsDAO;
+import org.jrecruiter.dao.JobDao;
+import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
@@ -63,25 +63,25 @@ public class JobServiceImpl implements JobService {
     /**
      * Job Dao.
      */
-    private JobsDAO jobsDao;
+    private JobDao jobDao;
 
     /**
      * Settings Dao.
      */
-    private SettingsDAO settingsDao;
+    private ConfigurationDao configurationDao;
 
     /**
-     * @param jobsDao The jobsDao to set.
+     * @param jobDao The jobDao to set.
      */
-    public void setJobsDao(final JobsDAO jobsDao) {
-        this.jobsDao = jobsDao;
+    public void setJobDao(final JobDao jobDao) {
+        this.jobDao = jobDao;
     }
 
     /**
      * @param settingsDao The settingsDao to set.
      */
-    public final void setSettingsDao(final SettingsDAO settingsDao) {
-        this.settingsDao = settingsDao;
+    public final void setConfigurationDao(final ConfigurationDao configurationDao) {
+        this.configurationDao = configurationDao;
     }
 
 
@@ -117,42 +117,42 @@ public class JobServiceImpl implements JobService {
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
     public List getJobs() {
-        return jobsDao.getAllJobs();
+        return jobDao.getAllJobs();
     }
 
     /* (non-Javadoc)
      * @see org.jrecruiter.service.JobService#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     public List<Job> getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder) {
-        return jobsDao.getJobs(pageSize, pageNumber, fieldSorted, sortOrder);
+        return jobDao.getJobs(pageSize, pageNumber, fieldSorted, sortOrder);
     }
 
     /* (non-Javadoc)
      * @see org.jrecruiter.service.JobService#getJobsCount()
      */
     public Integer getJobsCount() {
-        return jobsDao.getJobsCount();
+        return jobDao.getJobsCount();
     }
 
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
      */
     public List getUsersJobs(final String username) {
-        return jobsDao.getAllUserJobs(username);
+        return jobDao.getAllUserJobs(username);
     }
 
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
      */
     public List getUsersJobsForStatistics(final String username) {
-        return jobsDao.getAllUserJobsForStatistics(username);
+        return jobDao.getAllUserJobsForStatistics(username);
     }
 
     /* (non-Javadoc)
      * @see org.jrecruiter.service.JobService#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
     public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
-        return jobsDao.getUsersJobsForStatistics(username, maxResult, statsMode);
+        return jobDao.getUsersJobsForStatistics(username, maxResult, statsMode);
     }
 
     /* (non-Javadoc)
@@ -167,7 +167,7 @@ public class JobServiceImpl implements JobService {
     * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
     */
     public void updateJob(final Job jobs) {
-        jobsDao.update(jobs);
+        jobDao.update(jobs);
     }
 
     /* (non-Javadoc)
@@ -175,18 +175,18 @@ public class JobServiceImpl implements JobService {
     */
     public Job getJobForId(final Long jobId) {
 
-        return jobsDao.get(jobId);
+        return jobDao.get(jobId);
     }
 
     public List searchByKeyword(final String keyword) {
-        return jobsDao.searchByKeyword(keyword);
+        return jobDao.searchByKeyword(keyword);
     }
 
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#deleteJobForId(java.lang.Long)
      */
     public void deleteJobForId(final Long jobId) {
-        jobsDao.delete(jobId);
+        jobDao.remove(jobId);
     }
 
 
@@ -196,7 +196,7 @@ public class JobServiceImpl implements JobService {
     public void sendJobPostingToMailingList(final Job jobs) {
 
         final SimpleMailMessage msg = new SimpleMailMessage(this.message);
-        msg.setTo(settingsDao.get("mail.jobposting.email").getText());
+        msg.setTo(configurationDao.get("mail.jobposting.email").getMessageText());
 
         final Map < String,Object > model = new HashMap < String,Object > ();
 
@@ -224,7 +224,7 @@ public class JobServiceImpl implements JobService {
         msg.setText(result);
 
         msg.setSubject(subject);
-        msg.setFrom(settingsDao.get("mail.from").getText());
+        msg.setFrom(configurationDao.get("mail.from").getMessageText());
 
         try {
             mailSender.send(msg);
@@ -236,15 +236,15 @@ public class JobServiceImpl implements JobService {
     }
 
     public List getJRecruiterSettings() {
-        return settingsDao.getAllConfigurations();
+        return configurationDao.getAll();
     }
 
     public Configuration getJRecruiterSetting(final String key) {
-        return settingsDao.get(key);
+        return configurationDao.get(key);
     }
 
     public void saveJRecruiterSetting(final Configuration configuration) {
-        settingsDao.update(configuration);
+        configurationDao.update(configuration);
 
     }
 

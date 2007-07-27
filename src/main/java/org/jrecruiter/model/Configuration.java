@@ -1,96 +1,100 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ *	http://www.jrecruiter.org
+ *
+ *	Disclaimer of Warranty.
+ *
+ *	Unless required by applicable law or agreed to in writing, Licensor provides
+ *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
+ *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
+ *	including, without limitation, any warranties or conditions of TITLE,
+ *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
+ *	solely responsible for determining the appropriateness of using or
+ *	redistributing the Work and assume any risks associated with Your exercise of
+ *	permissions under this License.
+ *
+ */
 package org.jrecruiter.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.EqualsBuilder;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
-* This class represents configuration data.
-*
-* @author Gunnar Hillert
-* @version @version $Id$
-*/
-public class Configuration extends BaseObject implements Serializable {
+ * This class represents configuration data.
+ *
+ * @author Gunnar Hillert
+ * @version $Id$
+ */
+@Entity
+@Table(name="configuration"
+	,schema="jrecruiter"
+		, uniqueConstraints = {  }
+)
+public class Configuration implements Serializable {
 
-    /**
-     * serialVersionUID.
-     */
-    private static final long serialVersionUID = 1L;
-    private String key;
-    private String text;
-    private Date lastModified;
+	/**
+	 * serialVersionUID.
+	 */
+	private static final long serialVersionUID = 7279232706235477101L;
 
+	// Fields
 
-    /**
-     * Constructor.
-     */
-    public Configuration() {
-        super();
+	private String messageKey;
+	private String messageText;
+	private Date lastModified;
 
-    }
+	// Constructors
 
-    public String getKey() {
-        return key;
-    }
+	/** default constructor */
+	public Configuration() {
+	}
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	/** minimal constructor */
+	public Configuration(String messageKey) {
+		this.messageKey = messageKey;
+	}
+	/** full constructor */
+	public Configuration(String messageKey, String messageText, Date lastModified) {
+		this.messageKey = messageKey;
+		this.messageText = messageText;
+		this.lastModified = lastModified;
+	}
 
-    public Date getLastModified() {
-        return lastModified;
-    }
+	// Property accessors
+	@Id
+	@Column(name="message_key", unique=true, nullable=false, insertable=true, updatable=true, length=0)
+	public String getMessageKey() {
+		return this.messageKey;
+	}
 
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
-    }
+	public void setMessageKey(String messageKey) {
+		this.messageKey = messageKey;
+	}
 
-    public String getText() {
-        return text;
-    }
+	@Column(name="message_text", unique=false, nullable=true, insertable=true, updatable=true)
+	public String getMessageText() {
+		return this.messageText;
+	}
 
-    public void setText(String text) {
-        this.text = text;
-    }
+	public void setMessageText(String messageText) {
+		this.messageText = messageText;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (!(other instanceof Configuration))
-            return false;
-        Configuration castOther = (Configuration) other;
-        return new EqualsBuilder().append(key, castOther.key).append(text,
-                castOther.text).append(lastModified, castOther.lastModified)
-                .isEquals();
-    }
+	@Column(name="last_modified", unique=false, nullable=true, insertable=true, updatable=true, length=8)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getLastModified() {
+		return this.lastModified;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(387190309, 1466501611).append(key).append(
-                text).append(lastModified).toHashCode();
-    }
-
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
+	}
 
 
 }

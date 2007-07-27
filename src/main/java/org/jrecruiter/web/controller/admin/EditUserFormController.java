@@ -15,34 +15,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * List all the jobs. 
- * 
+ * List all the jobs.
+ *
  * @author Gunnar Hillert
- * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ * @version $Id$
  *
  */
 public class EditUserFormController extends BaseSimpleFormController  {
-	
+
 	/**
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(EditUserFormController.class);
-    
+
     /**
      * The service layer reference.
      */
     private UserService service;
-    
+
     /**
      * Inject the service layer reference.
-     * @param service 
+     * @param service
      */
     public void setService(UserService service) {
 		this.service = service;
 	}
 
     /**
-     * 
+     *
      */
     public ModelAndView onSubmit(HttpServletRequest request,
             HttpServletResponse response, Object command,
@@ -57,11 +57,11 @@ public class EditUserFormController extends BaseSimpleFormController  {
         user.setFax(form.getFax());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
-        
+
         if (form.getPassword() != null) {
         	user.setPassword(form.getPassword());
         }
-        
+
         user.setPhone(form.getPhone());
 
         service.updateUser(user);
@@ -74,10 +74,10 @@ public class EditUserFormController extends BaseSimpleFormController  {
 	 */
 	@Override
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		
+
         final String username;
         final User userPrincipal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
+
         if ((request.getParameter("username") != null)
          && (request.isUserInRole("admin"))) {
             username = request.getParameter("username");
@@ -89,13 +89,13 @@ public class EditUserFormController extends BaseSimpleFormController  {
 
         final UserForm form = new UserForm();
 
-        if (user.getRegisterDate() != null) {
-        	form.setRegisterDate(user.getRegisterDate());
+        if (user.getRegistrationDate() != null) {
+        	form.setRegistrationDate(user.getRegistrationDate());
         }
         if (user.getUpdateDate() != null) {
         	form.setUpdateDate(user.getUpdateDate());
         }
-        
+
         BeanUtils.copyProperties(form, user);
 		form.setPassword(null);
 

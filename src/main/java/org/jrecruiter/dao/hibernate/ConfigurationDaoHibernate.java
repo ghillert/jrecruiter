@@ -15,29 +15,28 @@
 */
 package org.jrecruiter.dao.hibernate;
 
-import java.util.List;
-
-import org.jrecruiter.dao.SettingsDAO;
+import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.model.Configuration;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id: SettingsDAOHibernate.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version @version $Id$
  */
-public class SettingsDAOHibernate extends HibernateDaoSupport implements SettingsDAO {
+public class ConfigurationDaoHibernate
+						extends GenericDaoHibernate< Configuration, String>
+						implements ConfigurationDao {
 
     /**
      * User Dao.
      */
-    private SettingsDAO configurationDao;
+    private ConfigurationDao configurationDao;
 
     /**
      * @param userDao The userDao to set.
      */
-    public void setConfigurationDao(SettingsDAO configurationDao) {
+    public void setConfigurationDao(ConfigurationDao configurationDao) {
         this.configurationDao = configurationDao;
     }
 
@@ -45,27 +44,13 @@ public class SettingsDAOHibernate extends HibernateDaoSupport implements Setting
      * Constructor.
      *
      */
-    private SettingsDAOHibernate() {
-        super();
+    private ConfigurationDaoHibernate() {
+        super(Configuration.class);
     }
-
-
 
     public Configuration get(String key) {
         Configuration configuration = (Configuration) getHibernateTemplate().load(Configuration.class, key);
         return configuration;
-    }
-
-    /**
-     * 
-     */
-    public List<Configuration> getAllConfigurations() {
-
-        List < Configuration > configurations = (List<Configuration>) getHibernateTemplate()
-        .find("from Configuration");
-
-       return configurations;
-
     }
 
     public void update(Configuration configuration) {

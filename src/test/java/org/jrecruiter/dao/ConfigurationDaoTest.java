@@ -2,19 +2,21 @@
  *
  */
 package org.jrecruiter.dao;
- 
+
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.jrecruiter.model.Configuration;
 import org.jrecruiter.test.BaseTest;
 
 /**
  * @author Gunnar Hillert
- * 
+ *
  */
 public class ConfigurationDaoTest extends BaseTest {
 
-	private SettingsDAO settingDao;
+	private ConfigurationDao configurationDao;
 
 	/**
 	 * Initialize Logging.
@@ -22,21 +24,18 @@ public class ConfigurationDaoTest extends BaseTest {
 	public static final Logger LOGGER = Logger
 			.getLogger(ConfigurationDaoTest.class);
 
-	public void testGetAllConfigurations() {
+	public void testGetAll() {
 
-		List<org.jrecruiter.model.Configuration> conf = settingDao
-				.getAllConfigurations();
+		Configuration configuration = new Configuration("test.test", "Just Testing", new Date());
+		configurationDao.save(configuration);
 
-		for (org.jrecruiter.model.Configuration setting : conf) {
-
-			LOGGER.info(setting);
-
-		}
+		List<org.jrecruiter.model.Configuration> conf = configurationDao.getAll();
+		assertTrue(conf.size() >= 1);
 
 	}
 
-	public void setSettingDao(SettingsDAO settingDao) {
-		this.settingDao = settingDao;
+	public void setConfigurationDao(ConfigurationDao configurationDao) {
+		this.configurationDao = configurationDao;
 	}
 
 }

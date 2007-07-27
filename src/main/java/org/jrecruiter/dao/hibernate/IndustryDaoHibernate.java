@@ -13,19 +13,26 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.dao;
+package org.jrecruiter.dao.hibernate;
 
-import org.jrecruiter.model.UserRole;
+import org.jrecruiter.dao.IndustryDao;
+import org.jrecruiter.model.Industry;
+
 
 /**
+ *
  * @author Gunnar Hillert
- * @version $Id: UserRoleDAO.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version $Id: UserRoleDAOHibernate.java 61 2006-11-17 04:40:39Z ghillert $
  */
-public interface UserRoleDAO {
+public class IndustryDaoHibernate extends GenericDaoHibernate< Industry, Long>
+								  implements IndustryDao {
+
     /**
-     * Get a role from persistence store.
-     * @param roleName
-     * @return A single role
+     * Constructor.
+     *
      */
-    UserRole getRole(String roleName);
+    private IndustryDaoHibernate() {
+    	super(Industry.class);
+    }
+
 }

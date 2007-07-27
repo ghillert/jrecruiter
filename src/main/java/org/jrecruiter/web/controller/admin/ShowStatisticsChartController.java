@@ -32,19 +32,19 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * List all the jobs. 
- * 
+ * List all the jobs.
+ *
  * @author Gunnar Hillert
- * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ * @version $Id$
  *
  */
 public class ShowStatisticsChartController extends MultiActionController  {
-	
+
 	/**
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(ShowStatisticsChartController.class);
-    
+
     /**
      * The service layer reference.
      */
@@ -54,20 +54,20 @@ public class ShowStatisticsChartController extends MultiActionController  {
      * Success View
      */
     private String successView;
-    
+
     /**
      * Success View for showing the job details
      */
     private String successViewShowDetails;
-    
+
     /**
-     * Ajax View 
+     * Ajax View
      */
     private String ajaxView;
-    
+
     /**
      * Inject the service layer reference.
-     * @param service 
+     * @param service
      */
     public void setService(JobService service) {
 		this.service = service;
@@ -115,12 +115,12 @@ if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
 
 return new ModelAndView("success");
     }
-    
-    
-    
+
+
+
         public final ModelAndView chartJobsHits(final HttpServletRequest request,
                 final HttpServletResponse response) throws Exception {
-        
+
         String chartTitle = null;
 
             String mode = request.getParameter("mode");
@@ -150,17 +150,17 @@ return new ModelAndView("success");
 
                 for (Job job : jobs) {
 
-                    if (job.getStatistics() != null) {
+                    if (job.getStatistic() != null) {
 
                         if (mode.equals("unique")){
-                            if (job.getStatistics().getUniqueVisits().longValue()>0){
-                                dataset.addValue(job.getStatistics().getUniqueVisits(),
+                            if (job.getStatistic().getUniqueVisits().longValue()>0){
+                                dataset.addValue(job.getStatistic().getUniqueVisits(),
                                     job.getJobTitle(), "");
                             }
 
                         } else {
-                            if (job.getStatistics().getCounter().longValue()>0){
-                                dataset.addValue(job.getStatistics().getCounter(), job.getJobTitle(), ""
+                            if (job.getStatistic().getCounter().longValue()>0){
+                                dataset.addValue(job.getStatistic().getCounter(), job.getJobTitle(), ""
                                     );
                             }
                         }
@@ -221,9 +221,9 @@ return new ModelAndView("success");
         return chart;
     }
 
-    
-    
-    
+
+
+
     /**
      * Convenient method for getting a i18n key's value with a single
      * string argument.
@@ -235,7 +235,7 @@ return new ModelAndView("success");
     public String getText(String msgKey, String arg) {
         return getText(msgKey, new Object[] { arg });
     }
-    
+
     /**
      * Convenience method for getting a i18n key's value with arguments.
      *
@@ -247,6 +247,6 @@ return new ModelAndView("success");
         return getMessageSourceAccessor().getMessage(msgKey, args);
     }
 
-    
-    
+
+
 }

@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  * List all the jobs. 
  * 
  * @author Gunnar Hillert
- * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ * @version $Id$
  *
  */
 public class SearchJobsFormController extends BaseSimpleFormController  {

@@ -30,7 +30,7 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
  * see also: http://forum.springframework.org/showthread.php?t=27296
  *
  * @author Gunnar Hillert
- * @version $Id: GeneralExceptionHandler.java 22 2006-05-18 03:00:32Z ghillert $
+ * @version $Id$
  */
 public class CustomMappingExceptionResolver extends SimpleMappingExceptionResolver {
 

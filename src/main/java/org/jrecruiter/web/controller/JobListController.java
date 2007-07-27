@@ -12,26 +12,26 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.displaytag.properties.SortOrderEnum;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Statistics;
+import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.web.JobsForDisplaytagSorting;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 /**
- * List all the jobs. 
- * 
+ * List all the jobs.
+ *
  * @author Gunnar Hillert
- * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ * @version $Id$
  *
  */
 public class JobListController extends MultiActionController  {
-	
+
 	/**
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(JobListController.class);
-    
+
     /**
      * The service layer reference.
      */
@@ -41,20 +41,20 @@ public class JobListController extends MultiActionController  {
      * Success View
      */
     private String successView;
-    
+
     /**
      * Success View for showing the job details
      */
     private String successViewShowDetails;
-    
+
     /**
-     * Ajax View 
+     * Ajax View
      */
     private String ajaxView;
-    
+
     /**
      * Inject the service layer reference.
-     * @param service 
+     * @param service
      */
     public void setService(JobService service) {
 		this.service = service;
@@ -91,42 +91,42 @@ public class JobListController extends MultiActionController  {
                                    final HttpServletResponse response)
             throws Exception {
 
-		
+
 	    final JobsForDisplaytagSorting jobsDisplaytag = new JobsForDisplaytagSorting();
-	
+
 	    String sortDirection = null;
 	    String sortField = null;
 	    Integer page = 1;
-	
+
 	    if (request.getParameter("sort") != null) {
 	        sortField = request.getParameter("sort");
 	        jobsDisplaytag.setSortCriterion(sortField);
 	    }
 	    if (request.getParameter("dir") != null) {
 	        sortDirection = request.getParameter("dir");
-	
+
 	        if (sortDirection.equalsIgnoreCase("ASC")) {
 	            jobsDisplaytag.setSortOrder(SortOrderEnum.ASCENDING);
 	        } else if (sortDirection.equalsIgnoreCase("DESC")) {
 	            jobsDisplaytag.setSortOrder(SortOrderEnum.DESCENDING);
 	        }
-	
+
 	    }
 	    if (request.getParameter("page") != null) {
 	        page = new Integer(request.getParameter("page"));
 	        jobsDisplaytag.setPageNumber(page);
 	    }
-	
+
 	    request.getParameterNames();
 	    jobsDisplaytag.setFullListSize(service.getJobsCount());
-	
+
 	    LOGGER.info("Retrieving all jobs - "
 	                    + ";Total Size: " + jobsDisplaytag.getFullListSize()
 	                    + ";Results per Page: " + jobsDisplaytag.getObjectsPerPage()
 	                    + ";Page: " + jobsDisplaytag.getPageNumber()
 	                    + ";Sort Field: " + jobsDisplaytag.getSortCriterion()
 	                    + ";Direction: " + sortDirection);
-	
+
 	    final List < Job > jobs = service.getJobs(
 	    						    jobsDisplaytag.getObjectsPerPage(),
 	                                jobsDisplaytag.getPageNumber(),
@@ -135,15 +135,15 @@ public class JobListController extends MultiActionController  {
 	    jobsDisplaytag.setJobs(jobs);
 
 	    final String ajaxCall = request.getParameter("displayAjax");
-	    
+
 	    if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
 	    	return new ModelAndView(ajaxView, "JobList", jobsDisplaytag);
 	    }
-	    
+
 	    request.setAttribute("JobList", jobsDisplaytag);
         return new ModelAndView(successView);
     }
-    
+
     /**
      * Default view for this controller.
      *
@@ -160,7 +160,7 @@ public class JobListController extends MultiActionController  {
             final Job jobDetail = service.getJobForId(id);
 
             if (jobDetail==null){
-                
+
                 request.getSession().setAttribute("message",
                         getText("error.jobposting.not.found", id.toString()));
 
@@ -169,15 +169,15 @@ public class JobListController extends MultiActionController  {
                 return new ModelAndView(successView);
             }
 
-            Statistics statistics = jobDetail.getStatistics();
+            Statistic statistics = jobDetail.getStatistic();
 
             if (statistics == null) {
 
-                statistics = new Statistics();
+                statistics = new Statistic();
                 statistics.setJob(jobDetail);
                 statistics.setCounter(new Long(0));
                 statistics.setUniqueVisits(new Long(0));
-                jobDetail.setStatistics(statistics);
+                jobDetail.setStatistic(statistics);
             }
 
             Set < Long > viewedPostings = new HashSet < Long >();
@@ -237,7 +237,7 @@ public class JobListController extends MultiActionController  {
     public String getText(String msgKey, String arg) {
         return getText(msgKey, new Object[] { arg });
     }
-    
+
     /**
      * Convenience method for getting a i18n key's value with arguments.
      *

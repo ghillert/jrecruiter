@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jrecruiter.web.forms;
 
@@ -9,28 +9,20 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
 /**
  * The user form extends the the user. This is necessary on some
  * forms the user must enter the password twice.
- * 
+ *
  * @author  Gunnar Hillert
- * @version $Id: User.java 111 2007-03-18 04:53:15Z ghillert $
+ * @version $Id$
  *
  */
 public class UserForm extends User {
 
     @NotBlank
     private String password2;
-	
+
 	/**
 	 *  Constructor.
 	 */
 	public UserForm() {
-	}
-
-	/**
-	 * @param username
-	 */
-	public UserForm(String username) {
-		super(username);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -47,6 +39,6 @@ public class UserForm extends User {
 		this.password2 = password2;
 	}
 
-	
-	
+
+
 }

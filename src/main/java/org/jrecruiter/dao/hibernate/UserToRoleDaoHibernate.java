@@ -13,23 +13,37 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.web.ajax;
+package org.jrecruiter.dao.hibernate;
 
-
-import org.apache.log4j.Logger;
+import org.jrecruiter.dao.UserToRoleDao;
+import org.jrecruiter.model.UserToRole;
 
 
 /**
+ *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version @version $Id: SettingsDAOHibernate.java 24 2006-05-18 03:09:15Z ghillert $
  */
-public class BaseDwrAction {
+public class UserToRoleDaoHibernate extends GenericDaoHibernate< UserToRole, Long> implements UserToRoleDao {
 
     /**
-     *   Initialize Logging.
+     * User-To-Role Dao.
      */
-    private static final Logger LOGGER = Logger.getLogger(BaseDwrAction.class);
+    private UserToRoleDao userToRoleDao;
 
-    final String TEMPLATE_DIRECTORY = "/WEB-INF/jsp/includes/dwr";
+    /**
+	 * @param userToRoleDao the userToRoleDao to set
+	 */
+	public void setUserToRoleDao(UserToRoleDao userToRoleDao) {
+		this.userToRoleDao = userToRoleDao;
+	}
+
+	/**
+     * Constructor.
+     *
+     */
+    private UserToRoleDaoHibernate() {
+    	super(UserToRole.class);
+    }
 
 }
