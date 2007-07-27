@@ -14,33 +14,33 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.GregorianCalendar;
 
 /**
- * List all the jobs. 
- * 
+ * List all the jobs.
+ *
  * @author Gunnar Hillert
- * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ * @version $Id$
  *
  */
 public class EditConfigurationFormController extends BaseSimpleFormController  {
-	
+
 	/**
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(EditConfigurationFormController.class);
-    
+
     /**
      * The service layer reference.
      */
     private JobService service;
-    
+
     /**
      * Inject the service layer reference.
-     * @param service 
+     * @param service
      */
     public void setService(JobService service) {
 		this.service = service;
 	}
 
-	
+
 	/* (non-Javadoc)
 	 * @see org.springframework.web.servlet.mvc.AbstractFormController#formBackingObject(javax.servlet.http.HttpServletRequest)
 	 */
@@ -49,18 +49,18 @@ public class EditConfigurationFormController extends BaseSimpleFormController  {
 
         final ConfigurationForm form = new ConfigurationForm();
 
-        form.setMailingListSubject( ((Configuration)service.getJRecruiterSetting("mail.jobposting.subject")).getText());
-        form.setMailingListTemplate(((Configuration)service.getJRecruiterSetting("mail.jobposting.body")).getText());
-        form.setMailingListEmail(   ((Configuration)service.getJRecruiterSetting("mail.jobposting.email")).getText());
-        form.setMailFrom(           ((Configuration)service.getJRecruiterSetting("mail.from")).getText());
-        form.setPasswordSubject(    ((Configuration)service.getJRecruiterSetting("mail.password.subject")).getText());
-        form.setPasswordTemplate(   ((Configuration)service.getJRecruiterSetting("mail.password.body")).getText());
+        form.setMailingListSubject( ((Configuration)service.getJRecruiterSetting("mail.jobposting.subject")).getMessageText());
+        form.setMailingListTemplate(((Configuration)service.getJRecruiterSetting("mail.jobposting.body")).getMessageText());
+        form.setMailingListEmail(   ((Configuration)service.getJRecruiterSetting("mail.jobposting.email")).getMessageText());
+        form.setMailFrom(           ((Configuration)service.getJRecruiterSetting("mail.from")).getMessageText());
+        form.setPasswordSubject(    ((Configuration)service.getJRecruiterSetting("mail.password.subject")).getMessageText());
+        form.setPasswordTemplate(   ((Configuration)service.getJRecruiterSetting("mail.password.body")).getMessageText());
 
         return form;
 	}
 
     /**
-     * 
+     *
      */
     public ModelAndView onSubmit(HttpServletRequest request,
             HttpServletResponse response, Object command,
@@ -71,38 +71,38 @@ public class EditConfigurationFormController extends BaseSimpleFormController  {
 		ConfigurationForm settingsForm = (ConfigurationForm) command;
 
         Configuration configuration = new Configuration();
-        configuration.setKey("mail.jobposting.subject");
-        configuration.setText((String) settingsForm.getMailingListSubject());
+        configuration.setMessageKey("mail.jobposting.subject");
+        configuration.setMessageText((String) settingsForm.getMailingListSubject());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         service.saveJRecruiterSetting(configuration);
 
         configuration = new Configuration();
-        configuration.setKey("mail.jobposting.body");
-        configuration.setText((String) settingsForm.getMailingListTemplate());
+        configuration.setMessageKey("mail.jobposting.body");
+        configuration.setMessageText((String) settingsForm.getMailingListTemplate());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         service.saveJRecruiterSetting(configuration);
 
         configuration = new Configuration();
-        configuration.setKey("mail.jobposting.email");
-        configuration.setText((String) settingsForm.getMailingListEmail());
+        configuration.setMessageKey("mail.jobposting.email");
+        configuration.setMessageText((String) settingsForm.getMailingListEmail());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         service.saveJRecruiterSetting(configuration);
 
         configuration = new Configuration();
-        configuration.setKey("mail.from");
-        configuration.setText((String) settingsForm.getMailFrom());
+        configuration.setMessageKey("mail.from");
+        configuration.setMessageText((String) settingsForm.getMailFrom());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         service.saveJRecruiterSetting(configuration);
 
         configuration = new Configuration();
-        configuration.setKey("mail.password.subject");
-        configuration.setText((String) settingsForm.getPasswordSubject());
+        configuration.setMessageKey("mail.password.subject");
+        configuration.setMessageText((String) settingsForm.getPasswordSubject());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         service.saveJRecruiterSetting(configuration);
 
         configuration = new Configuration();
-        configuration.setKey("mail.password.body");
-        configuration.setText((String) settingsForm.getPasswordTemplate());
+        configuration.setMessageKey("mail.password.body");
+        configuration.setMessageText((String) settingsForm.getPasswordTemplate());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         service.saveJRecruiterSetting(configuration);
 

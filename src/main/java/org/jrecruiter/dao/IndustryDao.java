@@ -13,23 +13,14 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.web.ajax;
+package org.jrecruiter.dao;
 
-
-import org.apache.log4j.Logger;
-
+import org.jrecruiter.model.Configuration;
+import org.jrecruiter.model.Industry;
 
 /**
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: UserRoleDAO.java 24 2006-05-18 03:09:15Z ghillert $
  */
-public class BaseDwrAction {
-
-    /**
-     *   Initialize Logging.
-     */
-    private static final Logger LOGGER = Logger.getLogger(BaseDwrAction.class);
-
-    final String TEMPLATE_DIRECTORY = "/WEB-INF/jsp/includes/dwr";
-
+public interface IndustryDao extends GenericDao < Industry, Long >{
 }

@@ -18,29 +18,22 @@ package org.jrecruiter.dao;
 import java.util.List;
 
 import org.jrecruiter.Constants;
+import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 
 /**
  * Interface for any job-related persistence calls.
  *
  * @author Jerzy Puchala, Gunnar Hillert
- * @version @version $Id: JobsDAO.java 39 2006-07-05 03:29:17Z ghillert $
+ * @version @version $Id$
  */
-public interface JobsDAO {
+public interface JobDao extends GenericDao < Job, Long >{
     /**
      * Method for returning list of all jobs.
      *
      * @return List of jobs
      */
     List < Job > getAllJobs();
-
-    /**
-     * Method for adding or updating a job posting.
-     *
-     * @param job job posting
-     *
-     */
-    void update(Job job);
 
     /**
      * Method for getting a job posting.
@@ -60,14 +53,6 @@ public interface JobsDAO {
      * @return List of jobs
      */
     List < Job > searchByKeyword(String keyword);
-
-    /**
-     * Method for getting a job posting.
-     *
-     * @param jobId job posting id
-     *
-     */
-    void delete(Long jobId);
 
     /**
      * Method for getting users jobs.

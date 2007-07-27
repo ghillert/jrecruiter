@@ -30,31 +30,32 @@ public class Constants {
         super();
     }
 
+    public enum Roles { ROLE_ADMIN, ROLE_MANAGER }
+
     public enum StatsMode { PAGE_HITS, UNIQUE_HITS }
 
+    /**
+     * Defines if a job was posted by a company (direct-hire) or
+     * by a recruiter.
+     */
     public enum OfferedBy {
 
-        recruiter(1, "Recruiter", "offeredBy.recruiter.description"),
-        company  (2,   "Company",   "offeredBy.company.description");
+        RECRUITER("Recruiter", "offeredBy.recruiter.description"),
+        COMPANY  ("Company",   "offeredBy.company.description");
 
-        Integer id;
         String name;
         String descriptionKey;
 
-        OfferedBy(final Integer id,
-                  final String name,
+        /**
+         * Constructor.
+         *
+         * @param name The name for display puposes.
+         * @param descriptionKey Provides description from the resource bundle.
+         */
+        OfferedBy(final String name,
                   final String descriptionKey) {
-            this.id = id;
             this.name = name;
             this.descriptionKey = descriptionKey;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
         }
 
         public String getName() {
@@ -73,4 +74,47 @@ public class Constants {
             this.descriptionKey = descriptionKey;
         }
     }
+
+    /**
+     * Denotes whether the job posting is active or disabled
+     * (not shown in the search results)
+     */
+    public enum JobStatus {
+
+        ACTIVE("Active",     "jobStatus.active.description"),
+        DISABLED("disabled", "jobStatus.disabled.description");
+
+        String name;
+        String descriptionKey;
+
+        /**
+         * Constructor.
+         *
+         * @param name The name for display puposes.
+         * @param descriptionKey Provides description from the resource bundle.
+         */
+        JobStatus(
+        		final String name,
+        		final String descriptionKey) {
+        	this.name = name;
+            this.descriptionKey = descriptionKey;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescriptionKey() {
+            return descriptionKey;
+        }
+
+        public void setDescriptionKey(String descriptionKey) {
+            this.descriptionKey = descriptionKey;
+        }
+    }
+
 }

@@ -13,6 +13,7 @@ public class StartAction extends ActionSupport {
     private final Log log = LogFactory.getLog(StartAction.class);
 
     public String list() { 
+    	log.info("ttttttttttttttttttttttttttttttttttttt");
         return SUCCESS; 
     } 
 }

@@ -3,6 +3,7 @@
  */
 package org.jrecruiter.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,13 +14,13 @@ import org.testng.annotations.Test;
 
 /**
  * @author Gunnar Hillert
- * 
+ *
  */
 public class UserDaoTest extends BaseTest {
 
-	private UserDAO userDao;
+	private UserDao userDao;
 
-	public void setUserDao(UserDAO userDAO) {
+	public void setUserDao(UserDao userDAO) {
 		this.userDao = userDAO;
 	}
 
@@ -28,16 +29,14 @@ public class UserDaoTest extends BaseTest {
 	 */
 	public static final Logger LOGGER = Logger.getLogger(UserDaoTest.class);
 
-	public void getAllUsersTest() {
-		System.out.println("exec");
+	public void testGetAllUsers() {
 
 		List<User> users = userDao.getAllUsers();
-
 		LOGGER.info("Number of users found: " + users.size());
-		LOGGER.info("Details des ersten users: " + users.get(0));
+		LOGGER.info("Details of first user: " + users.get(0));
 	}
 
-	public void getSingleUserTest() {
+	public void testGetSingleUser() {
 		System.out.println("exec");
 
 		User user = userDao.getUser("admin");
@@ -47,11 +46,10 @@ public class UserDaoTest extends BaseTest {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 */
-	@Test(groups = { "dao-integration-test" })
-	public void addAndRemoveUserTest() {
+	public void testAddAndRemoveUserTest() {
 
 		User user = new User();
 		user.setUsername("demo44");
@@ -60,11 +58,12 @@ public class UserDaoTest extends BaseTest {
 		user.setLastName("Demo Last Name");
 		user.setPassword("demo");
 		user.setPhone("123456");
-
-		userDao.addUser(user);
+		user.setRegistrationDate(new Date());
+		userDao.save(user);
 
 		assertNotNull(user.getUsername());
 		assertTrue(user.getFirstName().equals("Demo First Name"));
+		assertNotNull(user.getId());
 
 		userDao.deleteUser(new String[] { user.getUsername() });
 

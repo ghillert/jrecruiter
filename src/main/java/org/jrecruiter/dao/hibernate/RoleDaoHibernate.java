@@ -15,32 +15,44 @@
 */
 package org.jrecruiter.dao.hibernate;
 
-import org.jrecruiter.dao.UserRoleDAO;
-import org.jrecruiter.model.UserRole;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.jrecruiter.dao.RoleDao;
+import org.jrecruiter.model.Role;
 
 
 /**
  *
  * @author Gunnar Hillert
- * @version $Id: UserRoleDAOHibernate.java 61 2006-11-17 04:40:39Z ghillert $
+ * @version @version $Id: SettingsDAOHibernate.java 24 2006-05-18 03:09:15Z ghillert $
  */
-public class UserRoleDAOHibernate extends HibernateDaoSupport implements UserRoleDAO {
-
+public class RoleDaoHibernate extends GenericDaoHibernate< Role, Long>
+							  implements RoleDao {
 
     /**
+     * Role Dao.
+     */
+    private RoleDao roleDao;
+
+    /**
+	 * @param roleDao the roleDao to set
+	 */
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
+	/**
      * Constructor.
      *
      */
-    private UserRoleDAOHibernate() {
-        super();
+    private RoleDaoHibernate() {
+    	super(Role.class);
     }
 
-	public UserRole getRole(String roleName) {
-		return (UserRole)getHibernateTemplate().get(UserRole.class, roleName);
+	/* (non-Javadoc)
+	 * @see org.jrecruiter.dao.RoleDao#getRole(java.lang.String)
+	 */
+	public Role getRole(String roleName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-
-
 
 }

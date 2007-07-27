@@ -29,34 +29,34 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
- * List all the jobs. 
- * 
+ * List all the jobs.
+ *
  * @author Gunnar Hillert
- * @version $Id: JobListAction.java 58 2006-10-16 03:45:45Z ghillert $
+ * @version $Id$
  *
  */
 public class EditJobFormController extends BaseSimpleFormController  {
-	
+
 	/**
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(EditJobFormController.class);
-    
+
     /**
      * The service layer reference.
      */
     private JobService service;
-    
+
     /**
      * Inject the service layer reference.
-     * @param service 
+     * @param service
      */
     public void setService(JobService service) {
 		this.service = service;
 	}
-    
+
     /**
-     * 
+     *
      */
     public ModelAndView onSubmit(HttpServletRequest request,
             HttpServletResponse response, Object command,
@@ -66,7 +66,7 @@ public class EditJobFormController extends BaseSimpleFormController  {
 
 		Job job = (Job) command;
 		final Job jobFromDB = service.getJobForId(job.getId());
-		
+
         if (request.getParameter("delete") != null) {
 
         	//TODO user objects
@@ -82,7 +82,7 @@ public class EditJobFormController extends BaseSimpleFormController  {
 //                     }
 //                 }
 //             }
-             
+
              request.getSession().setAttribute("message",
                      getText("job.delete.success", ""));
 
@@ -121,19 +121,19 @@ public class EditJobFormController extends BaseSimpleFormController  {
 
 	}
 
-    
-    
+
+
     /* (non-Javadoc)
 	 * @see org.springframework.web.servlet.mvc.AbstractFormController#formBackingObject(javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        
+
 		//FIXME security
 		final Long id = Long.valueOf(request.getParameter("id"));
         final Job job = service.getJobForId(id);
 
-        request.setAttribute("statistics", job.getStatistics());
+        request.setAttribute("statistics", job.getStatistic());
 
 		return job;
 	}

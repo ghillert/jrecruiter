@@ -15,7 +15,7 @@
  */
 package org.jrecruiter.dao.hibernate;
 
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -24,48 +24,34 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.jrecruiter.Constants.Roles;
 import org.jrecruiter.Constants.StatsMode;
-import org.jrecruiter.dao.JobsDAO;
-import org.jrecruiter.dao.UserDAO;
+import org.jrecruiter.dao.JobDao;
+import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
-import org.jrecruiter.model.UserRole;
 import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
  * This DAO provides job-related database methods.
  *
  * @author Jerzy Puchala, Gunnar Hillert
- * @version $Id: JobsDAOHibernate.java 53 2006-10-13 02:54:52Z ghillert $
+ * @version $Id$
  */
-public final class JobsDAOHibernate extends HibernateDaoSupport
-                                        implements JobsDAO {
+public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
+                                        implements JobDao {
 
     /**
      * User Dao.
      */
-    private UserDAO userDao;
+    private UserDao userDao;
 
     /**
      * Constructor.
      *
      */
-    private JobsDAOHibernate() {
-        super();
-    }
-
-    /**
-     * Deletes a job posting.
-     *
-     * @param jobId Id of the job to be deleted
-     * @see org.jrecruiter.persistent.dao.JobReqDAO#delete(java.lang.Integer)
-     */
-    public void delete(final Long jobId) {
-
-        Job job = (Job) getHibernateTemplate().load(Job.class, jobId);
-        getHibernateTemplate().delete(job);
-
+    private JobDaoHibernate() {
+    	super(Job.class);
     }
 
     /**
@@ -94,7 +80,7 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
         List < Job > jobs = (List < Job >) getHibernateTemplate()
                 .find(
                         "select job from Job job "
-                                + "left outer join fetch job.statistics "
+                                + "left outer join fetch job.statistic "
                                 + " order by job.updateDate DESC");
 
         return jobs;
@@ -116,16 +102,10 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
 
         boolean administrator = false;
 
-        Iterator it = user.getRoles().iterator();
+        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
 
-        while (it.hasNext()) {
-
-            UserRole userRole = (UserRole) it.next();
-
-            if ("admin".equals(userRole.getName())) {
-                administrator = true;
-            }
-
+        if (index >= 0) {
+        	administrator = true;
         }
 
         if (administrator) {
@@ -154,16 +134,10 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
 
         boolean administrator = false;
 
-        Iterator it = user.getRoles().iterator();
+        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
 
-        while (it.hasNext()) {
-
-            UserRole userRole = (UserRole) it.next();
-
-            if ("admin".equals(userRole.getName())) {
-                administrator = true;
-            }
-
+        if (index >= 0) {
+        	administrator = true;
         }
 
         if (administrator) {
@@ -189,7 +163,7 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
      * @param statsMode  what type of statistical information to be generated
      * @return List of jobs.
      *
-     * @see org.jrecruiter.dao.JobsDAO#getUsersJobsForStatistics(java.lang.String,
+     * @see org.jrecruiter.dao.JobsDao#getUsersJobsForStatistics(java.lang.String,
      *      java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
     public List < Job > getUsersJobsForStatistics(final String username,
@@ -202,16 +176,10 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
 
         boolean administrator = false;
 
-        Iterator it = user.getRoles().iterator();
+        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
 
-        while (it.hasNext()) {
-
-            UserRole userRole = (UserRole) it.next();
-
-            if ("admin".equals(userRole.getName())) {
-                administrator = true;
-            }
-
+        if (index >= 0) {
+        	administrator = true;
         }
 
         final Session session = getSession(false);
@@ -296,17 +264,8 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
      * @param userDao
      *            The userDao to set.
      */
-    public void setUserDao(final UserDAO userDao) {
+    public void setUserDao(final UserDao userDao) {
         this.userDao = userDao;
-    }
-
-    /**
-     * Update a job posting in the persistence store.
-     */
-    public void update(Job job) {
-
-        getHibernateTemplate().saveOrUpdate(job);
-
     }
 
     /**
@@ -364,7 +323,7 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
      * Returns the number of totally available jobs in the system.
      *
      * @return Total number of jobs
-     * @see org.jrecruiter.dao.JobsDAO#getJobsCount()
+     * @see org.jrecruiter.dao.JobsDao#getJobsCount()
      */
     public Integer getJobsCount() {
 
@@ -380,5 +339,4 @@ public final class JobsDAOHibernate extends HibernateDaoSupport
         //FIXME
         return Integer.valueOf(numberOfJobs.toString());
     }
-
 }

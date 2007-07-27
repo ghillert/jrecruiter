@@ -26,11 +26,12 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
-import org.jrecruiter.dao.SettingsDAO;
-import org.jrecruiter.dao.UserDAO;
-import org.jrecruiter.dao.UserRoleDAO;
+import org.jrecruiter.dao.ConfigurationDao;
+import org.jrecruiter.dao.UserDao;
+import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.User;
-import org.jrecruiter.model.UserRole;
+import org.jrecruiter.model.Role;
+import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -69,30 +70,30 @@ public class UserServiceImpl implements UserService {
     /**
      * User Dao.
      */
-    private UserDAO userDao;
+    private UserDao userDao;
 
     /**
      * UserRole Dao.
      */
-    private UserRoleDAO userRoleDao;
-    
+    private RoleDao roleDao;
+
     /**
      * Access to settings.
      */
-    private SettingsDAO settingsDao;
+    private ConfigurationDao configurationDao;
 
     /**
      * @param userDao The userDao to set.
      */
-    public void setUserDao(UserDAO userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-    
+
     /**
 	 * @param userRoleDao the userRoleDao to set
 	 */
-	public void setUserRoleDao(UserRoleDAO userRoleDao) {
-		this.userRoleDao = userRoleDao;
+	public void setRoleDao(RoleDao userRoleDao) {
+		this.roleDao = userRoleDao;
 	}
 
 	/**
@@ -125,23 +126,27 @@ public class UserServiceImpl implements UserService {
     /**
      * @param settingsDAO The settingsDAO to set.
      */
-    public final void setSettingsDao(SettingsDAO settingsDao) {
-        this.settingsDao = settingsDao;
+    public final void setConfigurationDao(ConfigurationDao configurationDao) {
+        this.configurationDao = configurationDao;
     }
 
     public void addUser(User user) throws DuplicateUserException{
 
         Date registerDate = new Date();
-        user.setRegisterDate(registerDate);
+        user.setRegistrationDate(registerDate);
         user.setUpdateDate(registerDate);
         try {
 
-        	UserRole role = userRoleDao.getRole("manager");
-        	Set<UserRole> roles = new HashSet<UserRole>();
-        	roles.add(role);
-        	user.setRoles(roles);
-        	
-        	userDao.addUser(user);
+        	Role role = roleDao.getRole("manager");
+        	Set<UserToRole> userToRoles = user.getUserToRoles();
+
+        	UserToRole utr = new UserToRole();
+        	utr.setRole(role);
+        	utr.setUser(user);
+
+        	userToRoles.add(utr);
+
+        	userDao.save(user);
         } catch (DataIntegrityViolationException e){
             LOGGER.warn("addUser() - A DataIntegrityViolationException was thrown - " + e.getMessage());
             throw new DuplicateUserException("User already exists", e);
@@ -156,7 +161,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) {
         Date updateDate = new Date();
         user.setUpdateDate(updateDate);
-        userDao.updateUser(user);
+        userDao.update(user);
     }
 
     public List<User> getAllUsers() {
@@ -174,8 +179,8 @@ public class UserServiceImpl implements UserService {
     public void sendPassword(User user) {
 
         final SimpleMailMessage msg = new SimpleMailMessage(this.message);
-        msg.setSubject(settingsDao.get("mail.password.subject").getText());
-        msg.setFrom(settingsDao.get("mail.from").getText());
+        msg.setSubject(configurationDao.get("mail.password.subject").getMessageText());
+        msg.setFrom(configurationDao.get("mail.from").getMessageText());
         msg.setTo(user.getFirstName() + " " + user.getLastName()
                 + "<" + user.getEmail() + ">");
 
