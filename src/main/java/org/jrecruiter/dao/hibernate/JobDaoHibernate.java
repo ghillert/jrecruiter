@@ -55,21 +55,6 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
     }
 
     /**
-     * Get a gob from the persistence store.
-     *
-     * @param jobId
-     *            Id of the job posting.
-     * @return A single job posting
-     *
-     * @see org.jrecruiter.persistent.dao.JobReqDAO#get(java.lang.Integer)
-     */
-    public Job get(final Long jobId) {
-
-        Job job = (Job) getHibernateTemplate().get(Job.class, jobId);
-        return job;
-    }
-
-    /**
      * Method for returning list of all jobs.
      *
      * @return List of Jobs
@@ -97,26 +82,8 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
     public List < Job > getAllUserJobs(final String username) {
 
         List < Job > jobs;
-
-        User user = userDao.getUser(username);
-
-        boolean administrator = false;
-
-        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
-
-        if (index >= 0) {
-        	administrator = true;
-        }
-
-        if (administrator) {
-            jobs = this.getAllJobs();
-        } else {
-
             jobs = getHibernateTemplate().find(
-                    "from Job j where j.owner.username=?", username);
-
-        }
-
+                    "from Job j where j.user.username=?", username);
         return jobs;
     }
 

@@ -23,9 +23,9 @@ import org.jrecruiter.test.BaseTest;
  * @version $Id: JobService.java 93 2007-01-22 02:42:14Z ghillert $
  */
 public class UserServiceTest extends BaseTest {
-	
+
 	UserService userService;
-	
+
 	/**
 	 * @param userService the userService to set
 	 */
@@ -43,5 +43,8 @@ public class UserServiceTest extends BaseTest {
 
 	public void deleteUserTest(){}
 
-	public void sendPasswordTest(){}
+	public void sendPasswordTest(){
+
+
+	}
 }

@@ -18,7 +18,6 @@ package org.jrecruiter.dao;
 import java.util.List;
 
 import org.jrecruiter.Constants;
-import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 
 /**
@@ -60,7 +59,7 @@ public interface JobDao extends GenericDao < Job, Long >{
      * @param username name of user owning the job.
      * @return List of Job objects for given User
      */
-    List getAllUserJobs(String username);
+    List <Job> getAllUserJobs(String username);
 
     /**
      * Method for returning list of available job postings.

@@ -13,39 +13,38 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao;
 
-import org.jrecruiter.dao.ConfigurationDao;
-import org.jrecruiter.dao.StatisticDao;
-import org.jrecruiter.model.Statistic;
+import org.jrecruiter.model.Industry;
+import org.jrecruiter.model.User;
+import org.jrecruiter.model.Role;
 
+import java.util.List;
 
 /**
- *
- * @author Gunnar Hillert
- * @version @version $Id: SettingsDAOHibernate.java 24 2006-05-18 03:09:15Z ghillert $
+ * @author Dorota Puchala, Gunnar Hillert
+ * @version @version $Id: UserDAO.java 24 2006-05-18 03:09:15Z ghillert $
  */
-public class StatisticDaoHibernate extends GenericDaoHibernate< Statistic, Long>
-								   implements StatisticDao {
+public interface UserDao extends GenericDao < User, Long >{
 
     /**
-     * User Dao.
+     * Get a user from persistence store.
+     * @param username
+     * @return A single user
      */
-    private ConfigurationDao configurationDao;
+    User getUser(String username);
 
     /**
-     * @param userDao The userDao to set.
+     * Return all users from persistence store.
+     * @return List of users
      */
-    public void setConfigurationDao(ConfigurationDao configurationDao) {
-        this.configurationDao = configurationDao;
-    }
+    List < User > getAllUsers();
 
     /**
-     * Constructor.
+     * Delete an array of users from persistence store.
      *
+     * @param usernameList list of user names.
      */
-    private StatisticDaoHibernate() {
-    	super(Statistic.class);
-    }
+    void deleteUser(String[] usernameList);
 
 }
