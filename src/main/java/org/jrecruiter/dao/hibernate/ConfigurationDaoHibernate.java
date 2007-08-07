@@ -48,16 +48,4 @@ public class ConfigurationDaoHibernate
         super(Configuration.class);
     }
 
-    public Configuration get(String key) {
-        Configuration configuration = (Configuration) getHibernateTemplate().load(Configuration.class, key);
-        return configuration;
-    }
-
-    public void update(Configuration configuration) {
-        getHibernateTemplate().update(configuration);
-
-    }
-
-
-
 }

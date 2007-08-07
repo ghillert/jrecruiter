@@ -39,4 +39,16 @@ public class RoleDaoTest extends BaseTest {
 
 		assertTrue(roles.size() >= 1);
 	}
+
+	public void testGetRole() {
+
+		final Role role = new Role(null, "TEST");
+		roleDao.save(role);
+
+		assertNotNull(role.getId());
+
+		Role role2 = roleDao.getRole("TEST");
+
+		assertNotNull(role);
+	}
 }

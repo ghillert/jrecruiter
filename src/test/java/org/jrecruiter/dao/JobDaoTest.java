@@ -41,17 +41,6 @@ public class JobDaoTest extends BaseTest {
 		this.jobDao = jobDao;
 	}
 
-	public void testGetAllJobs() {
-
-		List<Job> jobs = jobDao.getAllJobs();
-
-		for (Job job : jobs) {
-
-			LOGGER.info(job.getId());
-
-		}
-	}
-
 	public void testGetJobsPaginated() {
 
 		List<Job> jobs = jobDao.getJobs(20, 1, null, null);
@@ -64,18 +53,76 @@ public class JobDaoTest extends BaseTest {
 	}
 
 	public void testSearchByKeyword() {
-
 		jobDao.searchByKeyword("java");
 	}
 
 	public void testSaveJobWithStatistic() {
-		Job job = new Job();
+		final Job job = this.getJob();
 
         Statistic statistic = new Statistic();
         statistic.setJob(job);
         statistic.setCounter(new Long(0));
         statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
+
+		User user = this.getUser();
+		userDao.save(user);
+
+		job.setStatistic(statistic);
+		job.setUser(user);
+
+		jobDao.save(job);
+		assertNotNull(job.getId());
+	}
+
+	public void testGetJob() {
+
+		final Job job = this.getJob();
+
+		User user = this.getUser();
+		userDao.save(user);
+
+		job.setUser(user);
+		jobDao.save(job);
+
+		Job job2 = jobDao.get(job.getId());
+
+		assertNotNull(job2);
+	}
+
+	public void testDoesJobExist() {
+
+		final Job job = this.getJob();
+
+		User user = this.getUser();
+		userDao.save(user);
+
+		job.setUser(user);
+
+		assertFalse(jobDao.exists(9999999L));
+		jobDao.save(job);
+		assertNotNull(job.getId());
+
+		assertTrue(jobDao.exists(job.getId()));
+	}
+
+	public void testGetAllUserJobs() {
+
+		final Job job = this.getJob();
+		final User user = this.getUser();
+
+		userDao.save(user);
+
+		job.setUser(user);
+		jobDao.save(job);
+
+		List <Job> jobs = jobDao.getAllUserJobs("demo44");
+
+		assertNotNull(jobs);
+		assertTrue(jobs.size()>0);
+	}
+
+	private User getUser() {
 
 		User user = new User();
 		user.setUsername("demo44");
@@ -85,8 +132,14 @@ public class JobDaoTest extends BaseTest {
 		user.setPassword("demo");
 		user.setPhone("123456");
 		user.setRegistrationDate(new Date());
-		userDao.save(user);
 
+		return user;
+
+	}
+
+	private Job getJob() {
+
+		Job job = new Job();
 		job.setBusinessAddress1("businessAddress1");
 		job.setBusinessAddress2("businessAddress2");
 		job.setBusinessCity("businessCity");
@@ -97,7 +150,7 @@ public class JobDaoTest extends BaseTest {
 		job.setBusinessState("businessState");
 		job.setBusinessZip("businessZip");
 		job.setDescription("description");
-		//job.setIndustry("industry");
+
 		job.setJobRestrictions("jobRestrictions");
 		job.setJobTitle("jobTitle");
 		job.setLatitude(BigDecimal.ONE);
@@ -105,14 +158,28 @@ public class JobDaoTest extends BaseTest {
 		job.setOfferedBy(OfferedBy.RECRUITER);
 		job.setRegistrationDate(new Date());
 		job.setSalary(new BigDecimal(10000));
-		job.setStatistic(statistic);
 		job.setStatus(JobStatus.ACTIVE);
 		job.setUpdateDate(new Date());
-		job.setUser(user);
 		job.setWebsite("www.google.com");
 
+		return job;
+
+	}
+
+	public void testGetAllJobs() {
+
+		final Job job = this.getJob();
+
+		User user = this.getUser();
+		userDao.save(user);
+
+		job.setUser(user);
 		jobDao.save(job);
 
-		assertNotNull(job.getId());
+		List <Job> jobs = jobDao.getAllJobs();
+
+		assertTrue(jobs.size() > 0);
+
 	}
+
 }

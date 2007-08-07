@@ -15,8 +15,18 @@
 */
 package org.jrecruiter.dao.hibernate;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.jrecruiter.Constants.Roles;
+import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.dao.RoleDao;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Role;
+import org.jrecruiter.model.User;
 
 
 /**
@@ -50,9 +60,25 @@ public class RoleDaoHibernate extends GenericDaoHibernate< Role, Long>
 	/* (non-Javadoc)
 	 * @see org.jrecruiter.dao.RoleDao#getRole(java.lang.String)
 	 */
-	public Role getRole(String roleName) {
-		// TODO Auto-generated method stub
-		return null;
+	public Role getRole(final String roleName) {
+
+		final Role role;
+
+		final Session session = getSession(false);
+
+		try {
+			Query query = session
+					.createQuery("select r from Role r "
+							+ "where r.name = :role");
+			query.setString("role", roleName);
+
+			role = (Role) query.uniqueResult();
+
+		} catch (HibernateException ex) {
+			throw convertHibernateAccessException(ex);
+		}
+
+		return role;
 	}
 
 }

@@ -15,7 +15,7 @@
 */
 package org.jrecruiter.service.impl;
 
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,14 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.jrecruiter.Constants.Roles;
 import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.ConfigurationDao;
+import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
@@ -35,7 +38,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
- * @author Jerzy Puchala
+ * @author Gunnar Hillert
  * @version $Id$
  */
 public class JobServiceImpl implements JobService {
@@ -66,6 +69,11 @@ public class JobServiceImpl implements JobService {
     private JobDao jobDao;
 
     /**
+     * User Dao.
+     */
+    private UserDao userDao;
+
+    /**
      * Settings Dao.
      */
     private ConfigurationDao configurationDao;
@@ -83,8 +91,6 @@ public class JobServiceImpl implements JobService {
     public final void setConfigurationDao(final ConfigurationDao configurationDao) {
         this.configurationDao = configurationDao;
     }
-
-
 
     /**
      * Sets the mail sender.
@@ -138,7 +144,25 @@ public class JobServiceImpl implements JobService {
      * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
      */
     public List getUsersJobs(final String username) {
-        return jobDao.getAllUserJobs(username);
+
+    	List <Job> jobs = null;
+        User user = userDao.getUser(username);
+
+        boolean administrator = false;
+
+        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
+
+        if (index >= 0) {
+        	administrator = true;
+        }
+
+        if (administrator) {
+            jobs = jobDao.getAllJobs();
+        } else {
+        	jobs = jobDao.getAllUserJobs(username);
+        }
+
+        return jobs;
     }
 
     /* (non-Javadoc)
@@ -247,6 +271,13 @@ public class JobServiceImpl implements JobService {
         configurationDao.update(configuration);
 
     }
+
+	/**
+	 * @param userDao the userDao to set
+	 */
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
 
 }
