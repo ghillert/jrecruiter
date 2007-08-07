@@ -2,6 +2,7 @@ package org.jrecruiter.web.controller.admin;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -11,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * List all the jobs. 
- * 
+ * List all the jobs.
+ *
  * @author Gunnar Hillert
  * @version $Id$
  *
@@ -41,13 +42,13 @@ public class ShowStatisticsController extends MultiActionController {
 	private String successViewShowDetails;
 
 	/**
-	 * Ajax View 
+	 * Ajax View
 	 */
 	private String ajaxView;
 
 	/**
 	 * Inject the service layer reference.
-	 * @param service 
+	 * @param service
 	 */
 	public void setService(JobService service) {
 		this.service = service;
@@ -82,7 +83,7 @@ public class ShowStatisticsController extends MultiActionController {
 	public final ModelAndView view(final HttpServletRequest request,
 			final HttpServletResponse response) throws Exception {
 
-		final List jobs = service.getUsersJobsForStatistics(request
+		final List<Job> jobs = service.getUsersJobsForStatistics(request
 				.getRemoteUser());
 
 		request.setAttribute("jobs", jobs);

@@ -15,11 +15,9 @@
 */
 package org.jrecruiter.dao;
 
-import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.User;
-import org.jrecruiter.model.Role;
-
 import java.util.List;
+
+import org.jrecruiter.model.User;
 
 /**
  * @author Dorota Puchala, Gunnar Hillert

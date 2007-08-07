@@ -15,18 +15,11 @@
 */
 package org.jrecruiter.dao.hibernate;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.jrecruiter.Constants.Roles;
-import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.dao.RoleDao;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Role;
-import org.jrecruiter.model.User;
 
 
 /**
@@ -36,18 +29,6 @@ import org.jrecruiter.model.User;
  */
 public class RoleDaoHibernate extends GenericDaoHibernate< Role, Long>
 							  implements RoleDao {
-
-    /**
-     * Role Dao.
-     */
-    private RoleDao roleDao;
-
-    /**
-	 * @param roleDao the roleDao to set
-	 */
-	public void setRoleDao(RoleDao roleDao) {
-		this.roleDao = roleDao;
-	}
 
 	/**
      * Constructor.

@@ -122,7 +122,7 @@ public class JobServiceImpl implements JobService {
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
-    public List getJobs() {
+    public List<Job> getJobs() {
         return jobDao.getAllJobs();
     }
 
@@ -143,7 +143,7 @@ public class JobServiceImpl implements JobService {
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
      */
-    public List getUsersJobs(final String username) {
+    public List<Job> getUsersJobs(final String username) {
 
     	List <Job> jobs = null;
         User user = userDao.getUser(username);
@@ -168,7 +168,7 @@ public class JobServiceImpl implements JobService {
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
      */
-    public List getUsersJobsForStatistics(final String username) {
+    public List<Job> getUsersJobsForStatistics(final String username) {
         return jobDao.getAllUserJobsForStatistics(username);
     }
 
@@ -202,7 +202,7 @@ public class JobServiceImpl implements JobService {
         return jobDao.get(jobId);
     }
 
-    public List searchByKeyword(final String keyword) {
+    public List<Job> searchByKeyword(final String keyword) {
         return jobDao.searchByKeyword(keyword);
     }
 
@@ -259,7 +259,7 @@ public class JobServiceImpl implements JobService {
 
     }
 
-    public List getJRecruiterSettings() {
+    public List<Configuration> getJRecruiterSettings() {
         return configurationDao.getAll();
     }
 

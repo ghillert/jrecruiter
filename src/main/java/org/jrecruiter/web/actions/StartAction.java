@@ -9,11 +9,14 @@ import com.opensymphony.xwork2.ActionSupport;
 
 @Result(name=Action.SUCCESS,
 		  value="/WEB-INF/jsp/welcome.jsp")
-public class StartAction extends ActionSupport {
-    private final Log log = LogFactory.getLog(StartAction.class);
 
-    public String list() { 
-    	log.info("ttttttttttttttttttttttttttttttttttttt");
-        return SUCCESS; 
-    } 
+public class StartAction extends ActionSupport {
+
+	/** serialVersionUID. */
+	private static final long serialVersionUID = -7305246248797499086L;
+	private final Log log = LogFactory.getLog(StartAction.class);
+
+    public String list() {
+        return SUCCESS;
+    }
 }

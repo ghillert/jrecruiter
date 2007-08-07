@@ -50,6 +50,7 @@ public class DwrAction extends BaseDwrAction {
 	/* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
+    @SuppressWarnings("unchecked")
     public String getJob(Long jobId) throws Exception {
 
     	WebContext context = WebContextFactory.get();
@@ -86,11 +87,11 @@ public class DwrAction extends BaseDwrAction {
                  job.setStatistic(statistics);
              }
 
-             Set viewedPostings = new HashSet<Long>();
+             Set<Long> viewedPostings = new HashSet<Long>();
 
              if (request.getSession().getAttribute("visited") != null){
 
-                 viewedPostings = (Set)request.getSession().getAttribute("visited");
+                 viewedPostings = (Set<Long>)request.getSession().getAttribute("visited");
 
                  if (viewedPostings.contains(jobId)){
 

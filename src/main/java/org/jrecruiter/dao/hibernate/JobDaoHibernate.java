@@ -60,6 +60,7 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      * @return List of Jobs
      *
      */
+    @SuppressWarnings("unchecked")
     public List < Job > getAllJobs() {
 
         List < Job > jobs = (List < Job >) getHibernateTemplate()
@@ -79,6 +80,7 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      * @see org.jrecruiter.persistent.dao.
      *      JobReqDAO#getAllUserJobs(java.lang.String)
      */
+    @SuppressWarnings("unchecked")
     public List < Job > getAllUserJobs(final String username) {
 
         List < Job > jobs;
@@ -93,6 +95,7 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      * @see org.jrecruiter.persistent.dao.
      *      JobReqDAO#getAllUserJobs(java.lang.String)
      */
+    @SuppressWarnings("unchecked")
     public List < Job > getAllUserJobsForStatistics(String username) {
 
         List < Job > jobs;
@@ -133,6 +136,7 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      * @see org.jrecruiter.dao.JobsDao#getUsersJobsForStatistics(java.lang.String,
      *      java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
+    @SuppressWarnings("unchecked")
     public List < Job > getUsersJobsForStatistics(final String username,
                                                  final Integer maxResult,
                                                  final StatsMode statsMode) {
@@ -205,9 +209,10 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      *            The search keyword
      * @return List of job postings representing the search results.
      */
-    public List searchByKeyword(final String keyword) {
+    @SuppressWarnings("unchecked")
+    public List<Job> searchByKeyword(final String keyword) {
 
-        List list = (List) getHibernateTemplate().execute(
+        List<Job> list = (List<Job>) getHibernateTemplate().execute(
                 new HibernateCallback() {
 
                     public Object doInHibernate(final Session session)
@@ -243,6 +248,7 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      * @param sortOrder What is the sort order?
      * @return List of jobs.
      */
+    @SuppressWarnings("unchecked")
     public List < Job > getJobs(
                             final Integer pageSize,
                             final Integer pageNumber,

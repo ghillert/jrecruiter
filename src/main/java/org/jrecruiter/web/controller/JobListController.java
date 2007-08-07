@@ -152,6 +152,7 @@ public class JobListController extends MultiActionController  {
      * @return ModelAndView
      * @throws Exception Let Exceptions bubble up
      */
+    @SuppressWarnings("unchecked")
     public final ModelAndView details(final HttpServletRequest request,
                                    final HttpServletResponse response)
             throws Exception {
@@ -184,7 +185,7 @@ public class JobListController extends MultiActionController  {
 
             if (request.getSession().getAttribute("visited") != null){
 
-                viewedPostings = (Set)request.getSession().getAttribute("visited");
+                viewedPostings = (Set< Long >)request.getSession().getAttribute("visited");
 
                 if (viewedPostings.contains(id)){
 
