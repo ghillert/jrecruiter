@@ -15,7 +15,6 @@
 */
 package org.jrecruiter.dao.hibernate;
 
-import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.StatisticDao;
 import org.jrecruiter.model.Statistic;
 
@@ -27,18 +26,6 @@ import org.jrecruiter.model.Statistic;
  */
 public class StatisticDaoHibernate extends GenericDaoHibernate< Statistic, Long>
 								   implements StatisticDao {
-
-    /**
-     * User Dao.
-     */
-    private ConfigurationDao configurationDao;
-
-    /**
-     * @param userDao The userDao to set.
-     */
-    public void setConfigurationDao(ConfigurationDao configurationDao) {
-        this.configurationDao = configurationDao;
-    }
 
     /**
      * Constructor.

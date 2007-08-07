@@ -85,7 +85,7 @@ public interface JobDao extends GenericDao < Job, Long >{
      * @param username name of user owning the job.
      * @return List of Job objects for given User
      */
-    List getAllUserJobsForStatistics(String username);
+    List<Job> getAllUserJobsForStatistics(String username);
 
     /**
      * Method for returning list of jobs owned by the user for statistical

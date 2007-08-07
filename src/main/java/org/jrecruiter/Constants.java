@@ -16,7 +16,7 @@
 package org.jrecruiter;
 
 /**
- * Collection of commonmly used enumerations, constants etc.
+ * Collection of commonly used enumerations, constants etc.
  *
  * @author Gunnar Hillert
  * @version $Id$

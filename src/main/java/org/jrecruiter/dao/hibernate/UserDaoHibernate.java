@@ -26,7 +26,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.jrecruiter.dao.UserDao;
-import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -97,9 +96,10 @@ public class UserDaoHibernate extends GenericDaoHibernate< User, Long>
      *
      * @param usernameList list of user names.
      */
+    @SuppressWarnings("unchecked")
     public void deleteUser(final String[] usernameList) {
 
-        List list = (List) getHibernateTemplate().execute(
+        List<User> list = (List<User>) getHibernateTemplate().execute(
                 new HibernateCallback() {
 
                     public Object doInHibernate(final Session session)

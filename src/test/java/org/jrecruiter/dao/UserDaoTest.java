@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
 import org.springframework.dao.DataAccessException;
-import org.testng.annotations.Test;
 
 /**
  * @author Gunnar Hillert

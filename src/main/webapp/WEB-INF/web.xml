@@ -18,7 +18,7 @@
         <filter-name>exportFilter</filter-name>
         <filter-class>org.displaytag.filter.ResponseOverrideFilter</filter-class>
     </filter>
-    
+
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -31,7 +31,7 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
-	
+
 	<filter>
         <filter-name>messageFilter</filter-name>
         <filter-class>org.jrecruiter.web.MessageFilter</filter-class>
@@ -41,7 +41,7 @@
         <filter-name>lazyLoadingFilter</filter-name>
         <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
     </filter>
-	
+
     <filter>
         <filter-name>sitemesh</filter-name>
         <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
@@ -71,19 +71,19 @@
 			</param-value>
 		</init-param>
 	</filter>
-	
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/classes/applicationContext*.xml
         </param-value>
     </context-param>
-	
+
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
     <filter-mapping>
         <filter-name>messageFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -98,12 +98,12 @@
     <filter-mapping>
         <filter-name>lazyLoadingFilter</filter-name>
         <url-pattern>/rss/*</url-pattern>
-    </filter-mapping> 
+    </filter-mapping>
     <filter-mapping>
         <filter-name>lazyLoadingFilter</filter-name>
         <url-pattern>/j_acegi_security_check</url-pattern>
     </filter-mapping>
-    
+
     <filter-mapping>
         <filter-name>exportFilter</filter-name>
         <url-pattern>*.html</url-pattern>
@@ -116,7 +116,7 @@
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-       
+
 	<filter-mapping>
 		<filter-name>Acegi Filter Chain Proxy</filter-name>
 		<url-pattern>*.html</url-pattern>
@@ -126,11 +126,11 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-	
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-	
+
 	<listener>
 		<listener-class>
 			org.acegisecurity.ui.session.HttpSessionEventPublisher
@@ -163,7 +163,7 @@
     <servlet-name>dwr-invoker</servlet-name>
     <url-pattern>/dwr/*</url-pattern>
   </servlet-mapping>
-        
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
@@ -177,18 +177,20 @@
         <error-code>500</error-code>
         <location>/error.jsp</location>
     </error-page>
-    
+
 	<resource-ref>
 		<description>postgreSQL Datasource</description>
 		<res-ref-name>jdbc/postgres</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
 	</resource-ref>
 	<resource-ref>
 		<description>mail server Datasource</description>
 		<res-ref-name>mail/session</res-ref-name>
 		<res-type>javax.mail.Session</res-type>
 		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
 	</resource-ref>
 
 </web-app>

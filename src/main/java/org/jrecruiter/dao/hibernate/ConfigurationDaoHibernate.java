@@ -29,18 +29,6 @@ public class ConfigurationDaoHibernate
 						implements ConfigurationDao {
 
     /**
-     * User Dao.
-     */
-    private ConfigurationDao configurationDao;
-
-    /**
-     * @param userDao The userDao to set.
-     */
-    public void setConfigurationDao(ConfigurationDao configurationDao) {
-        this.configurationDao = configurationDao;
-    }
-
-    /**
      * Constructor.
      *
      */

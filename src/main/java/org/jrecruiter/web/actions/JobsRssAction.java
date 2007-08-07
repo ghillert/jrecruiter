@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jrecruiter.web.actions;
 
@@ -23,9 +23,12 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
  */
 public class JobsRssAction extends ActionSupport {
 
+	/** serialVersionUID */
+	private static final long serialVersionUID = -4901833648423551648L;
+
 	private SyndFeed rssFeed = new SyndFeedImpl();
 	private JobService jobService;
-	
+
 	/**
 	 * @return the jobService
 	 */
@@ -69,7 +72,7 @@ public class JobsRssAction extends ActionSupport {
         SyndContent description;
 
         List <Job> jobs = jobService.getJobs(20, 1, "updateDate", "DESC");
-        
+
         for (Job job : jobs) {
             entry = new SyndEntryImpl();
             entry.setTitle(job.getJobTitle());
@@ -82,11 +85,11 @@ public class JobsRssAction extends ActionSupport {
             entries.add(entry);
             entry.setLink("blubba");
         }
-        
+
         rssFeed.setEntries(entries);
-        
+
 		return SUCCESS;
-		
+
 	}
 
 }

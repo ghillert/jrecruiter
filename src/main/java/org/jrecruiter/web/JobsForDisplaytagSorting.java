@@ -34,7 +34,7 @@ public class JobsForDisplaytagSorting implements PaginatedList {
     /* (non-Javadoc)
      * @see org.displaytag.pagination.PaginatedList#getList()
      */
-    public List getList() {
+    public List<Job> getList() {
         return this.jobs;
     }
 

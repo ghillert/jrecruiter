@@ -4,7 +4,6 @@
 package org.jrecruiter.web.forms;
 
 import org.jrecruiter.model.User;
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
 /**
  * The user form extends the the user. This is necessary on some
@@ -16,8 +15,10 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
  */
 public class UserForm extends User {
 
-    @NotBlank
-    private String password2;
+    /** serialVersionUID. */
+	private static final long serialVersionUID = -2648285589713561993L;
+
+	private String password2;
 
 	/**
 	 *  Constructor.
@@ -38,7 +39,5 @@ public class UserForm extends User {
 	public void setPassword2(String password2) {
 		this.password2 = password2;
 	}
-
-
 
 }

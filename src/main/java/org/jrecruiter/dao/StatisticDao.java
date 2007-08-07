@@ -15,8 +15,6 @@
 */
 package org.jrecruiter.dao;
 
-import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Role;
 import org.jrecruiter.model.Statistic;
 
 /**

@@ -104,7 +104,7 @@ public class ShowStatisticsChartController extends MultiActionController  {
                                    final HttpServletResponse response)
             throws Exception {
 
-final List jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
+final List<Job> jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
 
 request.setAttribute("jobs", jobs);
 

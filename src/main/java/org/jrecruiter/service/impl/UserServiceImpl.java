@@ -17,20 +17,18 @@ package org.jrecruiter.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.jrecruiter.dao.ConfigurationDao;
-import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.dao.RoleDao;
-import org.jrecruiter.model.User;
+import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Role;
+import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
@@ -38,7 +36,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**

@@ -26,18 +26,6 @@ import org.jrecruiter.model.UserToRole;
  */
 public class UserToRoleDaoHibernate extends GenericDaoHibernate< UserToRole, Long> implements UserToRoleDao {
 
-    /**
-     * User-To-Role Dao.
-     */
-    private UserToRoleDao userToRoleDao;
-
-    /**
-	 * @param userToRoleDao the userToRoleDao to set
-	 */
-	public void setUserToRoleDao(UserToRoleDao userToRoleDao) {
-		this.userToRoleDao = userToRoleDao;
-	}
-
 	/**
      * Constructor.
      *
