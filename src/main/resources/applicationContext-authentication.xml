@@ -20,7 +20,7 @@
 	<bean id="daoAuthenticationProvider"
 		class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
 		<property name="userDetailsService">
-			<ref bean="userDao" />
+			<ref bean="userService" />
 		</property>
 	</bean>
 

@@ -305,10 +305,10 @@ public class User implements Serializable, UserDetails{
 
     	if (this.userToRoles != null) {
 
-        	final Set <String> roles = new HashSet<String>();
+        	final Set <GrantedAuthority> roles = new HashSet<GrantedAuthority>();
 
         	for (UserToRole userToRole : this.userToRoles) {
-        		roles.add(userToRole.getRole().getAuthority());
+        		roles.add(userToRole.getRole());
         	}
 
             return (GrantedAuthority[]) roles.toArray(new GrantedAuthority[0]);

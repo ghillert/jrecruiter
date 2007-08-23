@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.acegisecurity.userdetails.UserDetails;
+import org.acegisecurity.userdetails.UserDetailsService;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
@@ -32,6 +35,7 @@ import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
@@ -42,7 +46,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  * @author Dorota Puchala
  * @version $Id$
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**
      *   Initialize Logging.
@@ -204,5 +208,30 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(ex);
         }
 
+    }
+
+    /**
+     * This method is used by ACEGI security to load user details for authentication.
+     * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+     *
+     * @param username Username
+     * @return Details of the user
+     * @throws DataAccessException
+     * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
+     */
+    @SuppressWarnings("unchecked")
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+
+        final UserDetails user = this.getUser(username);
+
+        if (user==null){
+
+            LOGGER.warn("loadUserByUsername() - No user with id " + username + " found.");
+            throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + username + " found.");
+        }
+
+        LOGGER.info(user.getAuthorities());
+
+        return user;
     }
 }

@@ -15,6 +15,11 @@
 */
 package org.jrecruiter.service;
 
+import java.util.Date;
+
+import org.acegisecurity.userdetails.UserDetails;
+import org.jrecruiter.model.User;
+import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.test.BaseTest;
 
 /**
@@ -43,8 +48,34 @@ public class UserServiceTest extends BaseTest {
 
 	public void deleteUserTest(){}
 
-	public void sendPasswordTest(){
+	public void sendPasswordTest(){}
 
+	public void testLoadUserByUsername() {
 
+		final User user = getUser();
+
+		try {
+			userService.addUser(user);
+		} catch (DuplicateUserException e) {
+			fail();
+		}
+
+		final UserDetails user2 = userService.loadUserByUsername(user.getUsername());
+
+		assertNotNull(user2);
+	}
+
+	private User getUser() {
+
+		final User user = new User();
+		user.setUsername("demo44");
+		user.setEmail("demo@demo.com");
+		user.setFirstName("Demo First Name");
+		user.setLastName("Demo Last Name");
+		user.setPassword("demo");
+		user.setPhone("123456");
+		user.setRegistrationDate(new Date());
+
+		return user;
 	}
 }

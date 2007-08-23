@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jrecruiter.Constants.JobStatus;
 import org.jrecruiter.Constants.OfferedBy;
+import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
@@ -28,9 +29,13 @@ public class JobDaoTest extends BaseTest {
 
 	private UserDao userDao;
 
+    /** Statis Dao */
+	private StatisticDao statisticDao;
+
 	public void setUserDao(UserDao userDAO) {
 		this.userDao = userDAO;
 	}
+
 
 	/**
 	 *   Initialize Logging.
@@ -182,4 +187,61 @@ public class JobDaoTest extends BaseTest {
 
 	}
 
+	public void testGetAllUserJobsForStatistics() {
+		final Job job = this.getJob();
+		final User user = this.getUser();
+
+		userDao.save(user);
+
+		job.setUser(user);
+		jobDao.save(job);
+
+		List <Job> jobs = jobDao.getAllUserJobsForStatistics(user.getId());
+
+		assertNotNull(jobs);
+		assertTrue(jobs.size()>0);
+	}
+
+	public void getUsersJobsForStatistics() {
+		final Job job = this.getJob();
+		final User user = this.getUser();
+
+		userDao.save(user);
+		job.setUser(user);
+		jobDao.save(job);
+
+		Statistic statistic = new Statistic();
+
+		statistic.setJob(job);
+		statistic.setCounter(new Long(0));
+		statistic.setUniqueVisits(10L);
+		statistic.setLastAccess(new Date());
+
+		statisticDao.save(statistic);
+
+		List <Job> jobs = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.PAGE_HITS, false);
+
+		assertNotNull(jobs);
+		assertTrue(jobs.size()>0);
+	}
+
+
+	public void testGetJobsCount() {
+		final Job job = this.getJob();
+		final User user = this.getUser();
+
+		userDao.save(user);
+
+		job.setUser(user);
+		jobDao.save(job);
+
+		Integer totalNumberOfJobs = jobDao.getJobsCount();
+
+		assertNotNull(totalNumberOfJobs);
+		assertTrue(totalNumberOfJobs.intValue() > 0);
+	}
+
+	public void setStatisticDao(StatisticDao statisticDao) {
+		this.statisticDao = statisticDao;
+	}
 }

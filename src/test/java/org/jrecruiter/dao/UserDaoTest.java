@@ -48,16 +48,9 @@ public class UserDaoTest extends BaseTest {
 	 *
 	 *
 	 */
-	public void testAddAndRemoveUserTest() {
+	public void testAddAndRemoveUser() {
 
-		User user = new User();
-		user.setUsername("demo44");
-		user.setEmail("demo@demo.com");
-		user.setFirstName("Demo First Name");
-		user.setLastName("Demo Last Name");
-		user.setPassword("demo");
-		user.setPhone("123456");
-		user.setRegistrationDate(new Date());
+		final User user = getUser();
 		userDao.save(user);
 
 		assertNotNull(user.getUsername());
@@ -69,9 +62,9 @@ public class UserDaoTest extends BaseTest {
 		try {
 
 			LOGGER.info("Retrieving User: " + user.getUsername());
-			user = userDao.getUser(user.getUsername());
-			LOGGER.info(user);
-			if (user != null) {
+			User userFromDb = userDao.getUser(user.getUsername());
+			LOGGER.info(userFromDb);
+			if (userFromDb != null) {
 				fail("User found in database");
 			}
 		} catch (DataAccessException dae) {
@@ -81,4 +74,17 @@ public class UserDaoTest extends BaseTest {
 
 	}
 
+	private User getUser() {
+
+		final User user = new User();
+		user.setUsername("demo44");
+		user.setEmail("demo@demo.com");
+		user.setFirstName("Demo First Name");
+		user.setLastName("Demo Last Name");
+		user.setPassword("demo");
+		user.setPhone("123456");
+		user.setRegistrationDate(new Date());
+
+		return user;
+	}
 }

@@ -7,6 +7,10 @@ import org.apache.struts2.config.Result;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * @author Gunnar Hillert
+ * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
+ */
 @Result(name=Action.SUCCESS,
 		  value="/WEB-INF/jsp/welcome.jsp")
 public class GetPasswordAction extends ActionSupport {
