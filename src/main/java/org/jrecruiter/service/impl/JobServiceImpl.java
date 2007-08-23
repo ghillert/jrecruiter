@@ -169,14 +169,48 @@ public class JobServiceImpl implements JobService {
      * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
      */
     public List<Job> getUsersJobsForStatistics(final String username) {
-        return jobDao.getAllUserJobsForStatistics(username);
+
+    	final User user = userDao.getUser(username);
+
+    	if (user == null) {
+    		throw new IllegalArgumentException("No user found for username " + username);
+    	}
+
+    	boolean administrator = false;
+
+    	int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
+
+    	if (index >= 0) {
+    		administrator = true;
+    	}
+
+    	if (administrator) {
+    		return jobDao.getAll();
+    	}
+
+    	return jobDao.getAllUserJobsForStatistics(user.getId());
     }
 
     /* (non-Javadoc)
      * @see org.jrecruiter.service.JobService#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
     public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
-        return jobDao.getUsersJobsForStatistics(username, maxResult, statsMode);
+
+    	final User user = userDao.getUser(username);
+
+    	if (user == null) {
+    		throw new IllegalArgumentException("No user found for username " + username);
+    	}
+
+    	boolean administrator = false;
+
+    	int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
+
+    	if (index >= 0) {
+    		administrator = true;
+    	}
+
+    	return jobDao.getUsersJobsForStatistics(user.getId(), maxResult, statsMode, administrator);
     }
 
     /* (non-Javadoc)

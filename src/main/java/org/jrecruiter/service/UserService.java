@@ -15,14 +15,17 @@
 */
 package org.jrecruiter.service;
 
+import org.acegisecurity.userdetails.UserDetails;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
 /**
  * @author Dorota Puchala
- * @version $Id$
+ * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public interface UserService {
 
@@ -37,4 +40,17 @@ public interface UserService {
     void deleteUser(String[] usernameList);
 
     void sendPassword(User user);
+
+	/**
+	 * This method is used by ACEGI security to load user details for authentication.
+	 * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+	 *
+	 * @param username Username
+	 * @return Details of the user
+	 * @throws DataAccessException
+	 * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
+	 */
+	@SuppressWarnings("unchecked")
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException, DataAccessException;
 }

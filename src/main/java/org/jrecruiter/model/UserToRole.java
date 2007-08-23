@@ -18,9 +18,12 @@ package org.jrecruiter.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -66,6 +69,8 @@ public class UserToRole  implements java.io.Serializable {
     // Property accessors
     @Id
     @Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="users_roles_seq")
+	@SequenceGenerator(name="users_roles_seq", sequenceName="jrecruiter.users_roles_seq")
     public Long getId() {
         return this.id;
     }

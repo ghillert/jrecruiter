@@ -82,21 +82,23 @@ public interface JobDao extends GenericDao < Job, Long >{
     /**
      * Method for getting users jobs for statistical purposes.
      *
-     * @param username name of user owning the job.
+     * @param userId user id of user owning the job.
      * @return List of Job objects for given User
      */
-    List<Job> getAllUserJobsForStatistics(String username);
+    List<Job> getAllUserJobsForStatistics(Long userId);
 
     /**
      * Method for returning list of jobs owned by the user for statistical
      * purposes.
      *
-     * @param username username for which statistics shall be obtained
+     * @param userId user id of user owning the job.
      * @param maxResult maximum number of statistics objects returned
      * @param statsMode  what type of statistical information to be generated
+	 * @param administrator Is the user admin?
      * @return List of jobs.
      */
-    List < Job > getUsersJobsForStatistics(String username,
+    List < Job > getUsersJobsForStatistics(Long userId,
                                            Integer maxResult,
-                                           Constants.StatsMode statsMode);
+                                           Constants.StatsMode statsMode,
+                                           Boolean administrator);
 }

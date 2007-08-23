@@ -12,15 +12,18 @@ import com.opensymphony.xwork2.ActionSupport;
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 @Result(name=Action.SUCCESS,
-		  value="/WEB-INF/jsp/welcome.jsp")
-
-public class StartAction extends ActionSupport {
+		  value="/WEB-INF/jsp/user/addUser.jsp")
+public class SignupAction extends ActionSupport {
 
 	/** serialVersionUID. */
-	private static final long serialVersionUID = -7305246248797499086L;
-	private final Log log = LogFactory.getLog(StartAction.class);
+	private static final long serialVersionUID = -3422780336408883930L;
+	private final Log log = LogFactory.getLog(SignupAction.class);
 
     public String list() {
+        return SUCCESS;
+    }
+
+    public String execute() {
         return SUCCESS;
     }
 }

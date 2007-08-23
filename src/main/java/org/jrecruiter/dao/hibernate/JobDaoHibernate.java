@@ -42,11 +42,6 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
                                         implements JobDao {
 
     /**
-     * User Dao.
-     */
-    private UserDao userDao;
-
-    /**
      * Constructor.
      *
      */
@@ -96,32 +91,16 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      *      JobReqDAO#getAllUserJobs(java.lang.String)
      */
     @SuppressWarnings("unchecked")
-    public List < Job > getAllUserJobsForStatistics(String username) {
+    public List < Job > getAllUserJobsForStatistics(Long userId) {
 
-        List < Job > jobs;
+    	List < Job > jobs;
 
-        User user = userDao.getUser(username);
+    	jobs = getHibernateTemplate()
+    		.find(
+    			"from Job j left outer join fetch j.statistic where j.user.id=?",
+    			userId);
 
-        boolean administrator = false;
-
-        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
-
-        if (index >= 0) {
-        	administrator = true;
-        }
-
-        if (administrator) {
-            jobs = this.getAllJobs();
-        } else {
-
-            jobs = getHibernateTemplate()
-                    .find(
-                            "from Job j left outer join fetch j.statistics where j.owner.username=?",
-                            username);
-
-        }
-
-        return jobs;
+    return jobs;
     }
 
     /**
@@ -137,21 +116,12 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
      *      java.lang.Integer, org.jrecruiter.Constants.StatsMode)
      */
     @SuppressWarnings("unchecked")
-    public List < Job > getUsersJobsForStatistics(final String username,
+    public List < Job > getUsersJobsForStatistics(final Long userId,
                                                  final Integer maxResult,
-                                                 final StatsMode statsMode) {
+                                                 final StatsMode statsMode,
+                                                 final Boolean administrator) {
 
-        List < Job > jobs;
-
-        User user = userDao.getUser(username);
-
-        boolean administrator = false;
-
-        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
-
-        if (index >= 0) {
-        	administrator = true;
-        }
+        final List < Job > jobs;
 
         final Session session = getSession(false);
 
@@ -164,30 +134,30 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
                 if (administrator) {
 
                     query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistics as stats "
+                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
                                     + "where stats is not null order by stats.counter desc");
 
                 } else {
 
                     query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                                    + "where j.owner.username=:username and stats is not null "
+                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
+                                    + "where j.user.id=:userId and stats is not null "
                                     + "order by stats.counter desc");
-                    query.setString("username", username);
+                    query.setLong("userId", userId);
                 }
             } else {
 
                 if (administrator) {
                     query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistics as stats "
+                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
                                     + "where stats is not null order by stats.uniqueVisits desc");
                 } else {
 
                     query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistics as stats "
-                                    + "where j.owner.username=:username and stats is not null "
+                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
+                                    + "where j.user.id=:userId and stats is not null "
                                     + "order by stats.uniqueVisits desc");
-                    query.setString("username", username);
+                    query.setLong("userId", userId);
                 }
             }
 
@@ -230,14 +200,6 @@ public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
                 });
 
         return list;
-    }
-
-    /**
-     * @param userDao
-     *            The userDao to set.
-     */
-    public void setUserDao(final UserDao userDao) {
-        this.userDao = userDao;
     }
 
     /**

@@ -35,7 +35,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * @version $Id: UserDAOHibernate.java 24 2006-05-18 03:09:15Z ghillert $
  */
 public class UserDaoHibernate extends GenericDaoHibernate< User, Long>
-            implements UserDao, UserDetailsService {
+            implements UserDao {
 
     /**
      *   Initialize Logging.
@@ -116,33 +116,5 @@ public class UserDaoHibernate extends GenericDaoHibernate< User, Long>
 
             getHibernateTemplate().delete(user);
         }
-    }
-
-
-    /**
-     * This method is used by ACEGI security to load user details for authentication.
-     * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-     *
-     * @param username Username
-     * @return Details of the user
-     * @throws DataAccessException
-     * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
-     */
-    @SuppressWarnings("unchecked")
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-
-        UserDetails user;
-
-        user = this.getUser(username);
-
-        if (user==null){
-
-            LOGGER.warn("loadUserByUsername() - No user with id " + username + " found.");
-            throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + username + " found.");
-        }
-
-        LOGGER.info(user.getAuthorities());
-
-        return user;
     }
 }
