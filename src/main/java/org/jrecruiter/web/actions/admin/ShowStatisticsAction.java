@@ -1,9 +1,14 @@
-package org.jrecruiter.web.controller.admin;
+package org.jrecruiter.web.actions.admin;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.interceptor.PrincipalAware;
+import org.apache.struts2.interceptor.PrincipalProxy;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
@@ -22,48 +27,38 @@ import org.jfree.ui.TextAnchor;
 import org.jrecruiter.Constants;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
-import java.io.OutputStream;
-import java.util.List;
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * List all the jobs.
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: ShowStatisticsChartController.java 131 2007-08-07 03:37:02Z ghillert $
  *
  */
-public class ShowStatisticsChartController extends MultiActionController  {
+public class ShowStatisticsAction extends ActionSupport implements PrincipalAware {
+
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 4467043520853890820L;
 
 	/**
 	 * Logger Declaration.
 	 */
-    private final Log LOGGER = LogFactory.getLog(ShowStatisticsChartController.class);
+    private final Log LOGGER = LogFactory.getLog(ShowStatisticsAction.class);
+
+    private List<Job> jobs;
+
+    private String mode;
+
+    PrincipalProxy principalProxy;
 
     /**
      * The service layer reference.
      */
     private JobService service;
 
-    /**
-     * Success View
-     */
-    private String successView;
-
-    /**
-     * Success View for showing the job details
-     */
-    private String successViewShowDetails;
-
-    /**
-     * Ajax View
-     */
-    private String ajaxView;
+    Boolean displayAjax = Boolean.FALSE;
 
     /**
      * Inject the service layer reference.
@@ -73,57 +68,35 @@ public class ShowStatisticsChartController extends MultiActionController  {
 		this.service = service;
 	}
 
-    /**
-	 * @param ajaxView the ajaxView to set
-	 */
-	public void setAjaxView(String ajaxView) {
-		this.ajaxView = ajaxView;
+    public String getMode() {
+		return mode;
 	}
 
-	public void setSuccessViewShowDetails(String successViewShowDetails) {
-		this.successViewShowDetails = successViewShowDetails;
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 
 	/**
-	 * @param successView the successView to set
-	 */
-	public void setSuccessView(String successView) {
-		this.successView = successView;
-	}
-
-
-    /**
      * Default view for this controller.
      *
-     * @param request HttpServletRequest
-     * @param response HttpServletResponse
-     * @return ModelAndView
-     * @throws Exception Let Exceptions bubble up
      */
-    public final ModelAndView view(final HttpServletRequest request,
-                                   final HttpServletResponse response)
-            throws Exception {
+    public final String execute() {
 
-final List<Job> jobs = service.getUsersJobsForStatistics(request.getRemoteUser());
+    	jobs = service.getUsersJobsForStatistics(principalProxy.getRemoteUser());
 
-request.setAttribute("jobs", jobs);
+		if (displayAjax) {
+		    return "ajax";
+		}
 
-String ajaxCall = request.getParameter("displayAjax");
-if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
-    return new ModelAndView("ajax");
-}
-
-return new ModelAndView("success");
+		return SUCCESS;
     }
 
 
 
-        public final ModelAndView chartJobsHits(final HttpServletRequest request,
-                final HttpServletResponse response) throws Exception {
+        public final String chartJobsHits() throws Exception {
 
         String chartTitle = null;
 
-            String mode = request.getParameter("mode");
             boolean createChart = true;
 
             if (mode != null && mode.equals("unique")) { mode = "unique";}
@@ -139,10 +112,10 @@ return new ModelAndView("success");
                 List < Job > jobs = null;
 
                 if (mode.equals("unique")){
-                    jobs = service.getUsersJobsForStatistics(request.getRemoteUser(), 10, Constants.StatsMode.UNIQUE_HITS);
+                    jobs = service.getUsersJobsForStatistics(principalProxy.getRemoteUser(), 10, Constants.StatsMode.UNIQUE_HITS);
                     chartTitle = "Job Statistics Top 10 - Unique Hits";
                 } else {
-                    jobs = service.getUsersJobsForStatistics(request.getRemoteUser(), 10, Constants.StatsMode.PAGE_HITS);
+                    jobs = service.getUsersJobsForStatistics(principalProxy.getRemoteUser(), 10, Constants.StatsMode.PAGE_HITS);
                     chartTitle = "Job Statistics Top 10 - Page Hits";
                 }
 
@@ -170,10 +143,10 @@ return new ModelAndView("success");
 
                 final JFreeChart chart = createChart(dataset, chartTitle);
 
-                final OutputStream out = response.getOutputStream();
-                ChartUtilities.writeChartAsPNG(out, chart, 400, 300);
-
-                out.close();
+//                final OutputStream out = response.getOutputStream();
+//                ChartUtilities.writeChartAsPNG(out, chart, 400, 300);
+//
+//                out.close();
 
             }
 
@@ -221,31 +194,17 @@ return new ModelAndView("success");
         return chart;
     }
 
+	public void setPrincipalProxy(PrincipalProxy principalProxy) {
+		this.principalProxy = principalProxy;
+	}
 
+	public Boolean getDisplayAjax() {
+		return displayAjax;
+	}
 
-
-    /**
-     * Convenient method for getting a i18n key's value with a single
-     * string argument.
-     *
-     * @param msgKey
-     * @param arg
-     * @return
-     */
-    public String getText(String msgKey, String arg) {
-        return getText(msgKey, new Object[] { arg });
-    }
-
-    /**
-     * Convenience method for getting a i18n key's value with arguments.
-     *
-     * @param msgKey
-     * @param args
-     * @return
-     */
-    public String getText(String msgKey, Object[] args) {
-        return getMessageSourceAccessor().getMessage(msgKey, args);
-    }
+	public void setDisplayAjax(Boolean displayAjax) {
+		this.displayAjax = displayAjax;
+	}
 
 
 

@@ -22,6 +22,9 @@
     <property name="basename"><value>messageResources</value></property>
   </bean>
 
+    <tx:annotation-driven/>
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
     <aop:config>
         <aop:advisor id="serviceTx" advice-ref="txAdvice" pointcut="execution(* org.jrecruiter.service.*.*(..))"/>
     </aop:config>
@@ -48,6 +51,7 @@
     <property name="mailSender"><ref bean="mailSender"/></property>
     <property name="message"><ref bean="mailMessage"/></property>
     <property name="jobDao"><ref bean="jobDao"/></property>
+    <property name="statisticDao"><ref bean="statisticDao"/></property>
     <property name="configurationDao"><ref bean="configurationDao"/></property>
   </bean>
 
@@ -67,7 +71,7 @@
                   <ref bean="templateLoader"/>
               </entry>
               <entry key="ds.resource.loader.resource.table">
-                  <value>configuration</value>
+                  <value>jrecruiter.configuration</value>
               </entry>
               <entry key="ds.resource.loader.resource.keycolumn">
                   <value>message_key</value>

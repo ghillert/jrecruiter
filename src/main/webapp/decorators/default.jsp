@@ -57,9 +57,15 @@
 			<div id="header">AJUG Jobs</div>
 			<div id="header_menu">
 					<ul><li><a href="<c:url value='/'/>">Home</a></li>
-						<li><a href="#">Search Jobs</a></li>
-						<li><a href="#">Admin</a></li>
-						<li><a href="#">Contact</a></li>
+						<li>
+                            <s:url id="searchUrl" action="search" namespace="/"/>
+                            <a href="${searchUrl}">Search Jobs</a></li>
+						<li>
+						<s:url id="adminUrl" action="index" namespace="/admin"/>
+						<a href="${adminUrl}">Admin</a></li>
+						<li>
+						<s:url id="contactUrl" action="contact" namespace="/"/>
+						<a href="${contactUrl}">Contact</a></li>
 						<li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job offers as RSS feed.">&nbsp;<span>RSS Feed</span></a></li></ul>
 			</div>
 			<div id="content"><%@ include

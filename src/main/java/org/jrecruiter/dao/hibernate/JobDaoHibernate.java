@@ -15,22 +15,16 @@
  */
 package org.jrecruiter.dao.hibernate;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.jrecruiter.Constants.Roles;
 import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
-import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.User;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 /**
  * This DAO provides job-related database methods.
@@ -38,240 +32,211 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * @author Jerzy Puchala, Gunnar Hillert
  * @version $Id$
  */
+@Repository
 public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
-                                        implements JobDao {
+implements JobDao {
 
-    /**
-     * Constructor.
-     *
-     */
-    private JobDaoHibernate() {
-    	super(Job.class);
-    }
+	/**
+	 * Constructor.
+	 *
+	 */
+	private JobDaoHibernate() {
+		super(Job.class);
+	}
 
-    /**
-     * Method for returning list of all jobs.
-     *
-     * @return List of Jobs
-     *
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getAllJobs() {
+	/**
+	 * Method for returning list of all jobs.
+	 *
+	 * @return List of Jobs
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getAllJobs() {
 
-        List < Job > jobs = (List < Job >) getHibernateTemplate()
-                .find(
-                        "select job from Job job "
-                                + "left outer join fetch job.statistic "
-                                + " order by job.updateDate DESC");
+		List < Job > jobs = sf.getCurrentSession()
+		.createQuery("select job from Job job "
+				+ "left outer join fetch job.statistic "
+				+ " order by job.updateDate DESC")
+				.list();
 
-        return jobs;
-    }
+		return jobs;
+	}
 
-    /**
-     * Method for getting users jobs.
-     *
-     * @param username name of user owning the job.
-     * @return List of Job objects for given User
-     * @see org.jrecruiter.persistent.dao.
-     *      JobReqDAO#getAllUserJobs(java.lang.String)
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getAllUserJobs(final String username) {
+	/**
+	 * Method for getting users jobs.
+	 *
+	 * @param username name of user owning the job.
+	 * @return List of Job objects for given User
+	 * @see org.jrecruiter.persistent.dao.
+	 *      JobReqDAO#getAllUserJobs(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getAllUserJobs(final String username) {
 
-        List < Job > jobs;
-            jobs = getHibernateTemplate().find(
-                    "from Job j where j.user.username=?", username);
-        return jobs;
-    }
+		List < Job > jobs = sf.getCurrentSession()
+		.createQuery("from Job j where j.user.username=:username")
+		.setString("username", username)
+		.list();
+		return jobs;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.jrecruiter.persistent.dao.
-     *      JobReqDAO#getAllUserJobs(java.lang.String)
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getAllUserJobsForStatistics(Long userId) {
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.jrecruiter.persistent.dao.
+	 *      JobReqDAO#getAllUserJobs(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getAllUserJobsForStatistics(Long userId) {
 
-    	List < Job > jobs;
+		List < Job > jobs = sf.getCurrentSession()
+		.createQuery("from Job j left outer join fetch j.statistic where j.user.id=:userId")
+		.setLong("userId", userId)
+		.list();
+		return jobs;
+	}
 
-    	jobs = getHibernateTemplate()
-    		.find(
-    			"from Job j left outer join fetch j.statistic where j.user.id=?",
-    			userId);
+	/**
+	 * Method for returning list of jobs owned by the user for statistical
+	 * purposes.
+	 *
+	 * @param username username for which statistics shall be obtained
+	 * @param maxResult maximum number of statistics objects returned
+	 * @param statsMode  what type of statistical information to be generated
+	 * @return List of jobs.
+	 *
+	 * @see org.jrecruiter.dao.JobsDao#getUsersJobsForStatistics(java.lang.String,
+	 *      java.lang.Integer, org.jrecruiter.Constants.StatsMode)
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getUsersJobsForStatistics(final Long userId,
+			final Integer maxResult,
+			final StatsMode statsMode,
+			final Boolean administrator) {
 
-    return jobs;
-    }
+		final List < Job > jobs;
 
-    /**
-     * Method for returning list of jobs owned by the user for statistical
-     * purposes.
-     *
-     * @param username username for which statistics shall be obtained
-     * @param maxResult maximum number of statistics objects returned
-     * @param statsMode  what type of statistical information to be generated
-     * @return List of jobs.
-     *
-     * @see org.jrecruiter.dao.JobsDao#getUsersJobsForStatistics(java.lang.String,
-     *      java.lang.Integer, org.jrecruiter.Constants.StatsMode)
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getUsersJobsForStatistics(final Long userId,
-                                                 final Integer maxResult,
-                                                 final StatsMode statsMode,
-                                                 final Boolean administrator) {
+			Query query = null;
 
-        final List < Job > jobs;
+			if (statsMode == StatsMode.PAGE_HITS) {
 
-        final Session session = getSession(false);
+				if (administrator) {
 
-        try {
+					query = sf.getCurrentSession()
+					.createQuery("select j from Job j left outer join fetch j.statistic as stats "
+							+ "where stats is not null order by stats.counter desc");
 
-            Query query = null;
+				} else {
 
-            if (statsMode == StatsMode.PAGE_HITS) {
+					query = sf.getCurrentSession()
+					.createQuery("select j from Job j left outer join fetch j.statistic as stats "
+							+ "where j.user.id=:userId and stats is not null "
+							+ "order by stats.counter desc");
+					query.setLong("userId", userId);
+				}
+			} else {
 
-                if (administrator) {
+				if (administrator) {
+					query = sf.getCurrentSession()
+					.createQuery("select j from Job j left outer join fetch j.statistic as stats "
+							+ "where stats is not null order by stats.uniqueVisits desc");
+				} else {
 
-                    query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                                    + "where stats is not null order by stats.counter desc");
+					query = sf.getCurrentSession()
+					.createQuery("select j from Job j left outer join fetch j.statistic as stats "
+							+ "where j.user.id=:userId and stats is not null "
+							+ "order by stats.uniqueVisits desc");
+					query.setLong("userId", userId);
+				}
+			}
 
-                } else {
+			query.setMaxResults(maxResult);
 
-                    query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                                    + "where j.user.id=:userId and stats is not null "
-                                    + "order by stats.counter desc");
-                    query.setLong("userId", userId);
-                }
-            } else {
+			jobs = query.list();
 
-                if (administrator) {
-                    query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                                    + "where stats is not null order by stats.uniqueVisits desc");
-                } else {
+			return jobs;
+		}
 
-                    query = session
-                            .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                                    + "where j.user.id=:userId and stats is not null "
-                                    + "order by stats.uniqueVisits desc");
-                    query.setLong("userId", userId);
-                }
-            }
+		/**
+		 * Perform a simple search within the persistence store.
+		 *
+		 * @param keyword
+		 *            The search keyword
+		 * @return List of job postings representing the search results.
+		 */
+		@SuppressWarnings("unchecked")
+		public List<Job> searchByKeyword(final String keyword) {
 
-            query.setMaxResults(maxResult);
+			Query q = sf.getCurrentSession().createQuery("from Job j where "
+					+ "lower(j.jobTitle) like :keyword or "
+					+ "lower(j.description) like :keyword or "
+					+ "lower(j.jobRestrictions) like :keyword or "
+					+ "lower(j.businessLocation) like :keyword");
+			q.setString("keyword", "%" + keyword + "%");
 
-            jobs = query.list();
+			List<Job> list = (List<Job>) q.list();
 
-        } catch (HibernateException ex) {
-            throw convertHibernateAccessException(ex);
-        }
+			return list;
+		}
 
-        return jobs;
-    }
+		/**
+		 * Method for returning list of available job postings.
+		 * @param pageSize Max number of results returned
+		 * @param pageNumber Which page are you one?
+		 * @param fieldSorted Which field shall be sorted
+		 * @param sortOrder What is the sort order?
+		 * @return List of jobs.
+		 */
+		@SuppressWarnings("unchecked")
+		public List < Job > getJobs(
+				final Integer pageSize,
+				final Integer pageNumber,
+				String fieldSorted,
+				String sortOrder) {
+			List < Job > jobs;
 
-    /**
-     * Perform a simple search within the persistence store.
-     *
-     * @param keyword
-     *            The search keyword
-     * @return List of job postings representing the search results.
-     */
-    @SuppressWarnings("unchecked")
-    public List<Job> searchByKeyword(final String keyword) {
+			if (fieldSorted == null || fieldSorted.length() == 0) {
+				fieldSorted = "updateDate";
+			}
 
-        List<Job> list = (List<Job>) getHibernateTemplate().execute(
-                new HibernateCallback() {
+			if (sortOrder == null) {
+				sortOrder = "DESC";
+			} else if (!sortOrder.equalsIgnoreCase("ASC")
+					&& !sortOrder.equalsIgnoreCase("DESC")) {
+				sortOrder = "DESC";
+			}
 
-                    public Object doInHibernate(final Session session)
-                            throws HibernateException {
-                        Query q = session.createQuery("from Job j where "
-                                + "lower(j.jobTitle) like :keyword or "
-                                + "lower(j.description) like :keyword or "
-                                + "lower(j.jobRestrictions) like :keyword or "
-                                + "lower(j.businessLocation) like :keyword");
-                        q.setString("keyword", "%" + keyword + "%");
+			final Criteria criteria = sf.getCurrentSession().createCriteria(Job.class);
+			criteria.setFetchMode("statistics", FetchMode.JOIN);
 
-                        return q.list();
-                    }
+			if (sortOrder.equalsIgnoreCase("DESC")) {
+				criteria.addOrder(Order.desc(fieldSorted));
+			} else if (sortOrder.equalsIgnoreCase("ASC")) {
+				criteria.addOrder(Order.asc(fieldSorted));
+			}
 
-                });
+			criteria.setFirstResult((pageNumber - 1) * pageSize);
+			criteria.setMaxResults(pageSize);
 
-        return list;
-    }
+			jobs = criteria.list();
 
-    /**
-     * Method for returning list of available job postings.
-     * @param pageSize Max number of results returned
-     * @param pageNumber Which page are you one?
-     * @param fieldSorted Which field shall be sorted
-     * @param sortOrder What is the sort order?
-     * @return List of jobs.
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getJobs(
-                            final Integer pageSize,
-                            final Integer pageNumber,
-                                  String fieldSorted,
-                                  String sortOrder) {
+			return jobs;
+		}
 
-        final Session session = getSession(false);
-        List < Job > jobs;
+		/**
+		 * Returns the number of totally available jobs in the system.
+		 *
+		 * @return Total number of jobs
+		 * @see org.jrecruiter.dao.JobsDao#getJobsCount()
+		 */
+		public Integer getJobsCount() {
 
-        if (fieldSorted == null || fieldSorted.length() == 0) {
-            fieldSorted = "updateDate";
-        }
+			Long numberOfJobs = null;
 
-        if (sortOrder == null) {
-            sortOrder = "DESC";
-        } else if (!sortOrder.equalsIgnoreCase("ASC")
-                && !sortOrder.equalsIgnoreCase("DESC")) {
-            sortOrder = "DESC";
-        }
+			Query query = sf.getCurrentSession().createQuery("select count(*) from Job");
+			numberOfJobs = (Long) query.uniqueResult();
 
-        try {
-
-            final Criteria criteria = session.createCriteria(Job.class);
-            criteria.setFetchMode("statistics", FetchMode.JOIN);
-
-            if (sortOrder.equalsIgnoreCase("DESC")) {
-                criteria.addOrder(Order.desc(fieldSorted));
-            } else if (sortOrder.equalsIgnoreCase("ASC")) {
-                criteria.addOrder(Order.asc(fieldSorted));
-            }
-
-            criteria.setFirstResult((pageNumber - 1) * pageSize);
-            criteria.setMaxResults(pageSize);
-
-            jobs = criteria.list();
-
-        } catch (HibernateException ex) {
-            throw convertHibernateAccessException(ex);
-        }
-
-        return jobs;
-    }
-
-    /**
-     * Returns the number of totally available jobs in the system.
-     *
-     * @return Total number of jobs
-     * @see org.jrecruiter.dao.JobsDao#getJobsCount()
-     */
-    public Integer getJobsCount() {
-
-        final Session session = getSession(false);
-        Long numberOfJobs = null;
-
-        try {
-            Query query = session.createQuery("select count(*) from Job");
-            numberOfJobs = (Long) query.uniqueResult();
-        } catch (HibernateException ex) {
-            throw convertHibernateAccessException(ex);
-        }
-        //FIXME
-        return Integer.valueOf(numberOfJobs.toString());
-    }
-}
+			//FIXME
+			return Integer.valueOf(numberOfJobs.toString());
+		}
+	}

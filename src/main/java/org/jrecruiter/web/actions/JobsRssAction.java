@@ -21,27 +21,12 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
-public class JobsRssAction extends ActionSupport {
+public class JobsRssAction extends BaseAction {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = -4901833648423551648L;
 
 	private SyndFeed rssFeed = new SyndFeedImpl();
-	private JobService jobService;
-
-	/**
-	 * @return the jobService
-	 */
-	public JobService getJobService() {
-		return jobService;
-	}
-
-	/**
-	 * @param jobService the jobService to set
-	 */
-	public void setJobService(JobService jobService) {
-		this.jobService = jobService;
-	}
 
 	/**
 	 * @return the rssFeed
@@ -50,16 +35,12 @@ public class JobsRssAction extends ActionSupport {
 		return rssFeed;
 	}
 
-
-
 	/**
 	 * @param rssFeed the rssFeed to set
 	 */
 	public void setRssFeed(SyndFeed rssFeed) {
 		this.rssFeed = rssFeed;
 	}
-
-
 
 	public String execute() {
         rssFeed.setFeedType("rss_1.0");
@@ -89,7 +70,5 @@ public class JobsRssAction extends ActionSupport {
         rssFeed.setEntries(entries);
 
 		return SUCCESS;
-
 	}
-
 }

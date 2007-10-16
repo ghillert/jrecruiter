@@ -20,11 +20,12 @@ import java.util.List;
 import org.jrecruiter.Constants;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Statistic;
 
 /**
  *
  * @author Jerzy Puchala
- * @version $Id$
+ * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public interface JobService {
     /**
@@ -140,4 +141,10 @@ public interface JobService {
      * @param jobs
      */
     void updateJob(Job jobs);
+
+    /**
+     *
+     * @param statistics
+     */
+	void updateJobStatistic(Statistic statistics);
 }

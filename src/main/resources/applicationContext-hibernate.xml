@@ -5,10 +5,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
                            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
 
-	<!-- Spring JNDI Lookup   -->
-	<jee:jndi-lookup id="dataSource" lookup-on-startup="true"
-		jndi-name="java:comp/env/jdbc/postgres" />
-
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
 		dependency-check="default">

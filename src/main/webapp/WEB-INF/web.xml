@@ -2,8 +2,8 @@
 
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-	version="2.4">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd"
+	version="2.5">
 
 	<display-name>jRecruiter 2.0</display-name>
 	<description>jRecruiter is a job posting service.</description>
@@ -50,26 +50,25 @@
         <filter-name>struts-cleanup</filter-name>
         <filter-class>org.apache.struts2.dispatcher.ActionContextCleanUp</filter-class>
     </filter>
+    <filter>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <filter-class>
+            org.acegisecurity.util.FilterToBeanProxy
+        </filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>
+                org.acegisecurity.util.FilterChainProxy
+            </param-value>
+        </init-param>
+    </filter>
 	<filter>
 	  <filter-name>struts</filter-name>
 	  <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
-	  <init-param>
-	    <param-name>actionPackages</param-name>
-	    <param-value>org.jrecruiter.web.actions</param-value>
-	  </init-param>
-	</filter>
-
-	<filter>
-		<filter-name>Acegi Filter Chain Proxy</filter-name>
-		<filter-class>
-			org.acegisecurity.util.FilterToBeanProxy
-		</filter-class>
-		<init-param>
-			<param-name>targetClass</param-name>
-			<param-value>
-				org.acegisecurity.util.FilterChainProxy
-			</param-value>
-		</init-param>
+	    <init-param>
+	      <param-name>configProviders</param-name>
+	      <param-value>org.texturemedia.smarturls.SmartURLsConfigurationProvider</param-value>
+	    </init-param>
 	</filter>
 
     <context-param>
@@ -119,7 +118,7 @@
 
 	<filter-mapping>
 		<filter-name>Acegi Filter Chain Proxy</filter-name>
-		<url-pattern>*.html</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
     <filter-mapping>
         <filter-name>struts</filter-name>

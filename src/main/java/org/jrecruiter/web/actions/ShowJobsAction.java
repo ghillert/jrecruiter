@@ -5,48 +5,24 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.config.Result;
 import org.displaytag.properties.SortOrderEnum;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.service.JobService;
 import org.jrecruiter.web.JobsForDisplaytagSorting;
-
-import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
-	@Result(name=Action.SUCCESS,
-			  value="/WEB-INF/jsp/jobs.jsp")
-public class ShowJobsAction extends ActionSupport {
+public class ShowJobsAction extends BaseAction {
 
 
-	/**
-	 *
-	 */
+	/** serialVersionUID. */
 	private static final long serialVersionUID = 369806210598096582L;
 
 	/**
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(ShowJobsAction.class);
-
-    /**
-     * The service layer reference.
-     */
-    private JobService jobService;
-
-    /**
-     * Inject the service layer reference.
-     * @param service
-     */
-    public void setJobService(JobService service) {
-		this.jobService = service;
-	}
-
-
 
     /* (non-Javadoc)
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()

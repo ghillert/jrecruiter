@@ -36,10 +36,10 @@ import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
@@ -131,28 +131,38 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.configurationDao = configurationDao;
     }
 
+    @Transactional
     public void addUser(User user) throws DuplicateUserException{
 
-        Date registerDate = new Date();
-        user.setRegistrationDate(registerDate);
-        user.setUpdateDate(registerDate);
-        try {
+    	Date registerDate = new Date();
+    	user.setRegistrationDate(registerDate);
+    	user.setUpdateDate(registerDate);
 
-        	Role role = roleDao.getRole("manager");
-        	Set<UserToRole> userToRoles = user.getUserToRoles();
+    	User duplicateUser = userDao.getUser(user.getUsername());
 
-        	UserToRole utr = new UserToRole();
-        	utr.setRole(role);
-        	utr.setUser(user);
+    	if (duplicateUser!= null) {
+    		throw new DuplicateUserException("User " + duplicateUser.getUsername()
+    				                       + "(Id="  + duplicateUser.getId()
+    				                       + ") already exists!");
+    	}
 
-        	userToRoles.add(utr);
+    	Role role = roleDao.getRole("manager");
+    	Set<UserToRole> userToRoles = user.getUserToRoles();
 
-        	userDao.save(user);
-        } catch (DataIntegrityViolationException e){
-            LOGGER.warn("addUser() - A DataIntegrityViolationException was thrown - " + e.getMessage());
-            throw new DuplicateUserException("User already exists", e);
-        }
+    	UserToRole utr = new UserToRole();
+    	utr.setRole(role);
+    	utr.setUser(user);
+
+    	userToRoles.add(utr);
+
+    	this.saveUser(user);
     }
+
+    @Transactional
+    public void saveUser(User user) {
+    	userDao.save(user);
+    }
+
 
     public User getUser(String username) {
 

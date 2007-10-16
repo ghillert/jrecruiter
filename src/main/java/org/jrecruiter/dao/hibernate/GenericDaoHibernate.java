@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
 import org.jrecruiter.dao.GenericDao;
 import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 /**
  * This class serves as the Base class for all other DAOs - namely to hold
@@ -24,23 +26,31 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  *
  * @author <a href="mailto:bwnoll@gmail.com">Bryan Noll</a>
  */
-public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDaoSupport implements GenericDao<T, PK> {
+@Repository
+public class GenericDaoHibernate<T, PK extends Serializable> implements GenericDao<T, PK> {
 
-	protected final Log log = LogFactory.getLog(getClass());
+	protected SessionFactory sf;
+
+	private final Log log = LogFactory.getLog(getClass());
     private Class<T> persistentClass;
 
     public GenericDaoHibernate(Class<T> persistentClass) {
         this.persistentClass = persistentClass;
     }
 
-    @SuppressWarnings("unchecked")
+    public void setSessionFactory(SessionFactory factory) {
+		this.sf = factory;
+	}
+
+	@SuppressWarnings("unchecked")
     public List<T> getAll() {
-        return super.getHibernateTemplate().loadAll(this.persistentClass);
+		Criteria criteria = sf.getCurrentSession().createCriteria(this.persistentClass);
+		return criteria.list();
     }
 
     @SuppressWarnings("unchecked")
     public T get(PK id) {
-        T entity = (T) super.getHibernateTemplate().get(this.persistentClass, id);
+        T entity = (T) sf.getCurrentSession().get(this.persistentClass, id);
 
         if (entity == null) {
             log.warn("Uh oh, '" + this.persistentClass + "' object with id '" + id + "' not found...");
@@ -52,7 +62,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
 
     @SuppressWarnings("unchecked")
     public boolean exists(PK id) {
-        T entity = (T) super.getHibernateTemplate().get(this.persistentClass, id);
+        T entity = (T) sf.getCurrentSession().get(this.persistentClass, id);
         if (entity == null) {
             return false;
         } else {
@@ -61,16 +71,16 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
     }
 
     @SuppressWarnings("unchecked")
-    public T save(T object) {
-        return (T) super.getHibernateTemplate().save(object);
+    public void save(T object) {
+    	sf.getCurrentSession().save(object);
     }
 
     @SuppressWarnings("unchecked")
     public void update(T object) {
-        super.getHibernateTemplate().update(object);
+    	sf.getCurrentSession().update(object);
     }
 
     public void remove(PK id) {
-        super.getHibernateTemplate().delete(this.get(id));
+    	sf.getCurrentSession().delete(this.get(id));
     }
 }
