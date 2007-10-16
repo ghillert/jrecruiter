@@ -17,18 +17,6 @@
         <property name="defaultAutoCommit" value="true"/>
     </bean>
 
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-      <property name="host"><value>${mail.host}</value></property>
-      <property name="username"><value>${mail.user}</value></property>
-      <property name="password"><value>${mail.password}</value></property>
-      <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.auth">true</prop>
-                <prop key="mail.smtp.timeout">15000</prop>
-            </props>
-        </property>
-    </bean>
-
 	<!-- Load any properties that are developer-specific from a dedicated property file -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties"/>
