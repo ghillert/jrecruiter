@@ -1,7 +1,8 @@
 package org.jrecruiter.test;
 
-  
+
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
 /**
@@ -10,10 +11,20 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
  * @author Gunnar Hillert
  */
 public abstract class BaseTest extends AbstractTransactionalDataSourceSpringContextTests {
-	
+
 	public static final Logger LOGGER = Logger.getLogger(BaseTest.class);
 
-    protected String[] getConfigLocations() {
+	protected SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+    public void flushSession() {
+    	sessionFactory.getCurrentSession().flush();
+    }
+
+	protected String[] getConfigLocations() {
         setAutowireMode(AUTOWIRE_BY_NAME);
         return new String[] {
         "/applicationContext-acegi-base.xml",
@@ -22,7 +33,8 @@ public abstract class BaseTest extends AbstractTransactionalDataSourceSpringCont
         "/applicationContext-authorization.xml",
         "/applicationContext-hibernate.xml",
         "/applicationContext.xml",
-        "/test-applicationContext-datasource.xml"};
+        "/test-applicationContext-datasource.xml",
+        "/test-applicationContext-mail.xml"};
     }
-        
+
 }

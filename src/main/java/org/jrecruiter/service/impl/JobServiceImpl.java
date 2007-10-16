@@ -27,9 +27,11 @@ import org.jrecruiter.Constants.Roles;
 import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.ConfigurationDao;
+import org.jrecruiter.dao.StatisticDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.springframework.mail.MailException;
@@ -74,6 +76,11 @@ public class JobServiceImpl implements JobService {
     private UserDao userDao;
 
     /**
+     *
+     */
+    private StatisticDao statisticDao;
+
+    /**
      * Settings Dao.
      */
     private ConfigurationDao configurationDao;
@@ -92,7 +99,15 @@ public class JobServiceImpl implements JobService {
         this.configurationDao = configurationDao;
     }
 
-    /**
+    public StatisticDao getStatisticDao() {
+		return statisticDao;
+	}
+
+	public void setStatisticDao(StatisticDao statisticDao) {
+		this.statisticDao = statisticDao;
+	}
+
+	/**
      * Sets the mail sender.
      * @param mailSender
      */
@@ -217,8 +232,7 @@ public class JobServiceImpl implements JobService {
     * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
     */
     public void addJob(final Job jobs) {
-        jobs.setId(null);
-        updateJob(jobs);
+    	jobDao.save(jobs);
     }
 
     /* (non-Javadoc)
@@ -271,7 +285,7 @@ public class JobServiceImpl implements JobService {
         String subject = null;
         try {
 
-            result = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+        		result = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                    "mail.jobposting.body", model);
             subject = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                     "mail.jobposting.subject", model);
@@ -311,6 +325,15 @@ public class JobServiceImpl implements JobService {
 	 */
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	public void updateJobStatistic(Statistic statistics) {
+		if (statistics.getId() != null) {
+			this.statisticDao.update(statistics);
+		} else {
+			this.statisticDao.save(statistics);
+		}
+
 	}
 
 

@@ -4,7 +4,7 @@
 
        <table id="jobDetail">
        		<tr>
-                <td colspan=61" style=""><a href="javascript:closeJobDetail();" title="Return to the Job List">Back</a></td>
+                <td colspan="6" style=""><a href="javascript:closeJobDetail();" title="Return to the Job List">Back</a></td>
             </tr>
             <tr>
                 <td class="c1" style=""><fmt:message key="field.jobNumber"/>:</td>
@@ -12,7 +12,7 @@
                 <td class="c3" style=""><fmt:message key="field.jobTitle"/>:</td>
                 <td class="c4" style="" rowspan="2">${jobDetail.jobTitle}</td>
                 <td class="c5" style=""><fmt:message key="field.jobPostDate"/>:</td>
-                <td class="c6" style=""><fmt:formatDate value="${jobDetail.registerDate}" type="date" pattern="${datePattern}"/></td>
+                <td class="c6" style=""><fmt:formatDate value="${jobDetail.registrationDate}" type="date" pattern="${datePattern}"/></td>
             </tr>
             <tr>
                 <td class="c1_2" style="" colspan="3"></td>

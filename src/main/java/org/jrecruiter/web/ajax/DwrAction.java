@@ -62,12 +62,6 @@ public class DwrAction extends BaseDwrAction {
 
         if (job==null){
 
-        	//FIXME
-            //ActionMessages errors = new ActionMessages();
-            //errors.add("notfound", new ActionMessage("error.jobposting.not.found", jobId.toString()));
-
-            //request.setAttribute("errors", errors);
-
             LOGGER.warn("Requested jobposting with id " + jobId + " was not found.");
 
             //TODO FIX forward
@@ -81,7 +75,6 @@ public class DwrAction extends BaseDwrAction {
 
                  statistics = new Statistic();
                  statistics.setJob(job);
-                 statistics.setId(job.getId());
                  statistics.setCounter(new Long(0));
                  statistics.setUniqueVisits(new Long(0));
                  job.setStatistic(statistics);
@@ -126,7 +119,7 @@ public class DwrAction extends BaseDwrAction {
 
              statistics.setCounter(new Long(counter));
              statistics.setLastAccess(new Date());
-             service.updateJob(job);
+             service.updateJobStatistic(statistics);
 
 
              request.setAttribute("jobDetail", job);

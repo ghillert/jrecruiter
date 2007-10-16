@@ -38,7 +38,8 @@
                 <br/>
                 <ul>
                 <li>
-                	<a href="<c:url value='/addUser.html'/>"><fmt:message key="link.login.addUser"/></a>
+                    <s:url action="signup" namespace="registration" id="signupUrl"/>
+                	<a href="${signupUrl}"><fmt:message key="link.login.addUser"/></a>
                 </li>
                 <li>
                 	<a href="<c:url value='/getPassword.html'/>"><fmt:message key="link.login.forgotYourPassword"/></a>

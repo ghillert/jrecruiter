@@ -3,6 +3,7 @@
 @import url(jobList.css);
 @import url(showStatistics.css);
 @import url(userList.css);
+@import url(form.css);
 
 html {
 
@@ -21,7 +22,7 @@ body {
 }
 
 #container #header {
-	
+
   text-align: center;
   vertical-align: middle;
   padding-top: 15px;
@@ -42,10 +43,10 @@ body {
 }
 
 #container #header_menu{
-  width: 100%;	
+  width: 100%;
   border-top: 1px solid #FF3C00;
   background-color: #0076CC;
-  padding: 0; 
+  padding: 0;
 
 }
 
@@ -75,7 +76,7 @@ border-right: 1px solid #fff;
 #header_menu ul li a.icon
 {
 	background: url(../images/icons/feed-icon-14x14.png) no-repeat center;
-	
+
 }
 #header_menu ul li a.icon span
 {
@@ -166,99 +167,7 @@ h2 {
 }
 
 
-/* Form input field definitions */
 
-input.selected {
-  border-color: #ff0000;
-  background-color: #F7F7F7;
-
-}
-textarea.selected {
-  border-color: #ff0000;
-  background-color: #F7F7F7;
-}
-
-input.error {
-  background-color: #FF9999;
-  border-color: #ff0000;
-}
-
-button.selected {
-  border-color: #ff0000;
-}
-
-button.error {
-  background-color: #FF9999;
-  border-color: #ff0000;
-}
-
-textarea.error {
-  background-color: #FF9999;
-  border-color: #ff0000;
-}
-
-input {
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  border-left-style: solid;
-  border-top-color: #333333;
-  border-right-color: #999999;
-  border-bottom-color: #999999;
-  border-left-color: #333333;
-  background-color: #EEEEEE;
-
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-style: normal;
-}
-
-button {
-
-  height: 18px;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  border-left-style: solid;
-  border-top-color: #333333;
-  border-right-color: #999999;
-  border-bottom-color: #999999;
-  border-left-color: #333333;
-  background-color: #EEEEEE;
-
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-style: normal;
-}
-
-textarea {
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  border-left-style: solid;
-  border-top-color: #333333;
-  border-right-color: #999999;
-  border-bottom-color: #999999;
-  border-left-color: #333333;
-  background-color: #EEEEEE;
-
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-style: normal;
-
-}
 
 div.error{
   padding-left: 10px;

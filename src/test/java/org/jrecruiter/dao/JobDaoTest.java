@@ -15,6 +15,7 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.orm.ObjectRetrievalFailureException;
 
 /**
  * @author Gunnar Hillert
@@ -93,6 +94,16 @@ public class JobDaoTest extends BaseTest {
 		Job job2 = jobDao.get(job.getId());
 
 		assertNotNull(job2);
+	}
+
+	public void testGetNonExistingJob() {
+
+		try {
+			jobDao.get(9999999999999L);
+		} catch (ObjectRetrievalFailureException e) {
+			return;
+		}
+		fail();
 	}
 
 	public void testDoesJobExist() {
@@ -202,7 +213,7 @@ public class JobDaoTest extends BaseTest {
 		assertTrue(jobs.size()>0);
 	}
 
-	public void getUsersJobsForStatistics() {
+	public void testGetUsersJobsForStatistics() {
 		final Job job = this.getJob();
 		final User user = this.getUser();
 
@@ -223,8 +234,39 @@ public class JobDaoTest extends BaseTest {
 
 		assertNotNull(jobs);
 		assertTrue(jobs.size()>0);
+
+		List <Job> jobs2 = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.UNIQUE_HITS, false);
+
+		assertNotNull(jobs2);
+		assertTrue(jobs2.size()>0);
 	}
 
+	public void testGetUsersJobsForStatisticsAdmin() {
+		final Job job = this.getJob();
+		final User user = this.getUser();
+
+		userDao.save(user);
+		job.setUser(user);
+		jobDao.save(job);
+
+		Statistic statistic = new Statistic();
+
+		statistic.setJob(job);
+		statistic.setCounter(new Long(0));
+		statistic.setUniqueVisits(10L);
+		statistic.setLastAccess(new Date());
+
+		statisticDao.save(statistic);
+
+		List <Job> jobs = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.PAGE_HITS, true);
+		List <Job> jobs2 = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.UNIQUE_HITS, true);
+
+		assertNotNull(jobs);
+		assertTrue(jobs2.size()>0);
+
+		assertNotNull(jobs2);
+		assertTrue(jobs.size()>0);
+	}
 
 	public void testGetJobsCount() {
 		final Job job = this.getJob();
@@ -243,5 +285,26 @@ public class JobDaoTest extends BaseTest {
 
 	public void setStatisticDao(StatisticDao statisticDao) {
 		this.statisticDao = statisticDao;
+	}
+
+    public void testUpdateJob() {
+		final Job job = this.getJob();
+		final User user = this.getUser();
+
+		userDao.save(user);
+		job.setUser(user);
+		jobDao.save(job);
+
+		super.flushSession();
+
+		assertEquals("www.google.com", job.getWebsite());
+
+		job.setWebsite("www.hillert.com");
+		jobDao.update(job);
+		super.flushSession();
+
+		Job job2 = jobDao.get(job.getId());
+		assertEquals("www.hillert.com", job2.getWebsite());
+
 	}
 }

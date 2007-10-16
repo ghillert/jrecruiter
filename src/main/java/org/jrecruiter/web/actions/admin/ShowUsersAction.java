@@ -1,44 +1,75 @@
-package org.jrecruiter.web.controller.admin;
+package org.jrecruiter.web.actions.admin;
+
+import java.text.SimpleDateFormat;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.interceptor.PrincipalAware;
+import org.apache.struts2.interceptor.PrincipalProxy;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.UserService;
-import org.jrecruiter.web.controller.BaseSimpleFormController;
 import org.jrecruiter.web.forms.UserForm;
-import org.springframework.validation.BindException;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 
 /**
  * List all the jobs.
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: ShowUsersFormController.java 128 2007-07-27 03:55:54Z ghillert $
  *
  */
-public class ShowUsersFormController extends BaseSimpleFormController  {
+public class ShowUsersAction extends ActionSupport implements Preparable, PrincipalAware {
+
+	/** serialVersionUID. */
+	private static final long serialVersionUID = -2208374563094039361L;
 
 	/**
 	 * Logger Declaration.
 	 */
-    private final Log LOGGER = LogFactory.getLog(ShowUsersFormController.class);
+    private final Log LOGGER = LogFactory.getLog(ShowUsersAction.class);
 
     /**
      * The service layer reference.
      */
     private UserService service;
 
-    /**
-     * Ajax View
-     */
-    private String ajaxView;
+    PrincipalProxy principalProxy;
 
-    /**
+    String username;
+
+    private User user;
+
+    public String getUsername() {
+		return username;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public PrincipalProxy getPrincipalProxy() {
+		return principalProxy;
+	}
+
+	public void setPrincipalProxy(PrincipalProxy principalProxy) {
+		this.principalProxy = principalProxy;
+	}
+
+	/**
      * Inject the service layer reference.
      * @param service
      */
@@ -47,21 +78,9 @@ public class ShowUsersFormController extends BaseSimpleFormController  {
 	}
 
     /**
-	 * @param ajaxView the ajaxView to set
-	 */
-	public void setAjaxView(String ajaxView) {
-		this.ajaxView = ajaxView;
-	}
-
-    /**
      *
      */
-    public ModelAndView onSubmit(HttpServletRequest request,
-            HttpServletResponse response, Object command,
-            BindException errors)
-	throws Exception {
-		LOGGER.debug("entering 'onSubmit' method...");
-        User user = (User) command;
+    public String execute() {
 
 //        DynaBean dynaForm = (DynaBean) form;
 //
@@ -86,22 +105,17 @@ public class ShowUsersFormController extends BaseSimpleFormController  {
 //        request.getSession().setAttribute("message",
 //                getText("userList.delete.success", ""));
 
-        return new ModelAndView("success");
+        return SUCCESS;
 	}
 
+    public void prepare() throws Exception {
 
-    /* (non-Javadoc)
-	 * @see org.springframework.web.servlet.mvc.AbstractFormController#formBackingObject(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-
-        String username;
-        if ((request.getParameter("username") != null)
-         && (request.isUserInRole("admin"))) {
-            username = request.getParameter("username");
+    	String username;
+        if ((this.username != null)
+         && (principalProxy.isUserInRole("admin"))) {
+            username = this.username;
         } else {
-            username = request.getRemoteUser();
+            username = principalProxy.getRemoteUser();
         }
 
         User user = service.getUser(username);
@@ -119,9 +133,9 @@ public class ShowUsersFormController extends BaseSimpleFormController  {
 
         BeanUtils.copyProperties(form, user);
 
-		return user;
-	}
+		this.user = user;
 
+	}
 
 
 //    List users = userService.getAllUsers();

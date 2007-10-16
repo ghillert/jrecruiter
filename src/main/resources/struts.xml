@@ -4,12 +4,21 @@
 <struts>
     <!-- Include Struts defaults -->
     <include file="struts-default.xml"/>
-    
+
+
+
+
+
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
         <interceptors>
+            <interceptor name="store2" class="org.jrecruiter.web.interceptor.MessageStoreInterceptor">
+            </interceptor>
             <interceptor-stack name="defaultStack">
-                <interceptor-ref name="exception" />
+                <interceptor-ref name="store2" />
+                <interceptor-ref name="exception">
+                  <param name="logEnabled">true</param>
+                </interceptor-ref>
                 <interceptor-ref name="alias" />
                 <interceptor-ref name="servlet-config" />
                 <interceptor-ref name="prepare" />
@@ -26,34 +35,25 @@
                 <interceptor-ref name="workflow">
                     <param name="excludeMethods">input,back,cancel</param>
                 </interceptor-ref>
+
             </interceptor-stack>
+
         </interceptors>
 
         <global-results>
-            <result name="dataAccessFailure">dataAccessFailure.jsp</result>
+            <result name="globalException">/WEB-INF/jsp/error.jsp</result>
         </global-results>
 
         <global-exception-mappings>
-            <exception-mapping exception="org.springframework.dao.DataAccessException"
-                result="dataAccessFailure" />
+            <exception-mapping exception="java.lang.Throwable"
+                result="globalException"  />
         </global-exception-mappings>
     </package>
 
     <!-- Configuration for the default package. -->
     <package name="basic" extends="default">
-    	<action name="login"><result name="success">/WEB-INF/jsp/user/login.jsp</result></action>
-    	<action name="getPassword-input" method="input" >
-    		<result name="success">/WEB-INF/jsp/user/getPassword.jsp</result>
-    	</action>
-    	<action name="getPassword" class="">
-    		<result name="success">/WEB-INF/jsp/user/getPassword.jsp</result>
-    	</action>
     </package>
 
-    <package name="admin" extends="default" namespace="/admin" >
-		<action  name="admin"><result name="success">/WEB-INF/jsp/admin/adminmain.jsp</result></action>
-    </package>    
-    
     <package name="rss" extends="rss-default" namespace="/rss">
 	    <action name="jobs" class="org.jrecruiter.web.actions.JobsRssAction">
 	        <result type="rss" name="success">
@@ -63,7 +63,4 @@
 	        </result>
 	    </action>
 	</package>
-    
-    <constant name="struts.codebehind.pathPrefix" value="/WEB-INF/jsp/"/>
-    
 </struts>

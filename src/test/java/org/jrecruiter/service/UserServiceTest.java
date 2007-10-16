@@ -38,17 +38,47 @@ public class UserServiceTest extends BaseTest {
 		this.userService = userService;
 	}
 
-	public void addUserTest(){};
+	public void testAddUserTest(){
 
+		final User user = getUser();
+		final User user2 = getUser();
+
+		try {
+			userService.addUser(user);
+		    flushSession();
+		} catch (DuplicateUserException e) {
+			fail();
+		}
+		try {
+			userService.addUser(user2);
+			flushSession();
+		} catch (DuplicateUserException e) {
+			assertNotNull(e.getMessage());
+			return;
+		}
+		fail();
+	};
+
+	//TODO
 	public void getUserTest(){}
 
+	//TODO
 	public void updateUserTest(){}
 
+	//TODO
 	public void getAllUsersTest(){}
 
+	//TODO
 	public void deleteUserTest(){}
 
-	public void sendPasswordTest(){}
+	public void testSendPassword() throws Exception {
+		final User user = getUser();
+		userService.addUser(user);
+		flushSession();
+
+		userService.sendPassword(user);
+
+	}
 
 	public void testLoadUserByUsername() {
 
@@ -78,4 +108,6 @@ public class UserServiceTest extends BaseTest {
 
 		return user;
 	}
+
+
 }
