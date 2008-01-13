@@ -160,7 +160,7 @@ public class JobDaoTest extends BaseTest {
 		job.setBusinessAddress2("businessAddress2");
 		job.setBusinessCity("businessCity");
 		job.setBusinessEmail("businessEmail");
-		job.setBusinessLocation("businessLocation");
+		job.setRegionOther("businessLocation");
 		job.setBusinessName("businessName");
 		job.setBusinessPhone("businessPhone");
 		job.setBusinessState("businessState");
