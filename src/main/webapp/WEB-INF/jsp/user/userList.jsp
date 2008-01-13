@@ -29,31 +29,19 @@ function checkDelete(){
 
 <div id="main">
 
-  <logic:messagesPresent message="true">
-  <div class="success">
-      <html:messages id="message" property="info" message="true">
-      <bean:write name="message"/>
-      <br/>
-      </html:messages>
-  </div>
-  </logic:messagesPresent>
+  <s:form  action="deleteUser">
 
+      <s:if test="userList != null && userList.size > 0">
+        <%@include file="/WEB-INF/jsp/user/userListTable.jsp"%>
+      </s:if>
+	  <s:else>
+	  	   <fmt:message key="message.noAvailableJobs"/>
+	  </s:else>
 
-  <html:form  action="deleteUser">
-
-      <logic:notEmpty name="userList">
-        <%@include file="/pages/user/userListTable.jsp"%>
-      </logic:notEmpty>
-
-      <logic:empty name="userList">
-                      <fmt:message key="message.noAvailableJobs"/>
-      </logic:empty>
-        <br/><br/>
-        <html:cancel><bean:message key="jobposting.button.cancel"/></html:cancel>
-            <logic:notEmpty name="userList">
-              <html:submit onclick="javascript:return checkDelete();"><bean:message key="jobposting.button.delete"/></html:submit>
-            </logic:notEmpty>
-
-  </html:form>
+      <s:submit method="cancel" onclick="javascript:return checkDelete();" value="%{getText('jobposting.button.cancel')}"/>
+      <s:if test="userList != null && userList.size > 0">
+        <s:submit method="delete" onclick="javascript:return checkDelete();" value="%{getText('jobposting.button.delete')}"/>
+      </s:if>
+  </s:form>
 
 </div>

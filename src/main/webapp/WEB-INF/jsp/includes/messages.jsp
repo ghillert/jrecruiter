@@ -27,11 +27,9 @@
 <s:if test="hasActionMessages()">
     <div class="error" id="errorMessages">
       <s:iterator value="actionMessages">
-          <s:iterator value="value">
-			<img src="<c:url value="/images/iconInformation.gif"/>"
+            <img src="<c:url value="/images/iconInformation.gif"/>"
                 alt="<fmt:message key="icon.information"/>" class="icon" />
-            <c:out value="${msg}" escapeXml="false"/><br />
-          </s:iterator>
+            <s:property /><br />
       </s:iterator>
    </div>
 </s:if>
