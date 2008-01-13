@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
                            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
 
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-		dependency-check="default">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="annotatedClasses">
-			<list>
-				<value>org.jrecruiter.model.Configuration</value>
-				<value>org.jrecruiter.model.Industry</value>
-				<value>org.jrecruiter.model.Job</value>
-				<value>org.jrecruiter.model.Role</value>
-				<value>org.jrecruiter.model.Statistic</value>
-				<value>org.jrecruiter.model.User</value>
-				<value>org.jrecruiter.model.UserToRole</value>
-			</list>
-		</property>
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+        dependency-check="default">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>org.jrecruiter.model.Configuration</value>
+                <value>org.jrecruiter.model.Industry</value>
+                <value>org.jrecruiter.model.Job</value>
+                <value>org.jrecruiter.model.Region</value>
+                <value>org.jrecruiter.model.Role</value>
+                <value>org.jrecruiter.model.Statistic</value>
+                <value>org.jrecruiter.model.User</value>
+                <value>org.jrecruiter.model.UserToRole</value>
+            </list>
+        </property>
 
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">
-					org.hibernate.dialect.PostgreSQLDialect
-				</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.max_fetch_depth">2</prop>
-				<prop key="hibernate.format_sql">true</prop>
-			</props>
-		</property>
-	</bean>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.PostgreSQLDialect
+                </prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.max_fetch_depth">2</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
 
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory">
-			<ref local="sessionFactory" />
-		</property>
-	</bean>
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref local="sessionFactory" />
+        </property>
+    </bean>
 </beans>

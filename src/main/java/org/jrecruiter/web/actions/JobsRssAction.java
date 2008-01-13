@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jrecruiter.model.Job;
-import org.jrecruiter.service.JobService;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;

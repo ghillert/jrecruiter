@@ -1,5 +1,5 @@
 /*
- * $Id: MessageStoreInterceptor.java 471756 2006-11-06 15:01:43Z husted $
+ * $Id$
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -23,14 +23,11 @@ package org.jrecruiter.web.interceptor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -138,7 +135,7 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
  *
  * <!-- END SNIPPET: exampleDescription -->
  *
- * @version $Date: 2006-11-06 10:01:43 -0500 (Mon, 06 Nov 2006) $ $Id: MessageStoreInterceptor.java 471756 2006-11-06 15:01:43Z husted $
+ * @version $Date: 2006-11-06 10:01:43 -0500 (Mon, 06 Nov 2006) $ $Id$
  */
 public class MessageStoreInterceptor implements Interceptor {
 

@@ -30,7 +30,7 @@ public class Constants {
         super();
     }
 
-    public enum Roles { ROLE_ADMIN, ROLE_MANAGER }
+    public enum Roles { ADMIN, MANAGER }
 
     public enum StatsMode { PAGE_HITS, UNIQUE_HITS }
 

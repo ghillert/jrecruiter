@@ -46,7 +46,6 @@ import org.acegisecurity.userdetails.UserDetails;
  */
 @Entity
 @Table(name="users"
-	, schema="jrecruiter"
 		, uniqueConstraints = { @UniqueConstraint( columnNames = { "email" } ),
 		@UniqueConstraint( columnNames = { "username" } ) }
 )
@@ -118,7 +117,7 @@ public class User implements Serializable, UserDetails{
 	@Id
 	@Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="users_id_seq")
-	@SequenceGenerator(name="users_id_seq", sequenceName="jrecruiter.users_id_seq")
+	@SequenceGenerator(name="users_id_seq", sequenceName="users_id_seq")
 	public Long getId() {
 		return this.id;
 	}

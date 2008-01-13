@@ -6,15 +6,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.service.JobService;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * List all the jobs.
  *
  * @author Gunnar Hillert
- * @version $Id: SearchJobsFormController.java 131 2007-08-07 03:37:02Z ghillert $
+ * @version $Id$
  *
  */
 public class SearchJobsAction extends BaseAction  {

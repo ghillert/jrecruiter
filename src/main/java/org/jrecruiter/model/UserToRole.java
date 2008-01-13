@@ -32,11 +32,10 @@ import javax.persistence.UniqueConstraint;
  * User and Role).
  *
  * @author  Gunnar Hillert
- * @version $Id: User.java 118 2007-04-25 03:00:12Z ghillert $
+ * @version $Id$
  */
 @Entity
 @Table(name="users_roles"
-    ,schema="jrecruiter"
     , uniqueConstraints = { @UniqueConstraint( columnNames = { "users_id", "roles_id" } ) }
 )
 public class UserToRole  implements java.io.Serializable {
@@ -70,7 +69,7 @@ public class UserToRole  implements java.io.Serializable {
     @Id
     @Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="users_roles_seq")
-	@SequenceGenerator(name="users_roles_seq", sequenceName="jrecruiter.users_roles_seq")
+	@SequenceGenerator(name="users_roles_seq", sequenceName="users_roles_seq")
     public Long getId() {
         return this.id;
     }

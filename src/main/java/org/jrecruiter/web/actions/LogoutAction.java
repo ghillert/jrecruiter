@@ -9,18 +9,16 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import org.texturemedia.smarturls.Result;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 /**
  * Logs out from the application.
  *
  * @author Gunnar Hillert
- * @version $Id: LogOutController.java 128 2007-07-27 03:55:54Z ghillert $
+ * @version $Id$
  *
  */
 @Result(name="success", location="/",  type="redirect")
 @SuppressWarnings("unchecked")
-public class LogoutAction extends ActionSupport implements SessionAware  {
+public class LogoutAction extends BaseAction implements SessionAware  {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = -7129460964433090813L;

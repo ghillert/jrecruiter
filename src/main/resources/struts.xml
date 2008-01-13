@@ -5,10 +5,6 @@
     <!-- Include Struts defaults -->
     <include file="struts-default.xml"/>
 
-
-
-
-
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
         <interceptors>
@@ -21,13 +17,13 @@
                 </interceptor-ref>
                 <interceptor-ref name="alias" />
                 <interceptor-ref name="servlet-config" />
+                <interceptor-ref name="model-driven" />
+                <interceptor-ref name="params" />
                 <interceptor-ref name="prepare" />
                 <interceptor-ref name="i18n" />
                 <interceptor-ref name="chain" />
-                <interceptor-ref name="model-driven" />
                 <interceptor-ref name="fileUpload" />
                 <interceptor-ref name="static-params" />
-                <interceptor-ref name="params" />
                 <interceptor-ref name="conversionError" />
                 <interceptor-ref name="validation">
                     <param name="excludeMethods">cancel,execute,delete,edit,list</param>
@@ -44,10 +40,6 @@
             <result name="globalException">/WEB-INF/jsp/error.jsp</result>
         </global-results>
 
-        <global-exception-mappings>
-            <exception-mapping exception="java.lang.Throwable"
-                result="globalException"  />
-        </global-exception-mappings>
     </package>
 
     <!-- Configuration for the default package. -->
@@ -55,12 +47,22 @@
     </package>
 
     <package name="rss" extends="rss-default" namespace="/rss">
-	    <action name="jobs" class="org.jrecruiter.web.actions.JobsRssAction">
-	        <result type="rss" name="success">
-	            <param name="feedName">rssFeed</param>
-	            <!-- this is not required: defaults to rss 0.9 -->
-	            <param name="feedType">rss_1.0</param>
-	        </result>
-	    </action>
-	</package>
+        <action name="jobs" class="org.jrecruiter.web.actions.JobsRssAction">
+            <result type="rss" name="success">
+                <param name="feedName">rssFeed</param>
+                <param name="feedType">rss_1.0</param>
+            </result>
+        </action>
+    </package>
+
+    <package name="chart" extends="jfreechart-default" namespace="/chart">
+        <action name="viewJobChart" class="org.jrecruiter.web.actions.admin.ShowStatisticsAction"
+                method="chartJobsHits">
+              <result name="success" type="chart">
+                <param name="width">400</param>
+                <param name="height">300</param>
+              </result>
+        </action>
+    </package>
+
 </struts>

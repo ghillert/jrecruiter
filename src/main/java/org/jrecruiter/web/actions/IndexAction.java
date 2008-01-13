@@ -4,16 +4,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 /**
  * Logs out from the application.
  *
  * @author Gunnar Hillert
- * @version $Id: LogOutController.java 128 2007-07-27 03:55:54Z ghillert $
+ * @version $Id$
  *
  */
-public class IndexAction extends ActionSupport {
+public class IndexAction extends BaseAction {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = -7129460964433090813L;

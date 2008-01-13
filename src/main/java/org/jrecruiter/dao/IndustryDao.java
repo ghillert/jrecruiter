@@ -15,11 +15,14 @@
 */
 package org.jrecruiter.dao;
 
+import java.util.List;
+
 import org.jrecruiter.model.Industry;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: UserRoleDAO.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version $Id$
  */
 public interface IndustryDao extends GenericDao < Industry, Long >{
+    List<Industry> getAllIndustriesOrdered();
 }

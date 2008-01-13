@@ -23,7 +23,7 @@ import org.jrecruiter.model.Role;
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id: SettingsDAOHibernate.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version @version $Id$
  */
 public class RoleDaoHibernate extends GenericDaoHibernate< Role, Long>
 implements RoleDao {

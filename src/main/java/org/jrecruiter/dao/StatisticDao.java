@@ -19,7 +19,7 @@ import org.jrecruiter.model.Statistic;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: UserRoleDAO.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version $Id$
  */
 public interface StatisticDao extends GenericDao < Statistic, Long >{
 }
