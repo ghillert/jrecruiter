@@ -19,37 +19,38 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.jrecruiter.dao.IndustryDao;
+import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.model.Industry;
+import org.jrecruiter.model.Region;
+
 
 /**
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: UserRoleDAOHibernate.java 61 2006-11-17 04:40:39Z ghillert $
  */
-public class IndustryDaoHibernate extends GenericDaoHibernate< Industry, Long>
-                                  implements IndustryDao {
+public class RegionDaoHibernate extends GenericDaoHibernate< Region, Long>
+                                  implements RegionDao {
 
     /**
      * Constructor.
      *
      */
-    private IndustryDaoHibernate() {
-        super(Industry.class);
+    private RegionDaoHibernate() {
+        super(Region.class);
     }
 
     @SuppressWarnings("unchecked")
-    public List<Industry> getAllIndustriesOrdered() {
+    public List<Region> getAllRegionsOrdered() {
 
-        final List<Industry> industries;
+        final List<Region> regions;
 
         final Query query = sf.getCurrentSession().createQuery(
-                "select ind from Industry ind " +
+                "select reg from Region reg " +
                 "order by name ASC");
 
-        industries = query.list();
+        regions = query.list();
 
-        return industries;
+        return regions;
     }
-
-
 }

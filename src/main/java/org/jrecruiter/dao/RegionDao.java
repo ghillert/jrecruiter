@@ -13,26 +13,18 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao;
 
-import org.jrecruiter.dao.StatisticDao;
-import org.jrecruiter.model.Statistic;
+import java.util.List;
 
+import org.jrecruiter.model.Industry;
+import org.jrecruiter.model.Region;
 
 /**
- *
  * @author Gunnar Hillert
- * @version @version $Id$
+ * @version $Id: UserRoleDAO.java 24 2006-05-18 03:09:15Z ghillert $
  */
-public class StatisticDaoHibernate extends GenericDaoHibernate< Statistic, Long>
-								   implements StatisticDao {
+public interface RegionDao extends GenericDao < Region, Long >{
 
-    /**
-     * Constructor.
-     *
-     */
-    private StatisticDaoHibernate() {
-    	super(Statistic.class);
-    }
-
+    List<Region> getAllRegionsOrdered();
 }

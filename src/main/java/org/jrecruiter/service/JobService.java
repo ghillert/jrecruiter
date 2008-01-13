@@ -19,12 +19,15 @@ import java.util.List;
 
 import org.jrecruiter.Constants;
 import org.jrecruiter.model.Configuration;
+import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Statistic;
 
 /**
  *
  * @author Jerzy Puchala
+ * @author Gunnar Hillert
  * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public interface JobService {
@@ -146,5 +149,19 @@ public interface JobService {
      *
      * @param statistics
      */
-	void updateJobStatistic(Statistic statistics);
+    void updateJobStatistic(Statistic statistics);
+
+    /**
+     * Method for getting a List of the regions.
+     *
+     * @return List of Regions, ordered by region name.
+     */
+    List < Region > getRegions();
+
+    /**
+     * Method for getting a List of the industries.
+     *
+     * @return List of Industries, ordered by industry name.
+     */
+    List < Industry > getIndustries();
 }

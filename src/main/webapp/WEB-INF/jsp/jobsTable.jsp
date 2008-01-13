@@ -4,7 +4,7 @@
         <display:table name="JobList" pagesize="20" requestURI="" id="joblist" class="displaytag" export="false" defaultsort="4" defaultorder="descending">
         <display:column class="column1" titleKey="field.jobTitle" sortable="true" media="csv xml excel pdf" maxLength="30"/>
         <display:column class="column1" sortProperty="field.jobTitle" sortable="true" media="html" maxLength="30">
-        	<a href="#" onclick="javascript:showJobDetail(${joblist.id});">${joblist.jobTitle}</a>
+        	<a href="#" onclick="javascript:showJobDetail('A');">${joblist.jobTitle}</a>
         </display:column>
         <display:column class="column2" property="businessName" titleKey="field.businessName" sortable="true" media="html csv xml excel pdf" maxLength="20"/>
         <display:column class="column3" property="businessLocation" titleKey="field.location" sortable="true" media="html csv xml excel pdf" maxLength="15"/>

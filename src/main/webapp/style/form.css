@@ -1,7 +1,9 @@
 form div.required label,
 form div.required input,
 form div.optional label,
-form div.optional input {
+form div.optional input,
+form div.optional textarea
+form div.required textarea {
     display: block;
     width: 150px;
     float: left;
@@ -134,5 +136,5 @@ textarea {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
   font-style: normal;
-
+width: 350px;
 }

@@ -1,5 +1,10 @@
 package org.jrecruiter.web.actions;
 
+import org.acegisecurity.Authentication;
+import org.acegisecurity.context.SecurityContext;
+import org.acegisecurity.context.SecurityContextHolder;
+import org.jrecruiter.AcegiUtil;
+import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
 
@@ -35,4 +40,38 @@ public abstract class BaseAction extends ActionSupport {
     public String cancel() {
         return SUCCESS;
     }
+
+    //~~~~~Security Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    protected SecurityContext getSecurityContext() {
+    	return SecurityContextHolder.getContext();
+    }
+
+    protected Authentication getAuthentication() {
+    	SecurityContext securityContext = getSecurityContext();
+    	if (securityContext != null) {
+    		return securityContext.getAuthentication();
+    	} else {
+    		return null;
+    	}
+    }
+
+    protected User getLoggedInUser() {
+    	Authentication authentication = getAuthentication();
+    	if (authentication != null) {
+    		return (User) authentication.getPrincipal();
+    	} else {
+    		return null;
+    	}
+    }
+
+    protected Boolean hasRole(String role) {
+    	User getLoggedInUser = getLoggedInUser();
+    	if (getLoggedInUser != null) {
+    		return AcegiUtil.hasRole(role);
+    	} else {
+    		return Boolean.FALSE;
+    	}
+    }
+
 }

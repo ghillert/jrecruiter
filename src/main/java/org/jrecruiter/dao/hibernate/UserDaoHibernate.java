@@ -25,7 +25,7 @@ import org.jrecruiter.model.User;
 
 /**
  * @author Dorota Puchala
- * @version $Id: UserDAOHibernate.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version $Id$
  */
 public class UserDaoHibernate extends GenericDaoHibernate< User, Long>
 implements UserDao {

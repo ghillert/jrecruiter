@@ -43,7 +43,6 @@ import org.acegisecurity.GrantedAuthority;
  */
 @Entity
 @Table(name="roles"
-	,schema="jrecruiter"
 		, uniqueConstraints = { @UniqueConstraint( columnNames = { "name" } ) }
 )
 public class Role implements Serializable, GrantedAuthority {
@@ -87,7 +86,7 @@ public class Role implements Serializable, GrantedAuthority {
 	@Id
 	@Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="roles_id_seq")
-	@SequenceGenerator(name="roles_id_seq", sequenceName="jrecruiter.roles_id_seq")
+	@SequenceGenerator(name="roles_id_seq", sequenceName="roles_id_seq")
 	public Long getId() {
 		return this.id;
 	}

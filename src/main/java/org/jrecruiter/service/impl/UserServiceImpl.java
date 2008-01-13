@@ -27,6 +27,7 @@ import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.jrecruiter.Constants;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
@@ -39,11 +40,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  * @author Dorota Puchala
+ * @author Gunnar Hillert
+ *
  * @version $Id$
  */
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -91,13 +93,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-	 * @param userRoleDao the userRoleDao to set
-	 */
-	public void setRoleDao(RoleDao userRoleDao) {
-		this.roleDao = userRoleDao;
-	}
+     * @param userRoleDao the userRoleDao to set
+     */
+    public void setRoleDao(RoleDao userRoleDao) {
+        this.roleDao = userRoleDao;
+    }
 
-	/**
+    /**
      * Sets the mail sender.
      * @param mailSender
      */
@@ -125,42 +127,46 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-     * @param settingsDAO The settingsDAO to set.
+     * {@inheritDoc}
      */
     public final void setConfigurationDao(ConfigurationDao configurationDao) {
         this.configurationDao = configurationDao;
     }
 
-    @Transactional
+    /**
+     * {@inheritDoc}
+     */
     public void addUser(User user) throws DuplicateUserException{
 
-    	Date registerDate = new Date();
-    	user.setRegistrationDate(registerDate);
-    	user.setUpdateDate(registerDate);
+        Date registerDate = new Date();
+        user.setRegistrationDate(registerDate);
+        user.setUpdateDate(registerDate);
 
-    	User duplicateUser = userDao.getUser(user.getUsername());
+        User duplicateUser = userDao.getUser(user.getUsername());
 
-    	if (duplicateUser!= null) {
-    		throw new DuplicateUserException("User " + duplicateUser.getUsername()
-    				                       + "(Id="  + duplicateUser.getId()
-    				                       + ") already exists!");
-    	}
+        if (duplicateUser!= null) {
+            throw new DuplicateUserException("User " + duplicateUser.getUsername()
+                                           + "(Id="  + duplicateUser.getId()
+                                           + ") already exists!");
+        }
 
-    	Role role = roleDao.getRole("manager");
-    	Set<UserToRole> userToRoles = user.getUserToRoles();
+        Role role = roleDao.getRole(Constants.Roles.MANAGER.name());
+        Set<UserToRole> userToRoles = user.getUserToRoles();
 
-    	UserToRole utr = new UserToRole();
-    	utr.setRole(role);
-    	utr.setUser(user);
+        UserToRole utr = new UserToRole();
+        utr.setRole(role);
+        utr.setUser(user);
 
-    	userToRoles.add(utr);
+        userToRoles.add(utr);
 
-    	this.saveUser(user);
+        this.saveUser(user);
     }
 
-    @Transactional
+    /**
+     * {@inheritDoc}
+     */
     public void saveUser(User user) {
-    	userDao.save(user);
+        userDao.save(user);
     }
 
 
@@ -184,8 +190,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDao.deleteUser(usernameList);
     }
 
-    /* (non-Javadoc)
-     * @see org.ajug.service.UserServiceInterface#sendPassword(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     public void sendPassword(User user) {
 
@@ -221,13 +227,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-     * This method is used by ACEGI security to load user details for authentication.
-     * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-     *
-     * @param username Username
-     * @return Details of the user
-     * @throws DataAccessException
-     * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
@@ -244,4 +244,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return user;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public User getUser(Long userId) {
+        return userDao.get(userId);
+    }
+
 }

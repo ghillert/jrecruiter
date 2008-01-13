@@ -16,70 +16,93 @@
 package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jrecruiter.Constants.OfferedBy;
+import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Statistic;
-import org.jrecruiter.service.JobService;
 import org.jrecruiter.web.WebUtil;
+import org.jrecruiter.web.actions.BaseAction;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 
 /**
- * List all the jobs.
+ * Edit a job. Save the changes or delete the job posting altogether.
  *
  * @author Gunnar Hillert
- * @version $Id: EditJobFormController.java 128 2007-07-27 03:55:54Z ghillert $
+ * @version $Id$
  *
  */
-public class EditJobAction extends ActionSupport implements Preparable {
+public class EditJobAction extends BaseAction implements Preparable, ModelDriven<Job> {
 
-	/** serialVersionUID. */
-	private static final long serialVersionUID = 2621352739536377825L;
+    /** serialVersionUID. */
+    private static final long serialVersionUID = 2621352739536377825L;
 
-	private Job job;
-	private Statistic statistic;
+    private Job job = new Job();
 
-	public Long id;
+    private Set<OfferedBy>offeredBySet;
+    private List<Region> regions;
+    private List<Industry>industries;
+    private Map<Boolean, String>yesNoList;
 
-	/**
-	 * Logger Declaration.
-	 */
+    /** Prepare the select boxes of the form. */
+    public void prepare() throws Exception {
+
+        if (id != null) {
+
+            Job jobFromDb = jobService.getJobForId(id);
+
+            if (jobFromDb != null) {
+                this.job = jobFromDb;
+            } else {
+                throw new IllegalStateException("No job found for id " + id);
+            }
+
+             this.statistic = job.getStatistic();
+        }
+
+        this.offeredBySet = EnumSet.allOf(OfferedBy.class);
+        this.regions = jobService.getRegions();
+        this.industries = jobService.getIndustries();
+        this.yesNoList = new HashMap<Boolean, String>();
+        this.yesNoList.put(Boolean.FALSE, "False");
+        this.yesNoList.put(Boolean.TRUE, "True");
+
+    }
+
+    public Job getModel() {
+        return this.job;
+    }
+    public void setModel(Job job) {
+        this.job = job;
+    }
+
+    private Statistic statistic;
+
+    public Long id;
+
+    /**
+     * Logger Declaration.
+     */
     private final Log LOGGER = LogFactory.getLog(EditJobAction.class);
 
-    /**
-     * The service layer reference.
-     */
-    private JobService service;
-
-    /**
-     * Inject the service layer reference.
-     * @param service
-     */
-    public void setService(JobService service) {
-		this.service = service;
-	}
-
     public String delete() {
-
-    	//TODO user objects
-    	//FIXME Security improvements needed
-    	 service.deleteJobForId(this.job.getId());
-//         List ids = (List) dynaForm.get("job");
-//         if(ids != null){
-//             for (int i = 0; i < ids.size(); i++) {
-//                 LazyDynaBean aLong = (LazyDynaBean) ids.get(i);
-//                 String delete = (String) aLong.get("delete");
-//                 if (StringUtils.isNumeric(delete)) {
-//                     service.deleteJobForId(Long.valueOf(delete));
-//                 }
-//             }
-//         }
-
+         jobService.deleteJobForId(this.job.getId()); //FIXME SECURITY
          super.addActionMessage(getText("job.delete.success"));
          return SUCCESS;
+    }
+
+    public String execute() {
+        return INPUT;
     }
 
     /**
@@ -87,14 +110,14 @@ public class EditJobAction extends ActionSupport implements Preparable {
      */
     public String save() {
 
-		final Job jobFromDB = service.getJobForId(job.getId());
+        final Job jobFromDB = jobService.getJobForId(job.getId());
 
         if (job != null) {
 
             String jobDescription = (String) job.getDescription();
 
             jobFromDB.setBusinessName(job.getBusinessName());
-            jobFromDB.setBusinessLocation(job.getBusinessLocation());
+            jobFromDB.setRegionOther(job.getRegionOther());
             jobFromDB.setJobTitle(job.getJobTitle());
             jobFromDB.setSalary(job.getSalary());
             jobFromDB.setDescription(WebUtil.stripTags(jobDescription, "<b>"));
@@ -109,7 +132,7 @@ public class EditJobAction extends ActionSupport implements Preparable {
             jobFromDB.setIndustry(job.getIndustry());
             jobFromDB.setJobRestrictions(job.getJobRestrictions());
             jobFromDB.setUpdateDate(new Date());
-            service.updateJob(jobFromDB);
+            jobService.updateJob(jobFromDB);
         } else {
             throw new IllegalArgumentException("Job with id " + job.getId() + " does not exist.");
         }
@@ -118,31 +141,63 @@ public class EditJobAction extends ActionSupport implements Preparable {
 
         return SUCCESS;
 
-	}
+    }
 
-    public void prepare() throws Exception {
-		if (id != null) {
-			 this.job = service.getJobForId(id);
-			 this.statistic = job.getStatistic();
-		}
+    public Long getId() {
+        return id;
+    }
 
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Statistic getStatistic() {
+        return statistic;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setStatistic(Statistic statistic) {
+        this.statistic = statistic;
+    }
 
-	public Statistic getStatistic() {
-		return statistic;
-	}
+    public Job getJob() {
+        return job;
+    }
 
-	public void setStatistic(Statistic statistic) {
-		this.statistic = statistic;
-	}
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public Set<OfferedBy> getOfferedBySet() {
+        return offeredBySet;
+    }
+
+    public void setOfferedBySet(Set<OfferedBy> offeredBySet) {
+        this.offeredBySet = offeredBySet;
+    }
+
+    public List<Region> getRegions() {
+        return regions;
+    }
+
+    public void setRegions(List<Region> regions) {
+        this.regions = regions;
+    }
+
+    public List<Industry> getIndustries() {
+        return industries;
+    }
+
+    public void setIndustries(List<Industry> industries) {
+        this.industries = industries;
+    }
+
+    public Map<Boolean, String> getYesNoList() {
+        return yesNoList;
+    }
+
+    public void setYesNoList(Map<Boolean, String> yesNoList) {
+        this.yesNoList = yesNoList;
+    }
 
 
 }

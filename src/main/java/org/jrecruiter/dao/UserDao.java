@@ -21,7 +21,7 @@ import org.jrecruiter.model.User;
 
 /**
  * @author Dorota Puchala, Gunnar Hillert
- * @version @version $Id: UserDAO.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version @version $Id$
  */
 public interface UserDao extends GenericDao < User, Long >{
 

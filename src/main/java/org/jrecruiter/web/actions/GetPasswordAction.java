@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.interceptor.StoreMessages;
-import org.texturemedia.smarturls.ParentPackage;
 import org.texturemedia.smarturls.Result;
 
 /**

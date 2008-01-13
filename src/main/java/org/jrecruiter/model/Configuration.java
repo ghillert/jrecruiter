@@ -33,7 +33,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="configuration"
-	,schema="jrecruiter"
 		, uniqueConstraints = {  }
 )
 public class Configuration implements Serializable {

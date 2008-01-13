@@ -38,7 +38,6 @@ import org.hibernate.annotations.Parameter;
  */
 @Entity
 @Table(name="statistics"
-	,schema="jrecruiter"
 		, uniqueConstraints = {  }
 )
 public class Statistic implements Serializable {

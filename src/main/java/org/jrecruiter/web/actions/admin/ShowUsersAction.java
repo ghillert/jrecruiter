@@ -2,29 +2,23 @@ package org.jrecruiter.web.actions.admin;
 
 import java.text.SimpleDateFormat;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.interceptor.PrincipalAware;
-import org.apache.struts2.interceptor.PrincipalProxy;
 import org.jrecruiter.model.User;
-import org.jrecruiter.service.UserService;
+import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.forms.UserForm;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 
 /**
  * List all the jobs.
  *
  * @author Gunnar Hillert
- * @version $Id: ShowUsersFormController.java 128 2007-07-27 03:55:54Z ghillert $
+ * @version $Id$
  *
  */
-public class ShowUsersAction extends ActionSupport implements Preparable, PrincipalAware {
+public class ShowUsersAction extends BaseAction implements Preparable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = -2208374563094039361L;
@@ -33,13 +27,6 @@ public class ShowUsersAction extends ActionSupport implements Preparable, Princi
 	 * Logger Declaration.
 	 */
     private final Log LOGGER = LogFactory.getLog(ShowUsersAction.class);
-
-    /**
-     * The service layer reference.
-     */
-    private UserService service;
-
-    PrincipalProxy principalProxy;
 
     String username;
 
@@ -59,22 +46,6 @@ public class ShowUsersAction extends ActionSupport implements Preparable, Princi
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public PrincipalProxy getPrincipalProxy() {
-		return principalProxy;
-	}
-
-	public void setPrincipalProxy(PrincipalProxy principalProxy) {
-		this.principalProxy = principalProxy;
-	}
-
-	/**
-     * Inject the service layer reference.
-     * @param service
-     */
-    public void setService(UserService service) {
-		this.service = service;
 	}
 
     /**
@@ -110,15 +81,7 @@ public class ShowUsersAction extends ActionSupport implements Preparable, Princi
 
     public void prepare() throws Exception {
 
-    	String username;
-        if ((this.username != null)
-         && (principalProxy.isUserInRole("admin"))) {
-            username = this.username;
-        } else {
-            username = principalProxy.getRemoteUser();
-        }
-
-        User user = service.getUser(username);
+        User user = userService.getUser(super.getLoggedInUser().getUsername());
         UserForm form = new UserForm();
 
         form.setPassword2(user.getPassword());

@@ -18,9 +18,12 @@ package org.jrecruiter.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,37 +31,36 @@ import javax.persistence.Transient;
 * This class represents an industry (assignable to a job posting).
 *
 * @author Gunnar Hillert
-* @version $Id$
+* @version $Id: Job.java 117 2007-04-15 23:05:06Z ghillert $
 */
 @Entity
-@Table(name="industries"
+@Table(name="regions"
     , uniqueConstraints = {  }
 )
-public class Industry  implements java.io.Serializable {
+public class Region  implements java.io.Serializable {
 
-	/** serialVersionUID. */
-	private static final long serialVersionUID = 5352730251720839547L;
-
+    /** serialVersionUID. */
+    private static final long serialVersionUID = -6878911371987087795L;
 
     // Fields
 
-	/** Primary id of the industry */
-	private Long id;
+    /** Primary id of the industry */
+    private Long id;
     private String name;
     private Set<Job> jobs = new HashSet<Job>(0);
 
     // Constructors
 
     /** default constructor */
-    public Industry() {}
+    public Region() {}
 
-	/** minimal constructor */
-    public Industry(Long id, String name) {
+    /** minimal constructor */
+    public Region(Long id, String name) {
         this.id = id;
         this.name = name;
     }
     /** full constructor */
-    public Industry(Long id, String name, Set<Job> jobs) {
+    public Region(Long id, String name, Set<Job> jobs) {
        this.id = id;
        this.name = name;
        this.jobs = jobs;
@@ -84,7 +86,7 @@ public class Industry  implements java.io.Serializable {
         this.name = name;
     }
 
-    //@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="job")
+    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="job")
     @Transient
     public Set<Job> getJobs() {
         return this.jobs;

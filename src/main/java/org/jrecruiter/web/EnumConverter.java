@@ -15,35 +15,28 @@
 */
 package org.jrecruiter.web;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
 /**
-* From Appfuse
 * @author Gunnar Hillert
 * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
 */
-public class DateConverter extends StrutsTypeConverter {
-    public static final String format = "MM/dd/yyyy";
+public class EnumConverter extends StrutsTypeConverter {
 
+    @Override
     public Object convertFromString(Map ctx, String[] value, Class arg2) {
-        if (value[0] == null || value[0].trim().equals("")) {
-            return null;
+
+        if (arg2.isEnum()) {
+            return Enum.valueOf(arg2, value[0]);
         }
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        try {
-            return sdf.parse(value[0]);
-        } catch (ParseException pe) {
-            pe.printStackTrace();
-        }
+
         return null;
     }
 
+    @Override
     public String convertToString(Map ctx, Object data) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(data);
+        return data.toString();
     }
 }

@@ -23,14 +23,19 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.jrecruiter.AcegiUtil;
 import org.jrecruiter.Constants.Roles;
 import org.jrecruiter.Constants.StatsMode;
-import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.ConfigurationDao;
+import org.jrecruiter.dao.IndustryDao;
+import org.jrecruiter.dao.JobDao;
+import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.dao.StatisticDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Configuration;
+import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
@@ -76,6 +81,16 @@ public class JobServiceImpl implements JobService {
     private UserDao userDao;
 
     /**
+     * Industry Dao.
+     */
+    private IndustryDao industryDao;
+
+    /**
+     * User Region Dao.
+     */
+    private RegionDao regionDao;
+
+    /**
      *
      */
     private StatisticDao statisticDao;
@@ -84,6 +99,16 @@ public class JobServiceImpl implements JobService {
      * Settings Dao.
      */
     private ConfigurationDao configurationDao;
+
+    //~~~~~Dependency Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public void setIndustryDao(IndustryDao industryDao) {
+        this.industryDao = industryDao;
+    }
+
+    public void setRegionDao(RegionDao regionDao) {
+        this.regionDao = regionDao;
+    }
 
     /**
      * @param jobDao The jobDao to set.
@@ -99,15 +124,11 @@ public class JobServiceImpl implements JobService {
         this.configurationDao = configurationDao;
     }
 
-    public StatisticDao getStatisticDao() {
-		return statisticDao;
-	}
+    public void setStatisticDao(StatisticDao statisticDao) {
+        this.statisticDao = statisticDao;
+    }
 
-	public void setStatisticDao(StatisticDao statisticDao) {
-		this.statisticDao = statisticDao;
-	}
-
-	/**
+    /**
      * Sets the mail sender.
      * @param mailSender
      */
@@ -133,6 +154,8 @@ public class JobServiceImpl implements JobService {
     public void setVelocityEngine(final VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
+
+    //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
@@ -160,21 +183,19 @@ public class JobServiceImpl implements JobService {
      */
     public List<Job> getUsersJobs(final String username) {
 
-    	List <Job> jobs = null;
+        List <Job> jobs = null;
         User user = userDao.getUser(username);
 
         boolean administrator = false;
 
-        int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
-
-        if (index >= 0) {
-        	administrator = true;
+        if (AcegiUtil.containsRole(user.getAuthorities(), Roles.ADMIN.name())) {
+            administrator = true;
         }
 
         if (administrator) {
             jobs = jobDao.getAllJobs();
         } else {
-        	jobs = jobDao.getAllUserJobs(username);
+            jobs = jobDao.getAllUserJobs(username);
         }
 
         return jobs;
@@ -185,25 +206,17 @@ public class JobServiceImpl implements JobService {
      */
     public List<Job> getUsersJobsForStatistics(final String username) {
 
-    	final User user = userDao.getUser(username);
+        final User user = userDao.getUser(username);
 
-    	if (user == null) {
-    		throw new IllegalArgumentException("No user found for username " + username);
-    	}
+        if (user == null) {
+            throw new IllegalArgumentException("No user found for username " + username);
+        }
 
-    	boolean administrator = false;
+        if (AcegiUtil.hasRole(Roles.ADMIN.name())) {
+            return jobDao.getAll();
+        }
 
-    	int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
-
-    	if (index >= 0) {
-    		administrator = true;
-    	}
-
-    	if (administrator) {
-    		return jobDao.getAll();
-    	}
-
-    	return jobDao.getAllUserJobsForStatistics(user.getId());
+        return jobDao.getAllUserJobsForStatistics(user.getId());
     }
 
     /* (non-Javadoc)
@@ -211,28 +224,26 @@ public class JobServiceImpl implements JobService {
      */
     public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
 
-    	final User user = userDao.getUser(username);
+        final User user = userDao.getUser(username);
 
-    	if (user == null) {
-    		throw new IllegalArgumentException("No user found for username " + username);
-    	}
+        if (user == null) {
+            throw new IllegalArgumentException("No user found for username " + username);
+        }
 
-    	boolean administrator = false;
+        boolean administrator = false;
 
-    	int index = Arrays.binarySearch(user.getAuthorities(), Roles.ROLE_ADMIN.name());
+        if (AcegiUtil.hasRole(Roles.ADMIN.name())) {
+            administrator = true;
+        }
 
-    	if (index >= 0) {
-    		administrator = true;
-    	}
-
-    	return jobDao.getUsersJobsForStatistics(user.getId(), maxResult, statsMode, administrator);
+        return jobDao.getUsersJobsForStatistics(user.getId(), maxResult, statsMode, administrator);
     }
 
     /* (non-Javadoc)
     * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
     */
-    public void addJob(final Job jobs) {
-    	jobDao.save(jobs);
+    public void addJob(final Job job) {
+        jobDao.save(job);
     }
 
     /* (non-Javadoc)
@@ -274,7 +285,7 @@ public class JobServiceImpl implements JobService {
 
         model.put("jobId", jobs.getId());
         model.put("jobTitle", jobs.getJobTitle());
-        model.put("businessLocation", jobs.getBusinessLocation());
+        model.put("businessLocation", jobs.getRegionOther());
         model.put("businessName", jobs.getBusinessName());
         model.put("description", jobs.getDescription());
         model.put("jobRestrictions", jobs.getJobRestrictions());
@@ -285,7 +296,7 @@ public class JobServiceImpl implements JobService {
         String subject = null;
         try {
 
-        		result = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                result = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                    "mail.jobposting.body", model);
             subject = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                     "mail.jobposting.subject", model);
@@ -320,21 +331,29 @@ public class JobServiceImpl implements JobService {
 
     }
 
-	/**
-	 * @param userDao the userDao to set
-	 */
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
+    public List<Industry> getIndustries() {
+        return this.industryDao.getAllIndustriesOrdered();
+    }
 
-	public void updateJobStatistic(Statistic statistics) {
-		if (statistics.getId() != null) {
-			this.statisticDao.update(statistics);
-		} else {
-			this.statisticDao.save(statistics);
-		}
+    public List<Region> getRegions() {
+        return this.regionDao.getAllRegionsOrdered();
+    }
 
-	}
+    /**
+     * @param userDao the userDao to set
+     */
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void updateJobStatistic(Statistic statistics) {
+        if (statistics.getId() != null) {
+            this.statisticDao.update(statistics);
+        } else {
+            this.statisticDao.save(statistics);
+        }
+
+    }
 
 
 }

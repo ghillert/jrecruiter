@@ -19,7 +19,7 @@ package org.jrecruiter.webtier.forms;
  * Struts Action Form that holds a job posting
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id:JobPostingForm.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public class JobPostingForm {
 
