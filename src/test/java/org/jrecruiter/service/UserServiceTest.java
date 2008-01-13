@@ -18,7 +18,11 @@ package org.jrecruiter.service;
 import java.util.Date;
 
 import org.acegisecurity.userdetails.UserDetails;
+import org.jrecruiter.common.Constants;
+import org.jrecruiter.dao.RoleDao;
+import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.test.BaseTest;
 
@@ -29,85 +33,91 @@ import org.jrecruiter.test.BaseTest;
  */
 public class UserServiceTest extends BaseTest {
 
-	UserService userService;
+    UserService userService;
+    RoleDao roleDao;
 
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+    /**
+     * @param userService the userService to set
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
-	public void testAddUserTest(){
+    public void setRoleDao(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
 
-		final User user = getUser();
-		final User user2 = getUser();
+    public void testAddUserTest(){
 
-		try {
-			userService.addUser(user);
-		    flushSession();
-		} catch (DuplicateUserException e) {
-			fail();
-		}
-		try {
-			userService.addUser(user2);
-			flushSession();
-		} catch (DuplicateUserException e) {
-			assertNotNull(e.getMessage());
-			return;
-		}
-		fail();
-	};
+        final User user = getUser();
+        final User user2 = getUser();
 
-	//TODO
-	public void getUserTest(){}
+        try {
+            userService.addUser(user);
+            flushSession();
+        } catch (DuplicateUserException e) {
+            fail();
+        }
+        try {
+            userService.addUser(user2);
+            flushSession();
+        } catch (DuplicateUserException e) {
+            assertNotNull(e.getMessage());
+            return;
+        }
+        fail();
+    };
 
-	//TODO
-	public void updateUserTest(){}
+    //TODO
+    public void getUserTest(){}
 
-	//TODO
-	public void getAllUsersTest(){}
+    //TODO
+    public void updateUserTest(){}
 
-	//TODO
-	public void deleteUserTest(){}
+    //TODO
+    public void getAllUsersTest(){}
 
-	public void testSendPassword() throws Exception {
-		final User user = getUser();
-		userService.addUser(user);
-		flushSession();
+    //TODO
+    public void deleteUserTest(){}
 
-		userService.sendPassword(user);
+    public void testSendPassword() throws Exception {
+        final User user = getUser();
+        userService.addUser(user);
+        flushSession();
 
-	}
+        userService.sendPassword(user);
 
-	public void testLoadUserByUsername() {
+    }
 
-		final User user = getUser();
+    public void testLoadUserByUsername() {
 
-		try {
-			userService.addUser(user);
-		} catch (DuplicateUserException e) {
-			fail();
-		}
+        final User user = getUser();
 
-		final UserDetails user2 = userService.loadUserByUsername(user.getUsername());
+        try {
+            userService.addUser(user);
+            super.flushSession();
+        } catch (DuplicateUserException e) {
+            fail();
+        }
 
-		assertNotNull(user2);
-	}
+        final UserDetails user2 = userService.loadUserByUsername(user.getUsername());
 
-	private User getUser() {
+        assertNotNull(user2);
+    }
 
-		final User user = new User();
-		user.setUsername("demo44");
-		user.setEmail("demo@demo.com");
-		user.setFirstName("Demo First Name");
-		user.setLastName("Demo Last Name");
-		user.setPassword("demo");
-		user.setPhone("123456");
-		user.setRegistrationDate(new Date());
+    private User getUser() {
 
-		return user;
-	}
+        final User user = new User();
+        user.setUsername("demo44");
+        user.setEmail("demo@demo.com");
+        user.setFirstName("Demo First Name");
+        user.setLastName("Demo Last Name");
+        user.setPassword("demo");
+        user.setPhone("123456");
+        user.setRegistrationDate(new Date());
+
+        return user;
+    }
 
 
 }

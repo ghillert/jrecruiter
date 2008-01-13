@@ -32,44 +32,44 @@ import org.springframework.orm.ObjectRetrievalFailureException;
  */
 public class JobServiceTest extends BaseTest {
 
-	JobService jobService;
-	UserService userService;
+    JobService jobService;
+    UserService userService;
 
 
     public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+        this.userService = userService;
+    }
 
-	/**
-	 * @param jobService the jobService to set
-	 */
-	public void setJobService(JobService jobService) {
-		this.jobService = jobService;
-	}
+    /**
+     * @param jobService the jobService to set
+     */
+    public void setJobService(JobService jobService) {
+        this.jobService = jobService;
+    }
 
-	public void addJobTest(){}
+    public void addJobTest(){}
 
-	public void testDeleteJobForIdTest() throws Exception {
-		final Job job = this.getJob();
+    public void testDeleteJobForIdTest() throws Exception {
+        final Job job = this.getJob();
 
-		User user = this.getUser();
-		userService.addUser(user);
-		job.setUser(user);
-		jobService.addJob(job);
+        User user = this.getUser();
+        userService.addUser(user);
+        job.setUser(user);
+        jobService.addJob(job);
 
-		Job job2 = jobService.getJobForId(job.getId());
-		assertNotNull(job2);
-		jobService.deleteJobForId(job2.getId());
+        Job job2 = jobService.getJobForId(job.getId());
+        assertNotNull(job2);
+        jobService.deleteJobForId(job2.getId());
 
-		try {
-			jobService.getJobForId(job.getId());
-		} catch (ObjectRetrievalFailureException e) {
-			return;
-		}
+        try {
+            jobService.getJobForId(job.getId());
+        } catch (ObjectRetrievalFailureException e) {
+            return;
+        }
 
-		fail();
+        fail();
 
-	}
+    }
 
     public void getJobForIdTest(){}
 
@@ -95,64 +95,62 @@ public class JobServiceTest extends BaseTest {
 
     public void testSendJobPostingToMailingList() throws Exception {
 
-		final Job job = this.getJob();
+        final Job job = this.getJob();
 
-		User user = this.getUser();
-		userService.addUser(user);
+        User user = this.getUser();
+        userService.addUser(user);
 
-		job.setUser(user);
+        job.setUser(user);
 
-		jobService.addJob(job);
+        jobService.addJob(job);
 
-    	jobService.sendJobPostingToMailingList(job);
+        jobService.sendJobPostingToMailingList(job);
 
     }
-
-    public void updateJobTest(){}
 
 
 
 private Job getJob() {
 
-	Job job = new Job();
-	job.setBusinessAddress1("businessAddress1");
-	job.setBusinessAddress2("businessAddress2");
-	job.setBusinessCity("businessCity");
-	job.setBusinessEmail("businessEmail");
-	job.setBusinessLocation("businessLocation");
-	job.setBusinessName("businessName");
-	job.setBusinessPhone("businessPhone");
-	job.setBusinessState("businessState");
-	job.setBusinessZip("businessZip");
-	job.setDescription("description");
+    Job job = new Job();
+    job.setBusinessAddress1("businessAddress1");
+    job.setBusinessAddress2("businessAddress2");
+    job.setBusinessCity("businessCity");
+    job.setBusinessEmail("businessEmail");
+    job.setRegionOther("businessLocation");
+    job.setBusinessName("businessName");
+    job.setBusinessPhone("businessPhone");
+    job.setBusinessState("businessState");
+    job.setBusinessZip("businessZip");
+    job.setDescription("description");
 
-	job.setJobRestrictions("jobRestrictions");
-	job.setJobTitle("jobTitle");
-	job.setLatitude(BigDecimal.ONE);
-	job.setLongitude(BigDecimal.ZERO);
-	job.setOfferedBy(OfferedBy.RECRUITER);
-	job.setRegistrationDate(new Date());
-	job.setSalary(new BigDecimal(10000));
-	job.setStatus(JobStatus.ACTIVE);
-	job.setUpdateDate(new Date());
-	job.setWebsite("www.google.com");
+    job.setJobRestrictions("jobRestrictions");
+    job.setJobTitle("jobTitle");
+    job.setLatitude(BigDecimal.ONE);
+    job.setLongitude(BigDecimal.ZERO);
+    job.setOfferedBy(OfferedBy.RECRUITER);
+    job.setRegistrationDate(new Date());
+    job.setSalary(new BigDecimal(10000));
+    job.setStatus(JobStatus.ACTIVE);
+    job.setUpdateDate(new Date());
+    job.setWebsite("www.google.com");
 
-	return job;
+    return job;
 
 }
 
 private User getUser() {
 
-	User user = new User();
-	user.setUsername("demo44");
-	user.setEmail("demo@demo.com");
-	user.setFirstName("Demo First Name");
-	user.setLastName("Demo Last Name");
-	user.setPassword("demo");
-	user.setPhone("123456");
-	user.setRegistrationDate(new Date());
+    User user = new User();
+    user.setUsername("demo44");
+    user.setEmail("demo@demo.com");
+    user.setFirstName("Demo First Name");
+    user.setLastName("Demo Last Name");
+    user.setPassword("demo");
+    user.setPhone("123456");
+    user.setRegistrationDate(new Date());
 
-	return user;
+    return user;
 
 }
 
