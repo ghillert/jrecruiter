@@ -1,0 +1,36 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd">
+<dataset>
+    <table name="regions">
+        <column>id</column>
+        <column>name</column>
+        <row><value>1</value><value>Other</value></row>
+        <row><value>2</value><value>Alpharetta</value></row>
+        <row><value>3</value><value>Buckhead</value></row>
+        <row><value>4</value><value>Decatur</value></row>
+        <row><value>5</value><value>Downtown</value></row>
+        <row><value>6</value><value>Duluth</value></row>
+        <row><value>7</value><value>Marietta</value></row>
+        <row><value>8</value><value>Midtown</value></row>
+        <row><value>9</value><value>Norcross</value></row>
+        <row><value>10</value><value>Perimeter</value></row>
+    </table>
+    <table name="industries">
+        <column>id</column>
+        <column>name</column>
+        <row><value>1</value><value>Other</value></row>
+        <row><value>2</value><value>Engineering</value></row>
+        <row><value>3</value><value>Financial</value></row>
+        <row><value>4</value><value>Government</value></row>
+        <row><value>5</value><value>Healthcare</value></row>
+        <row><value>6</value><value>IT</value></row>
+        <row><value>7</value><value>Manufacturing</value></row>
+        <row><value>8</value><value>Telecommunications</value></row>
+    </table>
+    <table name="job_types">
+        <column>id</column>
+        <column>name</column>
+        <row><value>1</value><value>Full-time</value></row>
+        <row><value>2</value><value>Part-time</value></row>
+        <row><value>3</value><value>Contract</value></row>
+    </table>
+</dataset>
