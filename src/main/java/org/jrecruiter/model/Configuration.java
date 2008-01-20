@@ -32,8 +32,7 @@ import javax.persistence.TemporalType;
  * @version $Id$
  */
 @Entity
-@Table(name="configuration"
-		, uniqueConstraints = {  }
+@Table(uniqueConstraints = {  }
 )
 public class Configuration implements Serializable {
 
@@ -67,7 +66,7 @@ public class Configuration implements Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name="message_key", unique=true, nullable=false, insertable=true, updatable=true, length=0)
+	@Column(name="message_key", unique=true, nullable=false, insertable=true, updatable=true, length=200)
 	public String getMessageKey() {
 		return this.messageKey;
 	}
@@ -94,7 +93,5 @@ public class Configuration implements Serializable {
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
 	}
-
-
 }
 

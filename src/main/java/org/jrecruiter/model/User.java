@@ -45,8 +45,7 @@ import org.acegisecurity.userdetails.UserDetails;
  * @version $Id$
  */
 @Entity
-@Table(name="users"
-		, uniqueConstraints = { @UniqueConstraint( columnNames = { "email" } ),
+@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "email" } ),
 		@UniqueConstraint( columnNames = { "username" } ) }
 )
 public class User implements Serializable, UserDetails{

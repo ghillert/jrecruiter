@@ -35,7 +35,7 @@ import javax.persistence.Transient;
 */
 @Entity
 @Table(uniqueConstraints = {  })
-public class Region  implements java.io.Serializable {
+public class JobType  implements java.io.Serializable {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -6878911371987087795L;
@@ -50,15 +50,15 @@ public class Region  implements java.io.Serializable {
     // Constructors
 
     /** default constructor */
-    public Region() {}
+    public JobType() {}
 
     /** minimal constructor */
-    public Region(Long id, String name) {
+    public JobType(Long id, String name) {
         this.id = id;
         this.name = name;
     }
     /** full constructor */
-    public Region(Long id, String name, Set<Job> jobs) {
+    public JobType(Long id, String name, Set<Job> jobs) {
        this.id = id;
        this.name = name;
        this.jobs = jobs;

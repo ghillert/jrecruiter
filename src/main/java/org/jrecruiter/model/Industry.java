@@ -31,9 +31,7 @@ import javax.persistence.Transient;
 * @version $Id$
 */
 @Entity
-@Table(name="industries"
-    , uniqueConstraints = {  }
-)
+@Table(uniqueConstraints = {  })
 public class Industry  implements java.io.Serializable {
 
 	/** serialVersionUID. */
