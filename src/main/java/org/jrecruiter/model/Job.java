@@ -45,9 +45,7 @@ import org.jrecruiter.Constants.OfferedBy;
 * @version $Id$
 */
 @Entity
-@Table(name="jobs"
-    , uniqueConstraints = {  }
-)
+@Table(uniqueConstraints = {  })
 public class Job implements Serializable {
 
     /**

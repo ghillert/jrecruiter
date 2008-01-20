@@ -37,8 +37,7 @@ import org.hibernate.annotations.Parameter;
  * @version $Id$
  */
 @Entity
-@Table(name="statistics"
-		, uniqueConstraints = {  }
+@Table(uniqueConstraints = {  }
 )
 public class Statistic implements Serializable {
 

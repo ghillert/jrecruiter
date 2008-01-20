@@ -42,8 +42,7 @@ import org.acegisecurity.GrantedAuthority;
  * @version @version $Id$
  */
 @Entity
-@Table(name="roles"
-		, uniqueConstraints = { @UniqueConstraint( columnNames = { "name" } ) }
+@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "name" } ) }
 )
 public class Role implements Serializable, GrantedAuthority {
 

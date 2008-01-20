@@ -35,8 +35,7 @@ import javax.persistence.UniqueConstraint;
  * @version $Id$
  */
 @Entity
-@Table(name="users_roles"
-    , uniqueConstraints = { @UniqueConstraint( columnNames = { "users_id", "roles_id" } ) }
+@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "users_id", "roles_id" } ) }
 )
 public class UserToRole  implements java.io.Serializable {
 
