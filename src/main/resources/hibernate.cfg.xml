@@ -2,8 +2,15 @@
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-    <session-factory>
-        <mapping class="org.appfuse.model.User"/>
-        <mapping class="org.appfuse.model.Role"/>
-    </session-factory>
+	<session-factory>
+		<mapping class="org.jrecruiter.model.Configuration" />
+		<mapping class="org.jrecruiter.model.Industry" />
+		<mapping class="org.jrecruiter.model.Job" />
+		<mapping class="org.jrecruiter.model.JobType" />
+		<mapping class="org.jrecruiter.model.Region" />
+		<mapping class="org.jrecruiter.model.Role" />
+		<mapping class="org.jrecruiter.model.Statistic" />
+		<mapping class="org.jrecruiter.model.User" />
+        <mapping class="org.jrecruiter.model.UserToRole" />
+	</session-factory>
 </hibernate-configuration>
