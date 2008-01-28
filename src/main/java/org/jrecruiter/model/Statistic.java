@@ -71,7 +71,7 @@ public class Statistic implements Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name="jobs_id", unique=true, nullable=false, insertable=true, updatable=true)
+	@Column(unique=true, nullable=false, insertable=true, updatable=true)
 	@GeneratedValue(generator = "fk")
     @GenericGenerator (strategy = "foreign", name = "fk",
          parameters = @Parameter(name="property", value="job"))

@@ -194,10 +194,8 @@ public class Job implements Serializable {
     /**
      * @return the id
      */
-    @Id
-    @Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="jobs_id_seq")
-    @SequenceGenerator(name="jobs_id_seq", sequenceName="jobs_id_seq")
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(unique=true, nullable=false, insertable=true, updatable=true)
     public Long getId() {
         return id;
     }
@@ -255,7 +253,7 @@ public class Job implements Serializable {
     /**
      * @return the businessName
      */
-    @Column(name="business_name", unique=false, nullable=false, insertable=true, updatable=true, length=50)
+    @Column(unique=false, nullable=false, insertable=true, updatable=true, length=50)
     public String getBusinessName() {
         return businessName;
     }
@@ -300,7 +298,7 @@ public class Job implements Serializable {
     /**
      * @return the salary
      */
-    @Column(name="salary", unique=false, nullable=true, insertable=true, updatable=true, precision=65535, scale=65531)
+    @Column(name="salary", unique=false, nullable=true, insertable=true, updatable=true)
     public BigDecimal getSalary() {
         return salary;
     }
@@ -315,7 +313,7 @@ public class Job implements Serializable {
     /**
      * @return the description
      */
-    @Column(name="description", unique=false, nullable=false, insertable=true, updatable=true, length=0)
+    @Column(name="description", unique=false, nullable=false, insertable=true, updatable=true, length=2000)
     public String getDescription() {
         return description;
     }
@@ -465,7 +463,7 @@ public class Job implements Serializable {
     /**
      * @return the jobRestrictions
      */
-    @Column(name="job_restrictions", unique=false, nullable=true, insertable=true, updatable=true, length=0)
+    @Column(name="job_restrictions", unique=false, nullable=true, insertable=true, updatable=true, length=2000)
     public String getJobRestrictions() {
         return jobRestrictions;
     }
@@ -542,7 +540,7 @@ public class Job implements Serializable {
     /**
      * @return the longitude
      */
-    @Column(name="longitude", unique=false, nullable=true, insertable=true, updatable=true, precision=65535, scale=65531)
+    @Column(name="longitude", unique=false, nullable=true, insertable=true, updatable=true)
     public BigDecimal getLongitude() {
         return longitude;
     }
@@ -566,7 +564,7 @@ public class Job implements Serializable {
     /**
      * @return the latitude
      */
-    @Column(name="latitude", unique=false, nullable=true, insertable=true, updatable=true, precision=65535, scale=65531)
+    @Column(name="latitude", unique=false, nullable=true, insertable=true, updatable=true)
     public BigDecimal getLatitude() {
         return latitude;
     }

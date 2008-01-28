@@ -22,6 +22,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -65,8 +67,8 @@ public class Region  implements java.io.Serializable {
     }
 
     // Property accessors
-    @Id
-    @Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(unique=true, nullable=false, insertable=true, updatable=true)
     public Long getId() {
         return this.id;
     }

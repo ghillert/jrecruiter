@@ -27,12 +27,12 @@ public abstract class BaseTest extends AbstractTransactionalDataSourceSpringCont
 	protected String[] getConfigLocations() {
         setAutowireMode(AUTOWIRE_BY_NAME);
         return new String[] {
-        "/applicationContext-acegi-base.xml",
-        "/applicationContext-acegi-security.xml",
-        "/applicationContext-authentication.xml",
-        "/applicationContext-authorization.xml",
-        "/applicationContext-hibernate.xml",
-        "/applicationContext.xml",
+        "/spring/applicationContext-acegi-base.xml",
+        "/spring/applicationContext-acegi-security.xml",
+        "/spring/applicationContext-authentication.xml",
+        "/spring/applicationContext-authorization.xml",
+        "/spring/applicationContext-hibernate.xml",
+        "/spring/applicationContext.xml",
         "/test-applicationContext-datasource.xml",
         "/test-applicationContext-mail.xml"};
     }
