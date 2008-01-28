@@ -20,6 +20,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -65,8 +67,8 @@ public class Configuration implements Serializable {
 	}
 
 	// Property accessors
-	@Id
-	@Column(name="message_key", unique=true, nullable=false, insertable=true, updatable=true, length=200)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false, insertable=true, updatable=true, length=200)
 	public String getMessageKey() {
 		return this.messageKey;
 	}
@@ -75,7 +77,7 @@ public class Configuration implements Serializable {
 		this.messageKey = messageKey;
 	}
 
-	@Column(name="message_text", unique=false, nullable=true, insertable=true, updatable=true)
+	@Column(unique=false, nullable=true, insertable=true, updatable=true)
 	public String getMessageText() {
 		return this.messageText;
 	}
@@ -84,7 +86,7 @@ public class Configuration implements Serializable {
 		this.messageText = messageText;
 	}
 
-	@Column(name="last_modified", unique=false, nullable=true, insertable=true, updatable=true, length=8)
+	@Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getLastModified() {
 		return this.lastModified;

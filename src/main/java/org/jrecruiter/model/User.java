@@ -113,10 +113,8 @@ public class User implements Serializable, UserDetails{
 	}
 
 	// Property accessors
-	@Id
-	@Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="users_id_seq")
-	@SequenceGenerator(name="users_id_seq", sequenceName="users_id_seq")
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false, insertable=true, updatable=true)
 	public Long getId() {
 		return this.id;
 	}
@@ -125,7 +123,7 @@ public class User implements Serializable, UserDetails{
 		this.id = id;
 	}
 
-	@Column(name="username", unique=true, nullable=false, insertable=true,
+	@Column(unique=true, nullable=false, insertable=true,
 			updatable=true, length=50)
 	public String getUsername() {
 		return this.username;
@@ -135,7 +133,7 @@ public class User implements Serializable, UserDetails{
 		this.username = username;
 	}
 
-	@Column(name="password", unique=false, nullable=false, insertable=true,
+	@Column(unique=false, nullable=false, insertable=true,
 			updatable=true, length=100)
 	public String getPassword() {
 		return this.password;
@@ -145,7 +143,7 @@ public class User implements Serializable, UserDetails{
 		this.password = password;
 	}
 
-	@Column(name="first_name", unique=false, nullable=false, insertable=true,
+	@Column(unique=false, nullable=false, insertable=true,
 			updatable=true, length=50)
 	public String getFirstName() {
 		return this.firstName;
@@ -155,7 +153,7 @@ public class User implements Serializable, UserDetails{
 		this.firstName = firstName;
 	}
 
-	@Column(name="last_name", unique=false, nullable=false, insertable=true,
+	@Column(unique=false, nullable=false, insertable=true,
 			updatable=true, length=50)
 	public String getLastName() {
 		return this.lastName;
@@ -165,7 +163,7 @@ public class User implements Serializable, UserDetails{
 		this.lastName = lastName;
 	}
 
-	@Column(name="company", unique=false, nullable=true, insertable=true,
+	@Column(unique=false, nullable=true, insertable=true,
 			updatable=true, length=50)
 	public String getCompany() {
 		return this.company;
@@ -175,7 +173,7 @@ public class User implements Serializable, UserDetails{
 		this.company = company;
 	}
 
-	@Column(name="phone", unique=false, nullable=true, insertable=true,
+	@Column(unique=false, nullable=true, insertable=true,
 			updatable=true, length=25)
 	public String getPhone() {
 		return this.phone;
@@ -185,7 +183,7 @@ public class User implements Serializable, UserDetails{
 		this.phone = phone;
 	}
 
-	@Column(name="fax", unique=false, nullable=true, insertable=true,
+	@Column(unique=false, nullable=true, insertable=true,
 			updatable=true, length=25)
 	public String getFax() {
 		return this.fax;
@@ -195,7 +193,7 @@ public class User implements Serializable, UserDetails{
 		this.fax = fax;
 	}
 
-	@Column(name="email", unique=true, nullable=false, insertable=true,
+	@Column(unique=true, nullable=false, insertable=true,
 			updatable=true, length=50)
 	public String getEmail() {
 		return this.email;
@@ -205,7 +203,7 @@ public class User implements Serializable, UserDetails{
 		this.email = email;
 	}
 
-	@Column(name="registration_date", unique=false, nullable=false, insertable=true,
+	@Column(unique=false, nullable=false, insertable=true,
 			updatable=true, length=8)
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getRegistrationDate() {
@@ -216,7 +214,7 @@ public class User implements Serializable, UserDetails{
 		this.registrationDate = registrationDate;
 	}
 
-	@Column(name="expiration_date", unique=false, nullable=true, insertable=true,
+	@Column(unique=false, nullable=true, insertable=true,
 			updatable=true, length=8)
 	public Date getExpirationDate() {
 		return this.expirationDate;
@@ -226,7 +224,7 @@ public class User implements Serializable, UserDetails{
 		this.expirationDate = expirationDate;
 	}
 
-	@Column(name="update_date", unique=false, nullable=true, insertable=true,
+	@Column(unique=false, nullable=true, insertable=true,
 			updatable=true, length=8)
 	public Date getUpdateDate() {
 		return this.updateDate;

@@ -151,6 +151,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
         Role role = roleDao.getRole(Constants.Roles.MANAGER.name());
+
+        if (role == null) {
+        	throw new IllegalStateException("Role was not found but is required.");
+        }
+
         Set<UserToRole> userToRoles = user.getUserToRoles();
 
         UserToRole utr = new UserToRole();

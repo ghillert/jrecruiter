@@ -20,6 +20,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -63,8 +65,8 @@ public class Industry  implements java.io.Serializable {
     }
 
     // Property accessors
-    @Id
-    @Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(unique=true, nullable=false, insertable=true, updatable=true)
     public Long getId() {
         return this.id;
     }
@@ -73,7 +75,7 @@ public class Industry  implements java.io.Serializable {
         this.id = id;
     }
 
-    @Column(name="name", unique=false, nullable=false, insertable=true, updatable=true)
+    @Column(unique=false, nullable=false, insertable=true, updatable=true)
     public String getName() {
         return this.name;
     }

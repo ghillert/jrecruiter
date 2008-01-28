@@ -82,10 +82,8 @@ public class Role implements Serializable, GrantedAuthority {
 	}
 
 	// Property accessors
-	@Id
-	@Column(name="id", unique=true, nullable=false, insertable=true, updatable=true)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="roles_id_seq")
-	@SequenceGenerator(name="roles_id_seq", sequenceName="roles_id_seq")
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false, insertable=true, updatable=true)
 	public Long getId() {
 		return this.id;
 	}
@@ -94,7 +92,7 @@ public class Role implements Serializable, GrantedAuthority {
 		this.id = id;
 	}
 
-	@Column(name="name", unique=true, nullable=false, insertable=true, updatable=true, length=50)
+	@Column(unique=true, nullable=false, insertable=true, updatable=true, length=50)
 	public String getName() {
 		return this.name;
 	}
@@ -103,7 +101,7 @@ public class Role implements Serializable, GrantedAuthority {
 		this.name = name;
 	}
 
-	@Column(name="description", unique=false, nullable=true, insertable=true, updatable=true)
+	@Column(unique=false, nullable=true, insertable=true, updatable=true)
 	public String getDescription() {
 		return this.description;
 	}
