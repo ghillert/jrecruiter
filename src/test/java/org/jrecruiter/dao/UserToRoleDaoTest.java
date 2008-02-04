@@ -4,7 +4,6 @@
 package org.jrecruiter.dao;
 
 import java.util.Date;
-import java.util.List;
 
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;

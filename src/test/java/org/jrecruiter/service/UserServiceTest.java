@@ -18,11 +18,8 @@ package org.jrecruiter.service;
 import java.util.Date;
 
 import org.acegisecurity.userdetails.UserDetails;
-import org.jrecruiter.common.Constants;
 import org.jrecruiter.dao.RoleDao;
-import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
-import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.test.BaseTest;
 

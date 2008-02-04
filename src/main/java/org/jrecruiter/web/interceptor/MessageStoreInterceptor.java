@@ -153,7 +153,7 @@ public class MessageStoreInterceptor implements Interceptor {
 
     /**
      * Global Configuration parameter. When in autoRetrieveMode mode all action messages
-     * that exist in the session are moved into the request 
+     * that exist in the session are moved into the request
      * from the session and stored back into the request.
      */
     private boolean autoRetrieveMode = false;
@@ -219,6 +219,7 @@ public class MessageStoreInterceptor implements Interceptor {
      * @param invocation
      * @throws Exception
      */
+    @SuppressWarnings("unchecked")
     protected void before(ActionInvocation invocation) throws Exception {
         String reqOperationMode = getRequestOperationMode(invocation);
         boolean isRetrieve = false;
@@ -276,6 +277,7 @@ public class MessageStoreInterceptor implements Interceptor {
      * @param result
      * @throws Exception
      */
+    @SuppressWarnings("unchecked")
     protected void after(ActionInvocation invocation, String result) throws Exception {
 
         Object action = invocation.getAction();
@@ -318,6 +320,7 @@ public class MessageStoreInterceptor implements Interceptor {
      *
      * @return String
      */
+    @SuppressWarnings("unchecked")
     protected String getRequestOperationMode(ActionInvocation invocation) {
         String reqOperationMode = NONE;
         if (allowRequestParameterSwitch) {
@@ -341,6 +344,7 @@ public class MessageStoreInterceptor implements Interceptor {
      * @param col2
      * @return Collection
      */
+    @SuppressWarnings("unchecked")
     protected Collection mergeCollection(Collection col1, Collection col2) {
         Collection _col1 = (col1 == null ? new ArrayList() : col1);
         Collection _col2 = (col2 == null ? new ArrayList() : col2);
@@ -356,6 +360,7 @@ public class MessageStoreInterceptor implements Interceptor {
      * @param map2
      * @return Map
      */
+    @SuppressWarnings("unchecked")
     protected Map mergeMap(Map map1, Map map2) {
         Map _map1 = (map1 == null ? new LinkedHashMap() : map1);
         Map _map2 = (map2 == null ? new LinkedHashMap() : map2);
@@ -365,6 +370,7 @@ public class MessageStoreInterceptor implements Interceptor {
 
     //Copied from AnnotationValidationInterceptor
     // FIXME: This is copied from DefaultActionInvocation but should be exposed through the interface
+    @SuppressWarnings("unchecked")
     protected Method getActionMethod(Class actionClass, String methodName) throws NoSuchMethodException {
         Method method;
         try {

@@ -18,9 +18,7 @@ package org.jrecruiter.dao.hibernate;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.RegionDao;
-import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
 
 

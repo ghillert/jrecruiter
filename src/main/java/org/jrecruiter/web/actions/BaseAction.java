@@ -3,6 +3,7 @@ package org.jrecruiter.web.actions;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.AcegiUtil;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
@@ -37,6 +38,7 @@ public abstract class BaseAction extends ActionSupport {
 		this.jobService = jobService;
 	}
 
+	@SkipValidation
     public String cancel() {
         return SUCCESS;
     }
