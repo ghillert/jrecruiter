@@ -3,11 +3,9 @@
  */
 package org.jrecruiter.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.test.BaseTest;
 

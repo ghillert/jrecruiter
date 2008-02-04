@@ -23,11 +23,9 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
-import org.jrecruiter.AcegiUtil;
 import org.jrecruiter.Constants;
 import org.jrecruiter.Constants.JobStatus;
 import org.jrecruiter.Constants.OfferedBy;
-import org.jrecruiter.Constants.Roles;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.RegionDao;
@@ -41,7 +39,6 @@ import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.impl.JobServiceImpl;
-import org.testng.annotations.Test;
 
 
 /**

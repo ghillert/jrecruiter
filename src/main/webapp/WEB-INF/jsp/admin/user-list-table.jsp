@@ -8,7 +8,7 @@
             <fmt:formatDate value="${user.updateDate}" type="date" pattern="MM/dd/yy"/>
           </display:column>
           <display:column class="userlist5" titleKey="userList.th.delete" sortable="false" media="html csv xml excel pdf" sortProperty="updateDate">
-            <input type="checkbox" name="UserListForm[${user_rowNum}].delete" value="${user.username}" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';" errorStyleClass="error"></input>
+            <input type="checkbox" name="UserListForm[${user_rowNum}].delete" value="${user.username}" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"></input>
           </display:column>
         </display:table>
     </ajax:displayTag>

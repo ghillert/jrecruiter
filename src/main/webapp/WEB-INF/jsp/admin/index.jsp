@@ -23,7 +23,7 @@
           <li><a href="${addJobUrl}" ><fmt:message key="admin.main.label.add.job"/></a></li>
           <li><a href="${showStatisticsUrl}" ><fmt:message key="admin.main.label.show.statistics"/></a></li>
 
-          <authz:authorize ifAllGranted="admin">
+          <authz:authorize ifAllGranted="ADMIN">
               <li><a href="${userListUrl}" ><fmt:message key="admin.main.label.edit.user"/></a></li>
               <li><a href="${addUserUrl}" ><fmt:message key="admin.main.label.add.user"/></a></li>
               <li><a href="${editSettingsUrl}" ><fmt:message key="admin.main.label.edit.settings"/></a></li>

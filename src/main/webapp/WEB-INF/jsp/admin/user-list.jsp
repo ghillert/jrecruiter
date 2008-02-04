@@ -21,18 +21,10 @@ function checkDelete(){
 }
 </script>
 
-<div  id="header_menu">
-  <html:link action="adminMain" styleClass="button">
-        <fmt:message key="all.back.to.welcome.page"/>
-  </html:link>
-</div>
-
-<div id="main">
-
   <s:form  action="deleteUser">
 
       <s:if test="userList != null && userList.size > 0">
-        <%@include file="/WEB-INF/jsp/user/userListTable.jsp"%>
+        <%@include file="/WEB-INF/jsp/admin/user-list-table.jsp"%>
       </s:if>
 	  <s:else>
 	  	   <fmt:message key="message.noAvailableJobs"/>
@@ -43,5 +35,3 @@ function checkDelete(){
         <s:submit method="delete" onclick="javascript:return checkDelete();" value="%{getText('jobposting.button.delete')}"/>
       </s:if>
   </s:form>
-
-</div>

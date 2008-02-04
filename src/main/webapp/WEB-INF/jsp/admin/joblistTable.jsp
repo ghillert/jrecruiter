@@ -15,7 +15,7 @@
           <fmt:formatDate value="${job.updateDate}" type="date" pattern="MM/dd/yy"/>
         </display:column>
         <display:column class="joblist5" titleKey="jsp.joblist.table.delete" sortable="false" media="html csv xml excel pdf" sortProperty="updateDate">
-          <input type="checkbox" name="jobsToDelete[${job_rowNum}]" value="${job.id}" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';" errorStyleClass="error"></input>
+          <input type="checkbox" name="jobsToDelete[${job_rowNum}]" value="${job.id}" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"></input>
         </display:column>
       </display:table>
 </ajax:displayTag>

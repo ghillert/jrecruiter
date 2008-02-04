@@ -21,26 +21,17 @@ function checkDelete(){
 }
 </script>
 
-<div  id="header_menu">
-  <html:link action="adminMain" styleClass="button">
-        <fmt:message key="all.back.to.welcome.page"/>
-  </html:link>
-</div>
+<s:form action="editJob">
+    <s:if test="jobList != null && joblist.size() > 0">
+        <%@include file="/WEB-INF/jsp/admin/joblistTable.jsp"%>
+    </s:if>
+    <s:else>
+        <s:text name="message.noAvailableJobs"/>
+    </s:else>
 
-<div id="main">
-  <html:form target="" action="deleteJobPosting?method=deleteJobPosting">
-    <logic:notEmpty name="JobList">
-        <%@include file="/pages/admin/joblistTable.jsp"%>
-    </logic:notEmpty>
-
-    <logic:empty name="JobList">
-                    <bean:message key="message.noAvailableJobs"/>
-    </logic:empty>
-      <br/><br/>
-      <html:cancel><bean:message key="jobposting.button.cancel"/></html:cancel>
-          <logic:notEmpty name="JobList">
-            <html:submit onclick="javascript:return checkDelete();"><fmt:message key="jobposting.button.delete"/></html:submit>
-          </logic:notEmpty>
-  </html:form>
-</div>
+      <s:submit value="Cancel" method="cancel"/>
+      <s:if test="jobList != null && joblist.size() > 0">
+            <s:submit value="Delete" method="delete" onclick="javascript:return checkDelete();" />
+      </s:if>
+</s:form>
 

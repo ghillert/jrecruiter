@@ -119,7 +119,7 @@ public class ShowStatisticsAction extends BaseAction {
 
 			this.chart = createChart(dataset, chartTitle);
 
-		return super.SUCCESS;
+		return SUCCESS;
 	}
 
 	private static JFreeChart createChart(

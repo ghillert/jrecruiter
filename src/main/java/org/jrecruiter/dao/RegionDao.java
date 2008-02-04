@@ -17,7 +17,6 @@ package org.jrecruiter.dao;
 
 import java.util.List;
 
-import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
 
 /**

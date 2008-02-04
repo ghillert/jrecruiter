@@ -14,12 +14,7 @@ import org.jrecruiter.test.BaseTest;
  */
 public class RoleDaoTest extends BaseTest {
 
-	private UserDao userDao;
 	private RoleDao roleDao;
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
 
 	/**
 	 * @param roleDao the roleDao to set
@@ -49,6 +44,6 @@ public class RoleDaoTest extends BaseTest {
 
 		Role role2 = roleDao.getRole("TEST");
 
-		assertNotNull(role);
+		assertNotNull(role2);
 	}
 }
