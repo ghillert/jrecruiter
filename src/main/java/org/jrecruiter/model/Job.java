@@ -34,6 +34,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.jrecruiter.Constants.JobStatus;
 import org.jrecruiter.Constants.OfferedBy;
 
@@ -45,6 +50,7 @@ import org.jrecruiter.Constants.OfferedBy;
 */
 @Entity
 @Table(uniqueConstraints = {  })
+@Indexed
 public class Job implements Serializable {
 
     /**
@@ -195,6 +201,7 @@ public class Job implements Serializable {
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(unique=true, nullable=false, insertable=true, updatable=true)
+    @DocumentId
     public Long getId() {
         return id;
     }
@@ -313,6 +320,7 @@ public class Job implements Serializable {
      * @return the description
      */
     @Column(name="description", unique=false, nullable=false, insertable=true, updatable=true, length=2000)
+    @Field(index=Index.TOKENIZED, store=Store.NO)
     public String getDescription() {
         return description;
     }

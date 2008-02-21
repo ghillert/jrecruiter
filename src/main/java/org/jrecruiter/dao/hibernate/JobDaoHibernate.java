@@ -15,12 +15,17 @@
  */
 package org.jrecruiter.dao.hibernate;
 
+import java.text.ParseException;
 import java.util.List;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Job;
@@ -167,17 +172,20 @@ implements JobDao {
         @SuppressWarnings("unchecked")
         public List<Job> searchByKeyword(final String keyword) {
 
-            //TODO - Implement Search using Hibernate Search
+    		FullTextSession fullTextSession = Search.createFullTextSession(sf.getCurrentSession());
 
-            Query q = sf.getCurrentSession().createQuery("from Job j where "
-                    + "lower(j.jobTitle) like :keyword or "
-                    + "lower(j.description) like :keyword or "
-                    + "lower(j.jobRestrictions) like :keyword");
-            q.setString("keyword", "%" + keyword + "%");
+    		MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"summary", "body"},
+    		  new StandardAnalyzer());
+    		try {
+    		org.apache.lucene.search.Query query = parser.parse(keyword);
 
-            List<Job> list = (List<Job>) q.list();
+    		org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Job.class );
+    		List<Job> result = hibQuery.list();
 
-            return list;
+            return result;
+      		} catch ( org.apache.lucene.queryParser.ParseException e) {
+    			throw new IllegalStateException(e);
+    		}
         }
 
         /**
