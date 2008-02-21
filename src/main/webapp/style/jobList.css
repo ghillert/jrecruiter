@@ -1,5 +1,5 @@
 #joblist {
-  width: 610px;
+  width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -9,19 +9,24 @@
     }
 
     #joblist td.column1 {
-      width: 245px;
+      width: 20px;
     }
     #joblist td.column2 {
-      width: 160px;
+      width: 20px;
     }
     #joblist td.column3 {
-      width: 125px;
+      width: auto;
     }
     #joblist td.column4 {
-      width: 80px;
+      width: 150px;
     }
-    
-    
+    #joblist td.column5 {
+      width: 130px;
+    }
+    #joblist td.column6 {
+      width: 90px;
+    }
+
 #jobposting {
 	width: 100%;
 }

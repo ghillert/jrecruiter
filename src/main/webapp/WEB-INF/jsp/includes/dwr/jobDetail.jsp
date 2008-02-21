@@ -27,7 +27,7 @@
                          <table id="jobDetails" style="">
                             <tr>
                                 <td><fmt:message key="field.location"/>:</td>
-                                <td>${jobDetail.businessLocation}</td>
+                                <td>${jobDetail.region.name}</td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="field.industry"/>:</td>

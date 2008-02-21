@@ -16,6 +16,7 @@ import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.web.actions.BaseAction;
+import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -36,6 +37,7 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
  *
  */
 @Validation
+@Result(name="success", location="index", type="redirectAction")
 public class AddJobAction extends BaseAction implements Preparable, ModelDriven<Job> {
 
     /** serialVersionUID. */

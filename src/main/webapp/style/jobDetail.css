@@ -9,7 +9,13 @@
   border-right:  1px solid #ccccef;
   margin-left: auto;
   margin-right: auto;
+  background-color: #FFFFFF;
 }
+
+#jobDetail td {
+  background-color: #FFFFFF;
+}
+
 
 #jobDetail td.c1 {
     width: 60px; border: 1px solid #ccccef;

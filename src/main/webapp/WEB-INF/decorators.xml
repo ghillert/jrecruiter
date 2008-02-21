@@ -2,4 +2,7 @@
     <decorator name="default" page="default.jsp">
         <pattern>/*.html</pattern>
     </decorator>
+    <excludes>
+        <pattern>/job-detail.html*</pattern>
+    </excludes>
 </decorators>
