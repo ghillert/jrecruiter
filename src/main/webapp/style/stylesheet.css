@@ -46,8 +46,9 @@ body {
   width: 100%;
   border-top: 1px solid #FF3C00;
   background-color: #0076CC;
-  padding: 0;
 
+  background-repeat: repeat-x;
+  padding: 0;
 }
 
 #header_menu ul
@@ -59,6 +60,7 @@ color: White;
 float: left;
 width: 100%;
 font-family: arial, helvetica, sans-serif;
+  background-image: url("../images/header_menu_background.png");
 }
 
 #header_menu ul li { display: inline; }
@@ -71,6 +73,7 @@ color: White;
 text-decoration: none;
 float: left;
 border-right: 1px solid #fff;
+  background-image: url("../images/header_menu_background.png");
 }
 
 #header_menu ul li a.icon
