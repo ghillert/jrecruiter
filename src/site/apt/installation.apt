@@ -3,7 +3,7 @@ Installation and Setup
  ------
 Gunnar Hillert
  ------
-January 19, 2008
+February 19, 2008
 
 
 Requirements
@@ -29,13 +29,11 @@ plugin and the dbunit plugin
 
 Please run the following command to create the table structure:
 
-mvn compile hibernate3:hbm2ddl
+'''mvn compile hibernate3:hbm2ddl'''
 
 Afterwards the seed data needs to be populated:
 
-mvn dbunit:operation
-
-
+'''mvn dbunit:operation'''
 
 Obtaining and building the sources
 
@@ -46,7 +44,9 @@ Obtaining and building the sources
  executable is in your path. You can the directly check out the source files
  from CVS using Maven. Execute the following command:
 
- mvn scm:checkout -DconnectionUrl=scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jrecruiter:jrecruiter-web
+ mvn scm:checkout -DconnectionUrl=scm:cvs:pserver:anonymous@https://jrecruiter.svn.sourceforge.net/svnroot/jrecruiter/trunk
+
+ ---- The Section below needs to be updated ----
 
  This will by default put the files to ./target/checkout/
 

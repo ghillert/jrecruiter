@@ -5,7 +5,14 @@
       <author email="gunnar at hillert dot com">Gunnar Hillert</author>
    </properties>
    <body>
-      <release version="2.0" date="2007-07-1" description="New Major Featurer Release">
+      <release version="2.0" date="April 2008" description="New Major Feature Release">
+           <action dev="Gunnar Hillert" type="add">
+               No more Struts XML-configuration files. Using the smarturls-s2 plugin for Struts the
+               amount of configuration XML could be vastly reduced.
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Hibernate Search support
+           </action>
            <action dev="Gunnar Hillert" type="add">
                RSS support
            </action>
