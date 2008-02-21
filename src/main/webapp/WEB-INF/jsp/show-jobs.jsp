@@ -1,9 +1,7 @@
 <title>Job List</title>
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
- 
-<%@include file="/WEB-INF/jsp/jobsTable.jsp"%>
 
-<div id="jobDetailContainer" style="display: none;"></div>
+<%@include file="/WEB-INF/jsp/jobsTable.jsp"%>
 
 <table id="socialinks">
 	<tr>

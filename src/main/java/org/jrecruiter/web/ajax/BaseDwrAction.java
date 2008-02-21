@@ -15,21 +15,10 @@
 */
 package org.jrecruiter.web.ajax;
 
-
-import org.apache.log4j.Logger;
-
-
 /**
  * @author Gunnar Hillert
  * @version $Id$
  */
 public class BaseDwrAction {
-
-    /**
-     *   Initialize Logging.
-     */
-    private static final Logger LOGGER = Logger.getLogger(BaseDwrAction.class);
-
     final String TEMPLATE_DIRECTORY = "/WEB-INF/jsp/includes/dwr";
-
 }

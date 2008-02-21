@@ -85,4 +85,41 @@
         <column>roles_id</column>
         <row><value>-1</value><value>-1</value><value>-1</value></row>
     </table>
+
+    <table name="configurations">
+        <column>message_key</column>
+        <column>message_text</column>
+        <row><value>mail.from</value><value>no_reply@jrecruiter.org</value></row>
+        <row><value>mail.jobposting.body</value><value>
+        A new job has been added:
+
+		Job ID:               ${jobId}
+		Job Title:            ${jobTitle}
+		Location:             ${businessLocation}
+		Business Name:        ${businessName}
+		Email:        ${businessEmail}
+
+		Job Description:
+		----------------
+
+		${description}
+
+		Job Restrictions:
+		----------------
+
+		${jobRestrictions}
+
+		This job was posted on: ${updateDate}
+
+		For more information, please visit: http://www.ajug.org/ajugjobs/showJobDetail.do?id=${jobId}
+
+        </value></row>
+        <row><value>mail.jobposting.email</value><value>jrecruiter@jrecruiter.org</value></row>
+        <row><value>mail.jobposting.subject</value><value>[ajug-jobs] ${jobTitle}</value></row>
+        <row><value>mail.password.body</value><value>
+        Hello,
+
+        Your requested password is: ${password}</value></row>
+        <row><value>mail.password.subject</value><value>jRecruiter Account Information - Lost Password</value></row>
+    </table>
 </dataset>

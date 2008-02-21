@@ -207,7 +207,6 @@
 
     function getLocation() {
       var address = $F('businessAddress1') + ',' + $F('businessCity') + ',' +  $F('businessState') + ',' + $F('businessZip');
-      alert(address);
       geocoder.getLocations(address, addAddressToMap);
     }
 

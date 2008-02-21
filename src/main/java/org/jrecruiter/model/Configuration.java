@@ -27,6 +27,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+
 /**
  * This class represents configuration data.
  *
@@ -78,6 +80,7 @@ public class Configuration implements Serializable {
 	}
 
 	@Column(unique=false, nullable=true, insertable=true, updatable=true)
+	@Type(type="text")
 	public String getMessageText() {
 		return this.messageText;
 	}

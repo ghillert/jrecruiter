@@ -29,7 +29,7 @@ plugin and the dbunit plugin
 
 Please run the following command to create the table structure:
 
-mvn compile hibernate3:hbm2
+mvn compile hibernate3:hbm2ddl
 
 Afterwards the seed data needs to be populated:
 

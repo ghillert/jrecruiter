@@ -16,12 +16,6 @@
       <link href="<html:rewrite page="/style/stylesheet.css" />"  rel="stylesheet" type="text/css" />
   </head>
   <body>
-      <div  id="header_menu">
-        <html:link action="backToWelcomePage" styleClass="button">
-          <fmt:message key="all.back.to.welcome.page"/>
-        </html:link>
-      </div>
-
       <div id="main">
         <p style="padding: 50px;">
           <fmt:message key="404.message"/>

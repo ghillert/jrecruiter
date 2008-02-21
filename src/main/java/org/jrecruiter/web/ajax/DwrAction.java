@@ -119,7 +119,7 @@ public class DwrAction extends BaseDwrAction {
 
              statistics.setCounter(new Long(counter));
              statistics.setLastAccess(new Date());
-             service.updateJobStatistic(statistics);
+             //service.updateJobStatistic(statistics);
 
 
              request.setAttribute("jobDetail", job);
