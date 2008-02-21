@@ -21,7 +21,7 @@ import org.jrecruiter.model.Region;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: UserRoleDAO.java 24 2006-05-18 03:09:15Z ghillert $
+ * @version $Id$
  */
 public interface RegionDao extends GenericDao < Region, Long >{
 

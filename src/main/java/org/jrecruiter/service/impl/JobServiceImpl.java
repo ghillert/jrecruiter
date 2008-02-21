@@ -354,5 +354,7 @@ public class JobServiceImpl implements JobService {
 
     }
 
-
+	public void reindexSearch() {
+		jobDao.reindexSearch();
+	}
 }

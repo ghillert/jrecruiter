@@ -33,7 +33,7 @@ import javax.persistence.Transient;
 * This class represents an industry (assignable to a job posting).
 *
 * @author Gunnar Hillert
-* @version $Id: Job.java 117 2007-04-15 23:05:06Z ghillert $
+* @version $Id$
 */
 @Entity
 @Table(uniqueConstraints = {  })

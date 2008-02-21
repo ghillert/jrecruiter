@@ -17,6 +17,7 @@
             <s:param name="show-jobs" value="true"/>
           </s:url>
           <s:url action="logout" id="logoutUrl"/>
+          <s:url action="search-index" id="searchIndexUrl"/>
 
           <li><a href="${editUserUrl}" ><fmt:message key="admin.main.label.edit.registration"/></a></li>
           <li><a href="${editJobUrl}" ><fmt:message key="admin.main.label.edit.jobs"/></a></li>
@@ -27,6 +28,7 @@
               <li><a href="${userListUrl}" ><fmt:message key="admin.main.label.edit.user"/></a></li>
               <li><a href="${addUserUrl}" ><fmt:message key="admin.main.label.add.user"/></a></li>
               <li><a href="${editSettingsUrl}" ><fmt:message key="admin.main.label.edit.settings"/></a></li>
+              <li><a href="${searchIndexUrl}" >Re-Index Search Index</a></li>
           </authz:authorize>
 
           <li><a href="${showJobsUrl}" ><fmt:message key="admin.main.label.view.jobs"/></a></li>
