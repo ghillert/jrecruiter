@@ -25,7 +25,7 @@ import org.jrecruiter.model.Region;
 /**
  *
  * @author Gunnar Hillert
- * @version $Id: UserRoleDAOHibernate.java 61 2006-11-17 04:40:39Z ghillert $
+ * @version $Id$
  */
 public class RegionDaoHibernate extends GenericDaoHibernate< Region, Long>
                                   implements RegionDao {

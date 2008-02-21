@@ -164,4 +164,7 @@ public interface JobService {
      * @return List of Industries, ordered by industry name.
      */
     List < Industry > getIndustries();
+
+    /** Re-index the Hibernate Search */
+    void reindexSearch();
 }

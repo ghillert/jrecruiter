@@ -101,4 +101,8 @@ public interface JobDao extends GenericDao < Job, Long >{
                                            Integer maxResult,
                                            Constants.StatsMode statsMode,
                                            Boolean administrator);
+    /**
+     * Re-index the Hibernate Search index
+     */
+    void reindexSearch();
 }

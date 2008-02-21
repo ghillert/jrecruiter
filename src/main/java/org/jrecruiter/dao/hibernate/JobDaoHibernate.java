@@ -20,9 +20,13 @@ import java.util.List;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.hibernate.CacheMode;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.FlushMode;
 import org.hibernate.Query;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.criterion.Order;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -174,7 +178,7 @@ implements JobDao {
 
     		FullTextSession fullTextSession = Search.createFullTextSession(sf.getCurrentSession());
 
-    		MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"summary", "body"},
+    		MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"description"},
     		  new StandardAnalyzer());
     		try {
     		org.apache.lucene.search.Query query = parser.parse(keyword);
@@ -248,4 +252,22 @@ implements JobDao {
             //FIXME
             return Integer.valueOf(numberOfJobs.toString());
         }
+
+        /** {@inheritDoc} */
+		public void reindexSearch() {
+
+			FullTextSession fullTextSession = Search.createFullTextSession(sf.getCurrentSession());
+			fullTextSession.setFlushMode(FlushMode.MANUAL);
+			fullTextSession.setCacheMode(CacheMode.IGNORE);
+			//Scrollable results will avoid loading too many objects in memory
+			ScrollableResults results = fullTextSession.createCriteria( Job.class ).scroll( ScrollMode.FORWARD_ONLY );
+			int index = 0;
+			while( results.next() ) {
+			    index++;
+			    fullTextSession.index( results.get(0) ); //index each element
+			}
+		}
+
     }
+
+
