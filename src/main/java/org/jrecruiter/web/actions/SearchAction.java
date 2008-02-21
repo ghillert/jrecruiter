@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.jrecruiter.model.Job;
 
 /**
@@ -14,7 +16,7 @@ import org.jrecruiter.model.Job;
  * @version $Id$
  *
  */
-public class SearchJobsAction extends BaseAction  {
+public class SearchAction extends BaseAction  {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = -6920008555687729003L;
@@ -22,7 +24,7 @@ public class SearchJobsAction extends BaseAction  {
 	/**
 	 * Logger Declaration.
 	 */
-    private final Log LOGGER = LogFactory.getLog(SearchJobsAction.class);
+    private final Log LOGGER = LogFactory.getLog(SearchAction.class);
 
     private String keyword;
     private List<Job>jobs = new ArrayList<Job>();

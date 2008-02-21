@@ -331,7 +331,12 @@
 			<name>jRecruiter Maven repository</name>
 			<url>http://www.hillert.com/maven/repository</url>
 		</repository>
-
+		<repository>
+		  <id>repository.jboss.org</id>
+		  <name>JBoss Maven Repository</name>
+		  <url>http://repository.jboss.org/maven2</url>
+		  <layout>default</layout>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 
@@ -411,6 +416,18 @@
             <artifactId>hibernate-annotations</artifactId>
             <version>3.3.0.ga</version>
         </dependency>
+
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-search</artifactId>
+		   <version>3.0.0.GA</version>
+		</dependency>
+
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-entitymanager</artifactId>
+		   <version>3.3.1.ga</version>
+		</dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
