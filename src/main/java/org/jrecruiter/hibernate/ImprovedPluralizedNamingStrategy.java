@@ -1,4 +1,4 @@
-//$Id: ImprovedNamingStrategy.java 9941 2006-05-22 18:28:53Z epbernard $
+//$Id$
 package org.jrecruiter.hibernate;
 
 import java.io.Serializable;
