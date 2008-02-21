@@ -9,9 +9,11 @@ jRecruiter - A job posting service
 
   * Struts 2
 
-  * Spring 2
+  * Spring 2.5
 
   * Hibernate 3.2
+
+  * Hibernate Search
 
   * Acegi Security
 
@@ -27,8 +29,8 @@ jRecruiter - A job posting service
 
 []
 
-  As database backend Postgres is used. However, support for other databases may be easily
-  added in the future.
+  As database backend Postgres is used. However, support for other databases is easily
+  implementable since Hibernate is used for creatign the table structure.
 
   The project website is located at:
 
