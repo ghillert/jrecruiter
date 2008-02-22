@@ -77,12 +77,7 @@ public class AddJobAction extends BaseAction implements Preparable, ModelDriven<
     @Override
     @SkipValidation
     public String execute() {
-
-            LOGGER.debug("Entering 'onSubmit' method - Adding Job.");
-
-            //TODO better handling required.
-            job = new Job();
-            return SUCCESS;
+    	return INPUT;
     }
 
     @SkipValidation

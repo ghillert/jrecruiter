@@ -24,6 +24,12 @@
                     onfocus="javascript:this.className='selected';"
                     onblur="javascript:this.className='';" />
     </div>
+    <div class="optional">
+       <label for="salary"><fmt:message key="field.salary" /></label>
+       <s:textfield name="salary" id="salary" size="11" tabindex="11"
+                    onfocus="javascript:this.className='selected';"
+                    onblur="javascript:this.className='';" />
+    </div>
 
     <div class="required">
        <label for="offered By"><fmt:message key="field.offered.by" /></label>
@@ -79,12 +85,6 @@
         <div class="optional">
            <label for="businessAddress2"><fmt:message key="field.address" /></label>
            <s:textfield name="businessAddress2" id="businessAddress2" size="11" tabindex="10"
-                        onfocus="javascript:this.className='selected';"
-                        onblur="javascript:this.className='';" />
-        </div>
-        <div class="optional">
-           <label for="salary"><fmt:message key="field.salary" /></label>
-           <s:textfield name="salary" id="salary" size="11" tabindex="11"
                         onfocus="javascript:this.className='selected';"
                         onblur="javascript:this.className='';" />
         </div>
