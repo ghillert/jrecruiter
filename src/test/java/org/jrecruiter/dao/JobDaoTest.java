@@ -219,7 +219,7 @@ public class JobDaoTest extends BaseTest {
 
 		userDao.save(user);
 		job.setUser(user);
-		jobDao.save(job);
+
 
 		Statistic statistic = new Statistic();
 
@@ -227,8 +227,11 @@ public class JobDaoTest extends BaseTest {
 		statistic.setCounter(new Long(0));
 		statistic.setUniqueVisits(10L);
 		statistic.setLastAccess(new Date());
+		job.setStatistic(statistic);
 
-		statisticDao.save(statistic);
+		jobDao.save(job);
+		flushSession();
+
 
 		List <Job> jobs = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.PAGE_HITS, false);
 

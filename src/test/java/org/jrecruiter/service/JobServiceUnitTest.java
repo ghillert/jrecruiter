@@ -120,15 +120,15 @@ public class JobServiceUnitTest extends TestCase {
 
         JobServiceImpl jobService = new JobServiceImpl();
         RegionDao regionDao = EasyMock.createMock(RegionDao.class);
-
         jobService.setRegionDao(regionDao);
-//        EasyMock.expect(jobDao.getAllJobs()).andReturn(jobs);
-//        EasyMock.replay(jobDao);
 
-        List<Job> jobsFromDb = jobService.getJobs();
+        EasyMock.expect(regionDao.getAllRegionsOrdered()).andReturn(regions);
+        EasyMock.replay(regionDao);
 
-        assertNotNull(jobsFromDb);
-        assertTrue(jobsFromDb.size() == 10);
+        List<Region> regionsromDb = jobService.getRegions();
+
+        assertNotNull(regionsromDb);
+        assertTrue(regionsromDb.size() == 10);
 
     }
 
@@ -373,6 +373,7 @@ public class JobServiceUnitTest extends TestCase {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final Statistic statistic = new Statistic();
+        statistic.setJob(this.getJob(1L));
         statistic.setId(1L);
 
         final StatisticDao statisticDao = EasyMock.createStrictMock(StatisticDao.class);
@@ -388,7 +389,7 @@ public class JobServiceUnitTest extends TestCase {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final Statistic statistic = new Statistic();
-        statistic.setId(null);
+        statistic.setJob(this.getJob(1L));
 
         final StatisticDao statisticDao = EasyMock.createStrictMock(StatisticDao.class);
         statisticDao.save(statistic);

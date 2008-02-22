@@ -40,7 +40,7 @@ public class UserToRoleDaoTest extends BaseTest {
         final Role role = new Role(null, "TEST");
         roleDao.save(role);
 
-        User user = userDao.get(160L);
+        User user = userDao.get(-1L);
 
         UserToRole userToRole = new UserToRole(null, role, user);
 
