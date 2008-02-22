@@ -24,10 +24,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 /**
@@ -48,8 +49,8 @@ public class Statistic implements Serializable {
 
 	// Fields
 
-	private Long id;
-	private Job  job;
+	private Long  id;
+	private Job job;
 	private Long counter;
 	private Date lastAccess;
 	private Long uniqueVisits;
@@ -61,20 +62,20 @@ public class Statistic implements Serializable {
 	}
 
 	/** full constructor */
-	public Statistic(Long jobsId, Job job, Long counter, Date lastAccess, Long uniqueVisits) {
-		this.id = jobsId;
-		this.job = job;
+	public Statistic(Long id, Long counter, Date lastAccess, Long uniqueVisits) {
+		this.id = id;
 		this.counter = counter;
 		this.lastAccess = lastAccess;
 		this.uniqueVisits = uniqueVisits;
 	}
 
-	// Property accessors
 	@Id
-	@Column(unique=true, nullable=false, insertable=true, updatable=true)
-	@GeneratedValue(generator = "fk")
-    @GenericGenerator (strategy = "foreign", name = "fk",
-         parameters = @Parameter(name="property", value="job"))
+    @GeneratedValue(generator="myForeignGenerator")
+    @org.hibernate.annotations.GenericGenerator(
+        name="myForeignGenerator",
+        strategy="foreign",
+        parameters=@Parameter(name="property", value="job")
+    )
 	public Long getId() {
 		return this.id;
 	}
@@ -83,12 +84,9 @@ public class Statistic implements Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(cascade={},
-			fetch=FetchType.LAZY)
-
-	@JoinColumn(name="jobs_id", unique=true, nullable=false, insertable=false, updatable=false)
+    @OneToOne(fetch=FetchType.LAZY, optional=false)
 	public Job getJob() {
-		return this.job;
+		return job;
 	}
 
 	public void setJob(Job job) {
