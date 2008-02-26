@@ -19,7 +19,7 @@ import org.springframework.orm.ObjectRetrievalFailureException;
 
 /**
  * @author Gunnar Hillert
- *
+ * @version $Id$
  */
 public class JobDaoTest extends BaseTest {
 

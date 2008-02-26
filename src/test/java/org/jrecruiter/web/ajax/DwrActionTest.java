@@ -26,7 +26,7 @@ import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Gunnar Hillert
- *
+ * @version $Id$
  */
 public class DwrActionTest extends BaseTest {
 	private DwrAction ajaxService;
