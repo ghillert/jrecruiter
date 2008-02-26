@@ -13,7 +13,7 @@ import org.springframework.dao.DataAccessException;
 
 /**
  * @author Gunnar Hillert
- *
+ * @version $Id$
  */
 public class UserDaoTest extends BaseTest {
 

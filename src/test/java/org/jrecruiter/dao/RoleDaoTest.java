@@ -10,7 +10,7 @@ import org.jrecruiter.test.BaseTest;
 
 /**
  * @author Gunnar Hillert
- *
+ * @version $Id$
  */
 public class RoleDaoTest extends BaseTest {
 
