@@ -30,7 +30,8 @@ public class DateConverter extends StrutsTypeConverter {
     public static final String format = "MM/dd/yyyy";
 
     public Object convertFromString(Map ctx, String[] value, Class arg2) {
-        if (value[0] == null || value[0].trim().equals("")) {
+
+    	if (value == null || value[0] == null || value[0].trim().equals("")) {
             return null;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format);
