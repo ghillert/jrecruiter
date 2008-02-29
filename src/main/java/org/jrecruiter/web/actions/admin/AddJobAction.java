@@ -80,12 +80,6 @@ public class AddJobAction extends BaseAction implements Preparable, ModelDriven<
     	return INPUT;
     }
 
-    @SkipValidation
-    public String cancel() {
-
-        return SUCCESS;
-    }
-
     @Validations(
             requiredFields = {
                     @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "businessEmail", message = "You must enter an Emal Address."),

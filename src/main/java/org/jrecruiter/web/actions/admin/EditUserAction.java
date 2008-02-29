@@ -17,6 +17,8 @@ public class EditUserAction extends BaseAction {
 
     private User user;
 
+    private Long userId;
+
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
     private final Log LOGGER = LogFactory.getLog(EditUserAction.class);
@@ -81,8 +83,11 @@ public class EditUserAction extends BaseAction {
      */
     public String execute() {
 
-        this.user = super.getLoggedInUser();
-
+    	if (this.userId != null) {
+    		this.user = userService.getUser(this.userId);
+    	} else {
+    		this.user = super.getLoggedInUser();
+    	}
         return INPUT;
     }
 
@@ -93,4 +98,14 @@ public class EditUserAction extends BaseAction {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+
 }
