@@ -34,7 +34,7 @@ import org.jrecruiter.service.impl.JobServiceImpl;
  * Test the Struts 2 Show Jobs Action
  *
  * @author Gunnar Hillert
- * @version $Id: EnumConverterTest.java 162 2008-02-26 04:55:29Z ghillert $
+ * @version $Id$
  */
 public class ShowJobsActionTest extends TestCase {
 
