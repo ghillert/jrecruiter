@@ -4,5 +4,6 @@
     </decorator>
     <excludes>
         <pattern>/job-detail.html*</pattern>
+        <pattern>/show-jobs-ajax.html*</pattern>
     </excludes>
 </decorators>

@@ -221,6 +221,7 @@ implements JobDao {
 
             final Criteria criteria = sf.getCurrentSession().createCriteria(Job.class);
             criteria.setFetchMode("statistics", FetchMode.JOIN);
+            criteria.setFetchMode("region", FetchMode.JOIN);
 
             if (sortOrder.equalsIgnoreCase("DESC")) {
                 criteria.addOrder(Order.desc(fieldSorted));

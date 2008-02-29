@@ -7,24 +7,19 @@
 <html>
 	<head>
 		<meta http-equiv="Cache-Control" content="no-store" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="0" />
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Pragma"        content="no-cache" />
+		<meta http-equiv="Expires"       content="0" />
+		<meta http-equiv="content-type"  content="text/html; charset=utf-8" />
 
-		<meta name="author" content="Gunnar Hillert" />
-		<meta name="keywords"
-			content="Jobs, java, Atlanta, j2ee, java ee, user group" />
-		<meta name="description"
-			content="Job Posting Service of the Atlanta Java User Group (AJUG)" />
+		<meta name="author"      content="Gunnar Hillert" />
+		<meta name="keywords"    content="Jobs, java, Atlanta, j2ee, java ee, user group" />
+		<meta name="description" content="Job Posting Service of the Atlanta Java User Group (AJUG)" />
 
 		<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
-		<script type="text/javascript"
-			src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
 
 		<script type="text/javascript" src="<c:url value='/js/overlibmws.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/ajaxtags.js'/>"></script>
-
-		<script type="text/javascript" src="<c:url value='/js/rico.js'/>"></script>
 
 		<!-- DWR specific -->
 		<script type="text/javascript" src="<c:url value='/dwr/interface/ajaxService.js'/>"></script>
@@ -54,22 +49,17 @@
 
 
 		<link rel="stylesheet" type="text/css" href="<c:url value='/js/shadowbox/'/>shadowbox.css"/>
-		<script type="text/javascript" src="<c:url value='/js/shadowbox/'/>yui-utilities.js"></script>
-		<script type="text/javascript" src="<c:url value='/js/shadowbox/'/>shadowbox-yui.js"></script>
+		<script type="text/javascript" src="<c:url value='/js/shadowbox/'/>shadowbox-prototype.js"></script>
 		<script type="text/javascript" src="<c:url value='/js/shadowbox/'/>shadowbox.js"></script>
 		<script type="text/javascript">
-
-		window.onload = function(){
-
-		    Shadowbox.init();
-
-		};
-
+	        function initShadowbox() { alert(1);
+		        document.observe('dom:loaded', function(){
+			           Shadowbox.init();
+			           });
+	        }
+	        initShadowbox();
 		</script>
 
-	    <script type="text/javascript">
-	       YAHOO.util.Event.onDOMReady(Shadowbox.init);
-	    </script>
 	</head>
 	<body onload="init();">
 		<div id="container">

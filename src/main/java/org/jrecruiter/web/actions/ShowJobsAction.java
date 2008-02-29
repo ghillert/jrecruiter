@@ -4,15 +4,30 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
 import org.displaytag.properties.SortOrderEnum;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.JobsForDisplaytagSorting;
+import org.texturemedia.smarturls.ActionName;
+import org.texturemedia.smarturls.ActionNames;
+import org.texturemedia.smarturls.Result;
+import org.texturemedia.smarturls.Results;
 
 /**
+ * Show a list of jobs.
+ *
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
+@Results(
+		{
+			@Result(name="ajax",    location="/WEB-INF/jsp/jobsTable.jsp"),
+			@Result(name="success", location="/WEB-INF/jsp/show-jobs.jsp")
+		}
+	)
+@ActionNames({
+  @ActionName(name="show-jobs"),
+  @ActionName(name="show-jobs-ajax")
+})
 public class ShowJobsAction extends BaseAction {
 
 
@@ -24,62 +39,99 @@ public class ShowJobsAction extends BaseAction {
 	 */
     private final Log LOGGER = LogFactory.getLog(ShowJobsAction.class);
 
+    private String dir;
+    private String sort;
+    private Integer page                            = 1;
+    private String displayAjax;
+    private JobsForDisplaytagSorting jobs           = new JobsForDisplaytagSorting();
+
     /* (non-Javadoc)
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()
 	 */
 	@Override
 	public String execute() throws Exception {
 
-    final JobsForDisplaytagSorting jobsDisplaytag = new JobsForDisplaytagSorting();
-
-    String sortDirection = null;
-    String sortField = null;
-    Integer page = 1;
-
-    if (ServletActionContext.getRequest().getParameter("sort") != null) {
-        sortField = ServletActionContext.getRequest().getParameter("sort");
-        jobsDisplaytag.setSortCriterion(sortField);
+    if (this.sort != null) {
+    	jobs.setSortCriterion(sort);
     }
-    if (ServletActionContext.getRequest().getParameter("dir") != null) {
-        sortDirection = ServletActionContext.getRequest().getParameter("dir");
+    if (this.dir != null) {
 
-        if (sortDirection.equalsIgnoreCase("ASC")) {
-            jobsDisplaytag.setSortOrder(SortOrderEnum.ASCENDING);
-        } else if (sortDirection.equalsIgnoreCase("DESC")) {
-            jobsDisplaytag.setSortOrder(SortOrderEnum.DESCENDING);
+        if (dir.equalsIgnoreCase("ASC")) {
+        	jobs.setSortOrder(SortOrderEnum.ASCENDING);
+        } else if (dir.equalsIgnoreCase("DESC")) {
+        	jobs.setSortOrder(SortOrderEnum.DESCENDING);
         }
 
     }
-    if (ServletActionContext.getRequest().getParameter("page") != null) {
-        page = new Integer(ServletActionContext.getRequest().getParameter("page"));
-        jobsDisplaytag.setPageNumber(page);
+
+    if (this.page != null) {
+    	jobs.setPageNumber(page);
     }
 
-    ServletActionContext.getRequest().getParameterNames();
-    jobsDisplaytag.setFullListSize(jobService.getJobsCount());
+    jobs.setFullListSize(jobService.getJobsCount());
 
     LOGGER.info("Retrieving all jobs - "
-                    + ";Total Size: " + jobsDisplaytag.getFullListSize()
-                    + ";Results per Page: " + jobsDisplaytag.getObjectsPerPage()
-                    + ";Page: " + jobsDisplaytag.getPageNumber()
-                    + ";Sort Field: " + jobsDisplaytag.getSortCriterion()
-                    + ";Direction: " + sortDirection);
+                    + ";Total Size: " + jobs.getFullListSize()
+                    + ";Results per Page: " + jobs.getObjectsPerPage()
+                    + ";Page: " + jobs.getPageNumber()
+                    + ";Sort Field: " + jobs.getSortCriterion()
+                    + ";Direction: " + dir);
 
-    final List < Job > jobs = jobService.getJobs(
-    						    jobsDisplaytag.getObjectsPerPage(),
-                                jobsDisplaytag.getPageNumber(),
-                                jobsDisplaytag.getSortCriterion(),
-                                sortDirection);
-    jobsDisplaytag.setJobs(jobs);
-    ServletActionContext.getRequest().setAttribute("JobList", jobsDisplaytag);
+    final List < Job > jobList = jobService.getJobs(
+    		                    jobs.getObjectsPerPage(),
+    		                    jobs.getPageNumber(),
+    		                    jobs.getSortCriterion(),
+                                dir);
+    jobs.setJobs(jobList);
 
-    final String ajaxCall = ServletActionContext.getRequest().getParameter("displayAjax");
-
-    if (ajaxCall != null && ajaxCall.equalsIgnoreCase("true")) {
+    if (displayAjax != null && displayAjax.equalsIgnoreCase("true")) {
     	return "ajax";
     }
 
-    ServletActionContext.getRequest().setAttribute("JobList", jobsDisplaytag);
     return SUCCESS;
     }
+
+	//~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	public String getDir() {
+		return dir;
+	}
+
+	public void setDir(String dir) {
+		this.dir = dir;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public String getDisplayAjax() {
+		return displayAjax;
+	}
+
+	public void setDisplayAjax(String displayAjax) {
+		this.displayAjax = displayAjax;
+	}
+
+	public JobsForDisplaytagSorting getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(JobsForDisplaytagSorting jobs) {
+		this.jobs = jobs;
+	}
+
+
 }

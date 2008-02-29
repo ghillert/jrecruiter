@@ -191,8 +191,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.getAllUsers();
     }
 
-    public void deleteUser(String[] usernameList){
-        userDao.deleteUser(usernameList);
+    public void deleteUser(User user){
+        userDao.remove(user.getId());
     }
 
     /**
