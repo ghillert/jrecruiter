@@ -71,10 +71,10 @@ public interface UserService {
     List<User> getAllUsers();
 
     /**
-     * Delete one or more users from the system.
-     * @param usernameList
+     * Delete a user from the system.
+     * @param user
      */
-    void deleteUser(String[] usernameList);
+    void deleteUser(User user);
 
     /**
      * The password for the provided user.
