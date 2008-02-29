@@ -20,7 +20,7 @@
  * @author      Michael J. I. Jackson <mjijackson@gmail.com>
  * @copyright   2007 Michael J. I. Jackson
  * @license     http://www.gnu.org/licenses/lgpl-3.0.txt GNU LGPL 3.0
- * @version     SVN: $Id: shadowbox.js 62 2008-02-05 23:47:48Z mjijackson $
+ * @version     SVN: $Id: shadowbox.js 75 2008-02-21 16:51:29Z mjijackson $
  */
 
 if(typeof Shadowbox == 'undefined'){
@@ -42,8 +42,6 @@ if(typeof Shadowbox == 'undefined'){
  * @class       Shadowbox
  * @author      Michael J. I. Jackson <mjijackson@gmail.com>
  * @singleton
- * @todo        Find a way to tell when movies and iframes are loaded
- * @todo        Incorporate slideshow functionality
  */
 (function(){
 
@@ -53,7 +51,7 @@ if(typeof Shadowbox == 'undefined'){
      * @property    {String}    version
      * @private
      */
-    var version = '1.0b7';
+    var version = '1.0';
 
     /**
      * Contains the default options for Shadowbox. This object is almost
@@ -63,6 +61,14 @@ if(typeof Shadowbox == 'undefined'){
      * @private
      */
     var options = {
+
+        /**
+         * A base URL that will be prepended to the loadingImage, flvPlayer, and
+         * overlayBgImage options to save on typing.
+         *
+         * @var     {String}    assetURL
+         */
+        assetURL:           '',
 
         /**
          * The path to the image to display while loading.
@@ -119,6 +125,14 @@ if(typeof Shadowbox == 'undefined'){
          * @var     {String}    overlayBgImage
          */
         overlayBgImage:     'images/overlay-85.png',
+
+        /**
+         * Listen to the overlay for clicks. If the user clicks the overlay,
+         * it will trigger Shadowbox.close().
+         *
+         * @var     {Boolean}   listenOverlay
+         */
+        listenOverlay:      true,
 
         /**
          * Automatically play movies.
@@ -235,16 +249,37 @@ if(typeof Shadowbox == 'undefined'){
         keysPrev:           ['p', 37],      // p or left arrow
 
         /**
-         * Hook functions that will be fired at various stages in the script
-         * execution. The single parameter passed to the function will be a link
-         * (DOM) element. In the case of onOpen, it will be the link element
-         * that was clicked. In onClose, it will be the link element corresponding
-         * to the last gallery piece that was displayed.
+         * A hook function to be fired when Shadowbox opens. The single argument
+         * will be the current gallery element.
          *
          * @var     {Function}
          */
         onOpen:             null,
+
+        /**
+         * A hook function to be fired when Shadowbox finishes loading its
+         * content. The single argument will be the current gallery element on
+         * display.
+         *
+         * @var     {Function}
+         */
         onFinish:           null,
+
+        /**
+         * A hook function to be fired when Shadowbox changes from one gallery
+         * element to the next. The single argument will be the current gallery
+         * element that is about to be displayed.
+         *
+         * @var     {Function}
+         */
+        onChange:           null,
+
+        /**
+         * A hook function that will be fired when Shadowbox closes. The single
+         * argument will be the gallery element most recently displayed.
+         *
+         * @var     {Function}
+         */
         onClose:            null,
 
         /**
@@ -418,12 +453,13 @@ if(typeof Shadowbox == 'undefined'){
      */
     var RE = {
         resize:         /(img|swf|flv)/, // file types to resize
+        overlay:        /(img|iframe|html|inline)/, // content types to not use an overlay image for on FF Mac
         swf:            /\.swf\s*$/i, // swf file extension
         flv:            /\.flv\s*$/i, // flv file extension
         domain:         /:\/\/(.*?)[:\/]/, // domain prefix
         inline:         /#(.+)$/, // inline element id
-        rel:            /^shadowbox/i, // rel attribute format
-        gallery:        /^shadowbox\[(.*?)\]/i, // rel attribute format for gallery link
+        rel:            /^(light|shadow)box/i, // rel attribute format
+        gallery:        /^(light|shadow)box\[(.*?)\]/i, // rel attribute format for gallery link
         unsupported:    /^unsupported-(\w+)/, // unsupported media type
         param:          /\s*([a-z_]*?)\s*=\s*(.+)\s*/, // rel string parameter
         empty:          /^(?:br|frame|hr|img|input|link|meta|range|spacer|wbr|area|param|col)$/i // elements that don't have children
@@ -645,10 +681,19 @@ if(typeof Shadowbox == 'undefined'){
      * @private
      */
     var apply = function(o, e){
-        if(o && e && typeof e == 'object'){
-            for (var p in e) o[p] = e[p];
-        }
+        for(var p in e) o[p] = e[p];
         return o;
+    };
+
+    /**
+     * Determines if the given object is an anchor/area element.
+     *
+     * @param   {mixed}     el      The object to check
+     * @return  {Boolean}           True if the object is a link element
+     * @private
+     */
+    var isLink = function(el){
+        return typeof el.tagName == 'string' && (el.tagName.toUpperCase() == 'A' || el.tagName.toUpperCase() == 'AREA');
     };
 
     /**
@@ -874,36 +919,32 @@ if(typeof Shadowbox == 'undefined'){
 
     /**
      * Determines the player needed to display the file at the given URL. If
-     * the file type is not supported, the return value will be 'unsupported-*'
-     * where * will be the player abbreviation.
+     * the file type is not supported, the return value will be 'unsupported'.
+     * If the file type is not supported but the correct player can be
+     * determined, the return value will be 'unsupported-*' where * will be the
+     * player abbreviation (e.g. 'qt' = QuickTime).
      *
      * @param   {String}        url     The url of the file
      * @return  {String}                The name of the player to use
      * @private
      */
     var getPlayerType = function(url){
-        if(RE.img.test(url)){
-            return 'img';
-        }
-        var this_domain = (domain_match = url.match(RE.domain))
-            ? (document.domain == domain_match[1])
-            : false;
-        if(url.indexOf('#') > -1 && this_domain) return 'html';
+        if(RE.img.test(url)) return 'img';
+        var match = url.match(RE.domain);
+        var this_domain = match ? document.domain == match[1] : false;
+        if(url.indexOf('#') > -1 && this_domain) return 'inline';
         var q_index = url.indexOf('?');
-        if(q_index > -1){
-            url = url.substring(0, q_index);
-        }
-        if(RE.swf.test(url)) return (plugins.fla) ? 'swf' : 'unsupported-swf';
-        if(RE.flv.test(url)) return (plugins.fla) ? 'flv' : 'unsupported-flv';
-        if(RE.qt.test(url)) return (plugins.qt) ? 'qt' : 'unsupported-qt';
+        if(q_index > -1) url = url.substring(0, q_index); // strip query string for player detection purposes
+        if(RE.swf.test(url)) return plugins.fla ? 'swf' : 'unsupported-swf';
+        if(RE.flv.test(url)) return plugins.fla ? 'flv' : 'unsupported-flv';
+        if(RE.qt.test(url)) return plugins.qt ? 'qt' : 'unsupported-qt';
         if(RE.wmp.test(url)){
             if(plugins.wmp){
                 return 'wmp';
             }else if(plugins.f4m){
                 return 'qt';
             }else{
-                if(isMac) return (plugins.qt ? 'unsupported-f4m' : 'unsupported-qtf4m');
-                return 'unsupported-wmp';
+                return isMac ? (plugins.qt ? 'unsupported-f4m' : 'unsupported-qtf4m') : 'unsupported-wmp';
             }
         }else if(RE.qtwmp.test(url)){
             if(plugins.qt){
@@ -911,7 +952,7 @@ if(typeof Shadowbox == 'undefined'){
             }else if(plugins.wmp){
                 return 'wmp';
             }else{
-                return (isMac ? 'unsupported-qt' : 'unsupported-qtwmp');
+                return isMac ? 'unsupported-qt' : 'unsupported-qtwmp';
             }
         }else if(!this_domain || RE.iframe.test(url)){
             return 'iframe';
@@ -920,108 +961,114 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Gets an array of information regarding the gallery for the given link
-     * element. The first element of this array will itself be an array of link
-     * objects that share the same gallery as the given link. The second element
-     * of the returned array will be the index in the first array of the given
-     * link element. This represents the starting point of the gallery. Note: We
-     * create copies of objects in the cache (using apply()) so that we don't
-     * permanently modify them later in setupGallery().
+     * Handles all clicks on links that have been set up to work with Shadowbox
+     * and cancels the default event behavior when appropriate.
      *
-     * @param   {HTMLElement}   link    The link that was clicked
-     * @return  {Array}                 The gallery information as detailed above
-     * @private
-     */
-    var getGallery = function(link){
-        var key = link.shadowboxCacheKey;
-        var name = cache[key].gallery;
-        if(!name){
-            return [[apply({}, cache[key])], 0]; // single item, no gallery
-        }else{
-            var gallery = [], index;
-            for(var i = 0, len = cache.length; i < len; ++i){
-                if(key == i){
-                    index = gallery.length; // key element found
-                    gallery[gallery.length] = apply({}, cache[i]);
-                }else if(cache[i].gallery && cache[i].gallery == name){
-                    gallery[gallery.length] = apply({}, cache[i]);
-                }
-            }
-            if(index == null) throw 'No Shadowbox cache item with index ' + key;
-            return [gallery, index];
-        }
-    };
-
-    /**
-     * Sets up the current gallery and checks to see if any of the gallery
-     * pieces are not supported by the user's browser. If there are, they will
-     * be handled according to the handleUnsupported option.
-     *
-     * @param   {HTMLElement}   link        The link to set up the gallery for
+     * @param   {Event}         ev          The click event object
      * @return  void
      * @private
      */
-    var setupGallery = function(link){
-        // update current & current_gallery
-        var gallery_info = getGallery(link);
-        current_gallery = gallery_info[0];
-        current = gallery_info[1];
+    var handleClick = function(ev){
+        // get anchor/area element
+        var link;
+        if(isLink(this)){
+            link = this; // jQuery, Prototype, YUI
+        }else{
+            link = SL.getTarget(ev); // Ext
+            while(!isLink(link) && link.parentNode){
+                link = link.parentNode;
+            }
+        }
+
+        Shadowbox.open(link);
+        if(current_gallery.length) SL.preventDefault(ev);
+    };
+
+    /**
+     * Sets up the current gallery for the given object. Modifies the current
+     * and current_gallery variables to contain the appropriate information.
+     * Also, checks to see if there are any gallery pieces that are not
+     * supported by the client's browser/plugins. If there are, they will be
+     * handled according to the handleUnsupported option.
+     *
+     * @param   {Object}    obj         The content to get the gallery for
+     * @return  void
+     * @private
+     */
+    var setupGallery = function(obj){
+        // create a copy so it doesn't get modified later
+        var copy = apply({}, obj);
+
+        // is it part of a gallery?
+        if(!obj.gallery){ // single item, no gallery
+            current_gallery = [copy];
+            current = 0;
+        }else{
+            current_gallery = []; // clear the current gallery
+            var index, ci;
+            for(var i = 0, len = cache.length; i < len; ++i){
+                ci = cache[i];
+                if(ci.gallery){
+                    if(ci.content == obj.content
+                        && ci.gallery == obj.gallery
+                        && ci.title == obj.title){ // compare content, gallery, & title
+                            index = current_gallery.length; // key element found
+                    }
+                    if(ci.gallery == obj.gallery){
+                        current_gallery.push(apply({}, ci));
+                    }
+                }
+            }
+            // if not found in cache, prepend to front of gallery
+            if(index == null){
+                current_gallery.unshift(copy);
+                index = 0;
+            }
+            current = index;
+        }
 
         // are any media in the current gallery supported?
-        var match;
-        for(var i = 0; i < current_gallery.length; ++i){
-            if(match = RE.unsupported.exec(current_gallery[i].type)){ // handle unsupported elements
+        var match, r;
+        for(var i = 0, len = current_gallery.length; i < len; ++i){
+            r = false;
+            if(current_gallery[i].type == 'unsupported'){ // don't support this at all
+                r = true;
+            }else if(match = RE.unsupported.exec(current_gallery[i].type)){ // handle unsupported elements
                 if(options.handleUnsupported == 'link'){
-                    // generate a link to the appropriate plugin download page(s)
                     current_gallery[i].type = 'html';
+                    // generate a link to the appropriate plugin download page(s)
                     var m;
                     switch(match[1]){
                         case 'qtwmp':
-                            m = String.format(
-                                options.text.errors.either,
-                                options.errors.qt.url,
-                                options.errors.qt.name,
-                                options.errors.wmp.url,
-                                options.errors.wmp.name);
+                            m = String.format(options.text.errors.either,
+                                options.errors.qt.url, options.errors.qt.name,
+                                options.errors.wmp.url, options.errors.wmp.name);
                         break;
                         case 'qtf4m':
-                            m = String.format(
-                                options.text.errors.shared,
-                                options.errors.qt.url,
-                                options.errors.qt.name,
-                                options.errors.f4m.url,
-                                options.errors.f4m.name);
+                            m = String.format(options.text.errors.shared,
+                                options.errors.qt.url, options.errors.qt.name,
+                                options.errors.f4m.url, options.errors.f4m.name);
                         break;
                         default:
-                            if(match[1] == 'swf' || match[1] == 'flv'){
-                                match[1] = 'fla';
-                            }
-                            m = String.format(
-                                options.text.errors.single,
-                                options.errors[match[1]].url,
-                                options.errors[match[1]].name);
+                            if(match[1] == 'swf' || match[1] == 'flv') match[1] = 'fla';
+                            m = String.format(options.text.errors.single,
+                                options.errors[match[1]].url, options.errors[match[1]].name);
                     }
                     current_gallery[i] = apply(current_gallery[i], {
-                        height:     options.initialHeight,
-                        width:      options.initialWidth,
-                        html:       Shadowbox.createHTML({
-                            tag:    'div',
-                            cls:    'shadowbox_message',
-                            html:   m
-                        })
+                        height:     160, // error messages are short so they
+                        width:      320, // only need a small box to display properly
+                        content:    '<div class="shadowbox_message">' + m + '</div>'
                     });
                 }else{
-                    // remove the element from the gallery
-                    current_gallery.splice(i, 1);
-                    if(i < current) --current;
-                    --i;
+                    r = true;
                 }
-            }else if(current_gallery[i].type == 'html'){ // handle inline elements
-                var match = RE.inline.exec(current_gallery[i].href);
+            }else if(current_gallery[i].type == 'inline'){ // handle inline elements
+                // retrieve the innerHTML of the inline element
+                var match = RE.inline.exec(current_gallery[i].content);
                 if(match){
                     var el;
                     if(el = SL.get(match[1])){
-                        current_gallery[i].html = el.innerHTML;
+                        current_gallery[i].content = el.innerHTML;
                     }else{
                         throw 'No element found with id ' + match[1];
                     }
@@ -1029,40 +1076,12 @@ if(typeof Shadowbox == 'undefined'){
                     throw 'No element id found for inline content';
                 }
             }
-        }
-    };
-
-    /**
-     * Handles all clicks on links that have been set up to work with Shadowbox.
-     * Determines if the type of medium is supported. If so, stops the browser
-     * from navigating away and opens Shadowbox.
-     *
-     * @param   {Event}         ev          The click event object
-     * @return  void
-     * @private
-     */
-    var handleClick = function(ev){
-        if(activated) return; // already open
-        activated = true;
-
-        // get link (anchor) element
-        var link;
-        if(typeof this.tagName == 'string' && this.tagName.toUpperCase() == 'A'){
-            link = this; // jQuery, Prototype, YUI
-        }else{
-            link = SL.getTarget(ev); // Ext
-            while(link.tagName.toUpperCase() != 'A' && link.parentNode){
-                link = link.parentNode;
+            if(r){
+                // remove the element from the gallery
+                current_gallery.splice(i, 1);
+                if(i < current) --current;
+                --i;
             }
-        }
-
-        // setup current gallery
-        setupGallery(link);
-
-        // if so, don't follow the link and open Shadowbox
-        if(current_gallery.length){
-            SL.preventDefault(ev);
-            openContent(link);
         }
     };
 
@@ -1269,45 +1288,134 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Opens the content linked to by the given link element. By this point,
-     * setupGallery() should have been called either by the click handler or
-     * by Shadowbox.open() directly.
+     * Loads the Shadowbox with the current piece.
      *
-     * @param   {HTMLElement}   link        The link to open
      * @return  void
      * @private
      */
-    var openContent = function(link){
-        // revert to default options
-        if(default_options){
-            options = default_options;
-            default_options = null; // erase for next time
-        }
-        // apply custom options
-        if(current_gallery[current].options){
-            default_options = apply({}, options); // store default options
-            options = apply(options, current_gallery[current].options);
-        }
-        // fire onOpen hook
-        if(options.onOpen && typeof options.onOpen == 'function'){
-            options.onOpen(link);
+    var loadContent = function(){
+        var obj = current_gallery[current];
+        if(!obj) return; // invalid
+
+        buildBars();
+
+        switch(obj.type){
+            case 'img':
+                // preload the image
+                preloader = new Image();
+                preloader.onload = function(){
+                    // images default to image height and width
+                    var h = obj.height ? parseInt(obj.height, 10) : preloader.height;
+                    var w = obj.width ? parseInt(obj.width, 10) : preloader.width;
+                    resizeContent(h, w, function(dims){
+                        showBars(function(){
+                            setContent({
+                                tag:    'img',
+                                height: dims.i_height,
+                                width:  dims.i_width,
+                                src:    obj.content,
+                                style:  'position:absolute'
+                            });
+                            if(dims.enableDrag && options.handleLgImages == 'drag'){
+                                // listen for drag
+                                toggleDrag(true);
+                                SL.setStyle(SL.get('shadowbox_drag_layer'), {
+                                    height:     dims.i_height + 'px',
+                                    width:      dims.i_width + 'px'
+                                });
+                            }
+                            finishContent();
+                        });
+                    });
+
+                    preloader.onload = function(){}; // clear onload for IE
+                };
+                preloader.src = obj.content;
+            break;
+
+            case 'swf':
+            case 'flv':
+            case 'qt':
+            case 'wmp':
+                var markup = Shadowbox.movieMarkup(obj);
+                resizeContent(markup.height, markup.width, function(){
+                    showBars(function(){
+                        setContent(markup);
+                        finishContent();
+                    });
+                });
+            break;
+
+            case 'iframe':
+                // iframes default to full viewport height and width
+                var h = obj.height ? parseInt(obj.height, 10) : SL.getViewportHeight();
+                var w = obj.width ? parseInt(obj.width, 10) : SL.getViewportWidth();
+                var content = {
+                    tag:            'iframe',
+                    name:           'shadowbox_content',
+                    height:         '100%',
+                    width:          '100%',
+                    frameborder:    '0',
+                    marginwidth:    '0',
+                    marginheight:   '0',
+                    scrolling:      'auto'
+                };
+
+                resizeContent(h, w, function(dims){
+                    showBars(function(){
+                        setContent(content);
+                        var win = (isIE)
+                            ? SL.get('shadowbox_content').contentWindow
+                            : window.frames['shadowbox_content'];
+                        win.location = obj.content;
+                        finishContent();
+                    });
+                });
+            break;
+
+            case 'html':
+            case 'inline':
+                // HTML content defaults to full viewport height and width
+                var h = obj.height ? parseInt(obj.height, 10) : SL.getViewportHeight();
+                var w = obj.width ? parseInt(obj.width, 10) : SL.getViewportWidth();
+                var content = {
+                    tag:    'div',
+                    cls:    'html', /* give special class to make scrollable */
+                    html:   obj.content
+                };
+                resizeContent(h, w, function(){
+                    showBars(function(){
+                        setContent(content);
+                        finishContent();
+                    });
+                });
+            break;
+
+            default:
+                // should never happen
+                throw 'Shadowbox cannot open content of type ' + obj.type;
         }
 
-        // display:block here helps with correct dimension calculations
-        SL.setStyle(SL.get('shadowbox'), 'display', 'block');
+        // preload neighboring images
+        if(current_gallery.length > 0){
+            var next = current_gallery[current + 1];
+            if(!next){
+                next = current_gallery[0];
+            }
+            if(next.type == 'img'){
+                var preload_next = new Image();
+                preload_next.src = next.href;
+            }
 
-        toggleTroubleElements(false);
-        var dims = getDimensions(options.initialHeight, options.initialWidth);
-        adjustHeight(dims.height, dims.top);
-        adjustWidth(dims.width);
-        hideBars(false);
-
-        // show the overlay and load the content
-        toggleOverlay(function(){
-            SL.setStyle(SL.get('shadowbox'), 'visibility', 'visible');
-            showLoading();
-            loadContent();
-        });
+            var prev = current_gallery[current - 1];
+            if(!prev){
+                prev = current_gallery[current_gallery.length - 1];
+            }
+            if(prev.type == 'img'){
+                var preload_prev = new Image();
+                preload_prev.src = prev.href;
+            }
+        }
     };
 
     /**
@@ -1363,138 +1471,6 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Loads the Shadowbox with the current piece.
-     *
-     * @return  void
-     * @private
-     */
-    var loadContent = function(){
-        var link = current_gallery[current];
-        if(!link) return; // invalid
-
-        buildBars();
-
-        switch(link.type){
-            case 'img':
-                // preload the image
-                preloader = new Image();
-                preloader.onload = function(){
-                    // images default to image height and width
-                    var h = link.height ? parseInt(link.height, 10) : preloader.height;
-                    var w = link.width ? parseInt(link.width, 10) : preloader.width;
-                    resizeContent(preloader.height, preloader.width, function(dims){
-                        showBars(function(){
-                            setContent({
-                                tag:    'img',
-                                height: dims.i_height,
-                                width:  dims.i_width,
-                                src:    link.href,
-                                style:  'position:absolute'
-                            });
-                            if(dims.enableDrag && options.handleLgImages == 'drag'){
-                                // listen for drag
-                                toggleDrag(true);
-                                SL.setStyle(SL.get('shadowbox_drag_layer'), {
-                                    height:     dims.i_height + 'px',
-                                    width:      dims.i_width + 'px'
-                                });
-                            }
-                            finishContent();
-                        });
-                    });
-
-                    preloader.onload = function(){}; // clear onload for IE
-                };
-                preloader.src = link.href;
-            break;
-
-            case 'swf':
-            case 'flv':
-            case 'qt':
-            case 'wmp':
-                var markup = Shadowbox.movieMarkup(link);
-                resizeContent(markup.height, markup.width, function(){
-                    showBars(function(){
-                        setContent(markup);
-                        finishContent();
-                    });
-                });
-            break;
-
-            case 'iframe':
-                // iframes default to full viewport height and width
-                var h = link.height ? parseInt(link.height, 10) : SL.getViewportHeight();
-                var w = link.width ? parseInt(link.width, 10) : SL.getViewportWidth();
-                var content = {
-                    tag:            'iframe',
-                    name:           'shadowbox_content',
-                    height:         '100%',
-                    width:          '100%',
-                    frameborder:    '0',
-                    marginwidth:    '0',
-                    marginheight:   '0',
-                    scrolling:      'auto'
-                };
-
-                resizeContent(h, w, function(dims){
-                    showBars(function(){
-                        setContent(content);
-                        var win = (isIE)
-                            ? SL.get('shadowbox_content').contentWindow
-                            : window.frames['shadowbox_content'];
-                        win.location = link.href;
-                        finishContent();
-                    });
-                });
-            break;
-
-            case 'html':
-                // HTML content defaults to full viewport height and width
-                var h = link.height ? parseInt(link.height, 10) : SL.getViewportHeight();
-                var w = link.width ? parseInt(link.width, 10) : SL.getViewportWidth();
-                var content = {
-                    tag:    'div',
-                    cls:    'html', /* give special class to make scrollable */
-                    html:   link.html
-                };
-                resizeContent(h, w, function(){
-                    showBars(function(){
-                        setContent(content);
-                        finishContent();
-                    });
-                });
-            break;
-
-            case 'unsupported':
-                // should never happen because links to unsupported media are
-                // removed or taken care of with an error message in setupGallery()
-                throw 'Content type cannot be determined for ' + link.href;
-            break;
-        }
-
-        // preload neighboring images
-        if(current_gallery.length > 0){
-            var next = current_gallery[current + 1];
-            if(!next){
-                next = current_gallery[0];
-            }
-            if(next.type == 'img'){
-                var preload_next = new Image();
-                preload_next.src = next.href;
-            }
-
-            var prev = current_gallery[current - 1];
-            if(!prev){
-                prev = current_gallery[current_gallery.length - 1];
-            }
-            if(prev.type == 'img'){
-                var preload_prev = new Image();
-                preload_prev.src = prev.href;
-            }
-        }
-    };
-
-    /**
      * This function is used as the callback after the Shadowbox has been
      * positioned, resized, and loaded with content.
      *
@@ -1502,15 +1478,14 @@ if(typeof Shadowbox == 'undefined'){
      * @private
      */
     var finishContent = function(){
-        var link = current_gallery[current];
-        if(!link) return; // invalid
+        var obj = current_gallery[current];
+        if(!obj) return; // invalid
         hideLoading(function(){
             listenKeyboard(true);
-            // fire onFinish hook
+            // fire onFinish handler
             if(options.onFinish && typeof options.onFinish == 'function'){
-                options.onFinish(link.el);
+                options.onFinish(obj);
             }
-            Shadowbox.play();
         });
     };
 
@@ -1820,7 +1795,7 @@ if(typeof Shadowbox == 'undefined'){
     var showLoading = function(){
         var loading = SL.get('shadowbox_loading');
         overwriteHTML(loading, String.format(options.skin.loading,
-            options.loadingImage,
+            options.assetURL + options.loadingImage,
             options.text.loading,
             options.text.cancel));
         loading.style.visibility = 'visible';
@@ -1879,10 +1854,8 @@ if(typeof Shadowbox == 'undefined'){
      */
     var checkOverlayImgNeeded = function(){
         if(!(isGecko && isMac)) return false;
-        var t;
         for(var i = 0, len = current_gallery.length; i < len; ++i){
-            t = current_gallery[i].type;
-            if(t != 'img' && t != 'html') return true;
+            if(!RE.overlay.exec(current_gallery[i].type)) return true;
         }
         return false;
     };
@@ -1907,7 +1880,7 @@ if(typeof Shadowbox == 'undefined'){
                 SL.setStyle(overlay, {
                     visibility:         'visible',
                     backgroundColor:    'transparent',
-                    backgroundImage:    'url(' + options.overlayBgImage + ')',
+                    backgroundImage:    'url(' + options.assetURL + options.overlayBgImage + ')',
                     backgroundRepeat:   'repeat',
                     opacity:            1
                 });
@@ -1934,11 +1907,13 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Initializes the Shadowbox environment.
+     * Initializes the Shadowbox environment. Appends Shadowbox' HTML to the
+     * document and sets up listeners on the window and overlay element.
      *
      * @param   {Object}    opts    The default options to use
      * @return  void
      * @public
+     * @static
      */
     Shadowbox.init = function(opts){
         if(initialized) return; // don't initialize twice
@@ -1973,10 +1948,10 @@ if(typeof Shadowbox == 'undefined'){
             }
         });
 
-        // add a listener to the overlay
-        SL.addEvent(SL.get('shadowbox_overlay'), 'click', function(){
-            Shadowbox.close();
-        });
+        if(options.listenOverlay){
+            // add a listener to the overlay
+            SL.addEvent(SL.get('shadowbox_overlay'), 'click', Shadowbox.close);
+        }
 
         // adjust some positioning if needed
         if(absolute_pos){
@@ -1998,15 +1973,17 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Grabs all relevant anchor elements on the page and sets them up for use
-     * with Shadowbox. Note: This method may be used to reset Shadowbox if links
-     * on a page change after initialization.
+     * Sets up listeners on the given links that will trigger Shadowbox. If no
+     * links are given, this method will set up every anchor element on the page
+     * with the appropriate rel attribute. Note: Because AREA elements do not
+     * support the rel attribute, they must be explicitly passed to this method.
      *
-     * @param   {Array}     links       An array (or array-like) list of link
-     *                                  elements to set up
+     * @param   {Array}     links       An array (or array-like) list of anchor
+     *                                  and/or area elements to set up
      * @param   {Object}    opts        Some options to use for the given links
      * @return  void
      * @public
+     * @static
      */
     Shadowbox.setup = function(links, opts){
         // get links if none specified
@@ -2021,12 +1998,12 @@ if(typeof Shadowbox == 'undefined'){
             links = [links]; // one link
         }
 
-        var link, key;
+        var link;
         for(var i = 0, len = links.length; i < len; ++i){
             link = links[i];
             if(typeof link.shadowboxCacheKey == 'undefined'){
                 // assign cache key expando
-                // use integer primitive so no memory leak in IE
+                // use integer primitive to avoid memory leak in IE
                 link.shadowboxCacheKey = cache.length;
                 SL.addEvent(link, 'click', handleClick); // add listener
             }
@@ -2035,34 +2012,35 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Builds an object from the original element data. That will be stored in
-     * the cache. These objects contain (most of) the following keys:
+     * Builds an object from the original link element data to store in cache.
+     * These objects contain (most of) the following keys:
      *
-     * - id: the link's id
+     * - el: the link element
      * - title: the linked file title
-     * - href: the linked file location
      * - type: the linked file type
-     * - gallery: the gallery the file belongs to
+     * - content: the linked file's URL
+     * - gallery: the gallery the file belongs to (optional)
      * - height: the height of the linked file (only necessary for movies)
      * - width: the width of the linked file (only necessary for movies)
      * - options: custom options to use (optional)
      *
-     * @param   {HTMLElement}   link    The link to process
+     * @param   {HTMLElement}   link    The link element to process
      * @return  {Object}                An object representing the link
      * @public
+     * @static
      */
     Shadowbox.buildCacheObj = function(link, opts){
         var href = link.href; // don't use getAttribute() here
         var o = {
             el:         link,
             title:      link.getAttribute('title'),
-            href:       href,
             type:       getPlayerType(href),
-            options:    apply({}, opts || {})
+            options:    apply({}, opts || {}), // break the reference
+            content:    href
         };
 
         // remove link-level options from top-level options
-        var opt, l_opts = ['height', 'width', 'gallery'];
+        var opt, l_opts = ['title', 'type', 'height', 'width', 'gallery'];
         for(var i = 0, len = l_opts.length; i < len; ++i){
             opt = l_opts[i];
             if(typeof o.options[opt] != 'undefined'){
@@ -2076,7 +2054,7 @@ if(typeof Shadowbox == 'undefined'){
         if(rel){
             // extract gallery name from shadowbox[name] format
             var match = rel.match(RE.gallery);
-            if(match) o.gallery = escape(match[1]);
+            if(match) o.gallery = escape(match[2]);
 
             // other parameters
             var params = rel.split(';');
@@ -2096,41 +2074,112 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Activates the Shadowbox with the given link element's content.
+     * Applies the given set of options to those currently in use. Note: Options
+     * will be reset on Shadowbox.open() so this function is only useful after
+     * it has already been called (while Shadowbox is open).
      *
-     * @param   {HTMLElement}   link        The link that was clicked
+     * @param   {Object}    opts        The options to apply
      * @return  void
      * @public
+     * @static
      */
-    Shadowbox.open = function(link){
-        if(activated) return; // already open
-        activated = true;
-
-        // setup the current gallery
-        setupGallery(link);
-
-        // anything to display?
-        if(current_gallery.length){
-            openContent(link);
-        }else{
-            throw 'Shadowbox unable to open link, run setup() first';
+    Shadowbox.applyOptions = function(opts){
+        if(opts){
+            // use apply here to break references
+            default_options = apply({}, options); // store default options
+            options = apply(options, opts); // apply options
         }
     };
 
     /**
-     * Changes the view to the picture in the current gallery specified by
-     * num.
+     * Reverts Shadowbox' options to the last default set in use before
+     * Shadowbox.applyOptions() was called.
+     *
+     * @return  void
+     * @public
+     * @static
+     */
+    Shadowbox.revertOptions = function(){
+        if(default_options){
+            options = default_options; // revert to default options
+            default_options = null; // erase for next time
+        }
+    };
+
+    /**
+     * Opens the given object in Shadowbox. This object may be either an
+     * anchor/area element, or an object similar to the one created by
+     * Shadowbox.buildCacheObj().
+     *
+     * @param   {mixed}     obj         The object or link element that defines
+     *                                  what to display
+     * @return  void
+     * @public
+     * @static
+     */
+    Shadowbox.open = function(obj, opts){
+        if(activated) return; // already open
+        activated = true;
+
+        // is it a link?
+        if(isLink(obj)){
+            if(typeof obj.shadowboxCacheKey == 'undefined' || typeof cache[obj.shadowboxCacheKey] == 'undefined'){
+                // link element that hasn't been set up before
+                // create an object on-the-fly
+                obj = this.buildCacheObj(obj, opts);
+            }else{
+                // link element that has been set up before, get from cache
+                obj = cache[obj.shadowboxCacheKey];
+            }
+        }
+
+        this.revertOptions();
+        if(obj.options || opts){
+            // use apply here to break references
+            this.applyOptions(apply(apply({}, obj.options || {}), opts || {}));
+        }
+
+        // update current & current_gallery
+        setupGallery(obj);
+
+        // anything to display?
+        if(current_gallery.length){
+            // fire onOpen hook
+            if(options.onOpen && typeof options.onOpen == 'function'){
+                options.onOpen(obj);
+            }
+
+            // display:block here helps with correct dimension calculations
+            SL.setStyle(SL.get('shadowbox'), 'display', 'block');
+
+            toggleTroubleElements(false);
+            var dims = getDimensions(options.initialHeight, options.initialWidth);
+            adjustHeight(dims.height, dims.top);
+            adjustWidth(dims.width);
+            hideBars(false);
+
+            // show the overlay and load the content
+            toggleOverlay(function(){
+                SL.setStyle(SL.get('shadowbox'), 'visibility', 'visible');
+                showLoading();
+                loadContent();
+            });
+        }
+    };
+
+    /**
+     * Jumps to the piece in the current gallery with index num.
      *
      * @param   {Number}    num     The gallery index to view
-     * @return  {Boolean}           True if the gallery change was successful,
-     *                              false otherwise
+     * @return  void
      * @public
+     * @static
      */
     Shadowbox.change = function(num){
         if(!current_gallery) return; // no current gallery
         if(!current_gallery[num]){ // index does not exist
             if(!options.continuous){
-                return false;
+                return;
             }else{
                 num = (num < 0) ? (current_gallery.length - 1) : 0; // loop
             }
@@ -2146,38 +2195,45 @@ if(typeof Shadowbox == 'undefined'){
         // turn this back on when done
         listenKeyboard(false);
 
+        // fire onChange handler
+        if(options.onChange && typeof options.onChange == 'function'){
+            options.onChange(current_gallery[current]);
+        }
+
         showLoading();
         hideBars(loadContent);
-        return true;
     };
 
     /**
-     * Attempts to forward the gallery to the next image.
+     * Jumps to the next piece in the gallery.
      *
      * @return  {Boolean}       True if the gallery changed to next item, false
      *                          otherwise
      * @public
+     * @static
      */
     Shadowbox.next = function(){
         return this.change(current + 1);
     };
 
     /**
-     * Attempts to rewind the gallery to the previous image.
+     * Jumps to the previous piece in the gallery.
      *
      * @return  {Boolean}       True if the gallery changed to previous item,
      *                          false otherwise
      * @public
+     * @static
      */
     Shadowbox.previous = function(){
         return this.change(current - 1);
     };
 
     /**
-     * Deactivates the Shadowbox.
+     * Deactivates Shadowbox.
      *
      * @return  void
      * @public
+     * @static
      */
     Shadowbox.close = function(){
         if(!activated) return; // already closed
@@ -2204,13 +2260,32 @@ if(typeof Shadowbox == 'undefined'){
         toggleOverlay(false);
         // turn on trouble elements
         toggleTroubleElements(true);
-        // fire onClose hook
+
+        // fire onClose handler
         if(options.onClose && typeof options.onClose == 'function'){
-            var link = current_gallery[current];
-            if(link) options.onClose(link.el);
+            options.onClose(current_gallery[current]);
         }
 
         activated = false;
+    };
+
+    /**
+     * Clears Shadowbox' cache and removes listeners and expandos from all
+     * cached link elements. May be used to completely reset Shadowbox in case
+     * links on a page change.
+     *
+     * @return  void
+     * @public
+     * @static
+     */
+    Shadowbox.clearCache = function(){
+        for(var i = 0, len = cache.length; i < len; ++i){
+            if(cache[i].el){
+                SL.removeEvent(cache[i].el, 'click', handleClick);
+                delete cache[i].shadowboxCacheKey;
+            }
+        }
+        cache = [];
     };
 
     /**
@@ -2221,20 +2296,21 @@ if(typeof Shadowbox == 'undefined'){
      * @param   {HTMLElement}   link        The link to the media file
      * @return  {Object}                    The proper markup to use (see above)
      * @public
+     * @static
      */
-    Shadowbox.movieMarkup = function(link){
+    Shadowbox.movieMarkup = function(obj){
         // movies default to 300x300 pixels
-        var h = link.height ? parseInt(link.height, 10) : 300;
-        var w = link.width ? parseInt(link.width, 10) : 300;
+        var h = obj.height ? parseInt(obj.height, 10) : 300;
+        var w = obj.width ? parseInt(obj.width, 10) : 300;
 
         var autoplay = options.autoplayMovies;
         var controls = options.showMovieControls;
-        if(link.options){
-            if(link.options.autoplayMovies != null){
-                autoplay = link.options.autoplayMovies;
+        if(obj.options){
+            if(obj.options.autoplayMovies != null){
+                autoplay = obj.options.autoplayMovies;
             }
-            if(link.options.showMovieControls != null){
-                controls = link.options.showMovieControls;
+            if(obj.options.showMovieControls != null){
+                controls = obj.options.showMovieControls;
             }
         }
 
@@ -2243,15 +2319,15 @@ if(typeof Shadowbox == 'undefined'){
             name:   'shadowbox_content'
         };
 
-        switch(link.type){
+        switch(obj.type){
             case 'swf':
                 var dims = getDimensions(h, w, true);
                 h = dims.height;
                 w = dims.width;
                 markup.type = 'application/x-shockwave-flash';
-                markup.data = link.href;
+                markup.data = obj.content;
                 markup.children = [
-                    { tag: 'param', name: 'movie', value: link.href }
+                    { tag: 'param', name: 'movie', value: obj.content }
                 ];
             break;
             case 'flv':
@@ -2266,7 +2342,7 @@ if(typeof Shadowbox == 'undefined'){
                 h = dims.height;
                 w = (h-(controls?20:0))/a; // maintain aspect ratio
                 var flashvars = [
-                    'file=' + link.href,
+                    'file=' + obj.content,
                     'height=' + h,
                     'width=' + w,
                     'autostart=' + autoplay,
@@ -2275,9 +2351,9 @@ if(typeof Shadowbox == 'undefined'){
                     'backcolor=0x000000&amp;frontcolor=0xCCCCCC&amp;lightcolor=0x557722'
                 ];
                 markup.type = 'application/x-shockwave-flash';
-                markup.data = options.flvPlayer;
+                markup.data = options.assetURL + options.flvPlayer;
                 markup.children = [
-                    { tag: 'param', name: 'movie', value: options.flvPlayer },
+                    { tag: 'param', name: 'movie', value: options.assetURL + options.flvPlayer },
                     { tag: 'param', name: 'flashvars', value: flashvars.join('&amp;') },
                     { tag: 'param', name: 'allowfullscreen', value: 'true' }
                 ];
@@ -2291,7 +2367,7 @@ if(typeof Shadowbox == 'undefined'){
                     controls = 'false';
                 }
                 markup.children = [
-                    { tag: 'param', name: 'src', value: link.href },
+                    { tag: 'param', name: 'src', value: obj.content },
                     { tag: 'param', name: 'scale', value: 'aspect' },
                     { tag: 'param', name: 'controller', value: controls },
                     { tag: 'param', name: 'autoplay', value: autoplay }
@@ -2301,7 +2377,7 @@ if(typeof Shadowbox == 'undefined'){
                     markup.codebase = 'http://www.apple.com/qtactivex/qtplugin.cab#version=6,0,2,0';
                 }else{
                     markup.type = 'video/quicktime';
-                    markup.data = link.href;
+                    markup.data = obj.content;
                 }
             break;
             case 'wmp':
@@ -2318,7 +2394,7 @@ if(typeof Shadowbox == 'undefined'){
                     }
                     // markup.type = 'application/x-oleobject';
                     markup.classid = 'clsid:6BF52A52-394A-11d3-B153-00C04F79FAA6';
-                    markup.children[markup.children.length] = { tag: 'param', name: 'url', value: link.href };
+                    markup.children[markup.children.length] = { tag: 'param', name: 'url', value: obj.content };
                     markup.children[markup.children.length] = { tag: 'param', name: 'uimode', value: controls };
                 }else{
                     if(controls){
@@ -2328,7 +2404,7 @@ if(typeof Shadowbox == 'undefined'){
                         controls = 0;
                     }
                     markup.type = 'video/x-ms-wmv';
-                    markup.data = link.href;
+                    markup.data = obj.content;
                     markup.children[markup.children.length] = { tag: 'param', name: 'showcontrols', value: controls };
                 }
             break;
@@ -2347,6 +2423,7 @@ if(typeof Shadowbox == 'undefined'){
      * @param   {Object}    obj     The HTML definition object
      * @return  {String}            An HTML string
      * @public
+     * @static
      */
     Shadowbox.createHTML = function(obj){
         var html = '<' + obj.tag;
@@ -2375,8 +2452,8 @@ if(typeof Shadowbox == 'undefined'){
     };
 
     /**
-     * Gets an object that lists which plugins are supported on this platform.
-     * The keys of this object will be:
+     * Gets an object that lists which plugins are supported by the client. The
+     * keys of this object will be:
      *
      * - fla: Adobe Flash Player
      * - qt: QuickTime Player
@@ -2385,6 +2462,7 @@ if(typeof Shadowbox == 'undefined'){
      *
      * @return  {Object}        The plugins object
      * @public
+     * @static
      */
     Shadowbox.getPlugins = function(){
         return plugins;
@@ -2395,16 +2473,18 @@ if(typeof Shadowbox == 'undefined'){
      *
      * @return  {Object}        The options object
      * @public
+     * @static
      */
     Shadowbox.getOptions = function(){
         return options;
     };
 
     /**
-     * Gets the current gallery item.
+     * Gets the current gallery object.
      *
      * @return  {Object}        The current gallery item
      * @public
+     * @static
      */
     Shadowbox.getCurrent = function(){
         return current_gallery[current];
@@ -2415,8 +2495,9 @@ if(typeof Shadowbox == 'undefined'){
      *
      * @return  {String}        The current version
      * @public
+     * @static
      */
-    Shadowbox.version = function(){
+    Shadowbox.getVersion = function(){
         return version;
     };
 
@@ -2430,7 +2511,7 @@ if(typeof Shadowbox == 'undefined'){
  * @public
  */
 Array.prototype.indexOf = Array.prototype.indexOf || function(o){
-    for (var i = 0, len = this.length; i < len; ++i){
+    for(var i = 0, len = this.length; i < len; ++i){
         if(this[i] == o) return i;
     }
     return -1;
