@@ -10,7 +10,7 @@
           <s:url action="show-jobs"             id="editJobUrl"/>
           <s:url action="add-job"               id="addJobUrl"/>
           <s:url action="show-statistics"       id="showStatisticsUrl"/>
-          <s:url action="user-list"             id="userListUrl"/>
+          <s:url action="show-users"            id="userListUrl"/>
           <s:url action="add-user"              id="addUserUrl"/>
           <s:url action="edit-settings"         id="editSettingsUrl"/>
           <s:url action="add-user"              id="showJobsUrl">
