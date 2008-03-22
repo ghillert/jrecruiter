@@ -7,6 +7,7 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.SessionAware;
+import org.jrecruiter.web.interceptor.StoreMessages;
 import org.texturemedia.smarturls.Result;
 
 /**
@@ -38,6 +39,7 @@ public class LogoutAction extends BaseAction implements SessionAware  {
      * Let's log out - Invalidate the session as well as the ACEGI security
      * context.
      */
+    @StoreMessages
     public String execute () {
 
     	final SecurityContext context = SecurityContextHolder.getContext();
@@ -57,6 +59,7 @@ public class LogoutAction extends BaseAction implements SessionAware  {
 
         context.setAuthentication(null);
 
+        super.addActionMessage("You logged out successfully.");
         return SUCCESS;
 
     }

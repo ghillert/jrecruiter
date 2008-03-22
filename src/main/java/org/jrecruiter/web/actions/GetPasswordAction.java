@@ -29,7 +29,7 @@ public class GetPasswordAction extends BaseAction {
 
     	this.user = userService.getUser(this.user.getUsername());
 
-    	//userService.sendPassword(this.user);
+    	userService.sendPassword(this.user);
 
     	super.addActionMessage("An email has been sent to " + user.getEmail());
         return SUCCESS;

@@ -46,20 +46,6 @@
 		<script src="http://www.google-analytics.com/urchin.js"
 			type="text/javascript">
 	    </script>
-
-
-		<link rel="stylesheet" type="text/css" href="<c:url value='/js/shadowbox/'/>shadowbox.css"/>
-		<script type="text/javascript" src="<c:url value='/js/shadowbox/'/>shadowbox-prototype.js"></script>
-		<script type="text/javascript" src="<c:url value='/js/shadowbox/'/>shadowbox.js"></script>
-		<script type="text/javascript">
-	        function initShadowbox() { alert(1);
-		        document.observe('dom:loaded', function(){
-			           Shadowbox.init();
-			           });
-	        }
-	        initShadowbox();
-		</script>
-
 	</head>
 	<body onload="init();">
 		<div id="container">

@@ -33,7 +33,7 @@ function init() {
     DWRUtil.useLoadingMessage();
 }
 
-function showJobDetail(id) {alert(id);
+function showJobDetail(id) {
 	ajaxService.getJob(id, handleData);
 
 	function handleData(data) {

@@ -16,6 +16,8 @@
 package org.jrecruiter.web.actions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -26,52 +28,26 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
 
 /**
- * Test the Struts 2 Show Jobs Action
+ * Test the Struts 2 Logout Action
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: ShowJobsActionTest.java 173 2008-02-29 06:17:07Z ghillert $
  */
-public class ShowJobsActionTest extends TestCase {
+public class LogoutActionTest extends TestCase {
 
     public void testExecute() throws Exception {
 
-    	ShowJobsAction showJobsAction = new ShowJobsAction();
+    	LogoutAction logoutAction = new LogoutAction();
 
         JobService jobService = EasyMock.createMock(JobService.class);
 
-
-        showJobsAction.setJobService(jobService);
-
-        List<Job>jobs = new ArrayList<Job>();
-
-        EasyMock.expect(jobService.getJobsCount()).andReturn(10);
-        EasyMock.expect(jobService.getJobs(20, 1, "", null)).andReturn(jobs);
+        logoutAction.setSession(new HashMap<String, Object>());
 
         EasyMock.replay(jobService);
 
-    	String ret = showJobsAction.execute();
+    	String ret = logoutAction.execute();
 
     	Assert.assertEquals("success", ret);
-    }
-
-    public void testExecuteAjax() throws Exception {
-    	ShowJobsAction showJobsAction = new ShowJobsAction();
-    	showJobsAction.setDisplayAjax("true");
-
-        JobService jobService = EasyMock.createMock(JobService.class);
-
-        showJobsAction.setJobService(jobService);
-
-        List<Job>jobs = new ArrayList<Job>();
-
-        EasyMock.expect(jobService.getJobsCount()).andReturn(10);
-        EasyMock.expect(jobService.getJobs(20, 1, "", null)).andReturn(jobs);
-
-        EasyMock.replay(jobService);
-
-    	String ret = showJobsAction.execute();
-
-    	Assert.assertEquals("ajax", ret);
     }
 }
 
