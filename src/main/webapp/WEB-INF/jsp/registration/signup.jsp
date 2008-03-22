@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
+<script type="text/javascript" src="<c:url value='/js/passwordmeter.js'/>"></script>
 <h2>Add a user</h2>
 
     <s:form id="addUserForm" action="signup">
@@ -13,10 +14,29 @@
         </div>
         <div class="required">
           	<label for="password"><fmt:message key="user.password" />*</label>
-          	<s:password  id="password" name="user.password" required="true" maxlength="25" tabindex="2"
-          	             onblur="javascript:this.className='';"
-          	             onfocus="javascript:this.className='selected';"/>
+          	<s:password  id="password" name="password" required="true" maxlength="25" tabindex="2"
+          	             onblur="javascript:this.className='';" onkeyup="testPassword(this.value)"
+          	             onfocus="javascript:this.className='selected';" />
         </div>
+        <div class="optional">
+            <label>Password Strength</label>
+            <span id="passwordStrength">very weak</span>
+        </div>
+        <div class="required">
+<div style="margin-left: 170px; width: 150px; border: 1px solid black;height: 5px; overflow: hidden;"><div id="passwordStrengthBar" style="width: 0px; background-color: green; height: 5px; overflow: "></div></div>
+        </div>
+        <div>
+            <ol>
+			   <li>Make your password 8 characters or more</li>
+			   <li>Use mixed case letters (upper and lower case)</li>
+			   <li>Use more than one number</li>
+			   <li>Use special characters (!,@,#,$,%,^,&amp;,*,?,_,~)</li>
+			   <li>Use L33t</li>
+			   <li>Use a random password generator/password vault like Password Safe or pwsafe</li>
+			   <li>Use PasswordMaker</li>
+            </ol>
+        </div>
+
         <div class="required">
           	<label for="firstName"><fmt:message key="user.firstName" />*</label>
           	<s:textfield id="firstName" name="user.firstName" required="true" maxlength="50" tabindex="3"

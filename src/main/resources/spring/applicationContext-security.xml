@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+  <bean id="stringDigester" class="org.jasypt.digest.StandardStringDigester" >
+    <property name="algorithm" value="SHA-512" />
+    <property name="iterations" value="100000" />
+    <property name="saltSizeBytes" value="16" />
+  </bean>
+
+  <!-- This Spring Security-friendly PasswordEncoder implementation will -->
+  <!-- wrap the StringDigester instance so that it can be used from      -->
+  <!-- the security framework.                                           -->
+  <bean id="passwordEncoder" class="org.jasypt.spring.security.PasswordEncoder">
+    <property name="stringDigester">
+      <ref bean="stringDigester" />
+    </property>
+  </bean>
+
+</beans>

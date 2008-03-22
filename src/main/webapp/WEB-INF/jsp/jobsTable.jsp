@@ -9,7 +9,8 @@
         </s:url>
 
         <display:column class="column1" sortProperty="field.jobTitle" sortable="true" media="html" maxLength="100">
-            <a rel="shadowbox;width=750;height=600" class="option" title="Job Detail - ${job.jobTitle}" href="${jobDetailUrl}">
+            <a  onclick="Shadowbox.open(")"
+                rel="width=750;height=600" class="option" title="Job Detail - ${job.jobTitle}" href="${jobDetailUrl}">
             <img alt="Job Detail" title="Job Detail - ${job.jobTitle}" src="${ctx}/images/icons/zoom.png" style="border-width: 0;"/></a>
         </display:column>
 

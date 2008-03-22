@@ -27,7 +27,7 @@ import org.apache.struts2.util.StrutsTypeConverter;
 * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
 */
 public class DateConverter extends StrutsTypeConverter {
-    public static final String format = "MM/dd/yyyy";
+    public static final String format = "MM/dd/yyyy"; //"11/11/2008"
 
     public Object convertFromString(Map ctx, String[] value, Class arg2) {
 

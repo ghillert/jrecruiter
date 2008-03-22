@@ -22,6 +22,9 @@
            <action dev="Gunnar Hillert" type="add">
                Application is now Struts 2 based
            </action>
+           <action dev="Gunnar Hillert" type="add">
+               Using jasypt for password digesting
+           </action>
       </release>
       <release version="1.2.1" date="2006-07-08" description="Minor fixes and features">
            <action dev="Gunnar Hillert" type="add">

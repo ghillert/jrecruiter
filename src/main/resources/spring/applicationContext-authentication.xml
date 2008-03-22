@@ -13,7 +13,7 @@
 			</list>
 		</property>
 	</bean>
-	<!-- ???? -->
+
 	<bean id="loggerListener"
 		class="org.acegisecurity.event.authentication.LoggerListener" />
 
@@ -22,6 +22,9 @@
 		<property name="userDetailsService">
 			<ref bean="userService" />
 		</property>
+        <property name="passwordEncoder">
+            <ref bean="passwordEncoder" />
+        </property>
 	</bean>
 
 </beans>

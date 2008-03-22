@@ -133,7 +133,7 @@ public class User implements Serializable, UserDetails{
 	}
 
 	@Column(unique=false, nullable=false, insertable=true,
-			updatable=true, length=100)
+			updatable=true, length=120)
 	public String getPassword() {
 		return this.password;
 	}
