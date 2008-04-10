@@ -69,7 +69,7 @@ public class Configuration implements Serializable {
 	}
 
 	// Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id
 	@Column(unique=true, nullable=false, insertable=true, updatable=true, length=200)
 	public String getMessageKey() {
 		return this.messageKey;
