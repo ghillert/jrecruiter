@@ -23,6 +23,7 @@ import org.jrecruiter.Constants.JobStatus;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.UserService;
+import org.jrecruiter.web.actions.BaseActionTest;
 
 /**
  * Test the Struts 2 Add User Action
@@ -30,22 +31,22 @@ import org.jrecruiter.service.UserService;
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class AddUserActionTest extends TestCase {
+public class AddUserActionTest extends BaseActionTest {
 
     public void testExecute() throws Exception {
-    	AddUserAction addUserAction = new AddUserAction();
+        AddUserAction addUserAction = new AddUserAction();
 
-    	String ret = addUserAction.execute();
+        String ret = addUserAction.execute();
 
-    	Assert.assertEquals("input", ret);
+        Assert.assertEquals("input", ret);
     }
 
     public void testSave() throws Exception {
-    	AddUserAction addUserAction = new AddUserAction();
+        AddUserAction addUserAction = new AddUserAction();
 
-    	User user = new User();
-
-    	addUserAction.setUser(user);
+        User user = new User();
+        user.setUsername("abc");
+        addUserAction.setUser(user);
 
         UserService userService = EasyMock.createMock(UserService.class);
 
@@ -54,9 +55,9 @@ public class AddUserActionTest extends TestCase {
 
         addUserAction.setUserService(userService);
 
-    	String ret = addUserAction.save();
+        String ret = addUserAction.save();
 
-    	Assert.assertEquals("success", ret);
+        Assert.assertEquals("success", ret);
     }
 }
 

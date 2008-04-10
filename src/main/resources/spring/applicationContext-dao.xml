@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean id="baseDao" abstract="true">
+          <property name="sessionFactory"><ref bean="sessionFactory" /></property>
+    </bean>
+
+    <bean id="configurationDao" class="org.jrecruiter.dao.hibernate.ConfigurationDaoHibernate" parent="baseDao"/>
+    <bean id="industryDao"      class="org.jrecruiter.dao.hibernate.IndustryDaoHibernate"      parent="baseDao"/>
+    <bean id="jobDao"           class="org.jrecruiter.dao.hibernate.JobDaoHibernate"           parent="baseDao"/>
+    <bean id="regionDao"        class="org.jrecruiter.dao.hibernate.RegionDaoHibernate"        parent="baseDao"/>
+    <bean id="roleDao"          class="org.jrecruiter.dao.hibernate.RoleDaoHibernate"          parent="baseDao"/>
+    <bean id="statisticDao"     class="org.jrecruiter.dao.hibernate.StatisticDaoHibernate"     parent="baseDao"/>
+    <bean id="userDao"          class="org.jrecruiter.dao.hibernate.UserDaoHibernate"          parent="baseDao"/>
+    <bean id="userToRoleDao"    class="org.jrecruiter.dao.hibernate.UserToRoleDaoHibernate"    parent="baseDao"/>
+
+</beans>

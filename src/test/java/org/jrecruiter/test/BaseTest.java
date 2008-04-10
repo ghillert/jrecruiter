@@ -29,12 +29,13 @@ public abstract class BaseTest extends AbstractTransactionalDataSourceSpringCont
         setAutowireMode(AUTOWIRE_BY_NAME);
         return new String[] {
         "/spring/applicationContext-acegi-base.xml",
-        "/spring/applicationContext-acegi-security.xml",
         "/spring/applicationContext-authentication.xml",
         "/spring/applicationContext-authorization.xml",
         "/spring/applicationContext-hibernate.xml",
         "/spring/applicationContext.xml",
         "/test-applicationContext-datasource.xml",
+        "/spring/applicationContext-security.xml",
+        "/spring/applicationContext-dao.xml",
         "/test-applicationContext-mail.xml"};
     }
 
