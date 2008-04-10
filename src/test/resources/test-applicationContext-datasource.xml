@@ -19,7 +19,7 @@
 
 	<!-- Load any properties that are developer-specific from a dedicated property file -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:jdbc.properties"/>
+        <property name="location" value="classpath:settings.properties"/>
     </bean>
 
 </beans>

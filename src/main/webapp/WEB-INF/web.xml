@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd"
-	version="2.5">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd"
+  version="2.5">
 
-	<display-name>jRecruiter 2.0</display-name>
-	<description>jRecruiter is a job posting service.</description>
+  <display-name>jRecruiter 2.0</display-name>
+  <description>jRecruiter is a job posting service.</description>
 
     <!-- Define the basename for a resource bundle for I18N -->
     <context-param>
@@ -60,14 +60,14 @@
             </param-value>
         </init-param>
     </filter>
-	<filter>
-	  <filter-name>struts</filter-name>
-	  <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
-	    <init-param>
-	      <param-name>configProviders</param-name>
-	      <param-value>org.texturemedia.smarturls.SmartURLsConfigurationProvider</param-value>
-	    </init-param>
-	</filter>
+  <filter>
+    <filter-name>struts</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+      <init-param>
+        <param-name>configProviders</param-name>
+        <param-value>org.texturemedia.smarturls.SmartURLsConfigurationProvider</param-value>
+      </init-param>
+  </filter>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -114,10 +114,10 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-	<filter-mapping>
-		<filter-name>Acegi Filter Chain Proxy</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+  <filter-mapping>
+    <filter-name>Acegi Filter Chain Proxy</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
     <filter-mapping>
         <filter-name>struts</filter-name>
         <url-pattern>/*</url-pattern>
@@ -128,11 +128,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-	<listener>
-		<listener-class>
-			org.acegisecurity.ui.session.HttpSessionEventPublisher
-		</listener-class>
-	</listener>
+  <listener>
+    <listener-class>
+      org.acegisecurity.ui.session.HttpSessionEventPublisher
+    </listener-class>
+  </listener>
 
   <servlet>
     <servlet-name>dwr-invoker</servlet-name>
@@ -161,9 +161,9 @@
     <url-pattern>/dwr/*</url-pattern>
   </servlet-mapping>
 
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
 
     <error-page>
         <error-code>404</error-code>
@@ -174,20 +174,5 @@
         <error-code>500</error-code>
         <location>/error.jsp</location>
     </error-page>
-
-	<resource-ref>
-		<description>postgreSQL Datasource</description>
-		<res-ref-name>jdbc/postgres</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-		<res-sharing-scope>Shareable</res-sharing-scope>
-	</resource-ref>
-	<resource-ref>
-		<description>mail server Datasource</description>
-		<res-ref-name>mail/session</res-ref-name>
-		<res-type>javax.mail.Session</res-type>
-		<res-auth>Container</res-auth>
-		<res-sharing-scope>Shareable</res-sharing-scope>
-	</resource-ref>
 
 </web-app>

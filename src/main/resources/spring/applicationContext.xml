@@ -111,17 +111,4 @@
   </bean>
   -->
 
-      <bean id="baseDao" abstract="true">
-          <property name="sessionFactory"><ref bean="sessionFactory" /></property>
-    </bean>
-
-    <bean id="configurationDao" class="org.jrecruiter.dao.hibernate.ConfigurationDaoHibernate" parent="baseDao"/>
-    <bean id="industryDao" class="org.jrecruiter.dao.hibernate.IndustryDaoHibernate"           parent="baseDao"/>
-    <bean id="jobDao" class="org.jrecruiter.dao.hibernate.JobDaoHibernate"                     parent="baseDao"/>
-    <bean id="regionDao" class="org.jrecruiter.dao.hibernate.RegionDaoHibernate"                 parent="baseDao"/>
-    <bean id="roleDao" class="org.jrecruiter.dao.hibernate.RoleDaoHibernate"                   parent="baseDao"/>
-    <bean id="statisticDao" class="org.jrecruiter.dao.hibernate.StatisticDaoHibernate"         parent="baseDao"/>
-    <bean id="userDao" class="org.jrecruiter.dao.hibernate.UserDaoHibernate"                   parent="baseDao"/>
-    <bean id="userToRoleDao" class="org.jrecruiter.dao.hibernate.UserToRoleDaoHibernate"       parent="baseDao"/>
-
 </beans>

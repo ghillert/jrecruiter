@@ -19,7 +19,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.util.StrutsTypeConverter;
+import org.jrecruiter.service.impl.JobServiceImpl;
 
 /**
 * From Appfuse
@@ -27,7 +29,13 @@ import org.apache.struts2.util.StrutsTypeConverter;
 * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
 */
 public class DateConverter extends StrutsTypeConverter {
+
     public static final String format = "MM/dd/yyyy"; //"11/11/2008"
+
+    /**
+     *   Initialize Logging.
+     */
+    private static final Logger LOGGER = Logger.getLogger(DateConverter.class);
 
     public Object convertFromString(Map ctx, String[] value, Class arg2) {
 
@@ -35,10 +43,12 @@ public class DateConverter extends StrutsTypeConverter {
             return null;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format);
+        sdf.setLenient(false);
+
         try {
             return sdf.parse(value[0]);
         } catch (ParseException pe) {
-            pe.printStackTrace();
+            LOGGER.warn("Error parsing date: " + value[0] + "; error: " + pe.getMessage() + "; expected format: " + format);
         }
         return null;
     }
