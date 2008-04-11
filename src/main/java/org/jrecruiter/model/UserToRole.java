@@ -65,7 +65,6 @@ public class UserToRole  implements java.io.Serializable {
 
     // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(unique=true, nullable=false, insertable=true, updatable=true)
 	public Long getId() {
         return this.id;
     }

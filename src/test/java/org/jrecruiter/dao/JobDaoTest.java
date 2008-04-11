@@ -128,6 +128,7 @@ public class JobDaoTest extends BaseTest {
 		final User user = this.getUser();
 
 		userDao.save(user);
+		super.flushSession();
 
 		job.setUser(user);
 		jobDao.save(job);

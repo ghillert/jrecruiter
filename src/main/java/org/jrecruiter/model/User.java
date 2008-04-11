@@ -113,7 +113,6 @@ public class User implements Serializable, UserDetails{
 
 	// Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false, insertable=true, updatable=true)
 	public Long getId() {
 		return this.id;
 	}

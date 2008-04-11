@@ -201,7 +201,6 @@ public class Job implements Serializable {
      * @return the id
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(unique=true, nullable=false, insertable=true, updatable=true)
     @DocumentId
     public Long getId() {
         return id;
