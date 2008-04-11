@@ -205,11 +205,9 @@
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
-<filtering>true</filtering>
       </testResource>
       <testResource>
         <directory>src/main/resources</directory>
-<filtering>true</filtering>
       </testResource>
     </testResources>
     <extensions>
@@ -828,7 +826,7 @@
                 <jdbc.artifactId>postgresql</jdbc.artifactId>
                 <jdbc.version>8.1-407.jdbc3</jdbc.version>
                 <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:postgresql://localhost/]]></jdbc.url>
+                <jdbc.url><![CDATA[jdbc:postgresql://localhost/jrecruiter]]></jdbc.url>
                 <jdbc.username>jrecruiter</jdbc.username>
                 <jdbc.password>jrecruiter</jdbc.password>
             </properties>
