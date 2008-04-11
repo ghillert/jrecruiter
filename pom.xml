@@ -205,9 +205,11 @@
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
+<filtering>true</filtering>
       </testResource>
       <testResource>
         <directory>src/main/resources</directory>
+<filtering>true</filtering>
       </testResource>
     </testResources>
     <extensions>
@@ -826,7 +828,7 @@
                 <jdbc.artifactId>postgresql</jdbc.artifactId>
                 <jdbc.version>8.1-407.jdbc3</jdbc.version>
                 <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:postgresql://localhost/jrecruiter]]></jdbc.url>
+                <jdbc.url><![CDATA[jdbc:postgresql://localhost/]]></jdbc.url>
                 <jdbc.username>jrecruiter</jdbc.username>
                 <jdbc.password>jrecruiter</jdbc.password>
             </properties>
@@ -884,6 +886,6 @@
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.url><![CDATA[jdbc:mysql://localhost/appfuse_test?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
         <jdbc.username>root</jdbc.username>
-        <jdbc.password></jdbc.password>
+        <jdbc.password>root</jdbc.password>
     </properties>
 </project>

@@ -33,7 +33,7 @@ public abstract class BaseTest extends AbstractTransactionalDataSourceSpringCont
         "/spring/applicationContext-authorization.xml",
         "/spring/applicationContext-hibernate.xml",
         "/spring/applicationContext.xml",
-        "/test-applicationContext-datasource.xml",
+        "/spring/applicationContext-resources.xml",
         "/spring/applicationContext-security.xml",
         "/spring/applicationContext-dao.xml",
         "/test-applicationContext-mail.xml"};

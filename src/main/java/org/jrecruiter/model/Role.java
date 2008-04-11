@@ -82,7 +82,6 @@ public class Role implements Serializable, GrantedAuthority {
 
 	// Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false, insertable=true, updatable=true)
 	public Long getId() {
 		return this.id;
 	}

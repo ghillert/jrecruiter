@@ -16,7 +16,7 @@
                 <prop key="hibernate.max_fetch_depth">2</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
-                <prop key="hibernate.search.default.indexBase">/tmp/search</prop>
+                <prop key="hibernate.search.default.indexBase">${hibernate.search.directory}</prop>
             </props>
         </property>
         <property name="namingStrategy"><ref bean="namingStrategy"/></property>
