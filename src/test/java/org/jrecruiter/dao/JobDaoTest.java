@@ -15,6 +15,7 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectRetrievalFailureException;
 
 /**
@@ -23,29 +24,16 @@ import org.springframework.orm.ObjectRetrievalFailureException;
  */
 public class JobDaoTest extends BaseTest {
 
-    /**
-     *
-     */
-    private JobDao jobDao;
-
-    private UserDao userDao;
+	private @Autowired JobDao jobDao;
+	private @Autowired UserDao userDao;
 
     /** Statis Dao */
-    private StatisticDao statisticDao;
-
-    public void setUserDao(UserDao userDAO) {
-        this.userDao = userDAO;
-    }
-
+	private @Autowired StatisticDao statisticDao;
 
     /**
      *   Initialize Logging.
      */
     public static final Logger LOGGER = Logger.getLogger(JobDaoTest.class);
-
-    public void setJobDao(JobDao jobDao) {
-        this.jobDao = jobDao;
-    }
 
     public void testGetJobsPaginated() {
 
@@ -72,13 +60,13 @@ public class JobDaoTest extends BaseTest {
         statistic.setLastAccess(new Date());
 
         User user = this.getUser();
-        userDao.save(user);
+        User savedUser = userDao.save(user);
 
         job.setStatistic(statistic);
-        job.setUser(user);
+        job.setUser(savedUser);
 
-        jobDao.save(job);
-        assertNotNull(job.getId());
+        Job savedJob = jobDao.save(job);
+        assertNotNull(savedJob.getId());
     }
 
     public void testGetJob() {
@@ -86,12 +74,12 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
 
         User user = this.getUser();
-        userDao.save(user);
+        User savedUser = userDao.save(user);
+        entityManager.flush();
+        job.setUser(savedUser);
+        Job savedJob = jobDao.save(job);
 
-        job.setUser(user);
-        jobDao.save(job);
-
-        Job job2 = jobDao.get(job.getId());
+        Job job2 = jobDao.get(savedJob.getId());
 
         assertNotNull(job2);
     }
@@ -111,15 +99,15 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
 
         User user = this.getUser();
-        userDao.save(user);
+        User savedUser = userDao.save(user);
 
-        job.setUser(user);
+        job.setUser(savedUser);
 
         assertFalse(jobDao.exists(9999999L));
-        jobDao.save(job);
-        assertNotNull(job.getId());
+        Job savedJob = jobDao.save(job);
+        assertNotNull(savedJob.getId());
 
-        assertTrue(jobDao.exists(job.getId()));
+        assertTrue(jobDao.exists(savedJob.getId()));
     }
 
     public void testGetAllUserJobs() {
@@ -127,11 +115,11 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
         final User user = this.getUser();
 
-        userDao.save(user);
+        User savedUser = userDao.save(user);
         entityManager.flush();
 
-        job.setUser(user);
-        jobDao.save(job);
+        job.setUser(savedUser);
+        Job savedJob = jobDao.save(job);
 
         List <Job> jobs = jobDao.getAllUserJobs("demo44");
 
@@ -188,9 +176,9 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
 
         User user = this.getUser();
-        userDao.save(user);
+        User savedUser = userDao.save(user);
 
-        job.setUser(user);
+        job.setUser(savedUser);
         jobDao.save(job);
 
         List <Job> jobs = jobDao.getAllJobs();
@@ -203,12 +191,12 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
         final User user = this.getUser();
 
-        userDao.save(user);
+        User savedUser = userDao.save(user);
 
-        job.setUser(user);
+        job.setUser(savedUser);
         jobDao.save(job);
 
-        List <Job> jobs = jobDao.getAllUserJobsForStatistics(user.getId());
+        List <Job> jobs = jobDao.getAllUserJobsForStatistics(savedUser.getId());
 
         assertNotNull(jobs);
         assertTrue(jobs.size()>0);
@@ -218,8 +206,8 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
         final User user = this.getUser();
 
-        userDao.save(user);
-        job.setUser(user);
+        User savedUser = userDao.save(user);
+        job.setUser(savedUser);
 
 
         Statistic statistic = new Statistic();
@@ -234,12 +222,12 @@ public class JobDaoTest extends BaseTest {
         entityManager.flush();
 
 
-        List <Job> jobs = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.PAGE_HITS, false);
+        List <Job> jobs = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.PAGE_HITS, false);
 
         assertNotNull(jobs);
         assertTrue(jobs.size()>0);
 
-        List <Job> jobs2 = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.UNIQUE_HITS, false);
+        List <Job> jobs2 = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.UNIQUE_HITS, false);
 
         assertNotNull(jobs2);
         assertTrue(jobs2.size()>0);
@@ -249,21 +237,21 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
         final User user = this.getUser();
 
-        userDao.save(user);
-        job.setUser(user);
-        jobDao.save(job);
+        User savedUser = userDao.save(user);
+        job.setUser(savedUser);
+        Job savedJob = jobDao.save(job);
 
         Statistic statistic = new Statistic();
 
-        statistic.setJob(job);
+        statistic.setJob(savedJob);
         statistic.setCounter(new Long(0));
         statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
 
         statisticDao.save(statistic);
 
-        List <Job> jobs = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.PAGE_HITS, true);
-        List <Job> jobs2 = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.UNIQUE_HITS, true);
+        List <Job> jobs = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.PAGE_HITS, true);
+        List <Job> jobs2 = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.UNIQUE_HITS, true);
 
         assertNotNull(jobs);
         assertTrue(jobs2.size()>0);
@@ -276,9 +264,9 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
         final User user = this.getUser();
 
-        userDao.save(user);
+        User savedUser = userDao.save(user);
 
-        job.setUser(user);
+        job.setUser(savedUser);
         jobDao.save(job);
 
         Integer totalNumberOfJobs = jobDao.getJobsCount();
@@ -295,19 +283,19 @@ public class JobDaoTest extends BaseTest {
         final Job job = this.getJob();
         final User user = this.getUser();
 
-        userDao.save(user);
-        job.setUser(user);
-        jobDao.save(job);
+        User savedUser = userDao.save(user);
+        job.setUser(savedUser);
+        Job savedJob = jobDao.save(job);
 
         entityManager.flush();
 
-        assertEquals("www.google.com", job.getWebsite());
+        assertEquals("www.google.com", savedJob.getWebsite());
 
-        job.setWebsite("www.hillert.com");
-        jobDao.save(job);
+        savedJob.setWebsite("www.hillert.com");
+        jobDao.save(savedJob);
         entityManager.flush();
 
-        Job job2 = jobDao.get(job.getId());
+        Job job2 = jobDao.get(savedJob.getId());
         assertEquals("www.hillert.com", job2.getWebsite());
 
     }

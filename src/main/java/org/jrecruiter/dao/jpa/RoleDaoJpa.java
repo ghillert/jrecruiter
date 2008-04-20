@@ -17,6 +17,7 @@ package org.jrecruiter.dao.jpa;
 
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.Role;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -24,6 +25,7 @@ import org.jrecruiter.model.Role;
  * @author Gunnar Hillert
  * @version @version $Id: RoleDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
  */
+@Repository("roleDao")
 public class RoleDaoJpa extends GenericDaoJpa< Role, Long>
 implements RoleDao {
 

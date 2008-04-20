@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
  * @author Jerzy Puchala, Gunnar Hillert
  * @version $Id: JobDaoHibernate.java 171 2008-02-29 05:58:09Z ghillert $
  */
-@Repository
+@Repository("jobDao")
 public final class JobDaoJpa extends GenericDaoJpa< Job, Long>
 implements JobDao {
 
@@ -213,7 +213,7 @@ implements JobDao {
                 sortOrder = "DESC";
             }
 
-            Session session = (Session) entityManager;
+            Session session = (Session)entityManager.getDelegate();
             final Criteria criteria = session.createCriteria(Job.class);
             criteria.setFetchMode("statistics", FetchMode.JOIN);
             criteria.setFetchMode("region", FetchMode.JOIN);
@@ -242,7 +242,7 @@ implements JobDao {
 
             Long numberOfJobs = null;
 
-            Session session = (Session) entityManager;
+            Session session = (Session)entityManager.getDelegate();
             Query query = session.createQuery("select count(*) from Job");
             numberOfJobs = (Long) query.uniqueResult();
 

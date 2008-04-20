@@ -17,6 +17,7 @@ package org.jrecruiter.dao.jpa;
 
 import org.jrecruiter.dao.StatisticDao;
 import org.jrecruiter.model.Statistic;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -24,6 +25,7 @@ import org.jrecruiter.model.Statistic;
  * @author Gunnar Hillert
  * @version @version $Id: StatisticDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
  */
+@Repository("statisticDao")
 public class StatisticDaoJpa extends GenericDaoJpa< Statistic, Long>
 								   implements StatisticDao {
 

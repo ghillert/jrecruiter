@@ -27,7 +27,6 @@ import org.springframework.stereotype.Repository;
  *
  * @author <a href="mailto:bwnoll@gmail.com">Bryan Noll</a>
  */
-@Repository
 public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, PK> {
 
     protected @PersistenceContext EntityManager entityManager;

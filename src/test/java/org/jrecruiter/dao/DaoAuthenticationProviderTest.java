@@ -10,6 +10,7 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.apache.log4j.Logger;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
@@ -17,18 +18,9 @@ import org.jrecruiter.test.BaseTest;
  */
 public class DaoAuthenticationProviderTest extends BaseTest {
 
-	private DaoAuthenticationProvider daoAuthenticationProvider;
+	private @Autowired DaoAuthenticationProvider daoAuthenticationProvider;
 
-	private UserDao userDao;
-
-	public void setUserDao(UserDao userDAO) {
-		this.userDao = userDAO;
-	}
-
-	public void setDaoAuthenticationProvider(
-			DaoAuthenticationProvider daoAuthenticationProvider) {
-		this.daoAuthenticationProvider = daoAuthenticationProvider;
-	}
+	private @Autowired UserDao userDao;
 
 	/**
 	 *   Initialize Logging.

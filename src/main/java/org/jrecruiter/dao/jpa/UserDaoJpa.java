@@ -24,11 +24,13 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.User;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Gunnar Hillert
  * @version $Id: UserDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
  */
+@Repository("userDao")
 public class UserDaoJpa extends GenericDaoJpa< User, Long>
 implements UserDao {
 
@@ -87,7 +89,7 @@ implements UserDao {
     @SuppressWarnings("unchecked")
     public void deleteUser(final String[] usernameList) {
 
-        Session session = (Session) entityManager;
+        Session session = (Session)entityManager.getDelegate();
 
         List<User> list = (List<User>) session.createCriteria(User.class).add(
                 Expression.in("username", usernameList)).list();

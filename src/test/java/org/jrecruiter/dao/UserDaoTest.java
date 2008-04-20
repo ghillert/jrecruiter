@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -17,11 +18,7 @@ import org.springframework.dao.DataAccessException;
  */
 public class UserDaoTest extends BaseTest {
 
-	private UserDao userDao;
-
-	public void setUserDao(UserDao userDAO) {
-		this.userDao = userDAO;
-	}
+	private @Autowired UserDao userDao;
 
 	/**
 	 * Initialize Logging.
@@ -36,12 +33,8 @@ public class UserDaoTest extends BaseTest {
 	}
 
 	public void testGetSingleUser() {
-		System.out.println("exec");
-
 		User user = userDao.getUser("admin");
-
 		LOGGER.info(user);
-
 	}
 
 	/**
@@ -51,18 +44,19 @@ public class UserDaoTest extends BaseTest {
 	public void testAddAndRemoveUser() {
 
 		final User user = getUser();
-		userDao.save(user);
+		User savedUser = userDao.save(user);
 
-		assertNotNull(user.getUsername());
-		assertTrue(user.getFirstName().equals("Demo First Name"));
-		assertNotNull(user.getId());
+		assertNotNull(savedUser.getUsername());
+		assertTrue(savedUser.getFirstName().equals("Demo First Name"));
+		entityManager.flush();
+		assertNotNull(savedUser.getId());
 
-		userDao.deleteUser(new String[] { user.getUsername() });
+		userDao.deleteUser(new String[] { savedUser.getUsername() });
 
 		try {
 
-			LOGGER.info("Retrieving User: " + user.getUsername());
-			User userFromDb = userDao.getUser(user.getUsername());
+			LOGGER.info("Retrieving User: " + savedUser.getUsername());
+			User userFromDb = userDao.getUser(savedUser.getUsername());
 			LOGGER.info(userFromDb);
 			if (userFromDb != null) {
 				fail("User found in database");

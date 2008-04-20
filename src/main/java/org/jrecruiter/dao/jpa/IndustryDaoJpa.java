@@ -21,12 +21,14 @@ import javax.persistence.Query;
 
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.model.Industry;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Gunnar Hillert
  * @version $Id: IndustryDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
  */
+@Repository("industryDao")
 public class IndustryDaoJpa extends GenericDaoJpa< Industry, Long>
                                   implements IndustryDao {
 
