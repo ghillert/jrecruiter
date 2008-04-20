@@ -5,17 +5,15 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
-    <bean id="baseDao" abstract="true">
-          <property name="sessionFactory"><ref bean="sessionFactory" /></property>
-    </bean>
+    <bean id="baseDao" abstract="true"/>
 
-    <bean id="configurationDao" class="org.jrecruiter.dao.hibernate.ConfigurationDaoHibernate" parent="baseDao"/>
-    <bean id="industryDao"      class="org.jrecruiter.dao.hibernate.IndustryDaoHibernate"      parent="baseDao"/>
-    <bean id="jobDao"           class="org.jrecruiter.dao.hibernate.JobDaoHibernate"           parent="baseDao"/>
-    <bean id="regionDao"        class="org.jrecruiter.dao.hibernate.RegionDaoHibernate"        parent="baseDao"/>
-    <bean id="roleDao"          class="org.jrecruiter.dao.hibernate.RoleDaoHibernate"          parent="baseDao"/>
-    <bean id="statisticDao"     class="org.jrecruiter.dao.hibernate.StatisticDaoHibernate"     parent="baseDao"/>
-    <bean id="userDao"          class="org.jrecruiter.dao.hibernate.UserDaoHibernate"          parent="baseDao"/>
-    <bean id="userToRoleDao"    class="org.jrecruiter.dao.hibernate.UserToRoleDaoHibernate"    parent="baseDao"/>
+    <bean id="configurationDao" class="org.jrecruiter.dao.jpa.ConfigurationDaoJpa" parent="baseDao"/>
+    <bean id="industryDao"      class="org.jrecruiter.dao.jpa.IndustryDaoJpa"      parent="baseDao"/>
+    <bean id="jobDao"           class="org.jrecruiter.dao.jpa.JobDaoJpa"           parent="baseDao"/>
+    <bean id="regionDao"        class="org.jrecruiter.dao.jpa.RegionDaoJpa"        parent="baseDao"/>
+    <bean id="roleDao"          class="org.jrecruiter.dao.jpa.RoleDaoJpa"          parent="baseDao"/>
+    <bean id="statisticDao"     class="org.jrecruiter.dao.jpa.StatisticDaoJpa"     parent="baseDao"/>
+    <bean id="userDao"          class="org.jrecruiter.dao.jpa.UserDaoJpa"          parent="baseDao"/>
+    <bean id="userToRoleDao"    class="org.jrecruiter.dao.jpa.UserToRoleDaoJpa"    parent="baseDao"/>
 
 </beans>

@@ -39,6 +39,7 @@ import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.impl.JobServiceImpl;
+import org.springframework.test.util.ReflectionTestUtils;
 
 
 /**
@@ -55,7 +56,7 @@ public class JobServiceUnitTest extends TestCase {
 
         JobDao jobDao = EasyMock.createMock(JobDao.class);
 
-        jobService.setJobDao(jobDao);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         jobDao.remove(1L);
         EasyMock.replay(jobDao);
 
@@ -66,7 +67,7 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetJobs(){
+    public void testGetJobs() throws Exception {
 
         List<Job> jobs = new ArrayList<Job>();
 
@@ -77,7 +78,7 @@ public class JobServiceUnitTest extends TestCase {
         JobServiceImpl jobService = new JobServiceImpl();
         JobDao jobDao = EasyMock.createMock(JobDao.class);
 
-        jobService.setJobDao(jobDao);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         EasyMock.expect(jobDao.getAllJobs()).andReturn(jobs);
         EasyMock.replay(jobDao);
 
@@ -88,7 +89,7 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetIndustries(){
+    public void testGetIndustries() throws Exception {
 
         List<Job> jobs = new ArrayList<Job>();
 
@@ -99,7 +100,7 @@ public class JobServiceUnitTest extends TestCase {
         JobServiceImpl jobService = new JobServiceImpl();
         JobDao jobDao = EasyMock.createMock(JobDao.class);
 
-        jobService.setJobDao(jobDao);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         EasyMock.expect(jobDao.getAllJobs()).andReturn(jobs);
         EasyMock.replay(jobDao);
 
@@ -110,7 +111,7 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetRegions(){
+    public void testGetRegions() throws Exception {
 
         List<Region> regions = new ArrayList<Region>();
 
@@ -120,8 +121,8 @@ public class JobServiceUnitTest extends TestCase {
 
         JobServiceImpl jobService = new JobServiceImpl();
         RegionDao regionDao = EasyMock.createMock(RegionDao.class);
-        jobService.setRegionDao(regionDao);
 
+        ReflectionTestUtils.setField(jobService, "regionDao", regionDao, RegionDao.class);
         EasyMock.expect(regionDao.getAllRegionsOrdered()).andReturn(regions);
         EasyMock.replay(regionDao);
 
@@ -132,7 +133,7 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetJobsForPagination(){
+    public void testGetJobsForPagination() throws Exception {
 
         final List<Job> jobs = new ArrayList<Job>();
 
@@ -143,7 +144,7 @@ public class JobServiceUnitTest extends TestCase {
         final JobServiceImpl jobService = new JobServiceImpl();
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
 
-        jobService.setJobDao(jobDao);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         EasyMock.expect(jobDao.getJobs(5, 1, "test", "ascending")).andReturn(jobs);
         EasyMock.replay(jobDao);
 
@@ -154,11 +155,11 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetJobsCountTest(){
+    public void testGetJobsCountTest() throws Exception {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
-        jobService.setJobDao(jobDao);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         EasyMock.expect(jobDao.getJobsCount()).andReturn(10);
         EasyMock.replay(jobDao);
@@ -168,7 +169,7 @@ public class JobServiceUnitTest extends TestCase {
         assertEquals(Integer.valueOf(10), jobsCounted);
     }
 
-    public void testGetJRecruiterSettings() {
+    public void testGetJRecruiterSettings() throws Exception {
 
         final JobServiceImpl jobService = new JobServiceImpl();
 
@@ -181,7 +182,8 @@ public class JobServiceUnitTest extends TestCase {
 
         final ConfigurationDao configurationDao = EasyMock.createStrictMock(ConfigurationDao.class);
         EasyMock.expect(configurationDao.getAll()).andReturn(settings);
-        jobService.setConfigurationDao(configurationDao);
+
+        ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
         EasyMock.replay(configurationDao);
 
@@ -191,7 +193,7 @@ public class JobServiceUnitTest extends TestCase {
         assertTrue(settings2.size() == 10);
     }
 
-    public void testGetJRecruiterSetting() {
+    public void testGetJRecruiterSetting() throws Exception {
 
         final JobServiceImpl jobService = new JobServiceImpl();
 
@@ -199,7 +201,8 @@ public class JobServiceUnitTest extends TestCase {
 
         final ConfigurationDao configurationDao = EasyMock.createStrictMock(ConfigurationDao.class);
         EasyMock.expect(configurationDao.get("key")).andReturn(configuration);
-        jobService.setConfigurationDao(configurationDao);
+
+        ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
         EasyMock.replay(configurationDao);
 
@@ -208,20 +211,21 @@ public class JobServiceUnitTest extends TestCase {
         assertNotNull(configuration2);
     }
 
-    public void testSaveJRecruiterSetting() {
+    public void testSaveJRecruiterSetting() throws Exception {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         Configuration configuration = new Configuration();
 
         final ConfigurationDao configurationDao = EasyMock.createStrictMock(ConfigurationDao.class);
-        configurationDao.update(configuration);
-        jobService.setConfigurationDao(configurationDao);
+        configurationDao.save(configuration);
+
+        ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
         EasyMock.replay(configurationDao);
         jobService.saveJRecruiterSetting(configuration);
     }
 
-    public void testGetUsersJobsTestAsAdminUser(){
+    public void testGetUsersJobsTestAsAdminUser() throws Exception {
 
         final User user = this.getUser();
         user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.ADMIN.name()), user));
@@ -229,7 +233,8 @@ public class JobServiceUnitTest extends TestCase {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
-        jobService.setJobDao(jobDao);
+
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         final UserDao userDao = EasyMock.createMock(UserDao.class);
         jobService.setUserDao(userDao);
@@ -253,7 +258,7 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetUsersJobsAsNormalUser(){
+    public void testGetUsersJobsAsNormalUser() throws Exception {
 
         final User user = this.getUser();
         user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.MANAGER.name()), user));
@@ -261,7 +266,7 @@ public class JobServiceUnitTest extends TestCase {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
-        jobService.setJobDao(jobDao);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         final UserDao userDao = EasyMock.createMock(UserDao.class);
         jobService.setUserDao(userDao);
@@ -285,7 +290,7 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetUsersJobsForStatistics() {
+    public void testGetUsersJobsForStatistics() throws Exception {
 
         final User user = this.getUser();
         user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.MANAGER.name()), user));
@@ -293,7 +298,7 @@ public class JobServiceUnitTest extends TestCase {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
-        jobService.setJobDao(jobDao);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         final UserDao userDao = EasyMock.createMock(UserDao.class);
         jobService.setUserDao(userDao);
@@ -319,15 +324,15 @@ public class JobServiceUnitTest extends TestCase {
     }
 
 
-    public void testAddJob() {
+    public void testAddJob() throws Exception {
 
         final JobServiceImpl jobService = new JobServiceImpl();
 
         Job job = this.getJob(1L);
 
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
-        jobDao.save(job);
-        jobService.setJobDao(jobDao);
+        EasyMock.expect(jobDao.save(job)).andReturn(job);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         EasyMock.replay(jobDao);
 
@@ -335,15 +340,15 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testGetJobForId() {
+    public void testGetJobForId() throws Exception {
 
         final JobServiceImpl jobService = new JobServiceImpl();
 
         Job job = this.getJob(1L);
 
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
-        jobDao.save(job);
-        jobService.setJobDao(jobDao);
+        EasyMock.expect(jobDao.save(job)).andReturn(job);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
 
 
@@ -354,14 +359,14 @@ public class JobServiceUnitTest extends TestCase {
     }
 
 
-    public void testUpdateJobTest(){
+    public void testUpdateJobTest() throws Exception {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final Job job = this.getJob(1L);
 
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
-        jobDao.update(job);
-        jobService.setJobDao(jobDao);
+        EasyMock.expect(jobDao.save(job)).andReturn(job);
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         EasyMock.replay(jobDao);
 
@@ -369,7 +374,7 @@ public class JobServiceUnitTest extends TestCase {
 
     }
 
-    public void testUpdateJobStatistic() {
+    public void testUpdateJobStatistic() throws Exception {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final Statistic statistic = new Statistic();
@@ -377,23 +382,24 @@ public class JobServiceUnitTest extends TestCase {
         statistic.setId(1L);
 
         final StatisticDao statisticDao = EasyMock.createStrictMock(StatisticDao.class);
-        statisticDao.update(statistic);
-        jobService.setStatisticDao(statisticDao);
+        EasyMock.expect(statisticDao.save(statistic)).andReturn(statistic);
+        ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
 
         EasyMock.replay(statisticDao);
 
         jobService.updateJobStatistic(statistic);
     }
 
-    public void testUpdateJobStatistic2() {
+    public void testUpdateJobStatistic2() throws Exception {
         final JobServiceImpl jobService = new JobServiceImpl();
 
         final Statistic statistic = new Statistic();
         statistic.setJob(this.getJob(1L));
 
         final StatisticDao statisticDao = EasyMock.createStrictMock(StatisticDao.class);
-        statisticDao.save(statistic);
-        jobService.setStatisticDao(statisticDao);
+        EasyMock.expect(statisticDao.save(statistic)).andReturn(statistic);
+
+        ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
 
         EasyMock.replay(statisticDao);
 

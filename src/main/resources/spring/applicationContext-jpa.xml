@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+
+                <bean id="hibernateJpaVendorAdapter"
+                        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                        <property name="showSql" value="true" />
+                </bean>
+
+                <bean id="entityManagerFactory"
+                        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+                        <property name="dataSource"          ref="dataSource"/>
+                        <property name="jpaVendorAdapter"          ref="hibernateJpaVendorAdapter"/>
+                        <property name="persistenceUnitName" value="base"/>
+                        <property name="loadTimeWeaver">
+                                <bean class="org.springframework.instrument.classloading.SimpleLoadTimeWeaver" />
+                        </property>
+                        <property name="jpaProperties">
+                        <props>
+                            <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                            <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+                            <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                            <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                            <prop key="hibernate.show_sql">true</prop>
+                            <prop key="hibernate.format_sql">true</prop>
+                            <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
+                            <prop key="hibernate.search.default.indexBase">${hibernate.search.directory}</prop>
+                        </props>
+                        </property>
+                </bean>
+                <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+                        <property name="entityManagerFactory" ref="entityManagerFactory" />
+                </bean>
+</beans>

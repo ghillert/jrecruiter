@@ -13,23 +13,15 @@
  *	permissions under this License.
  *
  */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao.jpa;
 
-import java.text.ParseException;
 import java.util.List;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.hibernate.CacheMode;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-import org.hibernate.FlushMode;
 import org.hibernate.Query;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 import org.jrecruiter.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Job;
@@ -39,17 +31,17 @@ import org.springframework.stereotype.Repository;
  * This DAO provides job-related database methods.
  *
  * @author Jerzy Puchala, Gunnar Hillert
- * @version $Id$
+ * @version $Id: JobDaoHibernate.java 171 2008-02-29 05:58:09Z ghillert $
  */
 @Repository
-public final class JobDaoHibernate extends GenericDaoHibernate< Job, Long>
+public final class JobDaoJpa extends GenericDaoJpa< Job, Long>
 implements JobDao {
 
     /**
      * Constructor.
      *
      */
-    private JobDaoHibernate() {
+    private JobDaoJpa() {
         super(Job.class);
     }
 
@@ -62,11 +54,11 @@ implements JobDao {
     @SuppressWarnings("unchecked")
     public List < Job > getAllJobs() {
 
-        List < Job > jobs = sf.getCurrentSession()
+        List < Job > jobs = entityManager
         .createQuery("select job from Job job "
                 + "left outer join fetch job.statistic "
                 + " order by job.updateDate DESC")
-                .list();
+                .getResultList();
 
         return jobs;
     }
@@ -82,10 +74,10 @@ implements JobDao {
     @SuppressWarnings("unchecked")
     public List < Job > getAllUserJobs(final String username) {
 
-        List < Job > jobs = sf.getCurrentSession()
+        List < Job > jobs = entityManager
         .createQuery("from Job j where j.user.username=:username")
-        .setString("username", username)
-        .list();
+        .setParameter("username", username)
+        .getResultList();
         return jobs;
     }
 
@@ -98,10 +90,10 @@ implements JobDao {
     @SuppressWarnings("unchecked")
     public List < Job > getAllUserJobsForStatistics(Long userId) {
 
-        List < Job > jobs = sf.getCurrentSession()
+        List < Job > jobs = entityManager
         .createQuery("from Job j left outer join fetch j.statistic where j.user.id=:userId")
-        .setLong("userId", userId)
-        .list();
+        .setParameter("userId", userId)
+        .getResultList();
         return jobs;
     }
 
@@ -125,43 +117,43 @@ implements JobDao {
 
         final List < Job > jobs;
 
-            Query query = null;
+            javax.persistence.Query query = null;
 
             if (statsMode == StatsMode.PAGE_HITS) {
 
                 if (administrator) {
 
-                    query = sf.getCurrentSession()
+                    query = entityManager
                     .createQuery("select j from Job j left outer join fetch j.statistic as stats "
                             + "where stats is not null order by stats.counter desc");
 
                 } else {
 
-                    query = sf.getCurrentSession()
+                    query = entityManager
                     .createQuery("select j from Job j left outer join fetch j.statistic as stats "
                             + "where j.user.id=:userId and stats is not null "
                             + "order by stats.counter desc");
-                    query.setLong("userId", userId);
+                    query.setParameter("userId", userId);
                 }
             } else {
 
                 if (administrator) {
-                    query = sf.getCurrentSession()
+                    query = entityManager
                     .createQuery("select j from Job j left outer join fetch j.statistic as stats "
                             + "where stats is not null order by stats.uniqueVisits desc");
                 } else {
 
-                    query = sf.getCurrentSession()
+                    query = entityManager
                     .createQuery("select j from Job j left outer join fetch j.statistic as stats "
                             + "where j.user.id=:userId and stats is not null "
                             + "order by stats.uniqueVisits desc");
-                    query.setLong("userId", userId);
+                    query.setParameter("userId", userId);
                 }
             }
 
             query.setMaxResults(maxResult);
 
-            jobs = query.list();
+            jobs = query.getResultList();
 
             return jobs;
         }
@@ -176,20 +168,22 @@ implements JobDao {
         @SuppressWarnings("unchecked")
         public List<Job> searchByKeyword(final String keyword) {
 
-    		FullTextSession fullTextSession = Search.createFullTextSession(sf.getCurrentSession());
+//            FullTextSession fullTextSession = Search.createFullTextSession(entityManager);
+//
+//            MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"description"},
+//              new StandardAnalyzer());
+//            try {
+//            org.apache.lucene.search.Query query = parser.parse(keyword);
+//
+//            org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Job.class );
+//            List<Job> result = hibQuery.list();
+//
+//            return result;
+//              } catch ( org.apache.lucene.queryParser.ParseException e) {
+//                throw new IllegalStateException(e);
+//            }
 
-    		MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"description"},
-    		  new StandardAnalyzer());
-    		try {
-    		org.apache.lucene.search.Query query = parser.parse(keyword);
-
-    		org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Job.class );
-    		List<Job> result = hibQuery.list();
-
-            return result;
-      		} catch ( org.apache.lucene.queryParser.ParseException e) {
-    			throw new IllegalStateException(e);
-    		}
+            return null;
         }
 
         /**
@@ -219,7 +213,8 @@ implements JobDao {
                 sortOrder = "DESC";
             }
 
-            final Criteria criteria = sf.getCurrentSession().createCriteria(Job.class);
+            Session session = (Session) entityManager;
+            final Criteria criteria = session.createCriteria(Job.class);
             criteria.setFetchMode("statistics", FetchMode.JOIN);
             criteria.setFetchMode("region", FetchMode.JOIN);
 
@@ -247,7 +242,8 @@ implements JobDao {
 
             Long numberOfJobs = null;
 
-            Query query = sf.getCurrentSession().createQuery("select count(*) from Job");
+            Session session = (Session) entityManager;
+            Query query = session.createQuery("select count(*) from Job");
             numberOfJobs = (Long) query.uniqueResult();
 
             //FIXME
@@ -255,19 +251,19 @@ implements JobDao {
         }
 
         /** {@inheritDoc} */
-		public void reindexSearch() {
+        public void reindexSearch() {
 
-			FullTextSession fullTextSession = Search.createFullTextSession(sf.getCurrentSession());
-			fullTextSession.setFlushMode(FlushMode.MANUAL);
-			fullTextSession.setCacheMode(CacheMode.IGNORE);
-			//Scrollable results will avoid loading too many objects in memory
-			ScrollableResults results = fullTextSession.createCriteria( Job.class ).scroll( ScrollMode.FORWARD_ONLY );
-			int index = 0;
-			while( results.next() ) {
-			    index++;
-			    fullTextSession.index( results.get(0) ); //index each element
-			}
-		}
+//            FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
+//            fullTextEntityManager.setFlushMode(FlushModeType.COMMIT);
+//            //Scrollable results will avoid loading too many objects in memory
+//            javax.persistence.Query query = parser.parse( "Java rocks!" );
+//            ScrollableResults results = fullTextEntityManager.createFullTextQuery(Job.class ).scroll( ScrollMode.FORWARD_ONLY );
+//            int index = 0;
+//            while( results.next() ) {
+//                index++;
+//                fullTextSession.index( results.get(0) ); //index each element
+//            }
+        }
 
     }
 

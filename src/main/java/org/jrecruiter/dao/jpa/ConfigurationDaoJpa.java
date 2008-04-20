@@ -13,26 +13,27 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao.jpa;
 
-import org.jrecruiter.dao.StatisticDao;
-import org.jrecruiter.model.Statistic;
+import org.jrecruiter.dao.ConfigurationDao;
+import org.jrecruiter.model.Configuration;
 
 
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id$
+ * @version @version $Id: ConfigurationDaoHibernate.java 131 2007-08-07 03:37:02Z ghillert $
  */
-public class StatisticDaoHibernate extends GenericDaoHibernate< Statistic, Long>
-								   implements StatisticDao {
+public class ConfigurationDaoJpa
+						extends GenericDaoJpa< Configuration, String>
+						implements ConfigurationDao {
 
     /**
      * Constructor.
      *
      */
-    private StatisticDaoHibernate() {
-    	super(Statistic.class);
+    private ConfigurationDaoJpa() {
+        super(Configuration.class);
     }
 
 }

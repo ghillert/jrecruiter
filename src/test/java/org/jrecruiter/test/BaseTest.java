@@ -13,30 +13,32 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
  */
 public abstract class BaseTest extends AbstractTransactionalDataSourceSpringContextTests {
 
-	public static final Logger LOGGER = Logger.getLogger(BaseTest.class);
+    public static final Logger LOGGER = Logger.getLogger(BaseTest.class);
 
-	protected SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
-    public void flushSession() {
-    	sessionFactory.getCurrentSession().flush();
+        this.sessionFactory = sessionFactory;
     }
 
-	protected String[] getConfigLocations() {
+    public void flushSession() {
+        sessionFactory.getCurrentSession().flush();
+    }
+
+    protected String[] getConfigLocations() {
         setAutowireMode(AUTOWIRE_BY_NAME);
         return new String[] {
         "/spring/applicationContext-acegi-base.xml",
         "/spring/applicationContext-authentication.xml",
         "/spring/applicationContext-authorization.xml",
-        "/spring/applicationContext-hibernate.xml",
+        "/spring/applicationContext-dao.xml",
+        "/spring/applicationContext-jpa.xml",
+        "/test-applicationContext-mail.xml",
         "/spring/applicationContext.xml",
         "/spring/applicationContext-resources.xml",
-        "/spring/applicationContext-security.xml",
-        "/spring/applicationContext-dao.xml",
-        "/test-applicationContext-mail.xml"};
+        "/spring/applicationContext-security.xml"
+
+        };
     }
 
 }

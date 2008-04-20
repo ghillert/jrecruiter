@@ -13,7 +13,7 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao.jpa;
 
 import org.jrecruiter.dao.UserToRoleDao;
 import org.jrecruiter.model.UserToRole;
@@ -22,15 +22,15 @@ import org.jrecruiter.model.UserToRole;
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id$
+ * @version @version $Id: UserToRoleDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
  */
-public class UserToRoleDaoHibernate extends GenericDaoHibernate< UserToRole, Long> implements UserToRoleDao {
+public class UserToRoleDaoJpa extends GenericDaoJpa< UserToRole, Long> implements UserToRoleDao {
 
 	/**
      * Constructor.
      *
      */
-    private UserToRoleDaoHibernate() {
+    private UserToRoleDaoJpa() {
     	super(UserToRole.class);
     }
 

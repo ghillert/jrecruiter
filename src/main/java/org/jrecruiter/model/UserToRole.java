@@ -15,7 +15,6 @@
  */
 package org.jrecruiter.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,13 +37,13 @@ import javax.persistence.UniqueConstraint;
 )
 public class UserToRole  implements java.io.Serializable {
 
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = 5133190927935871627L;
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = 5133190927935871627L;
 
 
-	// Fields
+    // Fields
 
      private Long id;
      private Role role;
@@ -65,7 +64,7 @@ public class UserToRole  implements java.io.Serializable {
 
     // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-	public Long getId() {
+    public Long getId() {
         return this.id;
     }
 

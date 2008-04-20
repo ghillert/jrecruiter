@@ -100,17 +100,17 @@
                     <components>
                         <component>
                             <name>hbm2ddl</name>
-                            <implementation>annotationconfiguration</implementation>
-                            <!-- Use 'jpaconfiguration' if you're using JPA. -->
-                            <!--<implementation>jpaconfiguration</implementation>-->
+                            <implementation>jpaconfiguration</implementation>
                         </component>
                     </components>
                     <componentProperties>
                         <drop>true</drop>
                         <jdk5>true</jdk5>
                         <namingstrategy>org.jrecruiter.hibernate.ImprovedPluralizedNamingStrategy</namingstrategy>
+                        <persistenceunit>base</persistenceunit>
                         <propertyfile>target/classes/jdbc.properties</propertyfile>
                         <skip>${maven.test.skip}</skip>
+                        <configurationfile>/src/main/webapp/META-INF/persistence.xml</configurationfile>
                     </componentProperties>
                 </configuration>
                 <executions>
@@ -310,7 +310,7 @@
     <dependency>
        <groupId>org.hibernate</groupId>
        <artifactId>hibernate-entitymanager</artifactId>
-       <version>3.3.1.ga</version>
+       <version>3.3.2.GA</version>
     </dependency>
 
         <dependency>

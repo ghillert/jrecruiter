@@ -13,27 +13,28 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao.jpa;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import javax.persistence.Query;
+
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.model.Industry;
 
 /**
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: IndustryDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
  */
-public class IndustryDaoHibernate extends GenericDaoHibernate< Industry, Long>
+public class IndustryDaoJpa extends GenericDaoJpa< Industry, Long>
                                   implements IndustryDao {
 
     /**
      * Constructor.
      *
      */
-    private IndustryDaoHibernate() {
+    private IndustryDaoJpa() {
         super(Industry.class);
     }
 
@@ -42,11 +43,11 @@ public class IndustryDaoHibernate extends GenericDaoHibernate< Industry, Long>
 
         final List<Industry> industries;
 
-        final Query query = sf.getCurrentSession().createQuery(
+        final Query query = entityManager.createQuery(
                 "select ind from Industry ind " +
                 "order by name ASC");
 
-        industries = query.list();
+        industries = query.getResultList();
 
         return industries;
     }

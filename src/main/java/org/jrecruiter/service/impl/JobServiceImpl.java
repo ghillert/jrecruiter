@@ -38,6 +38,7 @@ import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -49,110 +50,36 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  */
 public class JobServiceImpl implements JobService {
 
-    /**
-     *   Initialize Logging.
-     */
+    /** Initialize Logging. */
     private static final Logger LOGGER = Logger.getLogger(JobServiceImpl.class);
 
-    /**
-     *   Used for creating the Apache-Velocity-based Email template.
-     */
-    private VelocityEngine velocityEngine;
+    /** Used for creating the Apache-Velocity-based Email template. */
+    private @Autowired VelocityEngine velocityEngine;
 
-    /**
-     * Mailsender.
-     */
-    private MailSender mailSender;
+    /** Mailsender. */
+    private @Autowired MailSender mailSender;
 
-    /**
-     * Email message.
-     */
-    private SimpleMailMessage message;
+    /** Email message. */
+    private @Autowired SimpleMailMessage message;
 
-    /**
-     * Job Dao.
-     */
-    private JobDao jobDao;
+    /** Job Dao. */
+    private @Autowired JobDao jobDao;
 
-    /**
-     * User Dao.
-     */
-    private UserDao userDao;
+    /** User Dao. */
+    private @Autowired UserDao userDao;
 
-    /**
-     * Industry Dao.
-     */
-    private IndustryDao industryDao;
+    /** Industry Dao. */
+    private @Autowired IndustryDao industryDao;
 
-    /**
-     * User Region Dao.
-     */
-    private RegionDao regionDao;
+    /** User Region Dao. */
+    private @Autowired RegionDao regionDao;
 
-    /**
-     *
-     */
-    private StatisticDao statisticDao;
+    /** Statistic Dao. */
+    private @Autowired StatisticDao statisticDao;
 
-    /**
-     * Settings Dao.
-     */
-    private ConfigurationDao configurationDao;
+    /** Settings Dao. */
+    private @Autowired ConfigurationDao configurationDao;
 
-    //~~~~~Dependency Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    public void setIndustryDao(IndustryDao industryDao) {
-        this.industryDao = industryDao;
-    }
-
-    public void setRegionDao(RegionDao regionDao) {
-        this.regionDao = regionDao;
-    }
-
-    /**
-     * @param jobDao The jobDao to set.
-     */
-    public void setJobDao(final JobDao jobDao) {
-        this.jobDao = jobDao;
-    }
-
-    /**
-     * @param settingsDao The settingsDao to set.
-     */
-    public final void setConfigurationDao(final ConfigurationDao configurationDao) {
-        this.configurationDao = configurationDao;
-    }
-
-    public void setStatisticDao(StatisticDao statisticDao) {
-        this.statisticDao = statisticDao;
-    }
-
-    /**
-     * Sets the mail sender.
-     * @param mailSender
-     */
-    public void setMailSender(final MailSender mailSender) {
-        this.mailSender = mailSender;
-    }
-
-    /**
-     *
-     * Sets the Email message.
-     *
-     * @param message
-     */
-    public void setMessage(SimpleMailMessage message) {
-        this.message = message;
-    }
-
-    /**
-     * Sets the VelocityEngine.
-     *
-     * @param velocityEngine
-     */
-    public void setVelocityEngine(final VelocityEngine velocityEngine) {
-        this.velocityEngine = velocityEngine;
-    }
 
     //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -249,7 +176,7 @@ public class JobServiceImpl implements JobService {
     * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
     */
     public void updateJob(final Job jobs) {
-        jobDao.update(jobs);
+        jobDao.save(jobs);
     }
 
     /* (non-Javadoc)
@@ -326,7 +253,7 @@ public class JobServiceImpl implements JobService {
     }
 
     public void saveJRecruiterSetting(final Configuration configuration) {
-        configurationDao.update(configuration);
+        configurationDao.save(configuration);
 
     }
 
@@ -347,14 +274,14 @@ public class JobServiceImpl implements JobService {
 
     public void updateJobStatistic(Statistic statistics) {
         if (statistics.getId() != null) {
-            this.statisticDao.update(statistics);
+            this.statisticDao.save(statistics);
         } else {
             this.statisticDao.save(statistics);
         }
 
     }
 
-	public void reindexSearch() {
-		jobDao.reindexSearch();
-	}
+    public void reindexSearch() {
+        jobDao.reindexSearch();
+    }
 }

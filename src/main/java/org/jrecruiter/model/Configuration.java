@@ -20,8 +20,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,63 +38,63 @@ import org.hibernate.annotations.Type;
 )
 public class Configuration implements Serializable {
 
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = 7279232706235477101L;
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = 7279232706235477101L;
 
-	// Fields
+    // Fields
 
-	private String messageKey;
-	private String messageText;
-	private Date lastModified;
+    private String messageKey;
+    private String messageText;
+    private Date lastModified;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Configuration() {
-	}
+    /** default constructor */
+    public Configuration() {
+    }
 
-	/** minimal constructor */
-	public Configuration(String messageKey) {
-		this.messageKey = messageKey;
-	}
-	/** full constructor */
-	public Configuration(String messageKey, String messageText, Date lastModified) {
-		this.messageKey = messageKey;
-		this.messageText = messageText;
-		this.lastModified = lastModified;
-	}
+    /** minimal constructor */
+    public Configuration(String messageKey) {
+        this.messageKey = messageKey;
+    }
+    /** full constructor */
+    public Configuration(String messageKey, String messageText, Date lastModified) {
+        this.messageKey = messageKey;
+        this.messageText = messageText;
+        this.lastModified = lastModified;
+    }
 
-	// Property accessors
+    // Property accessors
     @Id
-	@Column(length=200)
-	public String getMessageKey() {
-		return this.messageKey;
-	}
+    @Column(length=200)
+    public String getMessageKey() {
+        return this.messageKey;
+    }
 
-	public void setMessageKey(String messageKey) {
-		this.messageKey = messageKey;
-	}
+    public void setMessageKey(String messageKey) {
+        this.messageKey = messageKey;
+    }
 
-	@Column(unique=false, nullable=true, insertable=true, updatable=true)
-	@Type(type="text")
-	public String getMessageText() {
-		return this.messageText;
-	}
+    @Column(unique=false, nullable=true, insertable=true, updatable=true)
+    @Type(type="text")
+    public String getMessageText() {
+        return this.messageText;
+    }
 
-	public void setMessageText(String messageText) {
-		this.messageText = messageText;
-	}
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
 
-	@Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getLastModified() {
-		return this.lastModified;
-	}
+    @Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getLastModified() {
+        return this.lastModified;
+    }
 
-	public void setLastModified(Date lastModified) {
-		this.lastModified = lastModified;
-	}
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
 }
 
