@@ -45,7 +45,7 @@ public class UserToRoleDaoTest extends BaseTest {
         UserToRole userToRole = new UserToRole(null, role, user);
 
         userToRoleDao.save(userToRole);
-        super.flushSession();
+        entityManager.flush();
 
         assertNotNull(userToRole.getId());
     }
@@ -66,7 +66,7 @@ public class UserToRoleDaoTest extends BaseTest {
         assertTrue(user.getUserToRoles().size() == 1);
 
         userDao.save(user);
-        super.flushSession();
+        entityManager.flush();
 
         assertNotNull(userToRole.getId());
     }

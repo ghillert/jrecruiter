@@ -51,13 +51,13 @@ public class UserServiceTest extends BaseTest {
 
         try {
             userService.addUser(user);
-            flushSession();
+            entityManager.flush();
         } catch (DuplicateUserException e) {
             fail();
         }
         try {
             userService.addUser(user2);
-            flushSession();
+            entityManager.flush();
         } catch (DuplicateUserException e) {
             assertNotNull(e.getMessage());
             return;
@@ -80,7 +80,7 @@ public class UserServiceTest extends BaseTest {
     public void testSendPassword() throws Exception {
         final User user = getUser();
         userService.addUser(user);
-        flushSession();
+        entityManager.flush();
 
         userService.sendPassword(user);
 
@@ -92,7 +92,7 @@ public class UserServiceTest extends BaseTest {
 
         try {
             userService.addUser(user);
-            super.flushSession();
+            entityManager.flush();
         } catch (DuplicateUserException e) {
             fail();
         }

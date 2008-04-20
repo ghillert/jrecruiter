@@ -1,6 +1,9 @@
 package org.jrecruiter.test;
 
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
@@ -15,15 +18,7 @@ public abstract class BaseTest extends AbstractTransactionalDataSourceSpringCont
 
     public static final Logger LOGGER = Logger.getLogger(BaseTest.class);
 
-    protected SessionFactory sessionFactory;
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public void flushSession() {
-        sessionFactory.getCurrentSession().flush();
-    }
+    protected @PersistenceContext EntityManager entityManager;
 
     protected String[] getConfigLocations() {
         setAutowireMode(AUTOWIRE_BY_NAME);

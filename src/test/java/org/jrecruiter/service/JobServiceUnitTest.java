@@ -237,7 +237,7 @@ public class JobServiceUnitTest extends TestCase {
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         final UserDao userDao = EasyMock.createMock(UserDao.class);
-        jobService.setUserDao(userDao);
+        ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
         EasyMock.expect(userDao.getUser("demo44")).andReturn(user);
         EasyMock.replay(userDao);
@@ -269,7 +269,7 @@ public class JobServiceUnitTest extends TestCase {
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         final UserDao userDao = EasyMock.createMock(UserDao.class);
-        jobService.setUserDao(userDao);
+        ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
         EasyMock.expect(userDao.getUser("demo44")).andReturn(user);
         EasyMock.replay(userDao);
@@ -301,7 +301,7 @@ public class JobServiceUnitTest extends TestCase {
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
         final UserDao userDao = EasyMock.createMock(UserDao.class);
-        jobService.setUserDao(userDao);
+        ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
         EasyMock.expect(userDao.getUser("demo44")).andReturn(user);
         EasyMock.replay(userDao);

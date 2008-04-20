@@ -32,7 +32,7 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
 
     protected @PersistenceContext EntityManager entityManager;
 
-    private final Log log = LogFactory.getLog(getClass());
+    //private final Log log = LogFactory.getLog(getClass());
     private Class<T> persistentClass;
 
     public GenericDaoJpa(Class<T> persistentClass) {
@@ -54,7 +54,7 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
 
         if (entity == null) {
             String msg = "Uh oh, '" + this.persistentClass + "' object with id '" + id + "' not found...";
-            log.warn(msg);
+           // log.warn(msg);
             throw new EntityNotFoundException(msg);
         }
 
