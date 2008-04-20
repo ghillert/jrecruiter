@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Role role = roleDao.getRole(Constants.Roles.MANAGER.name());
 
         if (role == null) {
-        	throw new IllegalStateException("Role was not found but is required.");
+            throw new IllegalStateException("Role was not found but is required.");
         }
 
         Set<UserToRole> userToRoles = user.getUserToRoles();
@@ -183,7 +183,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void updateUser(User user) {
         Date updateDate = new Date();
         user.setUpdateDate(updateDate);
-        userDao.update(user);
+        userDao.save(user);
     }
 
     public List<User> getAllUsers() {

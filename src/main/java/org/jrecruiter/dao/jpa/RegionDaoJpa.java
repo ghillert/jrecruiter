@@ -13,11 +13,10 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao.jpa;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.model.Region;
 
@@ -25,16 +24,16 @@ import org.jrecruiter.model.Region;
 /**
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: RegionDaoHibernate.java 156 2008-02-21 03:26:28Z ghillert $
  */
-public class RegionDaoHibernate extends GenericDaoHibernate< Region, Long>
+public class RegionDaoJpa extends GenericDaoJpa< Region, Long>
                                   implements RegionDao {
 
     /**
      * Constructor.
      *
      */
-    private RegionDaoHibernate() {
+    private RegionDaoJpa() {
         super(Region.class);
     }
 
@@ -43,11 +42,11 @@ public class RegionDaoHibernate extends GenericDaoHibernate< Region, Long>
 
         final List<Region> regions;
 
-        final Query query = sf.getCurrentSession().createQuery(
+        final javax.persistence.Query query = entityManager.createQuery(
                 "select reg from Region reg " +
                 "order by name ASC");
 
-        regions = query.list();
+        regions = query.getResultList();
 
         return regions;
     }

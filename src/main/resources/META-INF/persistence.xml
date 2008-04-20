@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+    <persistence-unit name="base"
+        transaction-type="RESOURCE_LOCAL">
+      <properties>
+         <property name="hibernate.ejb.naming_strategy" value="org.jrecruiter.hibernate.ImprovedPluralizedNamingStrategy"/>
+      </properties>
+    </persistence-unit>
+</persistence>

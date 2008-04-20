@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.util.StrutsTypeConverter;
-import org.jrecruiter.service.impl.JobServiceImpl;
 
 /**
 * From Appfuse
@@ -39,7 +38,7 @@ public class DateConverter extends StrutsTypeConverter {
 
     public Object convertFromString(Map ctx, String[] value, Class arg2) {
 
-    	if (value == null || value[0] == null || value[0].trim().equals("")) {
+        if (value == null || value[0] == null || value[0].trim().equals("")) {
             return null;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format);

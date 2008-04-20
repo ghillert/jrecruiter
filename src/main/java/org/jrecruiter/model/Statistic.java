@@ -23,11 +23,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Parameter;
 
@@ -35,90 +32,90 @@ import org.hibernate.annotations.Parameter;
  * Holds statistical information about a job posting.
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: Statistic.java 180 2008-04-10 03:28:03Z ghillert $
  */
 @Entity
 @Table(uniqueConstraints = {  }
 )
 public class Statistic implements Serializable {
 
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = -6450245841259870972L;
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = -6450245841259870972L;
 
-	// Fields
+    // Fields
 
-	private Long  id;
-	private Job job;
-	private Long counter;
-	private Date lastAccess;
-	private Long uniqueVisits;
+    private Long  id;
+    private Job job;
+    private Long counter;
+    private Date lastAccess;
+    private Long uniqueVisits;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Statistic() {
-	}
+    /** default constructor */
+    public Statistic() {
+    }
 
-	/** full constructor */
-	public Statistic(Long id, Long counter, Date lastAccess, Long uniqueVisits) {
-		this.id = id;
-		this.counter = counter;
-		this.lastAccess = lastAccess;
-		this.uniqueVisits = uniqueVisits;
-	}
+    /** full constructor */
+    public Statistic(Long id, Long counter, Date lastAccess, Long uniqueVisits) {
+        this.id = id;
+        this.counter = counter;
+        this.lastAccess = lastAccess;
+        this.uniqueVisits = uniqueVisits;
+    }
 
-	@Id
+    @Id
     @GeneratedValue(generator="myForeignGenerator")
     @org.hibernate.annotations.GenericGenerator(
         name="myForeignGenerator",
         strategy="foreign",
         parameters=@Parameter(name="property", value="job")
     )
-	public Long getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @OneToOne(fetch=FetchType.LAZY, optional=false)
-	public Job getJob() {
-		return job;
-	}
+    public Job getJob() {
+        return job;
+    }
 
-	public void setJob(Job job) {
-		this.job = job;
-	}
+    public void setJob(Job job) {
+        this.job = job;
+    }
 
-	@Column(name="counter", unique=false, nullable=false, insertable=true, updatable=true)
-	public Long getCounter() {
-		return this.counter;
-	}
+    @Column(name="counter", unique=false, nullable=false, insertable=true, updatable=true)
+    public Long getCounter() {
+        return this.counter;
+    }
 
-	public void setCounter(Long counter) {
-		this.counter = counter;
-	}
+    public void setCounter(Long counter) {
+        this.counter = counter;
+    }
 
-	@Column(name="last_access", unique=false, nullable=false, insertable=true, updatable=true, length=8)
-	public Date getLastAccess() {
-		return this.lastAccess;
-	}
+    @Column(name="last_access", unique=false, nullable=false, insertable=true, updatable=true, length=8)
+    public Date getLastAccess() {
+        return this.lastAccess;
+    }
 
-	public void setLastAccess(Date lastAccess) {
-		this.lastAccess = lastAccess;
-	}
+    public void setLastAccess(Date lastAccess) {
+        this.lastAccess = lastAccess;
+    }
 
-	@Column(name="unique_visits", unique=false, nullable=false, insertable=true, updatable=true)
-	public Long getUniqueVisits() {
-		return this.uniqueVisits;
-	}
+    @Column(name="unique_visits", unique=false, nullable=false, insertable=true, updatable=true)
+    public Long getUniqueVisits() {
+        return this.uniqueVisits;
+    }
 
-	public void setUniqueVisits(Long uniqueVisits) {
-		this.uniqueVisits = uniqueVisits;
-	}
+    public void setUniqueVisits(Long uniqueVisits) {
+        this.uniqueVisits = uniqueVisits;
+    }
 
 }
 

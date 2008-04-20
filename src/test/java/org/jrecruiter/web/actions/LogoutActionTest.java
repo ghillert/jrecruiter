@@ -15,16 +15,12 @@
 */
 package org.jrecruiter.web.actions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
 
 /**
@@ -37,7 +33,7 @@ public class LogoutActionTest extends TestCase {
 
     public void testExecute() throws Exception {
 
-    	LogoutAction logoutAction = new LogoutAction();
+        LogoutAction logoutAction = new LogoutAction();
 
         JobService jobService = EasyMock.createMock(JobService.class);
 
@@ -45,9 +41,9 @@ public class LogoutActionTest extends TestCase {
 
         EasyMock.replay(jobService);
 
-    	String ret = logoutAction.execute();
+        String ret = logoutAction.execute();
 
-    	Assert.assertEquals("success", ret);
+        Assert.assertEquals("success", ret);
     }
 }
 

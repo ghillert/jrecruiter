@@ -15,23 +15,17 @@
 */
 package org.jrecruiter.web.actions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.apache.struts2.ServletActionContext;
 import org.easymock.EasyMock;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
  * Test the Struts 2 Logout Action

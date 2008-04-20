@@ -13,9 +13,8 @@
  *	permissions under this License.
  *
  */
-package org.jrecruiter.dao.hibernate;
+package org.jrecruiter.dao.jpa;
 
-import org.hibernate.Query;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.Role;
 
@@ -23,34 +22,34 @@ import org.jrecruiter.model.Role;
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id$
+ * @version @version $Id: RoleDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
  */
-public class RoleDaoHibernate extends GenericDaoHibernate< Role, Long>
+public class RoleDaoJpa extends GenericDaoJpa< Role, Long>
 implements RoleDao {
 
-	/**
-	 * Constructor.
-	 *
-	 */
-	private RoleDaoHibernate() {
-		super(Role.class);
-	}
+    /**
+     * Constructor.
+     *
+     */
+    private RoleDaoJpa() {
+        super(Role.class);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.jrecruiter.dao.RoleDao#getRole(java.lang.String)
-	 */
-	public Role getRole(final String roleName) {
+    /* (non-Javadoc)
+     * @see org.jrecruiter.dao.RoleDao#getRole(java.lang.String)
+     */
+    public Role getRole(final String roleName) {
 
-		final Role role;
+        final Role role;
 
-		Query query = sf.getCurrentSession()
-		.createQuery("select r from Role r "
-				+ "where r.name = :role");
-		query.setString("role", roleName);
+        javax.persistence.Query query = entityManager
+        .createQuery("select r from Role r "
+                + "where r.name = :role");
+        query.setParameter("role", roleName);
 
-		role = (Role) query.uniqueResult();
+        role = (Role) query.getSingleResult();
 
-		return role;
-	}
+        return role;
+    }
 
 }
