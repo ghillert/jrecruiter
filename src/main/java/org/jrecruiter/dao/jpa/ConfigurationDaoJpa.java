@@ -17,6 +17,7 @@ package org.jrecruiter.dao.jpa;
 
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.model.Configuration;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -24,6 +25,7 @@ import org.jrecruiter.model.Configuration;
  * @author Gunnar Hillert
  * @version @version $Id: ConfigurationDaoHibernate.java 131 2007-08-07 03:37:02Z ghillert $
  */
+@Repository("configurationDao")
 public class ConfigurationDaoJpa
 						extends GenericDaoJpa< Configuration, String>
 						implements ConfigurationDao {

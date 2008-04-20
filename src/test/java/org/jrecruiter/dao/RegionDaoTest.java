@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
@@ -14,7 +15,7 @@ import org.jrecruiter.test.BaseTest;
  */
 public class RegionDaoTest extends BaseTest {
 
-    private RegionDao regionDao;
+	private @Autowired RegionDao regionDao;
 
     /**
      * Initialize Logging.
@@ -29,7 +30,4 @@ public class RegionDaoTest extends BaseTest {
 
     }
 
-    public void setRegionDao(RegionDao regionDao) {
-        this.regionDao = regionDao;
-    }
 }

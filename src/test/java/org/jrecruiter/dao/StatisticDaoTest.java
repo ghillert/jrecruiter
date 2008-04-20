@@ -13,6 +13,7 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
@@ -20,46 +21,23 @@ import org.jrecruiter.test.BaseTest;
  */
 public class StatisticDaoTest extends BaseTest {
 
-	/**
-	 *
-	 */
-	private StatisticDao statisticDao;
+	private @Autowired StatisticDao statisticDao;
 
-	private UserDao userDao;
+	private @Autowired UserDao userDao;
 
-	private JobDao jobDao;
-
-	/**
-	 * @param jobDao the jobDao to set
-	 */
-	public void setJobDao(JobDao jobDao) {
-		this.jobDao = jobDao;
-	}
-
-	public void setUserDao(UserDao userDAO) {
-		this.userDao = userDAO;
-	}
+	private @Autowired JobDao jobDao;
 
 	/**
 	 *   Initialize Logging.
 	 */
 	public static final Logger LOGGER = Logger.getLogger(StatisticDaoTest.class);
 
-	/**
-	 * @param statisticDao the statisticDao to set
-	 */
-	public void setStatisticDao(StatisticDao statisticDao) {
-		this.statisticDao = statisticDao;
-	}
-
 	public void testGetAllStatistics() {
-		final Job job = this.getJob();
-
 		Statistic statistic = getStatistic();
 
-		statisticDao.save(statistic);
+		Statistic savedStatistic = statisticDao.save(statistic);
 
-		assertNotNull(statistic.getId());
+		assertNotNull(savedStatistic.getId());
 	}
 
 	private Statistic getStatistic() {
@@ -69,13 +47,13 @@ public class StatisticDaoTest extends BaseTest {
 
 		final User user = this.getUser();
 
-		userDao.save(user);
+		User savedUser = userDao.save(user);
 
-		job.setUser(user);
+		job.setUser(savedUser);
 
-		jobDao.save(job);
+		Job savedJob = jobDao.save(job);
 
-        statistic.setJob(job);
+        statistic.setJob(savedJob);
         statistic.setCounter(new Long(0));
         statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());

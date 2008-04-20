@@ -26,7 +26,6 @@ public abstract class BaseTest extends AbstractTransactionalDataSourceSpringCont
         "/spring/applicationContext-acegi-base.xml",
         "/spring/applicationContext-authentication.xml",
         "/spring/applicationContext-authorization.xml",
-        "/spring/applicationContext-dao.xml",
         "/spring/applicationContext-jpa.xml",
         "/test-applicationContext-mail.xml",
         "/spring/applicationContext.xml",

@@ -9,6 +9,7 @@ import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
@@ -16,48 +17,34 @@ import org.jrecruiter.test.BaseTest;
  */
 public class UserToRoleDaoTest extends BaseTest {
 
-    private UserDao       userDao;
-    private UserToRoleDao userToRoleDao;
-    private RoleDao       roleDao;
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    /**
-     * @param roleDao the roleDao to set
-     */
-    public void setRoleDao(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
-
-    public void setUserToRoleDao(UserToRoleDao userToRoleDao) {
-        this.userToRoleDao = userToRoleDao;
-    }
+	private @Autowired UserDao       userDao;
+	private @Autowired UserToRoleDao userToRoleDao;
+	private @Autowired RoleDao       roleDao;
 
     public void testSaveUserToRole() {
 
         final Role role = new Role(null, "TEST");
-        roleDao.save(role);
+        Role savedRole = roleDao.save(role);
+        entityManager.flush();
 
         User user = userDao.get(-1L);
 
-        UserToRole userToRole = new UserToRole(null, role, user);
+        UserToRole userToRole = new UserToRole(null, savedRole, user);
 
-        userToRoleDao.save(userToRole);
+        UserToRole savedUserToRole = userToRoleDao.save(userToRole);
         entityManager.flush();
 
-        assertNotNull(userToRole.getId());
+        assertNotNull(savedUserToRole.getId());
     }
 
     public void testSaveUserToRole2() {
 
         final Role role = new Role(null, "TEST");
-        roleDao.save(role);
+        Role savedRole = roleDao.save(role);
 
         User user = getUser();
 
-        UserToRole userToRole = new UserToRole(null, role, user);
+        UserToRole userToRole = new UserToRole(null, savedRole, user);
 
         assertTrue(user.getUserToRoles().size() == 0);
 
@@ -65,10 +52,10 @@ public class UserToRoleDaoTest extends BaseTest {
 
         assertTrue(user.getUserToRoles().size() == 1);
 
-        userDao.save(user);
+        User savedUser = userDao.save(user);
         entityManager.flush();
 
-        assertNotNull(userToRole.getId());
+        assertTrue(savedUser.getUserToRoles().size() == 1);
     }
 
 

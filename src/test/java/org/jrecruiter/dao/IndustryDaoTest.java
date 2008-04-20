@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
@@ -15,7 +16,7 @@ import org.jrecruiter.test.BaseTest;
  */
 public class IndustryDaoTest extends BaseTest {
 
-    private IndustryDao industryDao;
+	private @Autowired IndustryDao industryDao;
 
     /**
      * Initialize Logging.
@@ -29,9 +30,4 @@ public class IndustryDaoTest extends BaseTest {
         assertTrue(industries.size() == 16);
 
     }
-
-    public void setIndustryDao(IndustryDao industryDao) {
-        this.industryDao = industryDao;
-    }
-
 }

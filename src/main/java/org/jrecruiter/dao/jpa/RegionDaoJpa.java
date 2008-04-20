@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.model.Region;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -26,6 +27,7 @@ import org.jrecruiter.model.Region;
  * @author Gunnar Hillert
  * @version $Id: RegionDaoHibernate.java 156 2008-02-21 03:26:28Z ghillert $
  */
+@Repository("regionDao")
 public class RegionDaoJpa extends GenericDaoJpa< Region, Long>
                                   implements RegionDao {
 
