@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.test.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
@@ -16,7 +17,7 @@ import org.jrecruiter.test.BaseTest;
  */
 public class ConfigurationDaoTest extends BaseTest {
 
-	private ConfigurationDao configurationDao;
+	private @Autowired ConfigurationDao configurationDao;
 
 	/**
 	 * Initialize Logging.
@@ -32,10 +33,6 @@ public class ConfigurationDaoTest extends BaseTest {
 		List<org.jrecruiter.model.Configuration> conf = configurationDao.getAll();
 		assertTrue(conf.size() >= 1);
 
-	}
-
-	public void setConfigurationDao(ConfigurationDao configurationDao) {
-		this.configurationDao = configurationDao;
 	}
 
 }

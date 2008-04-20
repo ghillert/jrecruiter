@@ -36,6 +36,7 @@ import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
@@ -58,80 +59,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      *   Used for creating the Apache-Velocity-based Email template.
      */
-    private VelocityEngine velocityEngine;
+    private @Autowired VelocityEngine velocityEngine;
 
     /**
      * Mailsender.
      */
-    private MailSender mailSender;
+    private @Autowired MailSender mailSender;
 
     /**
      * Email message.
      */
-    private SimpleMailMessage message;
+    private @Autowired SimpleMailMessage message;
 
     /**
      * User Dao.
      */
-    private UserDao userDao;
+    private @Autowired UserDao userDao;
 
     /**
      * UserRole Dao.
      */
-    private RoleDao roleDao;
+    private @Autowired RoleDao roleDao;
 
     /**
      * Access to settings.
      */
-    private ConfigurationDao configurationDao;
-
-    /**
-     * @param userDao The userDao to set.
-     */
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    /**
-     * @param userRoleDao the userRoleDao to set
-     */
-    public void setRoleDao(RoleDao userRoleDao) {
-        this.roleDao = userRoleDao;
-    }
-
-    /**
-     * Sets the mail sender.
-     * @param mailSender
-     */
-    public void setMailSender(MailSender mailSender) {
-        this.mailSender = mailSender;
-    }
-
-    /**
-     *
-     * Sets the Email message.
-     *
-     * @param message
-     */
-    public void setMessage(SimpleMailMessage message) {
-        this.message = message;
-    }
-
-    /**
-     * Sets the VelocityEngine.
-     *
-     * @param velocityEngine
-     */
-    public void setVelocityEngine(VelocityEngine velocityEngine) {
-        this.velocityEngine = velocityEngine;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public final void setConfigurationDao(ConfigurationDao configurationDao) {
-        this.configurationDao = configurationDao;
-    }
+    private @Autowired ConfigurationDao configurationDao;
 
     /**
      * {@inheritDoc}

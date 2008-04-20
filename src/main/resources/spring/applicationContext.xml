@@ -41,31 +41,11 @@
     </tx:advice>
 
   <!-- The central service facade of this application -->
-  <bean id="userService" class="org.jrecruiter.service.impl.UserServiceImpl">
-    <property name="velocityEngine"><ref bean="velocityEngine"/></property>
-    <property name="mailSender"><ref bean="mailSender"/></property>
-    <property name="message"><ref bean="mailMessage"/></property>
-    <property name="userDao"><ref bean="userDao"/></property>
-    <property name="configurationDao"><ref bean="configurationDao"/></property>
-    <property name="roleDao"><ref bean="roleDao"/></property>
+  <bean id="userService" class="org.jrecruiter.service.impl.UserServiceImpl"/>
 
-  </bean>
+  <bean id="jobService" class="org.jrecruiter.service.impl.JobServiceImpl"/>
 
-  <bean id="jobService" class="org.jrecruiter.service.impl.JobServiceImpl">
-    <property name="velocityEngine"><ref bean="velocityEngine"/></property>
-    <property name="mailSender"><ref bean="mailSender"/></property>
-    <property name="message"><ref bean="mailMessage"/></property>
-    <property name="industryDao"><ref bean="industryDao"/></property>
-    <property name="jobDao"><ref bean="jobDao"/></property>
-    <property name="regionDao"><ref bean="regionDao"/></property>
-    <property name="userDao"><ref bean="userDao"/></property>
-    <property name="statisticDao"><ref bean="statisticDao"/></property>
-    <property name="configurationDao"><ref bean="configurationDao"/></property>
-  </bean>
-
-  <bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction">
-    <property name="service"><ref bean="jobService"/></property>
-  </bean>
+  <bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction"/>
 
   <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"/>
 

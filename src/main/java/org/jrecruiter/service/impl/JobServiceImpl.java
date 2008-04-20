@@ -42,12 +42,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  * @author Gunnar Hillert
  * @version $Id$
  */
+@Service
 public class JobServiceImpl implements JobService {
 
     /** Initialize Logging. */
@@ -263,13 +265,6 @@ public class JobServiceImpl implements JobService {
 
     public List<Region> getRegions() {
         return this.regionDao.getAllRegionsOrdered();
-    }
-
-    /**
-     * @param userDao the userDao to set
-     */
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
     }
 
     public void updateJobStatistic(Statistic statistics) {

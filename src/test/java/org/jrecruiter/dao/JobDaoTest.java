@@ -128,7 +128,7 @@ public class JobDaoTest extends BaseTest {
         final User user = this.getUser();
 
         userDao.save(user);
-        super.flushSession();
+        entityManager.flush();
 
         job.setUser(user);
         jobDao.save(job);
@@ -231,7 +231,7 @@ public class JobDaoTest extends BaseTest {
         job.setStatistic(statistic);
 
         jobDao.save(job);
-        flushSession();
+        entityManager.flush();
 
 
         List <Job> jobs = jobDao.getUsersJobsForStatistics(user.getId(), 5, StatsMode.PAGE_HITS, false);
@@ -299,13 +299,13 @@ public class JobDaoTest extends BaseTest {
         job.setUser(user);
         jobDao.save(job);
 
-        super.flushSession();
+        entityManager.flush();
 
         assertEquals("www.google.com", job.getWebsite());
 
         job.setWebsite("www.hillert.com");
         jobDao.save(job);
-        super.flushSession();
+        entityManager.flush();
 
         Job job2 = jobDao.get(job.getId());
         assertEquals("www.hillert.com", job2.getWebsite());

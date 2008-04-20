@@ -35,7 +35,7 @@ implements UserDao {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(UserDaoJpa.class);
+    //public static final Logger LOGGER = Logger.getLogger(UserDaoJpa.class);
 
     /**
      * Constructor.

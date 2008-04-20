@@ -28,6 +28,7 @@ import org.directwebremoting.WebContextFactory;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -41,11 +42,7 @@ public class DwrAction extends BaseDwrAction {
      */
     private static final Logger LOGGER = Logger.getLogger(DwrAction.class);
 
-    private JobService service;
-
-    public void setService(JobService service) {
-		this.service = service;
-	}
+    private @Autowired JobService service;
 
 	/* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
