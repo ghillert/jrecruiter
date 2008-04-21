@@ -53,16 +53,16 @@ public class JobServiceTest extends BaseTest {
         final Job job = this.getJob();
 
         User user = this.getUser();
-        userService.addUser(user);
-        job.setUser(user);
-        jobService.addJob(job);
+        User savedUser = userService.addUser(user);
+        job.setUser(savedUser);
+        Job savedJob = jobService.addJob(job);
 
-        Job job2 = jobService.getJobForId(job.getId());
+        Job job2 = jobService.getJobForId(savedJob.getId());
         assertNotNull(job2);
         jobService.deleteJobForId(job2.getId());
 
         try {
-            jobService.getJobForId(job.getId());
+            jobService.getJobForId(savedJob.getId());
         } catch (ObjectRetrievalFailureException e) {
             return;
         }
@@ -98,13 +98,13 @@ public class JobServiceTest extends BaseTest {
         final Job job = this.getJob();
 
         User user = this.getUser();
-        userService.addUser(user);
+        User savedUser = userService.addUser(user);
 
-        job.setUser(user);
+        job.setUser(savedUser);
 
-        jobService.addJob(job);
+        Job savedJob = jobService.addJob(job);
 
-        jobService.sendJobPostingToMailingList(job);
+        jobService.sendJobPostingToMailingList(savedJob);
 
     }
 

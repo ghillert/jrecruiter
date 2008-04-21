@@ -36,7 +36,7 @@ public interface JobService {
      *
      * @param jobs
      */
-    void addJob(Job jobs);
+    Job addJob(Job job);
 
     /**
      * Method for deleting a job posting for a job id.
