@@ -37,7 +37,7 @@
     </filter>
     <filter>
         <filter-name>lazyLoadingFilter</filter-name>
-        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
     </filter>
 
     <filter>
