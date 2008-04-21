@@ -41,7 +41,7 @@ public interface UserService {
      * @param user The user to add
      * @throws DuplicateUserException
      */
-    void addUser(User user) throws DuplicateUserException;
+    User addUser(User user) throws DuplicateUserException;
 
     /**
      * Load a user by the provided username

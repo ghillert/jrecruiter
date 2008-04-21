@@ -17,6 +17,7 @@ package org.jrecruiter.dao.jpa;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
@@ -54,7 +55,7 @@ implements UserDao {
      */
     public User getUser(String username) {
 
-        final User user;
+        User user;
 
         final Query query = entityManager.createQuery(
                 "select user from User user " +
@@ -62,8 +63,13 @@ implements UserDao {
                 "left join fetch utr.role "
                 + "where user.username= :username ");
         query.setParameter("username", username);
+        query.getResultList();
 
-        user = (User) query.getSingleResult();
+        try {
+        	user = (User) query.getSingleResult();
+        } catch(NoResultException e) {
+        	user = null;
+        }
 
         return user;
     }

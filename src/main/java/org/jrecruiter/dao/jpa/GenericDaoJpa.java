@@ -10,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.dao.GenericDao;
-import org.springframework.stereotype.Repository;
 
 /**
  * This class serves as the Base class for all other DAOs - namely to hold
@@ -31,7 +30,7 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
 
     protected @PersistenceContext EntityManager entityManager;
 
-    //private final Log log = LogFactory.getLog(getClass());
+    private final Log log = LogFactory.getLog(getClass());
     private Class<T> persistentClass;
 
     public GenericDaoJpa(Class<T> persistentClass) {
@@ -53,7 +52,7 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
 
         if (entity == null) {
             String msg = "Uh oh, '" + this.persistentClass + "' object with id '" + id + "' not found...";
-           // log.warn(msg);
+            log.warn(msg);
             throw new EntityNotFoundException(msg);
         }
 

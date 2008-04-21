@@ -18,9 +18,11 @@ package org.jrecruiter.web.actions.admin;
 import junit.framework.Assert;
 
 import org.easymock.EasyMock;
+import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.web.actions.BaseActionTest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * Test the Struts 2 Add User Action
@@ -45,9 +47,10 @@ public class AddUserActionTest extends BaseActionTest {
         user.setUsername("abc");
         addUserAction.setUser(user);
 
-        UserService userService = EasyMock.createMock(UserService.class);
 
-        userService.addUser(user);
+        final UserService userService = EasyMock.createMock(UserService.class);
+
+        EasyMock.expect(userService.addUser(user)).andReturn(user);
         EasyMock.replay(userService);
 
         addUserAction.setUserService(userService);

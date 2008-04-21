@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      * {@inheritDoc}
      */
-    public void addUser(User user) throws DuplicateUserException{
+    public User addUser(User user) throws DuplicateUserException{
 
         Date registerDate = new Date();
         user.setRegistrationDate(registerDate);
@@ -117,14 +117,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         userToRoles.add(utr);
 
-        this.saveUser(user);
+        return this.saveUser(user);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void saveUser(User user) {
-        userDao.save(user);
+    public User saveUser(User user) {
+        return userDao.save(user);
     }
 
 

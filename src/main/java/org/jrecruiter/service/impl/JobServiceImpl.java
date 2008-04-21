@@ -170,8 +170,8 @@ public class JobServiceImpl implements JobService {
     /* (non-Javadoc)
     * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
     */
-    public void addJob(final Job job) {
-        jobDao.save(job);
+    public Job addJob(final Job job) {
+        return jobDao.save(job);
     }
 
     /* (non-Javadoc)

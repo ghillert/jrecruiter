@@ -79,10 +79,10 @@ public class UserServiceTest extends BaseTest {
 
     public void testSendPassword() throws Exception {
         final User user = getUser();
-        userService.addUser(user);
+        User savedUser = userService.addUser(user);
         entityManager.flush();
 
-        userService.sendPassword(user);
+        userService.sendPassword(savedUser);
 
     }
 

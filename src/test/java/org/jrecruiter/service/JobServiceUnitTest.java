@@ -213,15 +213,14 @@ public class JobServiceUnitTest extends TestCase {
 
     public void testSaveJRecruiterSetting() throws Exception {
         final JobServiceImpl jobService = new JobServiceImpl();
-
         Configuration configuration = new Configuration();
 
         final ConfigurationDao configurationDao = EasyMock.createStrictMock(ConfigurationDao.class);
-        configurationDao.save(configuration);
+        EasyMock.expect(configurationDao.save(configuration)).andReturn(configuration);
+        EasyMock.replay(configurationDao);
 
         ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
-        EasyMock.replay(configurationDao);
         jobService.saveJRecruiterSetting(configuration);
     }
 
