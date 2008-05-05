@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id: UserToRoleDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
+ * @version @version $Id$
  */
 @Repository("userToRoleDao")
 public class UserToRoleDaoJpa extends GenericDaoJpa< UserToRole, Long> implements UserToRoleDao {

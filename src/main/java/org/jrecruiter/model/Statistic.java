@@ -32,7 +32,7 @@ import org.hibernate.annotations.Parameter;
  * Holds statistical information about a job posting.
  *
  * @author Gunnar Hillert
- * @version $Id: Statistic.java 180 2008-04-10 03:28:03Z ghillert $
+ * @version $Id$
  */
 @Entity
 @Table(uniqueConstraints = {  }

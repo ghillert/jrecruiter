@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id: ConfigurationDaoHibernate.java 131 2007-08-07 03:37:02Z ghillert $
+ * @version @version $Id$
  */
 @Repository("configurationDao")
 public class ConfigurationDaoJpa

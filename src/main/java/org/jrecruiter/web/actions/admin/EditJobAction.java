@@ -57,14 +57,14 @@ public class EditJobAction extends BaseAction implements Preparable, ModelDriven
     /** Prepare the select boxes of the form. */
     public void prepare() throws Exception {
 
-        if (id != null) {
+        if (this.id != null) {
 
-            Job jobFromDb = jobService.getJobForId(id);
+            Job jobFromDb = jobService.getJobForId(this.id);
 
             if (jobFromDb != null) {
                 this.job = jobFromDb;
             } else {
-                throw new IllegalStateException("No job found for id " + id);
+                throw new IllegalStateException("No job found for id " + this.id);
             }
 
              this.statistic = job.getStatistic();

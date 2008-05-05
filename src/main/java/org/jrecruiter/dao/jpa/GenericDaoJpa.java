@@ -28,7 +28,10 @@ import org.jrecruiter.dao.GenericDao;
  */
 public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, PK> {
 
-    protected @PersistenceContext EntityManager entityManager;
+
+    protected EntityManager entityManager;
+
+
 
     private final Log log = LogFactory.getLog(getClass());
     private Class<T> persistentClass;
@@ -74,6 +77,10 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
     /** {@inheritDoc} */
     public void remove(PK id) {
         this.entityManager.remove(this.get(id));
+    }
+    @PersistenceContext(unitName="base")
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
 }

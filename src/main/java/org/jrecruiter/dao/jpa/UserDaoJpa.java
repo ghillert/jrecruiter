@@ -29,7 +29,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: UserDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
+ * @version $Id$
  */
 @Repository("userDao")
 public class UserDaoJpa extends GenericDaoJpa< User, Long>

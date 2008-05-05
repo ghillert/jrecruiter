@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
 /**
  *
  * @author Gunnar Hillert
- * @version $Id: RegionDaoHibernate.java 156 2008-02-21 03:26:28Z ghillert $
+ * @version $Id$
  */
 @Repository("regionDao")
 public class RegionDaoJpa extends GenericDaoJpa< Region, Long>

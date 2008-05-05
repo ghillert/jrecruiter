@@ -13,12 +13,12 @@ import org.texturemedia.smarturls.Result;
 @Result(name="success", location="index", type="redirectAction")
 public class GetPasswordAction extends BaseAction {
 
-	User user;
+    User user;
 
-	/** serialVersionUID. */
-	private static final long serialVersionUID = -3422780336408883930L;
+    /** serialVersionUID. */
+    private static final long serialVersionUID = -3422780336408883930L;
 
-	private final Log LOG = LogFactory.getLog(GetPasswordAction.class);
+    private final Log LOG = LogFactory.getLog(GetPasswordAction.class);
 
     public String execute() {
         return SUCCESS;
@@ -27,19 +27,19 @@ public class GetPasswordAction extends BaseAction {
     @StoreMessages
     public String process() {
 
-    	this.user = userService.getUser(this.user.getUsername());
+        this.user = userService.getUser(this.user.getUsername());
 
-    	userService.sendPassword(this.user);
+        userService.sendPassword(this.user);
 
-    	super.addActionMessage("An email has been sent to " + user.getEmail());
+        super.addActionMessage("An email has been sent to " + user.getEmail());
         return SUCCESS;
     }
 
     public User getUser() {
-		return user;
-	}
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
