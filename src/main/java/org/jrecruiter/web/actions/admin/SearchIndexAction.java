@@ -8,7 +8,7 @@ import org.texturemedia.smarturls.Result;
  * Re-index the Hibernate Search Index
  *
  * @author Gunnar Hillert
- * @version $Id: IndexAction.java 154 2008-02-21 01:34:19Z ghillert $
+ * @version $Id$
  *
  */
 @Result(name="success", location="index", type="redirectAction")

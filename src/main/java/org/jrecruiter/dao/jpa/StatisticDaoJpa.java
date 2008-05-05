@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 /**
  *
  * @author Gunnar Hillert
- * @version @version $Id: StatisticDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
+ * @version @version $Id$
  */
 @Repository("statisticDao")
 public class StatisticDaoJpa extends GenericDaoJpa< Statistic, Long>

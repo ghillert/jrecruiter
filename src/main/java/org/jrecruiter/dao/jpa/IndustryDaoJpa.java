@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
 /**
  *
  * @author Gunnar Hillert
- * @version $Id: IndustryDaoHibernate.java 136 2008-01-13 15:39:09Z ghillert $
+ * @version $Id$
  */
 @Repository("industryDao")
 public class IndustryDaoJpa extends GenericDaoJpa< Industry, Long>

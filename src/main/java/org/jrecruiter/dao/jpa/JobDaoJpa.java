@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
  * This DAO provides job-related database methods.
  *
  * @author Jerzy Puchala, Gunnar Hillert
- * @version $Id: JobDaoHibernate.java 171 2008-02-29 05:58:09Z ghillert $
+ * @version $Id$
  */
 @Repository("jobDao")
 public final class JobDaoJpa extends GenericDaoJpa< Job, Long>

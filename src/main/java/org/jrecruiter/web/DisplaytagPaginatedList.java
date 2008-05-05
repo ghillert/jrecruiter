@@ -25,10 +25,10 @@ import org.jrecruiter.model.Job;
  * @author admin
  *
  */
-public class JobsForDisplaytagSorting implements PaginatedList {
+public class DisplaytagPaginatedList<T> implements PaginatedList {
 
 
-    private List < Job > jobs;
+    private List < T > records;
     private int pageNumber = 1;
     private int objectsPerPage = 20;
     private int fullListSize = 30;
@@ -38,7 +38,7 @@ public class JobsForDisplaytagSorting implements PaginatedList {
     /**
      *
      */
-    public JobsForDisplaytagSorting() {
+    public DisplaytagPaginatedList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,8 +46,8 @@ public class JobsForDisplaytagSorting implements PaginatedList {
     /* (non-Javadoc)
      * @see org.displaytag.pagination.PaginatedList#getList()
      */
-    public List<Job> getList() {
-        return this.jobs;
+    public List<T> getList() {
+        return this.records;
     }
 
     /* (non-Javadoc)
@@ -96,15 +96,15 @@ public class JobsForDisplaytagSorting implements PaginatedList {
     /**
      * @return Returns the jobs.
      */
-    public final List<Job> getJobs() {
-        return jobs;
+    public final List<T> getRecords() {
+        return records;
     }
 
     /**
      * @param jobs The jobs to set.
      */
-    public final void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
+    public final void setRecords(List<T> records) {
+        this.records = records;
     }
 
     /**
