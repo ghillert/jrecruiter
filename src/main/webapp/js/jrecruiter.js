@@ -33,28 +33,6 @@ function init() {
     DWRUtil.useLoadingMessage();
 }
 
-function showJobDetail(id) {
-	ajaxService.getJob(id, handleData);
-
-	function handleData(data) {
-
-		$('jobDetailContainer').innerHTML = data;
-
-		$('displayTagFrame').style.display = 'none';
-		new Effect.Appear($('jobDetailContainer'));
-
-		Rico.Corner.round('rounddiv1', {corners:'all', color:'#ccccef'} );
-	   	Rico.Corner.round('rounddiv2', {corners:'all', color:'#ccccef'} );
-	}
-}
-
-function closeJobDetail() {
-
-		$('jobDetailContainer').style.display = 'none';
-		new Effect.Appear($('displayTagFrame'));
-
-}
-
 function showJob(divId, longitude, latitude) {
 
   if (GBrowserIsCompatible()) {
@@ -65,8 +43,8 @@ function showJob(divId, longitude, latitude) {
     map.addOverlay(new GMarker(point));
 
     var mapControl = new GMapTypeControl();
-	map.addControl(mapControl);
-	map.addControl(new GSmallMapControl());
+  map.addControl(mapControl);
+  map.addControl(new GSmallMapControl());
     map.enableScrollWheelZoom();
   }
 
