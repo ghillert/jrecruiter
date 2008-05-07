@@ -9,6 +9,10 @@ html {
 
 }
 
+html img {
+    border-width: 0;
+}
+
 body {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -94,18 +98,6 @@ width: 4000px;
 background-color: #369;
 color: #fff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 #container #content {
 

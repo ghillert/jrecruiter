@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-    <ajax:displayTag id="displayTagFrame" ajaxFlag="displayAjax" baseUrl="${ctx}/show-jobs-ajax.html" postFunction="initShadowbox()">
+    <ajax:displayTag id="displayTagFrame" ajaxFlag="displayAjax" baseUrl="${ctx}/show-jobs-ajax.html" postFunction="initialize">
         <display:table name="jobs" pagesize="20" requestURI="" id="job" class="displaytag" export="false" defaultsort="4" defaultorder="descending">
         <display:column class="column1" titleKey="field.jobTitle" sortable="true" media="csv xml excel pdf" maxLength="30"/>
 
@@ -9,8 +9,7 @@
         </s:url>
 
         <display:column class="column1" sortProperty="field.jobTitle" sortable="true" media="html" maxLength="100">
-            <a  onclick="Shadowbox.open(")"
-                rel="width=750;height=600" class="option" title="Job Detail - ${job.jobTitle}" href="${jobDetailUrl}">
+            <a title="Job Detail - ${job.jobTitle}" href="${jobDetailUrl}">
             <img alt="Job Detail" title="Job Detail - ${job.jobTitle}" src="${ctx}/images/icons/zoom.png" style="border-width: 0;"/></a>
         </display:column>
 
