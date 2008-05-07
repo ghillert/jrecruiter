@@ -42,8 +42,6 @@ public class CreateDemoJobsTest extends BaseTest {
 
     public void testCreate30DemoJobsTest() throws Exception {
 
-        setComplete();
-
         final int numberOfJobs = 30;
         final LoremIpsum loremIpsum = new LoremIpsum();
 

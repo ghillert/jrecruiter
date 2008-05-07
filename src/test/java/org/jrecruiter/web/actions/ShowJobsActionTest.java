@@ -16,6 +16,7 @@
 package org.jrecruiter.web.actions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -35,12 +36,13 @@ public class ShowJobsActionTest extends TestCase {
 
     public void testExecute() throws Exception {
 
-    	ShowJobsAction showJobsAction = new ShowJobsAction();
+        ShowJobsAction showJobsAction = new ShowJobsAction();
 
         JobService jobService = EasyMock.createMock(JobService.class);
 
 
         showJobsAction.setJobService(jobService);
+        showJobsAction.setSession(new HashMap());
 
         List<Job>jobs = new ArrayList<Job>();
 
@@ -49,17 +51,18 @@ public class ShowJobsActionTest extends TestCase {
 
         EasyMock.replay(jobService);
 
-    	String ret = showJobsAction.execute();
+        String ret = showJobsAction.execute();
 
-    	Assert.assertEquals("success", ret);
+        Assert.assertEquals("success", ret);
     }
 
     public void testExecuteAjax() throws Exception {
-    	ShowJobsAction showJobsAction = new ShowJobsAction();
-    	showJobsAction.setDisplayAjax("true");
+        ShowJobsAction showJobsAction = new ShowJobsAction();
+        showJobsAction.setDisplayAjax("true");
 
         JobService jobService = EasyMock.createMock(JobService.class);
 
+        showJobsAction.setSession(new HashMap());
         showJobsAction.setJobService(jobService);
 
         List<Job>jobs = new ArrayList<Job>();
@@ -69,9 +72,9 @@ public class ShowJobsActionTest extends TestCase {
 
         EasyMock.replay(jobService);
 
-    	String ret = showJobsAction.execute();
+        String ret = showJobsAction.execute();
 
-    	Assert.assertEquals("ajax", ret);
+        Assert.assertEquals("ajax", ret);
     }
 }
 
