@@ -2,42 +2,27 @@
 
 <% pageContext.setAttribute("lf", "\n"); %>
 
-<html>
-    <head>
-        <meta http-equiv="Cache-Control" content="no-store" />
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="0" />
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title><decorator:title default="Welcome to jRecruiter" /></title>
-        <link href="<c:url value='/style/stylesheet.css'/>" rel="stylesheet"
-            type="text/css" />
-        <!-- Any jRecruiter specific scripts -->
-        <script type="text/javascript" src="<c:url value='/js/jrecruiter.js'/>"></script>
-                    <script
-            src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORRDnPHMi8enZNdcVVCphbEA7JeURRRhskeG0Rbs1V5Bog4q8OVhIFC3Ww"
-            type="text/javascript"></script>
-
     <style>
         .horizontalList
         {
         padding: .2em 0;
-		margin: 0;
-		list-style-type: none;
-		background-color: #036;
-		color: #FFF;
-		width: 100%;
-		font: normal 90% arial, helvetica, sans-serif;
-		text-align: center;
+    margin: 0;
+    list-style-type: none;
+    background-color: #036;
+    color: #FFF;
+    width: 100%;
+    font: normal 90% arial, helvetica, sans-serif;
+    text-align: center;
         }
 
         .horizontalList li
-		{
-		display: inline;
-		list-style-type: none;
-		padding-right: 20px;
-		}
+    {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+    }
 
-		.verticalList li
+    .verticalList li
         {
         clear: left;
         list-style-type: none;
@@ -51,10 +36,15 @@
         }
     </style>
 
-
-    </head>
-    <body onload="javascript:showJob('map_canvas',  ${job.latitude}, ${job.longitude});" onunload="GUnload()">
+<script type="text/javascript">
+<!--
+    window.onload = function() { showJob('map_canvas',  ${job.latitude}, ${job.longitude});}
+    window.onunload = function() { GUnload(); }
+//-->
+</script>
        <ul class="horizontalList">
+            <s:url id="showJobsUrl" action="show-jobs" includeParams="none"/>
+            <li><a href="${showJobsUrl}"><img src="${ctx}/images/icons/crystal/back.png" alt="Back" title="Back"/></a></li>
             <li><label><fmt:message key="field.jobNumber"/>:</label>${job.id}</li>
             <li><label><fmt:message key="field.jobPostDate"/>:</label><fmt:formatDate value="${job.registrationDate}" type="date" pattern="${datePattern}"/></li>
             <li><label><fmt:message key="field.jobUpdateDate"/>:</label><fmt:formatDate value="${job.updateDate}" type="date" pattern="${datePattern}"/></li>
@@ -69,7 +59,7 @@
 
         <fieldset style="height: 300px;">
             <legend>Summary</legend>
-	        <ul class="verticalList">
+          <ul class="verticalList">
 
                 <li><label><fmt:message key="field.location"/>:</label>
                     ${job.region.name}</li>
@@ -130,6 +120,3 @@
                         </c:otherwise>
                     </c:choose>
         </fieldset>
-
-</body>
-</html>

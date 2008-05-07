@@ -3,7 +3,7 @@
 <h2>Edit user</h2>
 
     <s:form id="editUserForm">
-    <s:hidden name="id"/>
+    <s:hidden name="user.id"/>
     <fieldset>
         <div class="required">
             <label for="username"><fmt:message key="user.username" />*</label>
