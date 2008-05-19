@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
-            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd">
+
+  <security:global-method-security secured-annotations="enabled"/>
 
   <bean id="stringDigester" class="org.jasypt.digest.StandardStringDigester" >
-    <property name="algorithm" value="SHA-512" />
-    <property name="iterations" value="100000" />
+    <property name="algorithm"     value="SHA-512" />
+    <property name="iterations"    value="100000" />
     <property name="saltSizeBytes" value="16" />
   </bean>
 
-  <!-- This Spring Security-friendly PasswordEncoder implementation will -->
-  <!-- wrap the StringDigester instance so that it can be used from      -->
-  <!-- the security framework.                                           -->
   <bean id="passwordEncoder" class="org.jasypt.spring.security.PasswordEncoder">
     <property name="stringDigester">
       <ref bean="stringDigester" />
     </property>
   </bean>
 
+  <security:http auto-config="true" access-decision-manager-ref="accessDecisionManager">
+    <security:intercept-url pattern="/admin/*.html**" access="MANAGER,ADMIN" />
+    <security:form-login login-page="/login.html" default-target-url="/admin/index.html"
+                         authentication-failure-url="/login.html?status=error"/>
+    <security:logout />
+    <security:concurrent-session-control max-sessions="1" exception-if-maximum-exceeded="true" />
+  </security:http>
+
+  <security:authentication-provider user-service-ref='userService' >
+       <security:password-encoder ref="passwordEncoder"/>
+  </security:authentication-provider>
+
+  <bean id="roleVoter" class="org.springframework.security.vote.RoleVoter ">
+    <property name="rolePrefix" value=""/>
+  </bean>
+
+  <bean id="accessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+    <property name="decisionVoters">
+      <list>
+          <ref bean="roleVoter" />
+          <ref bean="authenticatedVoter" />
+      </list>
+    </property>
+  </bean>
+  <bean id="authenticatedVoter" class="org.springframework.security.vote.AuthenticatedVoter"/>
 </beans>

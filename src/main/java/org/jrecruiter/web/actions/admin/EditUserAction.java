@@ -1,6 +1,6 @@
 package org.jrecruiter.web.actions.admin;
 
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.User;
@@ -83,11 +83,11 @@ public class EditUserAction extends BaseAction {
      */
     public String execute() {
 
-    	if (this.userId != null) {
-    		this.user = userService.getUser(this.userId);
-    	} else {
-    		this.user = super.getLoggedInUser();
-    	}
+        if (this.userId != null) {
+            this.user = userService.getUser(this.userId);
+        } else {
+            this.user = super.getLoggedInUser();
+        }
         return INPUT;
     }
 
@@ -99,13 +99,13 @@ public class EditUserAction extends BaseAction {
         this.user = user;
     }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
 
 }

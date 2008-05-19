@@ -5,7 +5,7 @@
           <fmt:message key="jsp.login.error.errorMessage"/><br/>
       </div>
   </c:if>
-  <form  name="j_acegi_security_check" id="j_acegi_security_check" method="POST" action="j_acegi_security_check">
+  <form  name="j_spring_security_check" id="j_acegi_security_check" method="POST" action="j_spring_security_check">
       <table id="login">
           <tr>
               <td class="top">
@@ -39,10 +39,10 @@
                 <ul>
                 <li>
                     <s:url action="signup" namespace="registration" id="signupUrl"/>
-                	<a href="${signupUrl}"><fmt:message key="link.login.addUser"/></a>
+                  <a href="${signupUrl}"><fmt:message key="link.login.addUser"/></a>
                 </li>
                 <li>
-                	<a href="<c:url value='/getPassword.html'/>"><fmt:message key="link.login.forgotYourPassword"/></a>
+                  <a href="<c:url value='/getPassword.html'/>"><fmt:message key="link.login.forgotYourPassword"/></a>
                 </li>
               </ul>
               </td>

@@ -19,13 +19,13 @@
     - definition will simply be used by the next level (countries-servlet.xml).
     -->
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-    <property name="basename"><value>messageResources</value></property>
+    <property name="basename"><value>messages</value></property>
   </bean>
 
     <aop:config>
         <aop:advisor id="serviceTx" advice-ref="txAdvice" pointcut="execution(* org.jrecruiter.service.*.*(..))"/>
     </aop:config>
-    
+
     <tx:advice id="txAdvice">
         <tx:attributes>
             <tx:method name="*"/>
@@ -40,7 +40,7 @@
     <property name="userDao"><ref bean="userDao"/></property>
     <property name="settingsDao"><ref bean="settingDao"/></property>
     <property name="userRoleDao"><ref bean="userRoleDao"/></property>
-    
+
   </bean>
 
   <bean id="jobService" class="org.jrecruiter.service.impl.JobServiceImpl">
@@ -58,7 +58,7 @@
   <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"/>
 
   <!-- Velocity - Configure Velocity for sending e-mail -->
-  <bean id="velocityEngine" 
+  <bean id="velocityEngine"
       class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
       <property name="velocityPropertiesMap">
           <map>
@@ -104,16 +104,16 @@
   </bean>
   -->
 
-  	<bean id="baseDao" abstract="true">
-  		<property name="sessionFactory"><ref bean="sessionFactory" /></property>
+    <bean id="baseDao" abstract="true">
+      <property name="sessionFactory"><ref bean="sessionFactory" /></property>
     </bean>
-  
+
     <bean id="jobDao" class="org.jrecruiter.dao.hibernate.JobsDAOHibernate" parent="baseDao"/>
 
     <bean id="userDao" class="org.jrecruiter.dao.hibernate.UserDAOHibernate" parent="baseDao"/>
 
     <bean id="settingDao" class="org.jrecruiter.dao.hibernate.SettingsDAOHibernate" parent="baseDao"/>
-    
+
     <bean id="userRoleDao" class="org.jrecruiter.dao.hibernate.UserRoleDAOHibernate" parent="baseDao"/>
 
 </beans>

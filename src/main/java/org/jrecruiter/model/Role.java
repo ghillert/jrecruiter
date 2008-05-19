@@ -31,7 +31,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.acegisecurity.GrantedAuthority;
+import org.springframework.security.GrantedAuthority;
 
 
 /**
@@ -45,96 +45,102 @@ import org.acegisecurity.GrantedAuthority;
 )
 public class Role implements Serializable, GrantedAuthority {
 
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = 7447568690062928081L;
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = 7447568690062928081L;
 
-	// Fields
+    // Fields
 
-	private Long id;
+    private Long id;
 
-	/** Name of the role. */
-	private String name;
+    /** Name of the role. */
+    private String name;
 
-	/** Description. */
-	private String description;
-	private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
+    /** Description. */
+    private String description;
+    private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Role() {
-	}
+    /** default constructor */
+    public Role() {
+    }
 
-	/** minimal constructor */
-	public Role(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-	/** full constructor */
-	public Role(Long id, String name, String description, Set<UserToRole> userToRoles) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.userToRoles = userToRoles;
-	}
+    /** minimal constructor */
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    /** full constructor */
+    public Role(Long id, String name, String description, Set<UserToRole> userToRoles) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.userToRoles = userToRoles;
+    }
 
-	// Property accessors
+    // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-	public Long getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Column(unique=true, nullable=false, insertable=true, updatable=true, length=50)
-	public String getName() {
-		return this.name;
-	}
+    @Column(unique=true, nullable=false, insertable=true, updatable=true, length=50)
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Column(unique=false, nullable=true, insertable=true, updatable=true)
-	public String getDescription() {
-		return this.description;
-	}
+    @Column(unique=false, nullable=true, insertable=true, updatable=true)
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="role")
-	public Set<UserToRole> getUserToRoles() {
-		return this.userToRoles;
-	}
+    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="role")
+    public Set<UserToRole> getUserToRoles() {
+        return this.userToRoles;
+    }
 
-	public void setUserToRoles(Set<UserToRole> userToRoles) {
-		this.userToRoles = userToRoles;
-	}
+    public void setUserToRoles(Set<UserToRole> userToRoles) {
+        this.userToRoles = userToRoles;
+    }
 
-	// For ACEGI
+    // For ACEGI
 
-	/**
-	 * @see org.acegisecurity.GrantedAuthority#getAuthority()
-	 * @return name of the role
-	 */
-	@Transient
-	public String getAuthority() {
-		return name;
-	}
+    /**
+     * @see org.acegisecurity.GrantedAuthority#getAuthority()
+     * @return name of the role
+     */
+    @Transient
+    public String getAuthority() {
+        return name;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return this.getAuthority();
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.getAuthority();
+    }
+
+    //FIXME
+    public int compareTo(Object arg0) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
 }
 
