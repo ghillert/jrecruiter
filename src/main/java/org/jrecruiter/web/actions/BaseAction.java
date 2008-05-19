@@ -1,8 +1,8 @@
 package org.jrecruiter.web.actions;
 
-import org.acegisecurity.Authentication;
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.Authentication;
+import org.springframework.security.context.SecurityContext;
+import org.springframework.security.context.SecurityContextHolder;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.AcegiUtil;
 import org.jrecruiter.model.User;
@@ -17,28 +17,28 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public abstract class BaseAction extends ActionSupport {
 
-	//~~~~~Services~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~Services~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
      * User related services.
      */
-	protected UserService userService;
+    protected UserService userService;
 
     /**
      * Job related services.
      */
-	protected JobService jobService;
+    protected JobService jobService;
 
-	//~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
-	public void setJobService(JobService jobService) {
-		this.jobService = jobService;
-	}
+    public void setJobService(JobService jobService) {
+        this.jobService = jobService;
+    }
 
-	@SkipValidation
+    @SkipValidation
     public String cancel() {
         return SUCCESS;
     }
@@ -46,34 +46,34 @@ public abstract class BaseAction extends ActionSupport {
     //~~~~~Security Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     protected SecurityContext getSecurityContext() {
-    	return SecurityContextHolder.getContext();
+        return SecurityContextHolder.getContext();
     }
 
     protected Authentication getAuthentication() {
-    	SecurityContext securityContext = getSecurityContext();
-    	if (securityContext != null) {
-    		return securityContext.getAuthentication();
-    	} else {
-    		return null;
-    	}
+        SecurityContext securityContext = getSecurityContext();
+        if (securityContext != null) {
+            return securityContext.getAuthentication();
+        } else {
+            return null;
+        }
     }
 
     protected User getLoggedInUser() {
-    	Authentication authentication = getAuthentication();
-    	if (authentication != null) {
-    		return (User) authentication.getPrincipal();
-    	} else {
-    		return null;
-    	}
+        Authentication authentication = getAuthentication();
+        if (authentication != null) {
+            return (User) authentication.getPrincipal();
+        } else {
+            return null;
+        }
     }
 
     protected Boolean hasRole(String role) {
-    	User getLoggedInUser = getLoggedInUser();
-    	if (getLoggedInUser != null) {
-    		return AcegiUtil.hasRole(role);
-    	} else {
-    		return Boolean.FALSE;
-    	}
+        User getLoggedInUser = getLoggedInUser();
+        if (getLoggedInUser != null) {
+            return AcegiUtil.hasRole(role);
+        } else {
+            return Boolean.FALSE;
+        }
     }
 
 }

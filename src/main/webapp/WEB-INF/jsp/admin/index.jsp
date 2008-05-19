@@ -1,8 +1,8 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
     <title>jRecruiter - Administrative Area</title>
-    <fmt:message key="admin.main.welcome"/>
-    <authz:authentication operation="firstName"/>
-     <authz:authentication operation="lastName"/>!
+    <s:text name="admin.main.welcome"/>
+    <security:authentication property="principal.firstName"/>
+     <security:authentication property="principal.lastName"/>!
 
     <div class="adminMain">
       <ul>
@@ -19,20 +19,20 @@
           <s:url action="logout" id="logoutUrl"/>
           <s:url action="search-index" id="searchIndexUrl"/>
 
-          <li><a href="${editUserUrl}" ><fmt:message key="admin.main.label.edit.registration"/></a></li>
-          <li><a href="${editJobUrl}" ><fmt:message key="admin.main.label.edit.jobs"/></a></li>
-          <li><a href="${addJobUrl}" ><fmt:message key="admin.main.label.add.job"/></a></li>
-          <li><a href="${showStatisticsUrl}" ><fmt:message key="admin.main.label.show.statistics"/></a></li>
+          <li><a href="${editUserUrl}" ><s:text name="admin.main.label.edit.registration"/></a></li>
+          <li><a href="${editJobUrl}" ><s:text name="admin.main.label.edit.jobs"/></a></li>
+          <li><a href="${addJobUrl}" ><s:text name="admin.main.label.add.job"/></a></li>
+          <li><a href="${showStatisticsUrl}" ><s:text name="admin.main.label.show.statistics"/></a></li>
 
           <authz:authorize ifAllGranted="ADMIN">
-              <li><a href="${userListUrl}" ><fmt:message key="admin.main.label.edit.user"/></a></li>
-              <li><a href="${addUserUrl}" ><fmt:message key="admin.main.label.add.user"/></a></li>
-              <li><a href="${editSettingsUrl}" ><fmt:message key="admin.main.label.edit.settings"/></a></li>
+              <li><a href="${userListUrl}" ><s:text name="admin.main.label.edit.user"/></a></li>
+              <li><a href="${addUserUrl}" ><s:text name="admin.main.label.add.user"/></a></li>
+              <li><a href="${editSettingsUrl}" ><s:text name="admin.main.label.edit.settings"/></a></li>
               <li><a href="${searchIndexUrl}" >Re-Index Search Index</a></li>
           </authz:authorize>
 
-          <li><a href="${showJobsUrl}" ><fmt:message key="admin.main.label.view.jobs"/></a></li>
-          <li><a href="${logoutUrl}" ><fmt:message key="admin.main.label.logout"/></a></li>
+          <li><a href="${showJobsUrl}" ><s:text name="admin.main.label.view.jobs"/></a></li>
+          <li><a href="${logoutUrl}" ><s:text name="admin.main.label.logout"/></a></li>
       </ul>
     </div>
 

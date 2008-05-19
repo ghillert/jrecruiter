@@ -24,7 +24,7 @@
     - definition will simply be used by the next level (countries-servlet.xml).
     -->
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-    <property name="basename"><value>messageResources</value></property>
+    <property name="basename"><value>messages</value></property>
   </bean>
 
 

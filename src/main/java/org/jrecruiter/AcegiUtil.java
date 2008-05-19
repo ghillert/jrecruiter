@@ -2,10 +2,10 @@ package org.jrecruiter;
 
 import java.util.Arrays;
 
-import org.acegisecurity.AccessDeniedException;
-import org.acegisecurity.Authentication;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.AccessDeniedException;
+import org.springframework.security.Authentication;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.context.SecurityContextHolder;
 
 
 public final class AcegiUtil
