@@ -2,7 +2,6 @@ package org.jrecruiter.web.actions.admin;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -24,6 +23,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
 import org.jrecruiter.Constants;
+import org.jrecruiter.Utils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.BaseAction;
 
@@ -36,155 +36,155 @@ import org.jrecruiter.web.actions.BaseAction;
  */
 public class ShowStatisticsAction extends BaseAction {
 
-	/** serialVersionUID. */
-	private static final long serialVersionUID = 4467043520853890820L;
+    /** serialVersionUID. */
+    private static final long serialVersionUID = 4467043520853890820L;
 
-	/**
-	 * Logger Declaration.
-	 */
-	private final Log LOGGER = LogFactory.getLog(ShowStatisticsAction.class);
+    /**
+     * Logger Declaration.
+     */
+    private final Log LOGGER = LogFactory.getLog(ShowStatisticsAction.class);
 
-	private JFreeChart chart;
+    private JFreeChart chart;
 
-	private List<Job> jobs = new ArrayList<Job>();
+    private List<Job> jobs = Utils.getArrayList();
 
-	private String mode;
+    private String mode;
 
-	Boolean displayAjax = Boolean.FALSE;
+    Boolean displayAjax = Boolean.FALSE;
 
-	public String getMode() {
-		return mode;
-	}
+    public String getMode() {
+        return mode;
+    }
 
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
-	/**
-	 * Default view for this controller.
-	 *
-	 */
-	public final String execute() {
+    /**
+     * Default view for this controller.
+     *
+     */
+    public final String execute() {
 
-		jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername());
+        jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername());
 
-		if (displayAjax) {
-			return "ajax";
-		}
+        if (displayAjax) {
+            return "ajax";
+        }
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	public final String chartJobsHits() throws Exception {
+    public final String chartJobsHits() throws Exception {
 
-		String chartTitle = null;
+        String chartTitle = null;
 
-		if (mode != null && mode.equals("unique")) {
-			mode = "unique";
-		}
+        if (mode != null && mode.equals("unique")) {
+            mode = "unique";
+        }
 
-		if (mode != null && mode.equals("all")) {
-			mode = "all";
-		}
+        if (mode != null && mode.equals("all")) {
+            mode = "all";
+        }
 
-			if (mode != null && mode.equals("unique")) {
-				jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10, Constants.StatsMode.UNIQUE_HITS);
-				chartTitle = "Job Statistics Top 10 - Unique Hits";
-			} else {
-				jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10, Constants.StatsMode.PAGE_HITS);
-				chartTitle = "Job Statistics Top 10 - Page Hits";
-			}
+            if (mode != null && mode.equals("unique")) {
+                jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10, Constants.StatsMode.UNIQUE_HITS);
+                chartTitle = "Job Statistics Top 10 - Unique Hits";
+            } else {
+                jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10, Constants.StatsMode.PAGE_HITS);
+                chartTitle = "Job Statistics Top 10 - Page Hits";
+            }
 
-			final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-			for (Job job : jobs) {
+            for (Job job : jobs) {
 
-				if (job.getStatistic() != null) {
+                if (job.getStatistic() != null) {
 
-					if (mode != null && mode.equals("unique")) {
-						if (job.getStatistic().getUniqueVisits().longValue() > 0) {
-							dataset.addValue(job.getStatistic()
-									.getUniqueVisits(), job.getJobTitle(), "");
-						}
+                    if (mode != null && mode.equals("unique")) {
+                        if (job.getStatistic().getUniqueVisits().longValue() > 0) {
+                            dataset.addValue(job.getStatistic()
+                                    .getUniqueVisits(), job.getJobTitle(), "");
+                        }
 
-					} else {
-						if (job.getStatistic().getCounter().longValue() > 0) {
-							dataset.addValue(job.getStatistic().getCounter(),
-									job.getJobTitle(), "");
-						}
-					}
+                    } else {
+                        if (job.getStatistic().getCounter().longValue() > 0) {
+                            dataset.addValue(job.getStatistic().getCounter(),
+                                    job.getJobTitle(), "");
+                        }
+                    }
 
-				}
-			}
+                }
+            }
 
-			this.chart = createChart(dataset, chartTitle);
+            this.chart = createChart(dataset, chartTitle);
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	private static JFreeChart createChart(
-			final CategoryDataset categorydataset, final String chartTitle) {
-		final JFreeChart chart = ChartFactory.createBarChart(chartTitle,
-				"Jobs", "Number of Hits", categorydataset,
-				PlotOrientation.VERTICAL, true, true, false);
+    private static JFreeChart createChart(
+            final CategoryDataset categorydataset, final String chartTitle) {
+        final JFreeChart chart = ChartFactory.createBarChart(chartTitle,
+                "Jobs", "Number of Hits", categorydataset,
+                PlotOrientation.VERTICAL, true, true, false);
 
-		final CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
-		categoryplot.setNoDataMessage("NO DATA!");
+        final CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+        categoryplot.setNoDataMessage("NO DATA!");
 
-		chart.setBackgroundPaint(new Color(245, 245, 255));
-		chart.setBorderPaint(new Color(204, 204, 204));
-		chart.setBorderStroke(new BasicStroke(1f));
+        chart.setBackgroundPaint(new Color(245, 245, 255));
+        chart.setBorderPaint(new Color(204, 204, 204));
+        chart.setBorderStroke(new BasicStroke(1f));
 
-		final LegendTitle legend = chart.getLegend();
-		legend.setWidth(1000);
-		legend.setPosition(RectangleEdge.BOTTOM);
+        final LegendTitle legend = chart.getLegend();
+        legend.setWidth(1000);
+        legend.setPosition(RectangleEdge.BOTTOM);
 
-		final BlockBorder border = new BlockBorder(new Color(204, 204, 204));
-		legend.setBorder(border);
+        final BlockBorder border = new BlockBorder(new Color(204, 204, 204));
+        legend.setBorder(border);
 
-		final CategoryPlot categoryPlot = (CategoryPlot) chart.getPlot();
-		categoryPlot.setBackgroundPaint(Color.WHITE);
-		categoryPlot.setRangeGridlinePaint(new Color(204, 204, 204));
-		categoryPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-		final NumberAxis numberaxis = (NumberAxis) categoryPlot.getRangeAxis();
+        final CategoryPlot categoryPlot = (CategoryPlot) chart.getPlot();
+        categoryPlot.setBackgroundPaint(Color.WHITE);
+        categoryPlot.setRangeGridlinePaint(new Color(204, 204, 204));
+        categoryPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+        final NumberAxis numberaxis = (NumberAxis) categoryPlot.getRangeAxis();
 
-		numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		final BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
-		renderer.setDrawBarOutline(true);
+        numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        final BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+        renderer.setDrawBarOutline(true);
 
-		final ItemLabelPosition itemlabelposition = new ItemLabelPosition(
-				ItemLabelAnchor.CENTER, TextAnchor.CENTER);
-		renderer.setPositiveItemLabelPosition(itemlabelposition);
+        final ItemLabelPosition itemlabelposition = new ItemLabelPosition(
+                ItemLabelAnchor.CENTER, TextAnchor.CENTER);
+        renderer.setPositiveItemLabelPosition(itemlabelposition);
 
-		renderer
-				.setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        renderer
+                .setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 
-		renderer.setItemLabelsVisible(true);
-		return chart;
-	}
+        renderer.setItemLabelsVisible(true);
+        return chart;
+    }
 
-	public Boolean getDisplayAjax() {
-		return displayAjax;
-	}
+    public Boolean getDisplayAjax() {
+        return displayAjax;
+    }
 
-	public void setDisplayAjax(Boolean displayAjax) {
-		this.displayAjax = displayAjax;
-	}
+    public void setDisplayAjax(Boolean displayAjax) {
+        this.displayAjax = displayAjax;
+    }
 
-	public JFreeChart getChart() {
-		return chart;
-	}
+    public JFreeChart getChart() {
+        return chart;
+    }
 
-	public void setChart(JFreeChart chart) {
-		this.chart = chart;
-	}
+    public void setChart(JFreeChart chart) {
+        this.chart = chart;
+    }
 
-	public List<Job> getJobs() {
-		return jobs;
-	}
+    public List<Job> getJobs() {
+        return jobs;
+    }
 
-	public void setJobs(List<Job> jobs) {
-		this.jobs = jobs;
-	}
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
 
 }
