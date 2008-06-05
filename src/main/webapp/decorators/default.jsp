@@ -15,7 +15,7 @@
     <meta name="keywords"    content="Jobs, java, Atlanta, j2ee, java ee, user group" />
     <meta name="description" content="Job Posting Service of the Atlanta Java User Group (AJUG)" />
 
-
+    <link href="<c:url value='/rss/jobs.rss'/>" rel="alternate" type="application/rss+xml" title="jRecruiter RSS Feed" />
 
     <link rel="icon" href="<c:url value='/favicon.ico'/>"
       type="image/x-icon" />
@@ -23,24 +23,7 @@
       type="image/x-icon" />
 
     <title><decorator:title default="Welcome to jRecruiter" /></title>
-
-    <link href="${ctx}/style/stylesheet.css"     rel="stylesheet" type="text/css" />
-    <link href="${ctx}/style/displaytag.css"     rel="stylesheet" type="text/css" />
-    <link href="${ctx}/style/jobDetail.css"      rel="stylesheet" type="text/css" />
-    <link href="${ctx}/style/jobList.css"        rel="stylesheet" type="text/css" />
-    <link href="${ctx}/style/showStatistics.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/style/userList.css"       rel="stylesheet" type="text/css" />
-    <link href="${ctx}/style/form.css"           rel="stylesheet" type="text/css" />
-
-
-    <!-- Google Maps -->
-    <script
-      src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORRDnPHMi8enZNdcVVCphbEA7JeURRRhskeG0Rbs1V5Bog4q8OVhIFC3Ww"
-      type="text/javascript"></script>
-
-    <script src="http://www.google-analytics.com/urchin.js"
-      type="text/javascript">
-      </script>
+    <jwr:style src="/bundles/all.css" />
   </head>
   <body onload="init();">
     <div id="container">
@@ -68,24 +51,19 @@
     </div>
 
     <!-- Java Script Imports -->
-    <script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
-
-    <script type="text/javascript" src="<c:url value='/js/overlibmws.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/js/ajaxtags.js'/>"></script>
+    <jwr:script src="/bundles/lib.js"/>
 
     <!-- DWR specific -->
     <script type="text/javascript" src="<c:url value='/dwr/interface/ajaxService.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
-      <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
 
-    <!-- Any jRecruiter specific scripts -->
-    <script type="text/javascript" src="<c:url value='/js/jrecruiter.js'/>"></script>
+    <!-- Google Maps -->
+    <script
+      src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORRDnPHMi8enZNdcVVCphbEA7JeURRRhskeG0Rbs1V5Bog4q8OVhIFC3Ww"
+      type="text/javascript"></script>
 
-    <script type="text/javascript">
-          _uacct = "UA-177507-3";
-          urchinTracker();
-    </script>
+
   </body>
 </html>
 

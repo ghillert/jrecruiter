@@ -1,6 +1,5 @@
 package org.jrecruiter.web.actions.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;

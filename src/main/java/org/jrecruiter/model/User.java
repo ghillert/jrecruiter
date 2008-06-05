@@ -70,8 +70,6 @@ public class User implements Serializable, UserDetails{
     private Set<Job> jobs = new HashSet<Job>(0);
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
-    private GrantedAuthority[] authorities;
-
     // Constructors
 
     /** default constructor */

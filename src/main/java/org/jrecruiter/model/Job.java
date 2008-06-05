@@ -33,6 +33,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -137,7 +138,10 @@ public class Job implements Serializable {
     /** Statistic of this particuliar job posting. */
     private Statistic statistic;
 
-    Boolean usesMap;
+    /** Flag that indicates whether this job is using google maps to further
+     *  details the job's location.
+     */
+    private Boolean usesMap;
 
     // Constructors
     /** default constructor */
@@ -598,6 +602,26 @@ public class Job implements Serializable {
         this.statistic = statistic;
     }
 
+    @Transient
+    public String getJobLocationForDisplay() {
+        if (this.regionOther != null) {
+            return this.regionOther;
+        } else if (this.region != null) {
+            return this.region.getName();
+        }
 
+        return null;
+    }
+
+    @Transient
+    public Date getPostedDate() {
+        if (this.updateDate != null) {
+            return this.updateDate;
+        } else if (this.registrationDate != null) {
+            return this.registrationDate;
+        }
+
+        return null;
+    }
 }
 

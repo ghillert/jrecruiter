@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
-import org.jrecruiter.model.Job;
 
 /**
  * @author admin

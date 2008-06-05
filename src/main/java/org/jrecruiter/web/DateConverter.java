@@ -36,6 +36,7 @@ public class DateConverter extends StrutsTypeConverter {
      */
     private static final Logger LOGGER = Logger.getLogger(DateConverter.class);
 
+    @Override
     public Object convertFromString(Map ctx, String[] value, Class arg2) {
 
         if (value == null || value[0] == null || value[0].trim().equals("")) {
@@ -52,6 +53,7 @@ public class DateConverter extends StrutsTypeConverter {
         return null;
     }
 
+    @Override
     public String convertToString(Map ctx, Object data) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(data);

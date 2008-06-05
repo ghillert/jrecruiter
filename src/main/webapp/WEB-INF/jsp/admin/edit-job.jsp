@@ -1,25 +1,22 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
+<style>
+<!--
+.statisticContainer { float: right; border: 1px solid #aaaaaa; width: 15em;}
+.statisticContainer ul { list-style: none; padding: 0;}
+.statisticContainer label { display: block; width: 10em;}
+-->
+</style>
+
+<fieldset class="statisticContainer">
+    <legend>Statistics</legend>
+    <ul>
+        <li><label>Page Visits:</label><s:property value="%{statistics.counter}" default="N/A"/></li>
+        <li><label>Unique Visits:</label><s:property value="%{statistics.uniqueVisits}" default="N/A"/></li>
+        <li><label>Last Access:</label><fmt:formatDate value="${statistics.lastAccess}" type="date" pattern="${datePattern}"/></li>
+    </ul>
+</fieldset>
 <h2><fmt:message key="admin.edit.job.title"/></h2>
-  <table class="jobposting">
-      <tr>
-          <td style="font-weight: bold;">Statistics</td>
-          <td>
-          </td>
-          <td>Page Visits:</td>
-          <td>
-              ${statistics.counter}
-          </td>
-          <td>Unique Visits:</td>
-          <td>
-              ${statistics.uniqueVisits}
-          </td>
-          <td>Last Access:</td>
-          <td>
-              <fmt:formatDate value="${statistics.lastAccess}" type="date" pattern="${datePattern}"/>
-          </td>
-      </tr>
-  </table>
 
 <s:form id="editUserForm">
     <s:hidden name="id"/>
@@ -45,14 +42,14 @@
     </div>
     <div class="optional">
        <label for="salary"><fmt:message key="field.salary" /></label>
-       <s:textfield name="salary" id="salary" size="11" tabindex="7"
+       <s:textfield name="salary" id="salary" size="11" tabindex="4"
                     onfocus="javascript:this.className='selected';"
                     onblur="javascript:this.className='';" />
     </div>
 
     <div class="required">
        <label for="offered By"><fmt:message key="field.offered.by" /></label>
-       <s:select name="offeredBy" id="offeredBy" tabindex="4"
+       <s:select name="offeredBy" id="offeredBy" tabindex="5"
                     list="offeredBySet" headerKey="" headerValue="Please select..."
                     onfocus="javascript:this.className='selected';"
                     onblur="javascript:this.className='';" />
@@ -64,20 +61,20 @@
         </legend>
            <div class="required">
                <label for="businessEmail"><fmt:message key="field.email" /></label>
-               <s:textfield name="businessEmail" id="businessEmail" size="11" tabindex="11"
+               <s:textfield name="businessEmail" id="businessEmail" size="11" tabindex="6"
                             onfocus="javascript:this.className='selected';"
                             onblur="javascript:this.className='';" />
            </div>
            <div class="optional">
                <label for="website"><fmt:message key="field.website" /></label>
-               <s:textfield name="website" id="website" size="11" tabindex="13"
+               <s:textfield name="website" id="website" size="11" tabindex="7"
                             onfocus="javascript:this.className='selected';"
                             onblur="javascript:this.className='';" />
                <fmt:message key="field.website.note" />
            </div>
            <div class="optional">
                <label for="businessPhone"><fmt:message key="field.phone" /></label>
-               <s:textfield name="businessPhone" id="businessPhone" size="11" tabindex="9"
+               <s:textfield name="businessPhone" id="businessPhone" size="11" tabindex="8"
                             onfocus="javascript:this.className='selected';"
                             onblur="javascript:this.className='';" />
            </div>
@@ -89,7 +86,7 @@
         </legend>
         <div class="required">
            <label for="region"><fmt:message key="field.location" /></label>
-           <s:select name="region" id="region" tabindex="3"
+           <s:select name="region" id="region" tabindex="9"
                         list="regions" headerKey="" headerValue="Please select a region..."
                         listValue="name" listKey="id"
                         onfocus="javascript:this.className='selected';"
@@ -97,32 +94,32 @@
         </div>
         <div class="optional">
            <label for="businessAddress1"><fmt:message key="field.address" /></label>
-           <s:textfield name="businessAddress1" id="businessAddress1" size="11" tabindex="4"
+           <s:textfield name="businessAddress1" id="businessAddress1" size="11" tabindex="10"
                         onfocus="javascript:this.className='selected';"
                         onblur="javascript:this.className='';" />
         </div>
         <div class="optional">
            <label for="businessAddress2"><fmt:message key="field.address" /></label>
-           <s:textfield name="businessAddress2" id="businessAddress2" size="11" tabindex="6"
+           <s:textfield name="businessAddress2" id="businessAddress2" size="11" tabindex="11"
                         onfocus="javascript:this.className='selected';"
                         onblur="javascript:this.className='';" />
         </div>
         <div class="optional">
            <label for="businessCity"><fmt:message key="field.city" /></label>
-           <s:textfield name="businessCity" id="businessCity" size="11" tabindex="8"
+           <s:textfield name="businessCity" id="businessCity" size="11" tabindex="12"
                         onfocus="javascript:this.className='selected';"
                         onblur="javascript:this.className='';" />
         </div>
         <div class="optional">
            <label for="businessState"><fmt:message key="field.state" /></label>
-           <s:textfield name="businessState" id="businessState" size="11" tabindex="10"
+           <s:textfield name="businessState" id="businessState" size="11" tabindex="13"
                         onfocus="javascript:this.className='selected';"
                         onblur="javascript:this.className='';" />
         </div>
 
         <div class="optional">
            <label for="businessZip"><fmt:message key="field.zip" /></label>
-           <s:textfield name="businessZip" id="businessZip" size="11" tabindex="12"
+           <s:textfield name="businessZip" id="businessZip" size="11" tabindex="14"
                         onfocus="javascript:this.className='selected';"
                         onblur="javascript:this.className='';" />
         </div>
@@ -137,19 +134,19 @@
                    Give your jobs more exposure! Do you like to provide geographic
                    details of the job posting's locations?</label>
            <s:select name="usesMap" id="usesMap" list="yesNoList"
-                     onchange="javascript:usesMapChange();"/>
+                     onchange="javascript:usesMapChange();" tabindex="15"/>
         </div>
 
         <div id="usesMapDiv" style="display: none;">
             <div class="required">
                 <label for="longitude"><fmt:message key="field.longitude" /></label>
-                <s:textfield name="longitude" id="longitude" size="5" tabindex="12"
+                <s:textfield name="longitude" id="longitude" size="5" tabindex="16"
                             onfocus="javascript:this.className='selected';"
                             onblur="javascript:this.className='';" />
             </div>
             <div class="required">
             <label for="longitude"><fmt:message key="field.latitude" /></label>
-            <s:textfield name="latitude" id="latitude" size="5" tabindex="12"
+            <s:textfield name="latitude" id="latitude" size="5" tabindex="17"
                          onfocus="javascript:this.className='selected';"
                          onblur="javascript:this.className='';" />
             </div>
@@ -169,13 +166,13 @@
         </legend>
         <div class="required">
            <label for="description"><fmt:message key="field.jobDescription" /></label>
-           <s:textarea name="description" id="description" rows="15" tabindex="14" cssStyle="width: 500px"
+           <s:textarea name="description" id="description" rows="15" tabindex="18" cssStyle="width: 500px"
                        onfocus="javascript:this.className='selected';"
                        onblur="javascript:this.className='';" />
         </div>
         <div class="optional">
            <label for="jobRestrictions"><fmt:message key="field.jobRestrictions" /></label>
-           <s:textarea name="jobRestrictions" id="jobRestrictions" rows="10" tabindex="15" cssStyle="width: 500px"
+           <s:textarea name="jobRestrictions" id="jobRestrictions" rows="10" tabindex="19" cssStyle="width: 500px"
                        onfocus="javascript:this.className='selected';"
                        onblur="javascript:this.className='';" />
            <fmt:message key="jobposting.texarea.note" />
@@ -183,13 +180,26 @@
     </fieldset>
     <fieldset>
             <div class="submit">
-                <s:submit value="Submit" method="save"/><s:submit value="Cancel" method="cancel"/>
+                <s:submit value="Submit" method="save" tabindex="20"/><s:submit value="Cancel" method="cancel" tabindex="21"/>
             </div>
     </fieldset>
     <fmt:message key="jobposting.add.label.mandatory" />
 </s:form>
 <script type="text/javascript">
 
+    function usesMapChange() {
+
+        var usesMapValue = document.getElementById('usesMap').value;
+
+        if (usesMapValue == 'true') {
+            document.getElementById('usesMapDiv').style.display = 'block';
+        } else {
+            document.getElementById('usesMapDiv').style.display = 'none';
+        }
+    }
+
+    usesMapChange();
+    document.getElementById('jobTitle').focus();
     var map;
     var geocoder;
 
@@ -230,17 +240,6 @@
       geocoder.getLocations(address, addAddressToMap);
     }
 
-    function usesMapChange() {
-        var usesMapValue = document.getElementById('usesMap').value;
-
-        if (usesMapValue == 'true') {
-            document.getElementById('usesMapDiv').style.display = 'block';
-        } else {
-            document.getElementById('usesMapDiv').style.display = 'none';
-        }
-    }
-
-    usesMapChange();
 </script>
 
 

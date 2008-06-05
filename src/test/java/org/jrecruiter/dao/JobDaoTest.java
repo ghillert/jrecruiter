@@ -24,11 +24,11 @@ import org.springframework.orm.ObjectRetrievalFailureException;
  */
 public class JobDaoTest extends BaseTest {
 
-	private @Autowired JobDao jobDao;
-	private @Autowired UserDao userDao;
+    private @Autowired JobDao jobDao;
+    private @Autowired UserDao userDao;
 
     /** Statis Dao */
-	private @Autowired StatisticDao statisticDao;
+    private @Autowired StatisticDao statisticDao;
 
     /**
      *   Initialize Logging.
@@ -119,7 +119,7 @@ public class JobDaoTest extends BaseTest {
         entityManager.flush();
 
         job.setUser(savedUser);
-        Job savedJob = jobDao.save(job);
+        jobDao.save(job);
 
         List <Job> jobs = jobDao.getAllUserJobs("demo44");
 

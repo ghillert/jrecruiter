@@ -61,6 +61,12 @@
             <legend>Summary</legend>
           <ul class="verticalList">
 
+                <li><label><fmt:message key="field.jobTitle"/>:</label>
+                    ${job.jobTitle}</li>
+                <li><label><fmt:message key="field.businessName"/>:</label>
+                    ${job.businessName}</li>
+                <li><label><fmt:message key="field.offered.by"/>:</label>
+                    <s:property value="%{getText(job.offeredBy.descriptionKey)}"/></li>
                 <li><label><fmt:message key="field.location"/>:</label>
                     ${job.region.name}</li>
 

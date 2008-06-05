@@ -26,7 +26,6 @@ import org.jrecruiter.model.Region;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.ObjectRetrievalFailureException;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
 
@@ -41,7 +40,7 @@ public class CreateDemoJobsTest extends BaseTest {
     private @Autowired UserService userService;
 
     public void testCreate30DemoJobsTest() throws Exception {
-
+setComplete();
         final int numberOfJobs = 30;
         final LoremIpsum loremIpsum = new LoremIpsum();
 
@@ -65,7 +64,13 @@ public class CreateDemoJobsTest extends BaseTest {
             job.setLatitude(BigDecimal.TEN);
             job.setLongitude(BigDecimal.TEN);
             job.setOfferedBy(OfferedBy.RECRUITER);
-            job.setRegion(new Region(-1L, null));
+
+            if (i % 2 == 0) {
+                job.setRegion(new Region(-2L, null));
+            } else {
+                job.setRegionOther("Some Other Region");
+            }
+
             job.setRegistrationDate(new Date());
             job.setSalary(BigDecimal.valueOf(100000.50));
             job.setStatus(JobStatus.ACTIVE);

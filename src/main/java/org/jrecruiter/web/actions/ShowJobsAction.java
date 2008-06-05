@@ -49,6 +49,7 @@ public class ShowJobsAction extends BaseAction implements SessionAware {
 
     private Map<String, Object>session;
 
+    @SuppressWarnings("unchecked")
     public void setSession(Map session) {
         this.session = session;
     }
@@ -56,6 +57,7 @@ public class ShowJobsAction extends BaseAction implements SessionAware {
     /* (non-Javadoc)
      * @see com.opensymphony.xwork2.ActionSupport#execute()
      */
+    @SuppressWarnings("unchecked")
     @Override
     public String execute() throws Exception {
 
@@ -151,11 +153,11 @@ public class ShowJobsAction extends BaseAction implements SessionAware {
         this.displayAjax = displayAjax;
     }
 
-    public DisplaytagPaginatedList getJobs() {
+    public DisplaytagPaginatedList<Job> getJobs() {
         return jobs;
     }
 
-    public void setJobs(DisplaytagPaginatedList jobs) {
+    public void setJobs(DisplaytagPaginatedList<Job> jobs) {
         this.jobs = jobs;
     }
 
