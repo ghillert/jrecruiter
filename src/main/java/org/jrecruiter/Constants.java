@@ -40,8 +40,8 @@ public class Constants {
      */
     public enum OfferedBy {
 
-        RECRUITER("Recruiter", "offeredBy.recruiter.description"),
-        COMPANY  ("Company",   "offeredBy.company.description");
+        RECRUITER("Recruiter", "enum.offeredBy.recruiter.description"),
+        COMPANY  ("Company",   "enum.offeredBy.company.description");
 
         String name;
         String descriptionKey;
@@ -94,9 +94,9 @@ public class Constants {
          * @param descriptionKey Provides description from the resource bundle.
          */
         JobStatus(
-        		final String name,
-        		final String descriptionKey) {
-        	this.name = name;
+                final String name,
+                final String descriptionKey) {
+            this.name = name;
             this.descriptionKey = descriptionKey;
         }
 

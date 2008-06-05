@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class RegionDaoTest extends BaseTest {
 
-	private @Autowired RegionDao regionDao;
+    private @Autowired RegionDao regionDao;
 
     /**
      * Initialize Logging.
@@ -26,7 +26,7 @@ public class RegionDaoTest extends BaseTest {
     public void testGetAll() {
 
         List<Region> regions = regionDao.getAllRegionsOrdered();
-        assertTrue(regions.size() == 10);
+        assertTrue(regions.size() == 9);
 
     }
 

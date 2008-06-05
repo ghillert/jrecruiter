@@ -24,12 +24,12 @@
           <li><a href="${addJobUrl}" ><s:text name="admin.main.label.add.job"/></a></li>
           <li><a href="${showStatisticsUrl}" ><s:text name="admin.main.label.show.statistics"/></a></li>
 
-          <authz:authorize ifAllGranted="ADMIN">
+          <security:authorize ifAllGranted="ADMIN">
               <li><a href="${userListUrl}" ><s:text name="admin.main.label.edit.user"/></a></li>
               <li><a href="${addUserUrl}" ><s:text name="admin.main.label.add.user"/></a></li>
               <li><a href="${editSettingsUrl}" ><s:text name="admin.main.label.edit.settings"/></a></li>
               <li><a href="${searchIndexUrl}" >Re-Index Search Index</a></li>
-          </authz:authorize>
+          </security:authorize>
 
           <li><a href="${showJobsUrl}" ><s:text name="admin.main.label.view.jobs"/></a></li>
           <li><a href="${logoutUrl}" ><s:text name="admin.main.label.logout"/></a></li>

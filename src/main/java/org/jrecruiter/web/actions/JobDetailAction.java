@@ -19,33 +19,35 @@ import org.jrecruiter.service.JobService;
 public class JobDetailAction extends BaseAction implements SessionAware {
 
 
-	/** serialVersionUID. */
-	private static final long serialVersionUID = 369806210598096582L;
+    /** serialVersionUID. */
+    private static final long serialVersionUID = 369806210598096582L;
 
-	private Long jobId;
+    private Long jobId;
 
-	private Job job;
+    private Job job;
 
-	private JobService jobService;
+    private JobService jobService;
 
-	private Map<String, Object>session;
+    private Map<String, Object>session;
 
-	/**
-	 * Logger Declaration.
-	 */
+    /**
+     * Logger Declaration.
+     */
     private final Log LOGGER = LogFactory.getLog(JobDetailAction.class);
 
+    @SuppressWarnings("unchecked")
     public void setSession(Map session) {
-		this.session = session;
-	}
+        this.session = session;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.opensymphony.xwork2.ActionSupport#execute()
-	 */
-	@Override
-	public String execute() throws Exception {
+    /* (non-Javadoc)
+     * @see com.opensymphony.xwork2.ActionSupport#execute()
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public String execute() throws Exception {
 
-    	this.job = jobService.getJobForId(jobId);
+        this.job = jobService.getJobForId(jobId);
 
         if (this.job==null){
 
@@ -53,7 +55,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
         } else {
 
-        	 Statistic statistics = job.getStatistic();
+             Statistic statistics = job.getStatistic();
 
              if (statistics == null) {
 
@@ -105,29 +107,29 @@ public class JobDetailAction extends BaseAction implements SessionAware {
              statistics.setLastAccess(new Date());
              //service.updateJobStatistic(statistics);
 
-        	}
+            }
 
     return SUCCESS;
     }
 
-	public Long getJobId() {
-		return jobId;
-	}
+    public Long getJobId() {
+        return jobId;
+    }
 
-	public void setJobId(Long jobId) {
-		this.jobId = jobId;
-	}
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
+    }
 
-	public Job getJob() {
-		return job;
-	}
+    public Job getJob() {
+        return job;
+    }
 
-	public void setJob(Job job) {
-		this.job = job;
-	}
+    public void setJob(Job job) {
+        this.job = job;
+    }
 
-	public void setJobService(JobService jobService) {
-		this.jobService = jobService;
-	}
+    public void setJobService(JobService jobService) {
+        this.jobService = jobService;
+    }
 
 }

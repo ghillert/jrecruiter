@@ -5,13 +5,12 @@ package org.jrecruiter.dao;
 
 import java.util.Date;
 
-import org.springframework.security.providers.dao.DaoAuthenticationProvider;
-import org.springframework.security.userdetails.UserDetails;
 import org.apache.log4j.Logger;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.test.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.userdetails.UserDetails;
 
 /**
  * @author Gunnar Hillert
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class DaoAuthenticationProviderTest extends BaseTest {
 
-    private @Autowired DaoAuthenticationProvider daoAuthenticationProvider;
     private @Autowired UserService userService;
     private @Autowired UserDao userDao;
 

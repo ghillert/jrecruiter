@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class IndustryDaoTest extends BaseTest {
 
-	private @Autowired IndustryDao industryDao;
+    private @Autowired IndustryDao industryDao;
 
     /**
      * Initialize Logging.
@@ -27,7 +27,7 @@ public class IndustryDaoTest extends BaseTest {
     public void testGetAll() {
 
         List<Industry> industries = industryDao.getAllIndustriesOrdered();
-        assertTrue(industries.size() == 16);
+        assertTrue(industries.size() == 15);
 
     }
 }
