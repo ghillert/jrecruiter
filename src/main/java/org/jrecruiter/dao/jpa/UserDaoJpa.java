@@ -20,7 +20,6 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.jrecruiter.dao.UserDao;
@@ -66,9 +65,9 @@ implements UserDao {
         query.getResultList();
 
         try {
-        	user = (User) query.getSingleResult();
+            user = (User) query.getSingleResult();
         } catch(NoResultException e) {
-        	user = null;
+            user = null;
         }
 
         return user;
