@@ -10,7 +10,14 @@ import org.jrecruiter.web.interceptor.StoreMessages;
 import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 import com.opensymphony.xwork2.validator.annotations.Validation;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 /**
  * @author Gunnar Hillert
@@ -32,6 +39,28 @@ public class SignupAction extends BaseAction {
     private final Log LOGGER = LogFactory.getLog(SignupAction.class);
 
     @StoreMessages
+    @Validations(
+            requiredStrings = {
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username",  trim=true, message = "You must enter a username."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "password",       trim=true, message = "You must enter a password."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", trim=true, message = "You must enter a first name."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName",  trim=true, message = "You must enter a last name."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.company",   trim=true, message = "You must enter a company.")
+                     },
+            emails =
+                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a valid email address.")},
+            stringLengthFields =
+                    {
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.username",  message = "The user name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, minLength = "6",  fieldName = "password",       message = "The password must be at least ${minLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.firstName", message = "The first name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.lastName",  message = "The last name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.company",   message = "The company name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.email",     message = "The email address must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25", fieldName = "user.phone",     message = "The phone number must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25", fieldName = "user.fax",       message = "The fax number must be shorter than ${maxLength} characters."),
+                    }
+            )
     public String save() {
 
         this.user.setPassword(this.stringDigester.digest(this.password));
