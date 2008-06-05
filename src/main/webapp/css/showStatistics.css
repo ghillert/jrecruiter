@@ -1,0 +1,19 @@
+table.jobStatistics td.column1 {
+  width: 70px;
+}
+
+table.jobStatistics td.column2 {
+  width: 200px;
+}
+
+table.jobStatistics td.column3 {
+  width: 125px;
+}
+
+table.jobStatistics td.column4 {
+  width: 125px;
+}
+
+table.jobStatistics td.column5 {
+  width: 125px;
+}

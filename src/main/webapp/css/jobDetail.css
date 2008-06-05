@@ -1,0 +1,122 @@
+/* Contains the CSS for the job posting detail page */
+
+#jobDetail {
+  border-collapse: collapse;
+  width: 600px;
+  border-top:    1px solid #ccccef;
+  border-bottom: 1px solid #ccccef;
+  border-left:   1px solid #ccccef;
+  border-right:  1px solid #ccccef;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #FFFFFF;
+}
+
+#jobDetail td {
+  background-color: #FFFFFF;
+}
+
+
+#jobDetail td.c1 {
+    width: 60px; border: 1px solid #ccccef;
+}
+#jobDetail td.c2 {
+    width: 70px; border: 1px solid #ccccef;
+}
+#jobDetail td.c3 {
+    width: 70px; border: 1px solid #ccccef;
+}
+#jobDetail td.c4 {
+    width: 300px; border: 1px solid #ccccef; text-align: center; vertical-align: middle; font-weight: bold;
+}
+#jobDetail td.c5 {
+    width: 70px; border: 1px solid #ccccef;
+}
+#jobDetail td.c6 {
+    width: 50px; border: 1px solid #ccccef;
+}
+#jobDetail td.c1_2 {
+    width: 200px; border: 1px solid #ccccef;
+}
+
+#jobDetail2 {
+  border-collapse: collapse;
+  width: 600px;
+  border-top:    0px solid #ccccef;
+  border-bottom: 0px solid #ccccef;
+  border-left:   1px solid #ccccef;
+  border-right:  1px solid #ccccef;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+    #jobDetail2 td.c1 {
+        width: 300px; border: 0px solid #ccccef; text-align: center; padding-top: 10px; padding-bottom: 10px; vertical-align: top;
+    }
+        #jobDetail2 td.c1 #rounddiv1 {
+            width: 250px; margin-left: auto; margin-right: auto; background-color: #ccccef;
+        }
+            #jobDetail2 td.c1 #rounddiv1 #jobDetails{
+                margin-top: 5px;
+                margin-bottom: 5px;
+                margin-left: 1px;
+                margin-right: 1px;
+                width: 248px;
+                border-collapse: collapse;
+                text-align: left;
+                background-color: #ffffff;
+            }
+                #jobDetail2 td.c1 #rounddiv1 #jobDetails td{
+                    padding-left: 3px;
+                    padding-right: 3px;
+                }
+                #jobDetail2 td.c1 #rounddiv1 #jobDetails td.devider{
+                    border-bottom: 1px solid #ccccef;
+                }
+    #jobDetail2 td.c2 {
+       width: 300px; border: 0px solid #ccccef;  text-align: center; padding-top: 10px; padding-bottom: 10px; vertical-align: top;
+    }
+        #jobDetail2 td.c2 #rounddiv2 {
+            width: 250px; margin-left: auto; margin-right: auto; background-color: #ccccef;
+        }
+            #jobDetail2 td.c2 #rounddiv2 #businessDetails{
+                margin-top: 5px;
+                margin-bottom: 5px;
+                margin-left: 1px;
+                margin-right: 1px;
+                width: 248px;
+                border-collapse: collapse;
+                text-align: left;
+                background-color: #ffffff;
+            }
+                #jobDetail2 td.c2 #rounddiv2 #businessDetails td{
+                    padding-left: 3px;
+                    padding-right: 3px;
+                }
+
+#jobDescription {
+  border-collapse: collapse;
+  width: 600px;
+  border-top:    0px solid #ccccef;
+  border-bottom: 1px solid #ccccef;
+  border-left:   1px solid #ccccef;
+  border-right:  1px solid #ccccef;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+    #jobDescription  .description-header {
+        width: 600px;
+        border: 1px solid #ccccef;
+        background-image: url('../images/job_detail_red.png');
+        padding-left: 25px;
+        font-weight: bold;
+    }
+
+    #jobDescription  .retriction-header {
+        width: 600px;
+        border: 1px solid #ccccef;
+        background-image: url('../images/job_detail_green.png');
+        padding-left: 25px;
+        font-weight: bold;
+    }
