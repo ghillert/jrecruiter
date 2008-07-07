@@ -76,7 +76,7 @@
         </fieldset>
         <fieldset>
           <div class="submit">
-          <s:submit value="Submit" method="save"/><s:submit value="Cancel" method="cancel"/>
+          <s:submit value="Submit" method="save" cssClass="submitBtn"/><s:submit value="Cancel" method="cancel" cssClass="submitBtn"/>
           </div>
         </fieldset>
         <p style="clear: both;"><fmt:message key="all.marked.fields.are.required"/></p>

@@ -18,11 +18,9 @@ package org.jrecruiter.web.actions.admin;
 import junit.framework.Assert;
 
 import org.easymock.EasyMock;
-import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.web.actions.BaseActionTest;
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * Test the Struts 2 Add User Action

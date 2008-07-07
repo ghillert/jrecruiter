@@ -135,6 +135,10 @@ public class Job implements Serializable {
     /** Used to map the Location of the job.*/
     private BigDecimal latitude = BigDecimal.ZERO;
 
+    /** Used to specify the zoom level when showing the location of the job
+     *  on a map. */
+    private Integer zoomLevel = Integer.valueOf(8);
+
     /** Statistic of this particuliar job posting. */
     private Statistic statistic;
 
@@ -584,6 +588,14 @@ public class Job implements Serializable {
      */
     public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
+    }
+
+    public Integer getZoomLevel() {
+        return zoomLevel;
+    }
+
+    public void setZoomLevel(Integer zoomLevel) {
+        this.zoomLevel = zoomLevel;
     }
 
     /**

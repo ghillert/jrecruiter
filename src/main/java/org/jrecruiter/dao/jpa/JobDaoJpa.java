@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
 /**
  * This DAO provides job-related database methods.
  *
- * @author Jerzy Puchala, Gunnar Hillert
+ * @author 	 Puchala, Gunnar Hillert
  * @version $Id$
  */
 @Repository("jobDao")

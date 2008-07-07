@@ -11,11 +11,14 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
+import org.jrecruiter.web.interceptor.StoreMessages;
+import org.texturemedia.smarturls.Result;
 
 /**
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
+@Result(name="showJobs", location="show-jobs", type="redirectAction")
 public class JobDetailAction extends BaseAction implements SessionAware {
 
 
@@ -45,14 +48,17 @@ public class JobDetailAction extends BaseAction implements SessionAware {
      */
     @Override
     @SuppressWarnings("unchecked")
+    @StoreMessages
     public String execute() throws Exception {
 
         this.job = jobService.getJobForId(jobId);
 
         if (this.job==null){
 
-            LOGGER.warn("Requested jobposting with id " + jobId + " was not found.");
-
+            String errorMessage = "Requested jobposting with id " + jobId + " was not found.";
+            LOGGER.warn(errorMessage);
+            super.addActionMessage("The requested job posting does not exist.");
+            return "showJobs";
         } else {
 
              Statistic statistics = job.getStatistic();

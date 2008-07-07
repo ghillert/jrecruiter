@@ -9,6 +9,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.displaytag.properties.SortOrderEnum;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.DisplaytagPaginatedList;
+import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.texturemedia.smarturls.ActionName;
 import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
@@ -58,6 +59,7 @@ public class ShowJobsAction extends BaseAction implements SessionAware {
      * @see com.opensymphony.xwork2.ActionSupport#execute()
      */
     @SuppressWarnings("unchecked")
+    @RetrieveMessages
     @Override
     public String execute() throws Exception {
 

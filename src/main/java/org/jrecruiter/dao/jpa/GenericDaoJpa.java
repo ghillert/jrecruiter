@@ -52,13 +52,6 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
     @SuppressWarnings("unchecked")
     public T get(PK id) {
         T entity = this.entityManager.find(this.persistentClass, id);
-
-        if (entity == null) {
-            String msg = "Uh oh, '" + this.persistentClass + "' object with id '" + id + "' not found...";
-            log.warn(msg);
-            throw new EntityNotFoundException(msg);
-        }
-
         return entity;
     }
 

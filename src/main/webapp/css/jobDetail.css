@@ -1,122 +1,82 @@
 /* Contains the CSS for the job posting detail page */
 
+
+#jobHeader {
+  height: 20px;
+  margin: 1em 0pt;
+  padding: 0;
+  background-color: #90B5E6;
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+}
+
+#jobHeader li {
+    background-position: 0pt 50%;
+    background-repeat:no-repeat;
+    float:left;
+    margin: 0 0 0 5px;
+    padding: 2px 5px 2px 20px;
+}
+
+#jobHeader li.print {
+  background-image: url(../images/icons/crystal/agt_print.png);
+}
+#jobHeader li.back {
+  background-image: url(../images/icons/crystal/back.png);
+}
+
+#jobDetailMap {
+    width: 300px;
+    float: right;
+    position:relative;
+    background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
+    border:1px solid #AAAAAA;
+    margin: 0px;
+    padding: 1em;
+}
+
 #jobDetail {
-  border-collapse: collapse;
-  width: 600px;
-  border-top:    1px solid #ccccef;
-  border-bottom: 1px solid #ccccef;
-  border-left:   1px solid #ccccef;
-  border-right:  1px solid #ccccef;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #FFFFFF;
+  background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
+  border:1px solid #AAAAAA;
+  margin: 1em 1em 0 0em;
+  padding: 1em;
 }
 
-#jobDetail td {
-  background-color: #FFFFFF;
+#jobDetail div.optional {
+  margin: 1em 1em;
+}
+#jobDetail div.optional {
+  clear:left;
 }
 
-
-#jobDetail td.c1 {
-    width: 60px; border: 1px solid #ccccef;
-}
-#jobDetail td.c2 {
-    width: 70px; border: 1px solid #ccccef;
-}
-#jobDetail td.c3 {
-    width: 70px; border: 1px solid #ccccef;
-}
-#jobDetail td.c4 {
-    width: 300px; border: 1px solid #ccccef; text-align: center; vertical-align: middle; font-weight: bold;
-}
-#jobDetail td.c5 {
-    width: 70px; border: 1px solid #ccccef;
-}
-#jobDetail td.c6 {
-    width: 50px; border: 1px solid #ccccef;
-}
-#jobDetail td.c1_2 {
-    width: 200px; border: 1px solid #ccccef;
+#jobDetail div.optional label {
+  padding-right: 1em;
+  text-align:right;
 }
 
-#jobDetail2 {
-  border-collapse: collapse;
-  width: 600px;
-  border-top:    0px solid #ccccef;
-  border-bottom: 0px solid #ccccef;
-  border-left:   1px solid #ccccef;
-  border-right:  1px solid #ccccef;
-  margin-left: auto;
-  margin-right: auto;
+#jobDetail div.strong {
+  font-weight: bold;
 }
 
-    #jobDetail2 td.c1 {
-        width: 300px; border: 0px solid #ccccef; text-align: center; padding-top: 10px; padding-bottom: 10px; vertical-align: top;
-    }
-        #jobDetail2 td.c1 #rounddiv1 {
-            width: 250px; margin-left: auto; margin-right: auto; background-color: #ccccef;
-        }
-            #jobDetail2 td.c1 #rounddiv1 #jobDetails{
-                margin-top: 5px;
-                margin-bottom: 5px;
-                margin-left: 1px;
-                margin-right: 1px;
-                width: 248px;
-                border-collapse: collapse;
-                text-align: left;
-                background-color: #ffffff;
-            }
-                #jobDetail2 td.c1 #rounddiv1 #jobDetails td{
-                    padding-left: 3px;
-                    padding-right: 3px;
-                }
-                #jobDetail2 td.c1 #rounddiv1 #jobDetails td.devider{
-                    border-bottom: 1px solid #ccccef;
-                }
-    #jobDetail2 td.c2 {
-       width: 300px; border: 0px solid #ccccef;  text-align: center; padding-top: 10px; padding-bottom: 10px; vertical-align: top;
-    }
-        #jobDetail2 td.c2 #rounddiv2 {
-            width: 250px; margin-left: auto; margin-right: auto; background-color: #ccccef;
-        }
-            #jobDetail2 td.c2 #rounddiv2 #businessDetails{
-                margin-top: 5px;
-                margin-bottom: 5px;
-                margin-left: 1px;
-                margin-right: 1px;
-                width: 248px;
-                border-collapse: collapse;
-                text-align: left;
-                background-color: #ffffff;
-            }
-                #jobDetail2 td.c2 #rounddiv2 #businessDetails td{
-                    padding-left: 3px;
-                    padding-right: 3px;
-                }
-
-#jobDescription {
-  border-collapse: collapse;
-  width: 600px;
-  border-top:    0px solid #ccccef;
-  border-bottom: 1px solid #ccccef;
-  border-left:   1px solid #ccccef;
-  border-right:  1px solid #ccccef;
-  margin-left: auto;
-  margin-right: auto;
+#jobDetail div.optional label {
+  display:block;
+  float:left;
+  margin-bottom: 5px;
+  width:120px;
 }
 
-    #jobDescription  .description-header {
-        width: 600px;
-        border: 1px solid #ccccef;
-        background-image: url('../images/job_detail_red.png');
-        padding-left: 25px;
-        font-weight: bold;
-    }
+#jobDetailDescription {
+  background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
+  border:1px solid #AAAAAA;
+  margin: 1em 0em 0 0em;
+  padding: 1em;
+  clear: right;
+}
 
-    #jobDescription  .retriction-header {
-        width: 600px;
-        border: 1px solid #ccccef;
-        background-image: url('../images/job_detail_green.png');
-        padding-left: 25px;
-        font-weight: bold;
-    }
+#jobDetailRestriction {
+  background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
+  border:1px solid #AAAAAA;
+  margin: 1em 0em 0 0em;
+  padding: 1em;
+}
