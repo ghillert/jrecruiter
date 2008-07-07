@@ -1,0 +1,32 @@
+#loginSection {
+  padding: 0;
+}
+
+#loginOptions {
+      border-top-color: #eeeeee;
+    border-top-style: solid;
+    border-top-width: 1px;
+  padding: 0;
+  margin: 2em 0 0 0;
+  list-style-type: circle;
+}
+
+#loginOptions li {
+  padding: 0.5em 1em 0.5em 1em;
+  display: block;
+}
+
+#loginOptions li img {
+  margin-right: 1em;
+  vertical-align: middle;
+}
+
+#loginOptions li.registration {
+
+  background-color: #a1c3ee;
+}
+
+#loginOptions li.getPassword {
+  background-color: #a1c3ee;
+
+}

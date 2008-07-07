@@ -27,7 +27,7 @@
   </head>
   <body onload="init();">
     <div id="container">
-      <div id="header">AJUG Jobs</div>
+      <div id="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
       <div id="header_menu">
           <ul><li><a href="<c:url value='/'/>">Home</a></li>
             <li>

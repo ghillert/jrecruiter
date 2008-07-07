@@ -9,7 +9,7 @@
                     onblur="javascript:this.className='';" />
     </div>
     <div class="submit">
-        <s:submit value="Search" method="search"/>
+        <s:submit value="Search" method="search" cssClass="submitBtn"/>
     </div>
 
       <display:table name="jobs" pagesize="15" requestURI="" id="job" class="displaytag" export="false" sort="list">

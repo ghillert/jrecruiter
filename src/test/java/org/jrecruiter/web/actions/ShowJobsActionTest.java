@@ -42,7 +42,7 @@ public class ShowJobsActionTest extends TestCase {
 
 
         showJobsAction.setJobService(jobService);
-        showJobsAction.setSession(new HashMap());
+        showJobsAction.setSession(new HashMap<String, Object>());
 
         List<Job>jobs = new ArrayList<Job>();
 
@@ -62,7 +62,7 @@ public class ShowJobsActionTest extends TestCase {
 
         JobService jobService = EasyMock.createMock(JobService.class);
 
-        showJobsAction.setSession(new HashMap());
+        showJobsAction.setSession(new HashMap<String, Object>());
         showJobsAction.setJobService(jobService);
 
         List<Job>jobs = new ArrayList<Job>();

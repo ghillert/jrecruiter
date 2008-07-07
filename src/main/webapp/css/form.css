@@ -16,21 +16,23 @@ form div.optional label {
     padding-right: 20px;
 }
 
-form div.required,
+form div.required, form div.submit,
 form div.optional {
   clear: left;
 }
 
-form fieldset div.submit {
+form div.submit {
   width: 200px;
     margin-left: auto;
     margin-right: auto;
+
 }
 
 form fieldset {
     margin: 1em 5em 1em 5em;
     padding: 1em 1em 1em 1em;
-    border: 1px solid #aaaaaa
+    border: 1px solid #aaaaaa;
+    background:url(../images/test/fieldset_back.png) top left no-repeat;
 }
 
 form div.required {
@@ -83,28 +85,6 @@ input {
   font-size: 14px;
   font-style: normal;
   padding:3px;
-}
-
-button {
-
-  height: 18px;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  border-left-style: solid;
-  border-top-color: #333333;
-  border-right-color: #999999;
-  border-bottom-color: #999999;
-  border-left-color: #333333;
-  background-color: #EEEEEE;
-
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-style: normal;
 }
 
 textarea {
