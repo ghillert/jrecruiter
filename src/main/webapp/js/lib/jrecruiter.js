@@ -1,52 +1,92 @@
-function highlightTableRows(tableId) {
-
-    var previousClass = null;
-    var table = document.getElementById(tableId);
-    var tbody = table.getElementsByTagName("tbody")[0];
-    var rows = tbody.getElementsByTagName("tr");
-    // add event handlers so rows light up and are clickable
-    for (i=0; i < rows.length; i++) {
-        rows[i].onmouseover = function() { previousClass=this.className;this.className+=' over' };
-        rows[i].onmouseout = function() { this.className=previousClass };
-        rows[i].onclick = function() {
-            var cell = this.getElementsByTagName("td")[0];
-            if (cell.getElementsByTagName("a").length > 0) {
-                var link = cell.getElementsByTagName("a")[0];
-                if (link.onclick) {
-                    call = link.getAttributeValue("onclick");
-                    // this will not work for links with onclick handlers that return false
-                    eval(call);
-                } else {
-                  location.href = link.getAttribute("href");
-                }
-                this.style.cursor="wait";
-            }
-        }
-    }
-}
 
 // Show the document's title on the status bar
-window.defaultStatus=document.title;
+    window.defaultStatus=document.title;
 
+    var map;
+    var geocoder;
+
+    var defaultMapLatitude  = 33.74;
+    var defaultMapLongitude = -84.38;
+    var defaultMapZoomLevel = 10;
 
 function init() {
     DWRUtil.useLoadingMessage();
 }
 
-function showJob(divId, longitude, latitude) {
+function usesMapChange() {
+    var usesMapValue = jQuery('#usesMap').val();
+
+    if (usesMapValue == 'true') {
+        document.getElementById('usesMapDiv').style.display = 'block';
+        document.getElementById('longitude').value=defaultMapLongitude;
+        document.getElementById('latitude').value=defaultMapLatitude;
+        document.getElementById('zoomLevel').value=defaultMapZoomLevel;
+
+
+        longitude = jQuery('#longitude').val();
+        latitude  = jQuery('#latitude').val();
+        zoomLevel = jQuery('#zoomLevel').val();
+        jobDivId  = 'map';
+
+        showJob(jobDivId, longitude, latitude, zoomLevel);
+
+    } else {
+        document.getElementById('usesMapDiv').style.display = 'none';
+    }
+}
+
+function showJob(jobDivId, longitude, latitude, zoomLevel) {
 
   if (GBrowserIsCompatible()) {
-    var map = new GMap2(document.getElementById(divId));
+      var point = new GLatLng(parseFloat(latitude), parseFloat(longitude));
 
-    var point = new GLatLng(latitude, longitude);
-    map.setCenter(point, 12);
+    if (map == null) {
+
+          map = new GMap2(document.getElementById(jobDivId));
+          map.checkResize();
+          map.addControl(new GSmallMapControl());
+          map.addControl(new GMapTypeControl());
+          map.enableScrollWheelZoom();
+          map.setCenter(point, parseFloat(zoomLevel));
+
+    } else {
+        map.clearOverlays();
+        map.setCenter(point, parseFloat(zoomLevel));
+        map.panTo(point);
+    }
+
     map.addOverlay(new GMarker(point));
 
-    var mapControl = new GMapTypeControl();
-  map.addControl(mapControl);
-  map.addControl(new GSmallMapControl());
-    map.enableScrollWheelZoom();
+  } else {
+    alert("Sorry but your browser is not compatible with Google Maps,");
+    return;
   }
+}
+
+function getCoordinatesFromAddress() {
+
+      if (geocoder == null) {
+           geocoder = new GClientGeocoder();
+      }
+
+      var address = jQuery("#businessAddress1").val()
+            + ',' + jQuery('#businessCity').val()
+            + ',' + jQuery('#businessState').val()
+            + ',' + jQuery('#businessZip').val();
+
+      geocoder.getLocations(address, addAddressToMapCallBack);
 
 }
+
+function addAddressToMapCallBack(response) {
+  if (!response || response.Status.code != 200) {
+    alert("Sorry, we were unable to geocode that address");
+  } else {
+    var place = response.Placemark[0];
+    document.getElementById('longitude').value=place.Point.coordinates[1];
+    document.getElementById('latitude').value=place.Point.coordinates[0];
+    showJob('map', place.Point.coordinates[0], place.Point.coordinates[1], jQuery('#zoomLevel').val());
+  }
+}
+
 
