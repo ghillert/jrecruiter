@@ -16,7 +16,7 @@
           </div>
           <div class="required">
             <label for="j_password"><fmt:message key="user.password" />*</label>
-            <s:textfield id="j_password" name="j_password" required="true" maxlength="25" tabindex="2"
+            <s:password id="j_password" name="j_password" required="true" maxlength="25" tabindex="2"
                              onblur="javascript:this.className='';"
                              onfocus="javascript:this.className='selected';"/>
           </div>

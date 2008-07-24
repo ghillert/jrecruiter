@@ -165,6 +165,22 @@ public interface JobService {
      */
     List < Industry > getIndustries();
 
+    /**
+     * Return a single industry.
+     *
+     * @param industryId
+     * @return
+     */
+    Industry getIndustry(Long industryId);
+
+    /**
+     * Return a single region.
+     *
+     * @param regionId
+     * @return
+     */
+    Region getRegion(Long regionId);
+
     /** Re-index the Hibernate Search */
     void reindexSearch();
 }

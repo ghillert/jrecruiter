@@ -150,9 +150,15 @@
                          onfocus="javascript:this.className='selected';"
                          onblur="javascript:this.className='';" />
             </div>
+            <div class="required">
+            <label for="zoomLevel"><fmt:message key="field.zoomLevel" /></label>
+            <s:textfield name="zoomLevel" id="zoomLevel" size="5" tabindex="18"
+                         onfocus="javascript:this.className='selected';"
+                         onblur="javascript:this.className='';" />
+            </div>
             <div class="submit">
-                <input type="button" value="Generate" onclick="getLocation();" />
-                <input type="button" value="Show" onclick="getLocation();" />
+                <input type="button" value="Generate Coordinates from Address" onclick="getCoordinatesFromAddress();" />
+                <input type="button" value="Show Coordinates in Map" onclick="showCoordinatesInMap();" />
             </div>
 
             <div id="map"
@@ -187,58 +193,12 @@
 </s:form>
 <script type="text/javascript">
 
-    function usesMapChange() {
+    jQery(function {
+      usesMapChange();
+      document.getElementById('jobTitle').focus();
+    });
 
-        var usesMapValue = document.getElementById('usesMap').value;
-
-        if (usesMapValue == 'true') {
-            document.getElementById('usesMapDiv').style.display = 'block';
-        } else {
-            document.getElementById('usesMapDiv').style.display = 'none';
-        }
-    }
-
-    usesMapChange();
-    document.getElementById('jobTitle').focus();
-    var map;
-    var geocoder;
-
-        function load() {
-      if (GBrowserIsCompatible()) {
-          map = new GMap2(document.getElementById("map"));
-          map.addControl(new GSmallMapControl());
-          map.addControl(new GMapTypeControl());
-
-          map.setCenter(new GLatLng(33.74, -84.38), 13);
-          geocoder = new GClientGeocoder();
-      }
-    }
-         load();
-
-     function addAddressToMap(response) {
-      map.clearOverlays();
-      if (!response || response.Status.code != 200) {
-        alert("Sorry, we were unable to geocode that address");
-      } else {
-        place = response.Placemark[0];
-          alert(place);
-        point = new GLatLng(place.Point.coordinates[1],
-                            place.Point.coordinates[0]);
-        $('longitude').value=place.Point.coordinates[1];
-        $('latitude').value=place.Point.coordinates[0];
-
-        marker = new GMarker(point);
-        map.addOverlay(marker);
-        marker.openInfoWindowHtml(place.address + '<br>' +
-          '<b>Country code:</b> ' + place.AddressDetails.Country.CountryNameCode);
-      }
-    }
-
-    function getLocation() {
-      var address = $F('businessAddress1') + ',' + $F('businessCity') + ',' +  $F('businessState') + ',' + $F('businessZip');
-      alert(address);
-      geocoder.getLocations(address, addAddressToMap);
-    }
+    jQery(document).unload(GUnload());
 
 </script>
 
