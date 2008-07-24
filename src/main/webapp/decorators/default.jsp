@@ -24,8 +24,21 @@
 
     <title><decorator:title default="Welcome to jRecruiter" /></title>
     <jwr:style src="/bundles/all.css" />
+
+    <!-- DWR specific -->
+    <script type="text/javascript" src="<c:url value='/dwr/interface/ajaxService.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
+
+    <!-- Google Maps -->
+    <script
+      src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORRDnPHMi8enZNdcVVCphbEA7JeURRRhskeG0Rbs1V5Bog4q8OVhIFC3Ww"
+      type="text/javascript"></script>
+
+    <!-- Java Script Imports -->
+    <jwr:script src="/bundles/lib.js"/>
   </head>
-  <body onload="init();">
+  <body>
     <div id="container">
       <div id="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
       <div id="header_menu">
@@ -39,7 +52,7 @@
             <li>
             <s:url id="contactUrl" action="contact" namespace="/"/>
             <a href="${contactUrl}">Contact</a></li>
-            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job offers as RSS feed.">&nbsp;<span>RSS Feed</span></a></li></ul>
+            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job postings as RSS feed.">&nbsp;<span>RSS Feed</span></a></li></ul>
       </div>
       <div id="content"><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
@@ -50,19 +63,9 @@
       </div>
     </div>
 
-    <!-- Java Script Imports -->
-    <jwr:script src="/bundles/lib.js"/>
-
-    <!-- DWR specific -->
-    <script type="text/javascript" src="<c:url value='/dwr/interface/ajaxService.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
-
-    <!-- Google Maps -->
-    <script
-      src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORRDnPHMi8enZNdcVVCphbEA7JeURRRhskeG0Rbs1V5Bog4q8OVhIFC3Ww"
-      type="text/javascript"></script>
-
+    <script type="text/javascript">
+        jQuery(init());
+    </script>
 
   </body>
 </html>

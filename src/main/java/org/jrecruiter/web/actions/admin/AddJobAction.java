@@ -77,7 +77,7 @@ public class AddJobAction extends BaseAction implements Preparable, ModelDriven<
     @Override
     @SkipValidation
     public String execute() {
-    	return INPUT;
+        return INPUT;
     }
 
     @Validations(
@@ -98,11 +98,17 @@ public class AddJobAction extends BaseAction implements Preparable, ModelDriven<
             urls =
                     { @UrlValidator(type = ValidatorType.SIMPLE, fieldName = "website", message = "You must enter a valid url.")},
             stringLengthFields =
-                    {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "5", fieldName = "jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
+                    {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
             )
     public String save() {
 
         LOGGER.debug("Adding Job...");
+
+        final Region region = jobService.getRegion(job.getRegion().getId());
+        final Industry industry = jobService.getIndustry(job.getIndustry().getId());
+
+        job.setRegion(region);
+        job.setIndustry(industry);
 
         job.setStatus(JobStatus.ACTIVE);
         job.setUser(super.getLoggedInUser());

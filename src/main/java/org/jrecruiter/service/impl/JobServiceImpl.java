@@ -279,4 +279,13 @@ public class JobServiceImpl implements JobService {
     public void reindexSearch() {
         jobDao.reindexSearch();
     }
+
+    public Industry getIndustry(Long industryId) {
+        return industryDao.get(industryId);
+    }
+
+    public Region getRegion(Long regionId) {
+        return regionDao.get(regionId);
+    }
+
 }
