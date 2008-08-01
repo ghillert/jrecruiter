@@ -1,4 +1,4 @@
-package org.jrecruiter;
+package org.jrecruiter.common;
 
 import java.util.Arrays;
 

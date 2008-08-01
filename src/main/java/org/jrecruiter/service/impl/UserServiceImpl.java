@@ -24,10 +24,11 @@ import java.util.Set;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
-import org.jrecruiter.Constants;
+import org.jrecruiter.common.Constants;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
@@ -49,6 +50,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  *
  * @version $Id$
  */
+@Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**

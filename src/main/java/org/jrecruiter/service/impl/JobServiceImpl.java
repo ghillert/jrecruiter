@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +23,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
-import org.jrecruiter.AcegiUtil;
-import org.jrecruiter.Constants.Roles;
-import org.jrecruiter.Constants.StatsMode;
+import org.jrecruiter.common.AcegiUtil;
+import org.jrecruiter.common.Constants.Roles;
+import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.JobDao;
@@ -37,6 +38,7 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -49,7 +51,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  * @author Gunnar Hillert
  * @version $Id$
  */
-@Service
+@Service("jobService")
 public class JobServiceImpl implements JobService {
 
     /** Initialize Logging. */
@@ -102,7 +104,7 @@ public class JobServiceImpl implements JobService {
     /* (non-Javadoc)
      * @see org.jrecruiter.service.JobService#getJobsCount()
      */
-    public Integer getJobsCount() {
+    public Long getJobsCount() {
         return jobDao.getJobsCount();
     }
 
@@ -287,5 +289,15 @@ public class JobServiceImpl implements JobService {
     public Region getRegion(Long regionId) {
         return regionDao.get(regionId);
     }
+
+    public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
+        return jobDao.getJobCountPerDayAndPeriod(fromDate, toDate);
+    }
+
+    public Long JobCount(Date day) {
+        return jobDao.getJobCount(day);
+    }
+
+
 
 }

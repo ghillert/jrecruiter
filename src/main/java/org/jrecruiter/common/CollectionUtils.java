@@ -13,21 +13,22 @@
  *  permissions under this License.
  *
  */
-package org.jrecruiter;
+package org.jrecruiter.common;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Contains utility methods, e.g. factory methods for creating list.
  *
  * @author Gunnar Hillert
- * @version $Id: Constants.java 136 2008-01-13 15:39:09Z ghillert $
+ * @version $Id$
  */
-public class Utils {
+public class CollectionUtils {
 
     /** Private Constructor.
      *  Supress default constructor for non-instantiability */
-    private Utils() {
+    private CollectionUtils() {
         throw new AssertionError();
     }
 
@@ -36,4 +37,8 @@ public class Utils {
         return new ArrayList<T>(0);
     }
 
+    /** Return a basic HashSet */
+    public static <T> java.util.HashSet<T> getHashSet() {
+        return new HashSet<T>(0);
+    }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jrecruiter.Utils;
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.BaseAction;
 import org.texturemedia.smarturls.Result;
@@ -34,7 +34,7 @@ public class ShowJobsAction extends BaseAction {
 
     List<Job> jobs;
 
-    List<Long> jobsToDelete = Utils.getArrayList();
+    List<Long> jobsToDelete = CollectionUtils.getArrayList();
 
     Boolean displayAjax = Boolean.FALSE;
 

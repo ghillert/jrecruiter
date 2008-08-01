@@ -2,7 +2,11 @@ package org.jrecruiter.web.actions.admin;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Paint;
+import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,16 +19,23 @@ import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
-import org.jrecruiter.Constants;
-import org.jrecruiter.Utils;
+import org.jrecruiter.common.Constants;
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.web.actions.BaseAction;
 
 /**
@@ -46,7 +57,7 @@ public class ShowStatisticsAction extends BaseAction {
 
     private JFreeChart chart;
 
-    private List<Job> jobs = Utils.getArrayList();
+    private List<Job> jobs = CollectionUtils.getArrayList();
 
     private String mode;
 
@@ -161,6 +172,33 @@ public class ShowStatisticsAction extends BaseAction {
 
         renderer.setItemLabelsVisible(true);
         return chart;
+    }
+
+    public final String chartJobCount() throws Exception {
+
+            final Calendar calendarToday = Calendar.getInstance();
+            final Calendar calendar30    = Calendar.getInstance();
+            calendar30.add(Calendar.DAY_OF_MONTH, -30);
+
+            long jobCount = jobService.JobCount(calendar30.getTime());
+            List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
+
+            TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );
+
+            for(JobCountPerDay jobCountPerDay : jobCountPerDayList )
+            {
+              jobCount = jobCount + jobCountPerDay.getNumberOfJobsPosted();
+              hitsPerDayData.add( new Day(jobCountPerDay.getJobDate()),  jobCount);
+            }
+            XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
+
+            this.chart = ChartFactory.createTimeSeriesChart("",
+                    "Jobs", "", hitsPerDayDataset, false, true, false);
+
+
+            chart.setBackgroundPaint(new Color(255,255,255,0));
+
+        return SUCCESS;
     }
 
     public Boolean getDisplayAjax() {
