@@ -18,7 +18,7 @@ package org.jrecruiter.web;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.jrecruiter.Constants.JobStatus;
+import org.jrecruiter.common.Constants.JobStatus;
 
 /**
  * Test the Struts 2 custom Enum Converter

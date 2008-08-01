@@ -26,7 +26,7 @@ public class RegionDaoTest extends BaseTest {
     public void testGetAll() {
 
         List<Region> regions = regionDao.getAllRegionsOrdered();
-        assertTrue(regions.size() == 9);
+        assertTrue(regions.size() == 10);
 
     }
 
