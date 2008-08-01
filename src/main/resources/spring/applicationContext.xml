@@ -9,8 +9,8 @@
 
     <tx:annotation-driven/>
     <context:annotation-config />
-    <context:component-scan base-package="org.jrecruiter.dao.jpa" />
-
+    <context:component-scan  base-package="org.jrecruiter.dao.jpa" />
+    <context:component-scan  base-package="org.jrecruiter.service.impl" />
   <!--
     - The message source for this context, loaded from localized "messages_xx" files
     - in the classpath, i.e. "/WEB-INF/classes/messages.properties" or
@@ -39,11 +39,6 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
-
-  <!-- The central service facade of this application -->
-  <bean id="userService" class="org.jrecruiter.service.impl.UserServiceImpl"/>
-
-  <bean id="jobService" class="org.jrecruiter.service.impl.JobServiceImpl"/>
 
   <bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction"/>
 

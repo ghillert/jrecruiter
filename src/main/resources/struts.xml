@@ -7,6 +7,9 @@
 
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
+
+
+
         <interceptors>
             <interceptor name="store2" class="org.jrecruiter.web.interceptor.MessageStoreInterceptor">
             </interceptor>
@@ -60,12 +63,23 @@
         </action>
     </package>
 
+
     <package name="chart" extends="jfreechart-default" namespace="/chart">
+            <result-types>
+            <result-type name="customChart" class="org.jrecruiter.web.CustomChartResult"/>
+        </result-types>
         <action name="viewJobChart" class="org.jrecruiter.web.actions.admin.ShowStatisticsAction"
                 method="chartJobsHits">
               <result name="success" type="chart">
                 <param name="width">400</param>
                 <param name="height">300</param>
+              </result>
+        </action>
+        <action name="viewJobCountChart" class="org.jrecruiter.web.actions.admin.ShowStatisticsAction"
+                method="chartJobCount">
+              <result name="success" type="customChart">
+                <param name="width">300</param>
+                <param name="height">150</param>
               </result>
         </action>
     </package>
