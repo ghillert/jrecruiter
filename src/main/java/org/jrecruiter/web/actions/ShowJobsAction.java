@@ -98,7 +98,7 @@ public class ShowJobsAction extends BaseAction implements SessionAware {
         state.setPageNumber(page);
     }
 
-    jobs.setFullListSize(jobService.getJobsCount());
+    jobs.setFullListSize(Integer.valueOf(jobService.getJobsCount().toString()));
 
     LOGGER.info("Retrieving all jobs - "
                     + ";Total Size: " + jobs.getFullListSize()

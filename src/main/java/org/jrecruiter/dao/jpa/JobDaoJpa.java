@@ -15,16 +15,28 @@
  */
 package org.jrecruiter.dao.jpa;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
+
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.jrecruiter.Constants.StatsMode;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -107,7 +119,7 @@ implements JobDao {
      * @return List of jobs.
      *
      * @see org.jrecruiter.dao.JobsDao#getUsersJobsForStatistics(java.lang.String,
-     *      java.lang.Integer, org.jrecruiter.Constants.StatsMode)
+     *      java.lang.Integer, org.jrecruiter.common.Constants.StatsMode)
      */
     @SuppressWarnings("unchecked")
     public List < Job > getUsersJobsForStatistics(final Long userId,
@@ -168,22 +180,22 @@ implements JobDao {
         @SuppressWarnings("unchecked")
         public List<Job> searchByKeyword(final String keyword) {
 
-//            FullTextSession fullTextSession = Search.createFullTextSession(entityManager);
-//
-//            MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"description"},
-//              new StandardAnalyzer());
-//            try {
-//            org.apache.lucene.search.Query query = parser.parse(keyword);
-//
-//            org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery( query, Job.class );
-//            List<Job> result = hibQuery.list();
-//
-//            return result;
-//              } catch ( org.apache.lucene.queryParser.ParseException e) {
-//                throw new IllegalStateException(e);
-//            }
+            FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
 
-            return null;
+            MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"description"},
+              new StandardAnalyzer());
+            try {
+            org.apache.lucene.search.Query query = parser.parse(keyword);
+
+            javax.persistence.Query hibQuery = fullTextEntityManager.createFullTextQuery( query, Job.class );
+            List<Job> result = hibQuery.getResultList();
+
+            return result;
+
+              } catch ( org.apache.lucene.queryParser.ParseException e) {
+                throw new IllegalStateException(e);
+            }
+
         }
 
         /**
@@ -232,13 +244,14 @@ implements JobDao {
             return jobs;
         }
 
+
         /**
          * Returns the number of totally available jobs in the system.
          *
          * @return Total number of jobs
          * @see org.jrecruiter.dao.JobsDao#getJobsCount()
          */
-        public Integer getJobsCount() {
+        public Long getJobsCount() {
 
             Long numberOfJobs = null;
 
@@ -246,23 +259,47 @@ implements JobDao {
             Query query = session.createQuery("select count(*) from Job");
             numberOfJobs = (Long) query.uniqueResult();
 
-            //FIXME
-            return Integer.valueOf(numberOfJobs.toString());
+            return numberOfJobs;
+        }
+
+        public Long getJobCount(Date day) {
+            Long numberOfJobs = null;
+
+            Session session = (Session)entityManager.getDelegate();
+            Query query = session.createQuery("select count(*) from Job job where job.registrationDate < :day");
+            query.setDate("day", day);
+
+            numberOfJobs = (Long) query.uniqueResult();
+
+            return numberOfJobs;
+        }
+
+        public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
+
+            Session session = (Session)entityManager.getDelegate();
+            Query query = session.createQuery("select new org.jrecruiter.model.statistics.JobCountPerDay(year(job.registrationDate), month(job.registrationDate), day(job.registrationDate), count(*)) from Job job "
+                    + " where job.registrationDate >= :fromDate and job.registrationDate <= :toDate "
+                    + "group by day(job.registrationDate), year(job.registrationDate), month(job.registrationDate)"
+                    + "order by year(job.registrationDate) asc, month(job.registrationDate) asc, day(job.registrationDate) asc");
+            query.setDate("fromDate", fromDate);
+            query.setDate("toDate", toDate);
+
+            List<JobCountPerDay> jobCountPerDayList = query.list();
+
+            return jobCountPerDayList;
         }
 
         /** {@inheritDoc} */
         public void reindexSearch() {
 
-//            FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
-//            fullTextEntityManager.setFlushMode(FlushModeType.COMMIT);
-//            //Scrollable results will avoid loading too many objects in memory
-//            javax.persistence.Query query = parser.parse( "Java rocks!" );
-//            ScrollableResults results = fullTextEntityManager.createFullTextQuery(Job.class ).scroll( ScrollMode.FORWARD_ONLY );
-//            int index = 0;
-//            while( results.next() ) {
-//                index++;
-//                fullTextSession.index( results.get(0) ); //index each element
-//            }
+            FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
+            fullTextEntityManager.setFlushMode(FlushModeType.COMMIT);
+
+            List<Job> jobs = entityManager.createQuery("select job from Job as job").getResultList();
+            for (Job job : jobs) {
+                fullTextEntityManager.index(job);
+            }
+
         }
 
     }

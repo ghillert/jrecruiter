@@ -29,6 +29,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.jrecruiter.common.CollectionUtils;
+
 /**
 * This class represents an industry (assignable to a job posting).
 *
@@ -47,7 +49,7 @@ public class JobType  implements java.io.Serializable {
     /** Primary id of the industry */
     private Long id;
     private String name;
-    private Set<Job> jobs = new HashSet<Job>(0);
+    private Set<Job> jobs = CollectionUtils.getHashSet();
 
     // Constructors
 

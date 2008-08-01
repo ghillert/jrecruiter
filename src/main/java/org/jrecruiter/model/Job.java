@@ -40,8 +40,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
-import org.jrecruiter.Constants.JobStatus;
-import org.jrecruiter.Constants.OfferedBy;
+import org.jrecruiter.common.Constants.JobStatus;
+import org.jrecruiter.common.Constants.OfferedBy;
 
 /**
 * This class represents a job posting.

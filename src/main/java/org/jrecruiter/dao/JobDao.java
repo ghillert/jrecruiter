@@ -15,10 +15,12 @@
 */
 package org.jrecruiter.dao;
 
+import java.util.Date;
 import java.util.List;
 
-import org.jrecruiter.Constants;
+import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**
  * Interface for any job-related persistence calls.
@@ -77,7 +79,23 @@ public interface JobDao extends GenericDao < Job, Long >{
      *
      * @return Total number of jobs
      */
-    Integer getJobsCount();
+    Long getJobsCount();
+
+    /**
+     *
+     * @param day
+     * @return
+     */
+    Long getJobCount(Date day);
+
+    /**
+     *
+     * @param fromDate
+     * @param toDate
+     * @return
+     */
+    List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
+
 
     /**
      * Method for getting users jobs for statistical purposes.
@@ -94,7 +112,7 @@ public interface JobDao extends GenericDao < Job, Long >{
      * @param userId user id of user owning the job.
      * @param maxResult maximum number of statistics objects returned
      * @param statsMode  what type of statistical information to be generated
-	 * @param administrator Is the user admin?
+     * @param administrator Is the user admin?
      * @return List of jobs.
      */
     List < Job > getUsersJobsForStatistics(Long userId,

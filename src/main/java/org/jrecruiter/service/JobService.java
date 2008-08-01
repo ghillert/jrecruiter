@@ -15,14 +15,16 @@
 */
 package org.jrecruiter.service;
 
+import java.util.Date;
 import java.util.List;
 
-import org.jrecruiter.Constants;
+import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Statistic;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**
  *
@@ -72,7 +74,7 @@ public interface JobService {
      *
      * @return Total number of jobs
      */
-    Integer getJobsCount();
+    Long getJobsCount();
 
     /**
      * Method for getting a single jRecruiter Setting.
@@ -183,4 +185,9 @@ public interface JobService {
 
     /** Re-index the Hibernate Search */
     void reindexSearch();
+
+    public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
+
+    public Long JobCount(Date day);
+
 }
