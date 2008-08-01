@@ -18,6 +18,7 @@
           </s:url>
           <s:url action="logout" id="logoutUrl"/>
           <s:url action="search-index" id="searchIndexUrl"/>
+          <s:url action="setup-demo"            id="setupDemoUrl"/>
 
           <li><a href="${editUserUrl}" ><s:text name="admin.main.label.edit.registration"/></a></li>
           <li><a href="${editJobUrl}" ><s:text name="admin.main.label.edit.jobs"/></a></li>
@@ -29,6 +30,7 @@
               <li><a href="${addUserUrl}" ><s:text name="admin.main.label.add.user"/></a></li>
               <li><a href="${editSettingsUrl}" ><s:text name="admin.main.label.edit.settings"/></a></li>
               <li><a href="${searchIndexUrl}" >Re-Index Search Index</a></li>
+              <li><a href="${setupDemoUrl}" >Setup Demo Jobs</a></li>
           </security:authorize>
 
           <li><a href="${showJobsUrl}" ><s:text name="admin.main.label.view.jobs"/></a></li>
