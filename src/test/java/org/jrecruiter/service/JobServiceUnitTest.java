@@ -23,9 +23,9 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.easymock.EasyMock;
-import org.jrecruiter.Constants;
-import org.jrecruiter.Constants.JobStatus;
-import org.jrecruiter.Constants.OfferedBy;
+import org.jrecruiter.common.Constants;
+import org.jrecruiter.common.Constants.JobStatus;
+import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.RegionDao;
@@ -161,12 +161,12 @@ public class JobServiceUnitTest extends TestCase {
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        EasyMock.expect(jobDao.getJobsCount()).andReturn(10);
+        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
         EasyMock.replay(jobDao);
 
-        final Integer jobsCounted = jobService.getJobsCount();
+        final Long jobsCounted = jobService.getJobsCount();
 
-        assertEquals(Integer.valueOf(10), jobsCounted);
+        assertEquals(Long.valueOf(10), jobsCounted);
     }
 
     public void testGetJRecruiterSettings() throws Exception {

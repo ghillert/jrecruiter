@@ -27,7 +27,7 @@ public class IndustryDaoTest extends BaseTest {
     public void testGetAll() {
 
         List<Industry> industries = industryDao.getAllIndustriesOrdered();
-        assertTrue(industries.size() == 15);
+        assertTrue(industries.size() == 16);
 
     }
 }

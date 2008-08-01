@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.jrecruiter.Constants.JobStatus;
-import org.jrecruiter.Constants.OfferedBy;
+import org.jrecruiter.common.Constants.JobStatus;
+import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;

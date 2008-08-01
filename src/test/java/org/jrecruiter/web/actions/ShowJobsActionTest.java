@@ -46,7 +46,7 @@ public class ShowJobsActionTest extends TestCase {
 
         List<Job>jobs = new ArrayList<Job>();
 
-        EasyMock.expect(jobService.getJobsCount()).andReturn(10);
+        EasyMock.expect(jobService.getJobsCount()).andReturn(10L);
         EasyMock.expect(jobService.getJobs(20, 1, "", null)).andReturn(jobs);
 
         EasyMock.replay(jobService);
@@ -67,7 +67,7 @@ public class ShowJobsActionTest extends TestCase {
 
         List<Job>jobs = new ArrayList<Job>();
 
-        EasyMock.expect(jobService.getJobsCount()).andReturn(10);
+        EasyMock.expect(jobService.getJobsCount()).andReturn(10L);
         EasyMock.expect(jobService.getJobs(20, 1, "", null)).andReturn(jobs);
 
         EasyMock.replay(jobService);

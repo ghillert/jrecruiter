@@ -4,16 +4,18 @@
 package org.jrecruiter.dao;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jrecruiter.Constants.JobStatus;
-import org.jrecruiter.Constants.OfferedBy;
-import org.jrecruiter.Constants.StatsMode;
+import org.jrecruiter.common.Constants.JobStatus;
+import org.jrecruiter.common.Constants.OfferedBy;
+import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.test.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectRetrievalFailureException;
@@ -86,12 +88,7 @@ public class JobDaoTest extends BaseTest {
 
     public void testGetNonExistingJob() {
 
-        try {
-            jobDao.get(9999999999999L);
-        } catch (ObjectRetrievalFailureException e) {
-            return;
-        }
-        fail();
+        assertNull(jobDao.get(9999999999999L));
     }
 
     public void testDoesJobExist() {
@@ -269,10 +266,93 @@ public class JobDaoTest extends BaseTest {
         job.setUser(savedUser);
         jobDao.save(job);
 
-        Integer totalNumberOfJobs = jobDao.getJobsCount();
+        Long totalNumberOfJobs = jobDao.getJobsCount();
 
         assertNotNull(totalNumberOfJobs);
         assertTrue(totalNumberOfJobs.intValue() > 0);
+    }
+
+    public void testGetJobCountForDay() {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.clear();
+        cal1.set(1500, 05, 20);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.clear();
+        cal2.set(1500, 04, 20);
+
+        Calendar cal3 = Calendar.getInstance();
+        cal3.clear();
+        cal3.set(1500, 03, 20);
+
+        final User user = this.getUser();
+
+        User savedUser = userDao.save(user);
+
+        final Job job1 = this.getJob();
+        job1.setUser(savedUser);
+        job1.setRegistrationDate(cal1.getTime());
+        jobDao.save(job1);
+
+        final Job job2 = this.getJob();
+        job2.setUser(savedUser);
+        job2.setRegistrationDate(cal2.getTime());
+        jobDao.save(job2);
+
+        final Job job3 = this.getJob();
+        job3.setUser(savedUser);
+        job3.setRegistrationDate(cal3.getTime());
+        jobDao.save(job3);
+
+        entityManager.flush();
+
+        Calendar queryDate = Calendar.getInstance();
+        queryDate.clear();
+        queryDate.set(1500, 4, 25);
+        Long totalNumberOfJobs = jobDao.getJobCount(queryDate.getTime());
+
+        assertNotNull(totalNumberOfJobs);
+        assertTrue(totalNumberOfJobs.intValue() == 2);
+    }
+
+    public void testGetJobCountPerDayAndPeriod() {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.clear();
+        cal1.set(1500, 05, 20);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.clear();
+        cal2.set(1500, 04, 20);
+
+        Calendar cal3 = Calendar.getInstance();
+        cal3.set(1500, 04, 20);
+
+        final User user = this.getUser();
+
+        User savedUser = userDao.save(user);
+
+        final Job job1 = this.getJob();
+        job1.setUser(savedUser);
+        job1.setRegistrationDate(cal1.getTime());
+        jobDao.save(job1);
+
+        final Job job2 = this.getJob();
+        job2.setUser(savedUser);
+        job2.setRegistrationDate(cal2.getTime());
+        jobDao.save(job2);
+
+        final Job job3 = this.getJob();
+        job3.setUser(savedUser);
+        job3.setRegistrationDate(cal3.getTime());
+        jobDao.save(job3);
+
+        entityManager.flush();
+
+        List<JobCountPerDay> jobCountPerDay = jobDao.getJobCountPerDayAndPeriod(cal3.getTime(), cal1.getTime());
+
+        assertNotNull(jobCountPerDay);
+        assertTrue(jobCountPerDay.size() == 2);
+
     }
 
     public void setStatisticDao(StatisticDao statisticDao) {
@@ -299,4 +379,6 @@ public class JobDaoTest extends BaseTest {
         assertEquals("www.hillert.com", job2.getWebsite());
 
     }
+
+
 }
