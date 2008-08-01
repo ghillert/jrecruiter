@@ -1,6 +1,5 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-    <%@include file="/WEB-INF/jsp/admin/showStatisticsTable.jsp"%>
 
     <s:url id="chartJobsHitsAllUrl" namespace="/chart" action="viewJobChart">
         <s:param name="mode" value="all"/>
