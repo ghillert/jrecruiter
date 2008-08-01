@@ -29,7 +29,7 @@
             <legend>Summary</legend>
           <div class="optional strong">
               <label><fmt:message key="field.jobTitle"/>:</label>
-              <s:property value="${job.jobTitle}" escape="true"/>
+              <s:property value="%{job.jobTitle}" escape="true"/>
           </div>
             <div class="optional strong">
                 <label><fmt:message key="field.businessName"/>:</label>
@@ -85,24 +85,27 @@
 <label><fmt:message key="field.city"/>:</label>${job.businessCity}
 
             </div>
-                        <div class="optional">
-<label><fmt:message key="field.state"/>:</label>${job.businessState}
-
-            </div>
-                                    <div class="optional">
-<label><fmt:message key="field.zip"/>:</label>${job.businessZip}
-
-            </div>
-                                    <div class="optional">
-<label><fmt:message key="field.website"/>:</label>
+            <s:if test="job.businessState != null">
+              <div class="optional">
+                 <label><fmt:message key="field.state"/>:</label><s:property value="%{job.businessState"/>
+              </div>
+            </s:if>
+            <s:if test="job.businessZip != null">
+              <div class="optional">
+                  <label><fmt:message key="field.zip"/>:</label><s:property value="%{job.businessZip}"/>
+              </div>
+            </s:if>
+            <s:if test="job.website != null">
+                <div class="optional">
+                   <label><fmt:message key="field.website"/>:</label>
                     <c:if test="${not fn:contains(job.website, 'http')}">
                       <a href="http://${job.website}">${job.website}</a>
                     </c:if>
                     <c:if test="${fn:contains(job.website, 'http')}">
                       <a href="${job.website}">${job.website}</a>
                     </c:if>
-
-            </div>
+                </div>
+            </s:if>
         </fieldset>
         <fieldset id="jobDetailDescription">
             <legend><fmt:message key="field.jobDescription"/></legend>
@@ -117,23 +120,24 @@
                         </c:otherwise>
                     </c:choose>
         </fieldset>
-        <fieldset id="jobDetailRestriction">
-            <legend><fmt:message key="field.jobRestrictions"/></legend>
-              <c:set var="restr"><c:out value="${job.jobRestrictions}" escapeXml="true"/></c:set>
-              <c:set var="restr"><c:out value="${fn:replace(restr, lf, '<br/>')}" escapeXml="false"/></c:set>
-                    <c:choose>
-                        <c:when test="${not empty restr}">
-                            <c:out value="${restr}" escapeXml="false"/>
-                        </c:when>
-                        <c:otherwise>
-                            N/A
-                        </c:otherwise>
-                    </c:choose>
-        </fieldset>
-
+        <s:if test="job.jobRestrictions != null">zxcczxc
+          <fieldset id="jobDetailRestriction">
+              <legend><fmt:message key="field.jobRestrictions"/></legend>
+                <c:set var="restr"><c:out value="${job.jobRestrictions}" escapeXml="true"/></c:set>
+                <c:set var="restr"><c:out value="${fn:replace(restr, lf, '<br/>')}" escapeXml="false"/></c:set>
+                      <c:choose>
+                          <c:when test="${not empty restr}">
+                              <c:out value="${restr}" escapeXml="false"/>
+                          </c:when>
+                          <c:otherwise>
+                              N/A
+                          </c:otherwise>
+                      </c:choose>
+          </fieldset>
+        </s:if>
         <script type="text/javascript">
 <!--
     window.onload = function() { showJob('map_canvas',  ${job.latitude}, ${job.longitude});}
-    window.onunload = function() { GUnload(); }
+    jQuery(document).unload(function() {GUnload();});
 //-->
 </script>
