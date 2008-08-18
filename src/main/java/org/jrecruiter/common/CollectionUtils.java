@@ -16,6 +16,7 @@
 package org.jrecruiter.common;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -40,5 +41,10 @@ public class CollectionUtils {
     /** Return a basic HashSet */
     public static <T> java.util.HashSet<T> getHashSet() {
         return new HashSet<T>(0);
+    }
+
+    /** Return a basic HashMap */
+    public static <T, S> java.util.HashMap<T,S> getHashMap() {
+        return new HashMap<T,S>(0);
     }
 }
