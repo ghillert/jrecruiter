@@ -17,10 +17,13 @@ package org.jrecruiter.dao.jpa;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 
+import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.hibernate.Criteria;
@@ -30,9 +33,11 @@ import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Job;
@@ -207,33 +212,50 @@ implements JobDao {
          * @return List of jobs.
          */
         @SuppressWarnings("unchecked")
-        public List < Job > getJobs(
-                final Integer pageSize,
-                final Integer pageNumber,
-                String fieldSorted,
-                String sortOrder) {
+        public List < Job > getJobs(final Integer pageSize,
+                                    final Integer pageNumber,
+                                    Map<String, String> sortOrders,
+                                    Map<String, String> jobFilters) {
             List < Job > jobs;
 
-            if (fieldSorted == null || fieldSorted.length() == 0) {
-                fieldSorted = "updateDate";
+            if (pageSize == null) {
+                throw new IllegalStateException("pageSize must not be null.");
+            }
+            if (pageNumber == null) {
+                throw new IllegalStateException("pageNumber must not be null.");
             }
 
-            if (sortOrder == null) {
-                sortOrder = "DESC";
-            } else if (!sortOrder.equalsIgnoreCase("ASC")
-                    && !sortOrder.equalsIgnoreCase("DESC")) {
-                sortOrder = "DESC";
+            if (sortOrders == null) {
+                sortOrders = CollectionUtils.getHashMap();
             }
+
+            if (sortOrders.isEmpty()) {
+                sortOrders.put("updateDate", "ASC");
+            }
+
+            if (jobFilters == null) {
+                jobFilters = CollectionUtils.getHashMap();
+            }
+
 
             Session session = (Session)entityManager.getDelegate();
             final Criteria criteria = session.createCriteria(Job.class);
+
             criteria.setFetchMode("statistics", FetchMode.JOIN);
             criteria.setFetchMode("region", FetchMode.JOIN);
 
-            if (sortOrder.equalsIgnoreCase("DESC")) {
-                criteria.addOrder(Order.desc(fieldSorted));
-            } else if (sortOrder.equalsIgnoreCase("ASC")) {
-                criteria.addOrder(Order.asc(fieldSorted));
+            for (Entry<String, String> entry : sortOrders.entrySet()) {
+                if (entry.getValue().equalsIgnoreCase("DESC")) {
+                    criteria.addOrder(Order.desc(entry.getKey()));
+                } else if (entry.getValue().equalsIgnoreCase("ASC")) {
+                    criteria.addOrder(Order.asc(entry.getKey()));
+                } else {
+                    throw new IllegalStateException("SortOrder " + entry.getValue() + " is not supported.");
+                }
+            }
+
+            for (Entry<String, String> entry : jobFilters.entrySet()) {
+                    criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue()));
             }
 
             criteria.setFirstResult((pageNumber - 1) * pageSize);

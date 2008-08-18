@@ -3,13 +3,29 @@ package org.jrecruiter.web.actions;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.displaytag.properties.SortOrderEnum;
+import org.jmesa.facade.TableFacade;
+import org.jmesa.facade.TableFacadeFactory;
+import org.jmesa.limit.Filter;
+import org.jmesa.limit.FilterSet;
+import org.jmesa.limit.Limit;
+import org.jmesa.limit.Order;
+import org.jmesa.limit.Sort;
+import org.jmesa.limit.SortSet;
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.util.FilteringUtils.JobFilterableProperty;
+import org.jrecruiter.model.util.FilteringUtils.SortOrder;
 import org.jrecruiter.web.DisplaytagPaginatedList;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
+import org.springframework.web.HttpRequestHandler;
 import org.texturemedia.smarturls.ActionName;
 import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
@@ -31,7 +47,7 @@ import org.texturemedia.smarturls.Results;
   @ActionName(name="show-jobs"),
   @ActionName(name="show-jobs-ajax")
 })
-public class ShowJobsAction extends BaseAction implements SessionAware {
+public class ShowJobsAction extends BaseAction implements ServletRequestAware {
 
 
     /** serialVersionUID. */
@@ -42,18 +58,11 @@ public class ShowJobsAction extends BaseAction implements SessionAware {
      */
     private final Log LOGGER = LogFactory.getLog(ShowJobsAction.class);
 
-    private String dir;
-    private String sort;
-    private Integer page;
-    private String displayAjax;
-    private DisplaytagPaginatedList<Job> jobs           = new DisplaytagPaginatedList<Job>();
+    private HttpServletRequest request;
 
-    private Map<String, Object>session;
-
-    @SuppressWarnings("unchecked")
-    public void setSession(Map session) {
-        this.session = session;
-    }
+    private String ajax;
+    private List<Job> jobs           = CollectionUtils.getArrayList();
+    private Limit limit;
 
     /* (non-Javadoc)
      * @see com.opensymphony.xwork2.ActionSupport#execute()
@@ -63,105 +72,76 @@ public class ShowJobsAction extends BaseAction implements SessionAware {
     @Override
     public String execute() throws Exception {
 
-    final DisplaytagPaginatedList<Job> state;
+        final TableFacade tableFacade = TableFacadeFactory.createTableFacade("jobsTable", request);
 
-    if (session.get("jobsTableState") != null) {
-        state = (DisplaytagPaginatedList<Job>)session.get("jobsTableState");
-    } else {
-        state = new DisplaytagPaginatedList<Job>();
-        session.put("jobsTableState",state);
-    }
+        limit                     = tableFacade.getLimit();
+        final FilterSet filterSet = limit.getFilterSet();
+        final SortSet sortSet     = limit.getSortSet();
 
-    this.jobs.setPageNumber(state.getPageNumber());
-    this.jobs.setSortCriterion(state.getSortCriterion());
-    this.jobs.setSortOrder(state.getSortOrder());
 
-    if (this.sort != null) {
-        jobs.setSortCriterion(sort);
-        state.setSortCriterion(sort);
-    }
+        final int totalRows = jobService.getJobsCount().intValue();
+        tableFacade.setTotalRows(totalRows);
 
-    if (this.dir != null) {
+        int page     = limit.getRowSelect().getPage();
+        int maxRows  = limit.getRowSelect().getMaxRows();
 
-        if (dir.equalsIgnoreCase("ASC")) {
-            jobs.setSortOrder(SortOrderEnum.ASCENDING);
-            state.setSortOrder(SortOrderEnum.ASCENDING);
-        } else if (dir.equalsIgnoreCase("DESC")) {
-            jobs.setSortOrder(SortOrderEnum.DESCENDING);
-            state.setSortOrder(SortOrderEnum.DESCENDING);
+        final Map<String, String> sortOrders              = CollectionUtils.getHashMap();
+        final Map<String, String> jobFilters = CollectionUtils.getHashMap();
+
+        if (sortSet.isSorted()) {
+            for (Sort sort : sortSet.getSorts()) {
+                sortOrders.put(sort.getProperty(), sort.getOrder().name());
+            }
         }
 
-    }
+        if (filterSet.isFiltered()) {
+            for (Filter filter : filterSet.getFilters()) {
+                jobFilters.put(filter.getProperty(), filter.getValue());
+            }
+        }
 
-    if (this.page != null) {
-        jobs.setPageNumber(page);
-        state.setPageNumber(page);
-    }
+        LOGGER.info("Retrieving all jobs - "
+                        + ";Total Size: " + totalRows
+                        + ";Results per Page: " + maxRows
+                        + ";Page: " + page);
 
-    jobs.setFullListSize(Integer.valueOf(jobService.getJobsCount().toString()));
+        this.jobs = jobService.getJobs(maxRows, page, sortOrders, jobFilters);
 
-    LOGGER.info("Retrieving all jobs - "
-                    + ";Total Size: " + jobs.getFullListSize()
-                    + ";Results per Page: " + jobs.getObjectsPerPage()
-                    + ";Page: " + jobs.getPageNumber()
-                    + ";Sort Field: " + jobs.getSortCriterion()
-                    + ";Direction: " + dir);
+        if (ajax != null && ajax.equalsIgnoreCase("true")) {
+            return "ajax";
+        }
 
-    final List < Job > jobList = jobService.getJobs(
-                                jobs.getObjectsPerPage(),
-                                jobs.getPageNumber(),
-                                jobs.getSortCriterion(),
-                                dir);
-    jobs.setRecords(jobList);
-
-    if (displayAjax != null && displayAjax.equalsIgnoreCase("true")) {
-        return "ajax";
-    }
-
-    return SUCCESS;
+        return SUCCESS;
     }
 
     //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public String getDir() {
-        return dir;
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
     }
 
-    public void setDir(String dir) {
-        this.dir = dir;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    public Integer getPage() {
-        return page;
-    }
-
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public String getDisplayAjax() {
-        return displayAjax;
-    }
-
-    public void setDisplayAjax(String displayAjax) {
-        this.displayAjax = displayAjax;
-    }
-
-    public DisplaytagPaginatedList<Job> getJobs() {
+    public List<Job> getJobs() {
         return jobs;
     }
 
-    public void setJobs(DisplaytagPaginatedList<Job> jobs) {
+    public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
     }
 
+    public Limit getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Limit limit) {
+        this.limit = limit;
+    }
+
+    public String getAjax() {
+        return ajax;
+    }
+
+    public void setAjax(String ajax) {
+        this.ajax = ajax;
+    }
 
 }

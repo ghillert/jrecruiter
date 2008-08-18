@@ -120,7 +120,7 @@
                         </c:otherwise>
                     </c:choose>
         </fieldset>
-        <s:if test="job.jobRestrictions != null">zxcczxc
+        <s:if test="job.jobRestrictions != null">
           <fieldset id="jobDetailRestriction">
               <legend><fmt:message key="field.jobRestrictions"/></legend>
                 <c:set var="restr"><c:out value="${job.jobRestrictions}" escapeXml="true"/></c:set>

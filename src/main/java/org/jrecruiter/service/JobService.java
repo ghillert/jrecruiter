@@ -17,6 +17,7 @@ package org.jrecruiter.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Configuration;
@@ -56,18 +57,18 @@ public interface JobService {
     Job getJobForId(Long jobId);
 
     /**
-     * Method for returning list of available job postings.
+     * Method for returning all available job postings.
      *
      * @return List of jobs.
      */
     List < Job > getJobs();
 
     /**
-     * Method for returning list of available job postings.
+     * Method for returning a filtered list of available job postings.
      *
      * @return List of jobs.
      */
-    List < Job > getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder);
+    List < Job > getJobs(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> jobFilters);
 
     /**
      * Returns the number of totally available jobs in the system.
