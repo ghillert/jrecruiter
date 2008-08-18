@@ -15,7 +15,7 @@
     <property name="saltSizeBytes" value="16" />
   </bean>
 
-  <bean id="passwordEncoder" class="org.jasypt.spring.security.PasswordEncoder">
+  <bean id="passwordEncoder" class="org.jasypt.spring.security2.PasswordEncoder">
     <property name="stringDigester">
       <ref bean="stringDigester" />
     </property>
