@@ -17,6 +17,7 @@ package org.jrecruiter.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
@@ -71,8 +72,7 @@ public interface JobDao extends GenericDao < Job, Long >{
      * @param sortOrder What is the sort order?
      * @return List of jobs.
      */
-    List < Job > getJobs(Integer pageSize, Integer pageNumber,
-                         String fieldSorted, String sortOrder);
+    List < Job > getJobs(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> jobFilters);
 
     /**
      * Returns the number of totally available jobs in the system.
