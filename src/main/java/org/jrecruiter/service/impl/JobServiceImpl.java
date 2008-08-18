@@ -97,8 +97,8 @@ public class JobServiceImpl implements JobService {
     /* (non-Javadoc)
      * @see org.jrecruiter.service.JobService#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
-    public List<Job> getJobs(Integer pageSize, Integer pageNumber, String fieldSorted, String sortOrder) {
-        return jobDao.getJobs(pageSize, pageNumber, fieldSorted, sortOrder);
+    public List<Job> getJobs(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> jobFilters) {
+        return jobDao.getJobs(pageSize, pageNumber, sortOrders, jobFilters);
     }
 
     /* (non-Javadoc)

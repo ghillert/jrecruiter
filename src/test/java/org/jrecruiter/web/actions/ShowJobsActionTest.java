@@ -42,12 +42,11 @@ public class ShowJobsActionTest extends TestCase {
 
 
         showJobsAction.setJobService(jobService);
-        showJobsAction.setSession(new HashMap<String, Object>());
 
         List<Job>jobs = new ArrayList<Job>();
 
         EasyMock.expect(jobService.getJobsCount()).andReturn(10L);
-        EasyMock.expect(jobService.getJobs(20, 1, "", null)).andReturn(jobs);
+        EasyMock.expect(jobService.getJobs(20, 1, null, null)).andReturn(jobs);
 
         EasyMock.replay(jobService);
 
@@ -58,17 +57,16 @@ public class ShowJobsActionTest extends TestCase {
 
     public void testExecuteAjax() throws Exception {
         ShowJobsAction showJobsAction = new ShowJobsAction();
-        showJobsAction.setDisplayAjax("true");
+        showJobsAction.setAjax("true");
 
         JobService jobService = EasyMock.createMock(JobService.class);
 
-        showJobsAction.setSession(new HashMap<String, Object>());
         showJobsAction.setJobService(jobService);
 
         List<Job>jobs = new ArrayList<Job>();
 
         EasyMock.expect(jobService.getJobsCount()).andReturn(10L);
-        EasyMock.expect(jobService.getJobs(20, 1, "", null)).andReturn(jobs);
+        EasyMock.expect(jobService.getJobs(20, 1, null, null)).andReturn(jobs);
 
         EasyMock.replay(jobService);
 

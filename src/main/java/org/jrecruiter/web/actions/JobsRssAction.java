@@ -21,36 +21,36 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
  */
 public class JobsRssAction extends BaseAction {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = -4901833648423551648L;
+    /** serialVersionUID */
+    private static final long serialVersionUID = -4901833648423551648L;
 
-	private SyndFeed rssFeed = new SyndFeedImpl();
+    private SyndFeed rssFeed = new SyndFeedImpl();
 
-	/**
-	 * @return the rssFeed
-	 */
-	public SyndFeed getRssFeed() {
-		return rssFeed;
-	}
+    /**
+     * @return the rssFeed
+     */
+    public SyndFeed getRssFeed() {
+        return rssFeed;
+    }
 
-	/**
-	 * @param rssFeed the rssFeed to set
-	 */
-	public void setRssFeed(SyndFeed rssFeed) {
-		this.rssFeed = rssFeed;
-	}
+    /**
+     * @param rssFeed the rssFeed to set
+     */
+    public void setRssFeed(SyndFeed rssFeed) {
+        this.rssFeed = rssFeed;
+    }
 
-	public String execute() {
+    public String execute() {
         rssFeed.setFeedType("rss_1.0");
-		rssFeed.setTitle("AJUG Job Postings");
-		rssFeed.setLink("http://www.ajug.org/jobs");
-		rssFeed.setDescription("RSS feed of the Atlanta Java User Group's job posting service.");
+        rssFeed.setTitle("AJUG Job Postings");
+        rssFeed.setLink("http://www.ajug.org/jobs");
+        rssFeed.setDescription("RSS feed of the Atlanta Java User Group's job posting service.");
 
         List <SyndEntry>entries = new ArrayList<SyndEntry>();
         SyndEntry entry;
         SyndContent description;
 
-        List <Job> jobs = jobService.getJobs(20, 1, "updateDate", "DESC");
+        List <Job> jobs = jobService.getJobs(20, 1, null, null);
 
         for (Job job : jobs) {
             entry = new SyndEntryImpl();
@@ -67,6 +67,6 @@ public class JobsRssAction extends BaseAction {
 
         rssFeed.setEntries(entries);
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 }

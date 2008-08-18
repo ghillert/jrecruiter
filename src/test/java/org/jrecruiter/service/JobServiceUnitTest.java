@@ -145,10 +145,10 @@ public class JobServiceUnitTest extends TestCase {
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        EasyMock.expect(jobDao.getJobs(5, 1, "test", "ascending")).andReturn(jobs);
+        EasyMock.expect(jobDao.getJobs(5, 1, null, null)).andReturn(jobs);
         EasyMock.replay(jobDao);
 
-        final List<Job> jobsFromDb = jobService.getJobs(5, 1, "test", "ascending");
+        final List<Job> jobsFromDb = jobService.getJobs(5, 1, null, null);
 
         assertNotNull(jobsFromDb);
         assertTrue(jobsFromDb.size() == 10);

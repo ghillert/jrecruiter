@@ -614,26 +614,5 @@ public class Job implements Serializable {
         this.statistic = statistic;
     }
 
-    @Transient
-    public String getJobLocationForDisplay() {
-        if (this.regionOther != null) {
-            return this.regionOther;
-        } else if (this.region != null) {
-            return this.region.getName();
-        }
-
-        return null;
-    }
-
-    @Transient
-    public Date getPostedDate() {
-        if (this.updateDate != null) {
-            return this.updateDate;
-        } else if (this.registrationDate != null) {
-            return this.registrationDate;
-        }
-
-        return null;
-    }
 }
 

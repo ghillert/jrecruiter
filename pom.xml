@@ -842,7 +842,7 @@
 
           <artifactId>jasypt</artifactId>
 
-          <version>1.5-dev</version>
+          <version>1.5</version>
 
         </dependency>
 
@@ -941,6 +941,11 @@
           </exclusions>
         </dependency>
 
+    <dependency>
+        <groupId>org.jmesa</groupId>
+        <artifactId>jmesa</artifactId>
+        <version>2.3.3</version>
+    </dependency>
   </dependencies>
 
 
@@ -1173,7 +1178,20 @@
                 <jdbc.artifactId>postgresql</jdbc.artifactId>
                 <jdbc.version>8.1-407.jdbc3</jdbc.version>
                 <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:postgresql://localhost/jrecruiter]]></jdbc.url>
+                <jdbc.url><![CDATA[jdbc:postgresql://localhost:5432/jrecruiter]]></jdbc.url>
+                <jdbc.username>jrecruiter</jdbc.username>
+                <jdbc.password>jrecruiter</jdbc.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>postgresql-test</id>
+            <properties>
+                <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+                <jdbc.groupId>postgresql</jdbc.groupId>
+                <jdbc.artifactId>postgresql</jdbc.artifactId>
+                <jdbc.version>8.1-407.jdbc3</jdbc.version>
+                <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
+                <jdbc.url><![CDATA[jdbc:postgresql://localhost:15432/jrecruiter]]></jdbc.url>
                 <jdbc.username>jrecruiter</jdbc.username>
                 <jdbc.password>jrecruiter</jdbc.password>
             </properties>
@@ -1201,7 +1219,7 @@
 
         <!-- Framework dependency versions -->
         <appfuse.version>2.0.1</appfuse.version>
-        <spring.version>2.5.3</spring.version>
+        <spring.version>2.5.5</spring.version>
 
         <!-- Testing dependency versions -->
         <jmock.version>1.1.0</jmock.version>

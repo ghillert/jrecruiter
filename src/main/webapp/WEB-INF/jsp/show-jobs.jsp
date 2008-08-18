@@ -1,7 +1,30 @@
 <title>Job List</title>
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<%@include file="/WEB-INF/jsp/jobsTable.jsp"%>
+<s:url id="tableUrl" includeParams="none"/>
+<s:url id="tableUrlAjax" action="show-jobs-ajax" includeParams="none"/>
+<form name="jobsForm" action="${tableUrl}">
+
+    <div id="jobs">
+        <jsp:include page="jobsTable.jsp"></jsp:include>
+    </div>
+
+</form>
+
+
+<script type="text/javascript">
+
+
+function onInvokeAction(id) {
+    setExportToLimit(id, '');
+
+    var parameterString = createParameterStringForLimit(id);
+
+    jQuery.get('<s:property value="%{#tableUrlAjax}"/>?ajax=true&' + parameterString, function(data) {
+        jQuery("#jobs").html(data);
+    });
+}
+</script>
 
 <table id="socialinks">
   <tr>
