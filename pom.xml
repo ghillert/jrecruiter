@@ -129,7 +129,7 @@
                         <namingstrategy>org.jrecruiter.hibernate.ImprovedPluralizedNamingStrategy</namingstrategy>
                         <propertyfile>target/classes/jdbc.properties</propertyfile>
                         <persistenceunit>base</persistenceunit>
-                        <skip>${maven.test.skip}</skip>
+                        <skip>true</skip>
                     </componentProperties>
                 </configuration>
                 <executions>
@@ -991,6 +991,10 @@
         <configuration>
           <childDelegation>true</childDelegation>
         </configuration>
+      </plugin>
+            <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </reporting>
