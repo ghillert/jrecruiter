@@ -36,7 +36,7 @@ import org.texturemedia.smarturls.Results;
               params={"contentType","text/plain",
                       "inputName","fileToDownLoad",
                       "contentDisposition","attachment; filename=logfile.txt",
-                      "bufferSize", "1024"}),
+                      "bufferSize", "1024"})
     })
 public class LoggingAction extends BaseAction {
 

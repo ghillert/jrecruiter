@@ -30,7 +30,7 @@ jRecruiter - A job posting service
 []
 
   As database backend Postgres is used. However, support for other databases is easily
-  implementable since Hibernate is used for creatign the table structure.
+  implementable since Hibernate is used for creating the table structure.
 
   The project website is located at:
 
