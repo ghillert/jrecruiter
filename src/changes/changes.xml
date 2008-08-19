@@ -5,10 +5,18 @@
       <author email="gunnar at hillert dot com">Gunnar Hillert</author>
    </properties>
    <body>
-      <release version="2.0" date="April 2008" description="New Major Feature Release">
+      <release version="2.0" date="TBD" description="New Major Feature Release">
            <action dev="Gunnar Hillert" type="add">
-               No more Struts XML-configuration files. Using the smarturls-s2 plugin for Struts the
-               amount of configuration XML could be vastly reduced.
+               (Almost) No more Struts XML-configuration files. Uses the
+               smarturls Struts 2 plugin for annotation based
+               configuration.
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Many Spring Beans dependencies are now configured  using annotations
+               (Spring 2.5.x)
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Sophisticated data-grid support using jMesa
            </action>
            <action dev="Gunnar Hillert" type="add">
                Hibernate Search support
@@ -24,6 +32,9 @@
            </action>
            <action dev="Gunnar Hillert" type="add">
                Using jasypt for password digesting
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Improved charting (jFreeCharts)
            </action>
       </release>
       <release version="1.2.1" date="2006-07-08" description="Minor fixes and features">
