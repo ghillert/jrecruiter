@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.BaseAction;
+import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.texturemedia.smarturls.Result;
 import org.texturemedia.smarturls.Results;
 
@@ -49,6 +50,7 @@ public class ShowJobsAction extends BaseAction {
     /**
      *
      */
+    @RetrieveMessages
     public String execute() {
         this.jobs = jobService.getJobs();
         return INPUT;

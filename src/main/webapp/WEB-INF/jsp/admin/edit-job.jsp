@@ -19,8 +19,7 @@
 <h2><fmt:message key="admin.edit.job.title"/></h2>
 
 <s:form id="editJobForm">
-    <s:hidden name="id"/>
-
+    <s:hidden name="job.id"/>
     <jsp:include page="includes/job_header.jsp"/>
     <jsp:include page="includes/job_contact.jsp"/>
     <jsp:include page="includes/job_location.jsp"/>
@@ -29,7 +28,7 @@
 
     <fieldset>
       <div class="submit">
-          <s:submit value="Submit" method="save" tabindex="23" cssClass="submitBtn"/><s:submit value="Cancel" method="cancel" tabindex="24" cssClass="submitBtn"/>
+          <s:submit value="Submit" method="save" tabindex="23" /><s:submit value="Cancel" method="cancel" tabindex="24"/>
       </div>
     </fieldset>
     <fmt:message key="jobposting.add.label.mandatory" />

@@ -35,10 +35,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.FilterDefs;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
@@ -52,6 +58,7 @@ import org.jrecruiter.common.Constants.OfferedBy;
 @Entity
 @Table(uniqueConstraints = {  })
 @Indexed
+@Analyzer(impl = org.apache.lucene.analysis.standard.StandardAnalyzer.class)
 public class Job implements Serializable {
 
     /**
@@ -225,6 +232,7 @@ public class Job implements Serializable {
      */
     @ManyToOne(cascade={}, fetch=FetchType.LAZY)
     @JoinColumn(name="industries_id", unique=false, nullable=true, insertable=true, updatable=true)
+    @IndexedEmbedded
     public Industry getIndustry() {
         return industry;
     }
@@ -241,6 +249,7 @@ public class Job implements Serializable {
      */
     @ManyToOne(cascade={}, fetch=FetchType.LAZY)
     @JoinColumn(name="regions_id", unique=false, nullable=true, insertable=true, updatable=true)
+    @IndexedEmbedded
     public Region getRegion() {
         return region;
     }
@@ -267,6 +276,7 @@ public class Job implements Serializable {
      * @return the businessName
      */
     @Column(unique=false, nullable=false, insertable=true, updatable=true, length=50)
+    @Field(index=Index.TOKENIZED, store=Store.YES)
     public String getBusinessName() {
         return businessName;
     }
@@ -282,6 +292,7 @@ public class Job implements Serializable {
      * @return the businessLocation
      */
     @Column(name="region_other", unique=false, nullable=true, insertable=true, updatable=true, length=50)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getRegionOther() {
         return regionOther;
     }
@@ -297,6 +308,7 @@ public class Job implements Serializable {
      * @return the jobTitle
      */
     @Column(name="job_title", unique=false, nullable=false, insertable=true, updatable=true, length=50)
+    @Field(index=Index.TOKENIZED, store=Store.YES)
     public String getJobTitle() {
         return jobTitle;
     }
@@ -312,6 +324,7 @@ public class Job implements Serializable {
      * @return the salary
      */
     @Column(name="salary", unique=false, nullable=true, insertable=true, updatable=true)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public BigDecimal getSalary() {
         return salary;
     }
@@ -327,7 +340,7 @@ public class Job implements Serializable {
      * @return the description
      */
     @Column(name="description", unique=false, nullable=false, insertable=true, updatable=true, length=2000)
-    @Field(index=Index.TOKENIZED, store=Store.NO)
+    @Field(index=Index.TOKENIZED, store=Store.YES)
     public String getDescription() {
         return description;
     }
@@ -343,6 +356,7 @@ public class Job implements Serializable {
      * @return the website
      */
     @Column(name="website", unique=false, nullable=true, insertable=true, updatable=true, length=50)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getWebsite() {
         return website;
     }
@@ -358,6 +372,7 @@ public class Job implements Serializable {
      * @return the businessAddress1
      */
     @Column(name="business_address1", unique=false, nullable=true, insertable=true, updatable=true, length=50)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getBusinessAddress1() {
         return businessAddress1;
     }
@@ -373,6 +388,7 @@ public class Job implements Serializable {
      * @return the businessAddress2
      */
     @Column(name="business_address2", unique=false, nullable=true, insertable=true, updatable=true, length=50)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getBusinessAddress2() {
         return businessAddress2;
     }
@@ -388,6 +404,7 @@ public class Job implements Serializable {
      * @return the businessCity
      */
     @Column(name="business_city", unique=false, nullable=true, insertable=true, updatable=true, length=30)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getBusinessCity() {
         return businessCity;
     }
@@ -403,6 +420,7 @@ public class Job implements Serializable {
      * @return the businessState
      */
     @Column(name="business_state", unique=false, nullable=true, insertable=true, updatable=true, length=20)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getBusinessState() {
         return businessState;
     }
@@ -418,6 +436,7 @@ public class Job implements Serializable {
      * @return the businessZip
      */
     @Column(name="business_zip", unique=false, nullable=true, insertable=true, updatable=true, length=15)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getBusinessZip() {
         return businessZip;
     }
@@ -433,6 +452,7 @@ public class Job implements Serializable {
      * @return the businessPhone
      */
     @Column(name="business_phone", unique=false, nullable=true, insertable=true, updatable=true, length=15)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getBusinessPhone() {
         return businessPhone;
     }
@@ -448,6 +468,7 @@ public class Job implements Serializable {
      * @return the businessEmail
      */
     @Column(name="business_email", unique=false, nullable=true, insertable=true, updatable=true, length=50)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getBusinessEmail() {
         return businessEmail;
     }
@@ -463,6 +484,7 @@ public class Job implements Serializable {
      * @return the industryOther
      */
     @Column(name="industry_other", unique=false, nullable=true, insertable=true, updatable=true, length=50)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getIndustryOther() {
         return industryOther;
     }
@@ -478,6 +500,7 @@ public class Job implements Serializable {
      * @return the jobRestrictions
      */
     @Column(name="job_restrictions", unique=false, nullable=true, insertable=true, updatable=true, length=2000)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getJobRestrictions() {
         return jobRestrictions;
     }
@@ -510,6 +533,8 @@ public class Job implements Serializable {
      */
     @Column(name="update_date", unique=false, nullable=true, insertable=true, updatable=true, length=8)
     @Temporal(TemporalType.TIMESTAMP)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
+    @DateBridge(resolution = Resolution.DAY)
     public Date getUpdateDate() {
         return updateDate;
     }

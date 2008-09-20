@@ -2,8 +2,8 @@
 Created: 20060120
 Author:  Steve Moitozo <god at zilla dot us> -- geekwisdom.com
 Description: This is a quick and dirty password quality meter
-		 written in JavaScript so that the password does
-		 not pass over the network.
+     written in JavaScript so that the password does
+     not pass over the network.
 License: MIT License (see below)
 Modified: 20060620 - added MIT License
 Modified: 20061111 - corrected regex for letters and numbers
@@ -62,134 +62,134 @@ combinatons:
 level 0 (1 points): letters and numbers exist
 level 1 (1 points): mixed case letters
 level 1 (2 points): letters, numbers and special characters
-					exist
+          exist
 level 1 (2 points): mixed case letters, numbers and special
-					characters exist
+          characters exist
 
 
 NOTE: Because I suck at regex the code might need work
 
 NOTE: Instead of putting out all the logging information,
-	  the score, and the verdict it would be nicer to stretch
-	  a graphic as a method of presenting a visual strength
-	  guage.
+    the score, and the verdict it would be nicer to stretch
+    a graphic as a method of presenting a visual strength
+    guage.
 
 ************************************************************ */
 function testPassword(passwd)
 {
-		var intScore   = 0
-		var strVerdict = "weak"
-		var strLog     = ""
 
-		// PASSWORD LENGTH
-		if (passwd.length<5)                         // length 4 or less
-		{
-			intScore = (intScore+3)
-			strLog   = strLog + "3 points for length (" + passwd.length + ")\n"
-		}
-		else if (passwd.length>4 && passwd.length<8) // length between 5 and 7
-		{
-			intScore = (intScore+6)
-			strLog   = strLog + "6 points for length (" + passwd.length + ")\n"
-		}
-		else if (passwd.length>7 && passwd.length<16)// length between 8 and 15
-		{
-			intScore = (intScore+12)
-			strLog   = strLog + "12 points for length (" + passwd.length + ")\n"
-		}
-		else if (passwd.length>15)                    // length 16 or more
-		{
-			intScore = (intScore+18)
-			strLog   = strLog + "18 point for length (" + passwd.length + ")\n"
-		}
+    var intScore   = 0
+    var strVerdict = "weak"
+    var strLog     = ""
 
-
-		// LETTERS (Not exactly implemented as dictacted above because of my limited understanding of Regex)
-		if (passwd.match(/[a-z]/))                              // [verified] at least one lower case letter
-		{
-			intScore = (intScore+1)
-			strLog   = strLog + "1 point for at least one lower case char\n"
-		}
-
-		if (passwd.match(/[A-Z]/))                              // [verified] at least one upper case letter
-		{
-			intScore = (intScore+5)
-			strLog   = strLog + "5 points for at least one upper case char\n"
-		}
-
-		// NUMBERS
-		if (passwd.match(/\d+/))                                 // [verified] at least one number
-		{
-			intScore = (intScore+5)
-			strLog   = strLog + "5 points for at least one number\n"
-		}
-
-		if (passwd.match(/(.*[0-9].*[0-9].*[0-9])/))             // [verified] at least three numbers
-		{
-			intScore = (intScore+5)
-			strLog   = strLog + "5 points for at least three numbers\n"
-		}
+    // PASSWORD LENGTH
+    if (passwd.length<5)                         // length 4 or less
+    {
+      intScore = (intScore+3)
+      strLog   = strLog + "3 points for length (" + passwd.length + ")\n"
+    }
+    else if (passwd.length>4 && passwd.length<8) // length between 5 and 7
+    {
+      intScore = (intScore+6)
+      strLog   = strLog + "6 points for length (" + passwd.length + ")\n"
+    }
+    else if (passwd.length>7 && passwd.length<16)// length between 8 and 15
+    {
+      intScore = (intScore+12)
+      strLog   = strLog + "12 points for length (" + passwd.length + ")\n"
+    }
+    else if (passwd.length>15)                    // length 16 or more
+    {
+      intScore = (intScore+18)
+      strLog   = strLog + "18 point for length (" + passwd.length + ")\n"
+    }
 
 
-		// SPECIAL CHAR
-		if (passwd.match(/.[!,@,#,$,%,^,&,*,?,_,~]/))            // [verified] at least one special character
-		{
-			intScore = (intScore+5)
-			strLog   = strLog + "5 points for at least one special char\n"
-		}
+    // LETTERS (Not exactly implemented as dictacted above because of my limited understanding of Regex)
+    if (passwd.match(/[a-z]/))                              // [verified] at least one lower case letter
+    {
+      intScore = (intScore+1)
+      strLog   = strLog + "1 point for at least one lower case char\n"
+    }
 
-									 // [verified] at least two special characters
-		if (passwd.match(/(.*[!,@,#,$,%,^,&,*,?,_,~].*[!,@,#,$,%,^,&,*,?,_,~])/))
-		{
-			intScore = (intScore+5)
-			strLog   = strLog + "5 points for at least two special chars\n"
-		}
+    if (passwd.match(/[A-Z]/))                              // [verified] at least one upper case letter
+    {
+      intScore = (intScore+5)
+      strLog   = strLog + "5 points for at least one upper case char\n"
+    }
 
+    // NUMBERS
+    if (passwd.match(/\d+/))                                 // [verified] at least one number
+    {
+      intScore = (intScore+5)
+      strLog   = strLog + "5 points for at least one number\n"
+    }
 
-		// COMBOS
-		if (passwd.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))        // [verified] both upper and lower case
-		{
-			intScore = (intScore+2)
-			strLog   = strLog + "2 combo points for upper and lower letters\n"
-		}
-
-		if (passwd.match(/([a-zA-Z])/) && passwd.match(/([0-9])/)) // [verified] both letters and numbers
-		{
-			intScore = (intScore+2)
-			strLog   = strLog + "2 combo points for letters and numbers\n"
-		}
-
-									// [verified] letters, numbers, and special characters
-		if (passwd.match(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/))
-		{
-			intScore = (intScore+2)
-			strLog   = strLog + "2 combo points for letters, numbers and special chars\n"
-		}
+    if (passwd.match(/(.*[0-9].*[0-9].*[0-9])/))             // [verified] at least three numbers
+    {
+      intScore = (intScore+5)
+      strLog   = strLog + "5 points for at least three numbers\n"
+    }
 
 
-		if(intScore < 16)
-		{
-		   strVerdict = "very weak"
-		}
-		else if (intScore > 15 && intScore < 25)
-		{
-		   strVerdict = "weak"
-		}
-		else if (intScore > 24 && intScore < 35)
-		{
-		   strVerdict = "mediocre"
-		}
-		else if (intScore > 34 && intScore < 45)
-		{
-		   strVerdict = "strong"
-		}
-		else
-		{
-		   strVerdict = "stronger"
-		}
+    // SPECIAL CHAR
+    if (passwd.match(/.[!,@,#,$,%,^,&,*,?,_,~]/))            // [verified] at least one special character
+    {
+      intScore = (intScore+5)
+      strLog   = strLog + "5 points for at least one special char\n"
+    }
+
+                   // [verified] at least two special characters
+    if (passwd.match(/(.*[!,@,#,$,%,^,&,*,?,_,~].*[!,@,#,$,%,^,&,*,?,_,~])/))
+    {
+      intScore = (intScore+5)
+      strLog   = strLog + "5 points for at least two special chars\n"
+    }
 
 
-	$('passwordStrength').innerHTML = (strVerdict);
-	$('passwordStrengthBar').style.width=intScore*4.5 + 'px';
+    // COMBOS
+    if (passwd.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))        // [verified] both upper and lower case
+    {
+      intScore = (intScore+2)
+      strLog   = strLog + "2 combo points for upper and lower letters\n"
+    }
+
+    if (passwd.match(/([a-zA-Z])/) && passwd.match(/([0-9])/)) // [verified] both letters and numbers
+    {
+      intScore = (intScore+2)
+      strLog   = strLog + "2 combo points for letters and numbers\n"
+    }
+
+                  // [verified] letters, numbers, and special characters
+    if (passwd.match(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/))
+    {
+      intScore = (intScore+2)
+      strLog   = strLog + "2 combo points for letters, numbers and special chars\n"
+    }
+
+
+    if(intScore < 16)
+    {
+       strVerdict = "very weak"
+    }
+    else if (intScore > 15 && intScore < 25)
+    {
+       strVerdict = "weak"
+    }
+    else if (intScore > 24 && intScore < 35)
+    {
+       strVerdict = "mediocre"
+    }
+    else if (intScore > 34 && intScore < 45)
+    {
+       strVerdict = "strong"
+    }
+    else
+    {
+       strVerdict = "stronger"
+    }
+
+  document.getElementById('passwordStrength').innerHTML = (strVerdict);
+  document.getElementById('passwordStrengthBar').style.width=intScore*4.5 + 'px';
 
 }

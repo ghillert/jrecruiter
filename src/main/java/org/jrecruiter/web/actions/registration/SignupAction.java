@@ -6,11 +6,13 @@ import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
+import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validation;
@@ -29,6 +31,7 @@ public class SignupAction extends BaseAction {
 
     private User user;
     private String password;
+    private String password2;
 
     private StringDigester stringDigester;
 
@@ -36,6 +39,7 @@ public class SignupAction extends BaseAction {
     private static final long serialVersionUID = -3422780336408883930L;
     private final Log LOGGER = LogFactory.getLog(SignupAction.class);
 
+    @RetrieveMessages
     @StoreMessages
     @Validations(
             requiredStrings = {
@@ -45,6 +49,9 @@ public class SignupAction extends BaseAction {
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName",  trim=true, message = "You must enter a last name."),
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.company",   trim=true, message = "You must enter a company.")
                      },
+             requiredFields = {
+                     @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "user.email",  message = "You must enter an email address.")
+                  },
             emails =
                     { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a valid email address.")},
             stringLengthFields =
@@ -76,7 +83,22 @@ public class SignupAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     *
+     */
+    public void validate() {
 
+        if (password != null && password != null) {
+
+            if (!password.trim().equals(password2.trim())) {
+                addFieldError("password2", "The passwords do not match.");
+            }
+
+        }
+
+    }
+
+    @RetrieveMessages
     public String execute() {
         return INPUT;
     }
@@ -98,6 +120,13 @@ public class SignupAction extends BaseAction {
         this.password = password;
     }
 
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
 
     public void setStringDigester(StringDigester stringDigester) {
         this.stringDigester = stringDigester;

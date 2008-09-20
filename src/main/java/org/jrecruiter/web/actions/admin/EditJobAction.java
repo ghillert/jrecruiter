@@ -16,24 +16,14 @@
 package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
-import org.jrecruiter.model.Statistic;
 import org.jrecruiter.web.WebUtil;
-import org.jrecruiter.web.actions.BaseAction;
-
-import com.opensymphony.xwork2.ModelDriven;
-import com.opensymphony.xwork2.Preparable;
+import org.texturemedia.smarturls.Result;
 
 /**
  * Edit a job. Save the changes or delete the job posting altogether.
@@ -42,162 +32,108 @@ import com.opensymphony.xwork2.Preparable;
  * @version $Id$
  *
  */
-public class EditJobAction extends BaseAction implements Preparable, ModelDriven<Job> {
+@Result(name="success", location="show-jobs", type="redirectAction")
+public class EditJobAction extends JobBaseAction {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 2621352739536377825L;
-
-    private Job job = new Job();
-
-    private Set<OfferedBy>offeredBySet;
-    private List<Region> regions;
-    private List<Industry>industries;
-    private Map<Boolean, String>yesNoList;
-
-    /** Prepare the select boxes of the form. */
-    public void prepare() throws Exception {
-
-        if (this.id != null) {
-
-            Job jobFromDb = jobService.getJobForId(this.id);
-
-            if (jobFromDb != null) {
-                this.job = jobFromDb;
-            } else {
-                throw new IllegalStateException("No job found for id " + this.id);
-            }
-
-             this.statistic = job.getStatistic();
-        }
-
-        this.offeredBySet = EnumSet.allOf(OfferedBy.class);
-        this.regions = jobService.getRegions();
-        this.industries = jobService.getIndustries();
-        this.yesNoList = new HashMap<Boolean, String>();
-        this.yesNoList.put(Boolean.FALSE, "False");
-        this.yesNoList.put(Boolean.TRUE, "True");
-
-    }
-
-    public Job getModel() {
-        return this.job;
-    }
-    public void setModel(Job job) {
-        this.job = job;
-    }
-
-    private Statistic statistic;
-
-    public Long id;
 
     /**
      * Logger Declaration.
      */
     private final Log LOGGER = LogFactory.getLog(EditJobAction.class);
 
+    /**
+     * Delete the job.
+     */
     public String delete() {
-         jobService.deleteJobForId(this.job.getId()); //FIXME SECURITY
+
+         final Job jobFromDB = jobService.getJobForId(this.model.getJob().getId());
+
+         if (jobFromDB == null) {
+             throw new IllegalArgumentException("Job with id " + model.getJob().getId() + " does not exist.");
+         }
+
+         jobService.deleteJobForId(this.model.getJob().getId()); //FIXME SECURITY
          super.addActionMessage(getText("job.delete.success"));
          return SUCCESS;
     }
 
+    /**
+     * Retrieve a job for edting.
+     */
     public String execute() {
+
+        if (this.id == null) {
+            throw new IllegalArgumentException("No job id was provided.");
+        }
+
+        final Job jobFromDb = jobService.getJobForId(this.id);
+
+        if (jobFromDb != null) {
+            LOGGER.info("Loaded job with Id: " + jobFromDb.getId());
+            this.model.setJob(jobFromDb);
+        } else {
+            throw new IllegalStateException("No job found for id " + this.id);
+        }
+
         return INPUT;
     }
 
     /**
-     *
+     * Save the job.
      */
     public String save() {
 
-        final Job jobFromDB = jobService.getJobForId(job.getId());
+        final Job jobFromDB = jobService.getJobForId(model.getJob().getId());
 
-        if (job != null) {
-
-            String jobDescription = (String) job.getDescription();
-
-            jobFromDB.setBusinessName(job.getBusinessName());
-            jobFromDB.setRegionOther(job.getRegionOther());
-            jobFromDB.setJobTitle(job.getJobTitle());
-            jobFromDB.setSalary(job.getSalary());
-            jobFromDB.setDescription(WebUtil.stripTags(jobDescription, "<b>"));
-            jobFromDB.setWebsite(job.getWebsite());
-            jobFromDB.setBusinessAddress1(job.getBusinessAddress1());
-            jobFromDB.setBusinessAddress2(job.getBusinessAddress2());
-            jobFromDB.setBusinessCity(job.getBusinessCity());
-            jobFromDB.setBusinessState(job.getBusinessState());
-            jobFromDB.setBusinessZip(job.getBusinessZip());
-            jobFromDB.setBusinessPhone(job.getBusinessPhone());
-            jobFromDB.setBusinessEmail(job.getBusinessEmail());
-            jobFromDB.setIndustry(job.getIndustry());
-            jobFromDB.setJobRestrictions(job.getJobRestrictions());
-            jobFromDB.setUpdateDate(new Date());
-            jobService.updateJob(jobFromDB);
-        } else {
-            throw new IllegalArgumentException("Job with id " + job.getId() + " does not exist.");
+        if (jobFromDB == null) {
+            throw new IllegalArgumentException("Job with id " + model.getJob().getId() + " does not exist.");
         }
+
+        if (this.model.getJob().getIndustry() != null && this.model.getJob().getIndustry().getId() != null) {
+            final Industry industry = jobService.getIndustry(jobFromDB.getIndustry().getId());
+
+            if (industry == null) {
+                throw new IllegalArgumentException("Industry with id " + this.model.getJob().getIndustry().getId() + " does not exist.");
+            } else {
+                jobFromDB.setIndustry(model.getJob().getIndustry());
+            }
+        }
+
+        if (this.model.getJob().getRegion() != null && this.model.getJob().getRegion().getId() != null) {
+            final Region region = jobService.getRegion(jobFromDB.getRegion().getId());
+
+            if (region == null) {
+                throw new IllegalArgumentException("Region with id " + this.model.getJob().getRegion().getId() + " does not exist.");
+            } else {
+                jobFromDB.setRegion(model.getJob().getRegion());
+            }
+        }
+
+        final String jobDescription = model.getJob().getDescription();
+
+        jobFromDB.setBusinessName(model.getJob().getBusinessName());
+        jobFromDB.setRegionOther(model.getJob().getRegionOther());
+        jobFromDB.setJobTitle(model.getJob().getJobTitle());
+        jobFromDB.setSalary(model.getJob().getSalary());
+        jobFromDB.setDescription(WebUtil.stripTags(jobDescription, "<b>"));
+        jobFromDB.setWebsite(model.getJob().getWebsite());
+        jobFromDB.setBusinessAddress1(model.getJob().getBusinessAddress1());
+        jobFromDB.setBusinessAddress2(model.getJob().getBusinessAddress2());
+        jobFromDB.setBusinessCity(model.getJob().getBusinessCity());
+        jobFromDB.setBusinessState(model.getJob().getBusinessState());
+        jobFromDB.setBusinessZip(model.getJob().getBusinessZip());
+        jobFromDB.setBusinessPhone(model.getJob().getBusinessPhone());
+        jobFromDB.setBusinessEmail(model.getJob().getBusinessEmail());
+        jobFromDB.setJobRestrictions(model.getJob().getJobRestrictions());
+        jobFromDB.setUpdateDate(new Date());
+        jobService.updateJob(jobFromDB);
 
         super.addActionMessage(getText("job.edit.success", ""));
 
         return SUCCESS;
 
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Statistic getStatistic() {
-        return statistic;
-    }
-
-    public void setStatistic(Statistic statistic) {
-        this.statistic = statistic;
-    }
-
-    public Job getJob() {
-        return job;
-    }
-
-    public void setJob(Job job) {
-        this.job = job;
-    }
-
-    public Set<OfferedBy> getOfferedBySet() {
-        return offeredBySet;
-    }
-
-    public void setOfferedBySet(Set<OfferedBy> offeredBySet) {
-        this.offeredBySet = offeredBySet;
-    }
-
-    public List<Region> getRegions() {
-        return regions;
-    }
-
-    public void setRegions(List<Region> regions) {
-        this.regions = regions;
-    }
-
-    public List<Industry> getIndustries() {
-        return industries;
-    }
-
-    public void setIndustries(List<Industry> industries) {
-        this.industries = industries;
-    }
-
-    public Map<Boolean, String> getYesNoList() {
-        return yesNoList;
-    }
-
-    public void setYesNoList(Map<Boolean, String> yesNoList) {
-        this.yesNoList = yesNoList;
-    }
-
 
 }
