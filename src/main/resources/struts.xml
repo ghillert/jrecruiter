@@ -7,9 +7,6 @@
 
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
-
-
-
         <interceptors>
             <interceptor name="store2" class="org.jrecruiter.web.interceptor.MessageStoreInterceptor">
             </interceptor>
@@ -19,35 +16,37 @@
                   <param name="logEnabled">true</param>
                 </interceptor-ref>
                 <interceptor-ref name="alias"/>
-                <interceptor-ref name="servletConfig"/>
-                <interceptor-ref name="params"/>
-                <interceptor-ref name="prepare"/>
                 <interceptor-ref name="i18n"/>
+                <interceptor-ref name="params">
+                    <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
-                <interceptor-ref name="debugging"/>
-                <interceptor-ref name="profiling"/>
-                <interceptor-ref name="scopedModelDriven"/>
                 <interceptor-ref name="modelDriven"/>
                 <interceptor-ref name="fileUpload"/>
                 <interceptor-ref name="checkbox"/>
                 <interceptor-ref name="staticParams"/>
                 <interceptor-ref name="params">
-                  <param name="excludeParams">dojo\..*</param>
+                    <param name="excludeParams">dojo\..*,^struts\..*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="validation">
-                    <param name="excludeMethods">input,back,cancel,browse,execute,delete,edit,list</param>
+                    <param name="excludeMethods">input,back,cancel,execute,delete,edit,list</param>
                 </interceptor-ref>
                 <interceptor-ref name="workflow">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
+                    <param name="excludeMethods">input,back,cancel</param>
                 </interceptor-ref>
             </interceptor-stack>
         </interceptors>
 
         <global-results>
             <result name="globalException">/WEB-INF/jsp/error.jsp</result>
+              <result name="backTo" type="redirect">
+            <param name="location">${backTo}</param>
+            <param name="parse">true</param>
+          </result>
         </global-results>
-
     </package>
 
     <!-- Configuration for the default package. -->
@@ -83,5 +82,7 @@
               </result>
         </action>
     </package>
+
+
 
 </struts>

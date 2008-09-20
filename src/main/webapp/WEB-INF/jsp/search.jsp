@@ -5,7 +5,7 @@
     <div class="required">
        <label for="keyword">Search terms</label>
        <s:textfield name="keyword" id="keyword" size="30" tabindex="1" cssClass="searchBox"/>
-       <s:submit value="Search" method="search" cssClass="submitBtn" cssStyle="margin-left: 1em;"/>
+       <s:submit value="Search" method="search" cssStyle="margin-left: 1em;"/>
     </div>
     <p style="clear: both;"/>
     <s:if test="jobs != null && !jobs.empty">
@@ -30,7 +30,7 @@
       jQuery(':input').bind('focus', function(event) { jQuery(event.target).addClass('selected'); });
       jQuery(':input').bind('blur', function(event) { jQuery(event.target).removeClass('selected'); });
 
-      jQuery('keyword').focus();
+      jQuery('#keyword').focus();
 
     });
 

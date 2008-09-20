@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +14,10 @@ import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
@@ -21,7 +25,10 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -31,6 +38,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
+import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.common.CollectionUtils;
@@ -178,7 +186,7 @@ public class ShowStatisticsAction extends BaseAction {
 
             final Calendar calendarToday = Calendar.getInstance();
             final Calendar calendar30    = Calendar.getInstance();
-            calendar30.add(Calendar.DAY_OF_MONTH, -30);
+            calendar30.add(Calendar.DAY_OF_MONTH, -300);
 
             long jobCount = jobService.JobCount(calendar30.getTime());
             List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
@@ -197,6 +205,30 @@ public class ShowStatisticsAction extends BaseAction {
 
 
             chart.setBackgroundPaint(new Color(255,255,255,0));
+
+            XYPlot xyplot = (XYPlot)this.chart.getPlot();
+            xyplot.setDomainGridlinePaint(Color.LIGHT_GRAY);
+            xyplot.setBackgroundPaint(new Color(255,255,255,0));
+
+            xyplot.setRangeGridlinePaint(Color.LIGHT_GRAY);
+            xyplot.setAxisOffset(new RectangleInsets(5D, 5D, 5D, 5D));
+            xyplot.setDomainCrosshairVisible(true);
+            xyplot.setRangeCrosshairVisible(true);
+
+            org.jfree.chart.renderer.xy.XYItemRenderer xyitemrenderer = xyplot.getRenderer();
+            if(xyitemrenderer instanceof XYLineAndShapeRenderer)
+            {
+                XYLineAndShapeRenderer xylineandshaperenderer = (XYLineAndShapeRenderer)xyitemrenderer;
+                xylineandshaperenderer.setBaseShapesVisible(false);
+                xyitemrenderer.setSeriesPaint(0, new Color(244, 66, 0));
+            }
+
+            DateAxis dateaxis = (DateAxis)xyplot.getDomainAxis();
+            dateaxis.setDateFormatOverride(new SimpleDateFormat("MMM-yyyy"));
+
+            NumberAxis valueAxis = (NumberAxis)xyplot.getRangeAxis();
+            valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
 
         return SUCCESS;
     }

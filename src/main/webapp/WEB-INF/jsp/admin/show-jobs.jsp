@@ -21,6 +21,12 @@ function checkDelete(){
 }
 </script>
 
+<h2>Job Administration</h2>
+<p class="info">
+    Located below are all jobs you have access to. You can either select a job for
+    deletion or click on a job posted in order to modify it.
+</p>
+
 <div id="main">
   <s:form>
     <s:if test="jobs != null && jobs.size() > 0">

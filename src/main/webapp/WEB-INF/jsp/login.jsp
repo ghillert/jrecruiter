@@ -1,9 +1,15 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
   <c:if test="${param.status == 'error'}">
-      <div class="error">
-          <fmt:message key="jsp.login.error.errorMessage"/><br/>
-      </div>
+    <table id="errorMessages">
+      <tr>
+        <td>
+          <ul>
+                <li><fmt:message key="jsp.login.error.errorMessage"/></li>
+          </ul>
+        </td>
+      </tr>
+    </table>
   </c:if>
   <form  name="j_spring_security_check" id="j_acegi_security_check" method="POST" action="j_spring_security_check">
       <fieldset id="loginSection">
@@ -21,8 +27,8 @@
                              onfocus="javascript:this.className='selected';"/>
           </div>
           <div class="submit">
-                  <input type="submit" class="submitBtn" value="Login"/>
-                  <input type="submit" class="submitBtn" onClick="location.href='<c:url value='/'/>'; return false;" value="Cancel"/>
+                  <input type="submit" value="Login"/>
+                  <input type="submit" onClick="location.href='<c:url value='/'/>'; return false;" value="Cancel"/>
           </div>
 
             <ul id="loginOptions" style="clear: left;">
@@ -33,7 +39,8 @@
                 </li>
                 <li class="getPassword">
                   <img src="${ctx}/images/icons/crystal/mail_get.png"/>
-                  <a href="<c:url value='/getPassword.html'/>"><fmt:message key="link.login.forgotYourPassword"/></a>
+                  <s:url action="get-password" namespace="/" id="getPasswordUrl"/>
+                  <a href="${getPasswordUrl}"><fmt:message key="link.login.forgotYourPassword"/></a>
                 </li>
             </ul>
       </fieldset>

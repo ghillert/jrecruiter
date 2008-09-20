@@ -77,10 +77,10 @@ public interface UserService {
     void deleteUser(User user);
 
     /**
-     * The password for the provided user.
+     * Reset the password for the provided user.
      * @param user
      */
-    void sendPassword(User user);
+    void resetPassword(User user);
 
     /**
      * This method is used by ACEGI security to load user details for authentication.

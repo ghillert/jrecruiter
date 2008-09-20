@@ -24,6 +24,8 @@ public abstract class BaseAction extends ActionSupport {
      */
     protected UserService userService;
 
+    private String backTo;
+
     /**
      * Job related services.
      */
@@ -40,6 +42,11 @@ public abstract class BaseAction extends ActionSupport {
 
     @SkipValidation
     public String cancel() {
+
+        if (this.backTo != null) {
+            return "backTo";
+        }
+
         return SUCCESS;
     }
 
@@ -76,4 +83,11 @@ public abstract class BaseAction extends ActionSupport {
         }
     }
 
+    public String getBackTo() {
+        return backTo;
+    }
+
+    public void setBackTo(String backTo) {
+        this.backTo = backTo;
+    }
 }

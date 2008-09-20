@@ -12,7 +12,7 @@
 
     <fieldset>
       <div class="submit">
-          <s:submit value="Submit" method="save" tabindex="23" cssClass="submitBtn"/><s:submit value="Cancel" method="cancel" tabindex="24" cssClass="submitBtn"/>
+          <s:submit value="Submit" method="save" tabindex="23"/><s:submit value="Cancel" method="cancel" tabindex="24"/>
       </div>
     </fieldset>
     <fmt:message key="jobposting.add.label.mandatory" />

@@ -62,15 +62,13 @@
                     ${job.businessPhone}
 
             </div>
-                        <div class="optional">
-<label><fmt:message key="field.email"/>:</label>
-                    <a href="mailto:${job.businessEmail}">${job.businessEmail}</a>
-
+            <div class="optional">
+                <label><fmt:message key="field.email"/>:</label>
+                <a href="mailto:${job.businessEmail}">${job.businessEmail}</a>
             </div>
-                        <div class="optional">
-<label><fmt:message key="field.businessName"/>:</label>
+            <div class="optional">
+                <label><fmt:message key="field.businessName"/>:</label>
                     ${job.businessName}
-
             </div>
                         <div class="optional">
 <label><fmt:message key="field.address"/>:</label>
@@ -137,7 +135,11 @@
         </s:if>
         <script type="text/javascript">
 <!--
-    window.onload = function() { showJob('map_canvas',  ${job.latitude}, ${job.longitude});}
+
+    jQuery(function() {
+        showJob('map_canvas',  ${job.latitude}, ${job.longitude}, ${job.zoomLevel});
+    });
+
     jQuery(document).unload(function() {GUnload();});
 //-->
 </script>

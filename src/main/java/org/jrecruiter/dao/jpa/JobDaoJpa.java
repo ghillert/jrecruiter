@@ -40,7 +40,9 @@ import org.hibernate.search.jpa.Search;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
+import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Region;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.springframework.stereotype.Repository;
 
@@ -187,7 +189,12 @@ implements JobDao {
 
             FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
 
-            MultiFieldQueryParser parser = new MultiFieldQueryParser( new String[]{"description"},
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(
+                    new String[]{"description", "industry.name", "region.name", "regionOther",
+                        "jobTitle", "website", "businessAddress1", "businessAddress2",
+                        "businessCity", "businessState", "businessZip", "businessPhone",
+                        "businessEmail", "industryOther", "jobRestrictions",
+                        "updateDate"},
               new StandardAnalyzer());
             try {
             org.apache.lucene.search.Query query = parser.parse(keyword);
@@ -296,6 +303,8 @@ implements JobDao {
             return numberOfJobs;
         }
 
+        /** {@inheritDoc} */
+        @SuppressWarnings("unchecked")
         public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
 
             Session session = (Session)entityManager.getDelegate();
@@ -312,6 +321,7 @@ implements JobDao {
         }
 
         /** {@inheritDoc} */
+        @SuppressWarnings("unchecked")
         public void reindexSearch() {
 
             FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
@@ -320,6 +330,16 @@ implements JobDao {
             List<Job> jobs = entityManager.createQuery("select job from Job as job").getResultList();
             for (Job job : jobs) {
                 fullTextEntityManager.index(job);
+            }
+
+            List<Region> regions = entityManager.createQuery("select region from Region as region").getResultList();
+            for (Region region : regions) {
+                fullTextEntityManager.index(region);
+            }
+
+            List<Industry> industries = entityManager.createQuery("select industry from Industry as industry").getResultList();
+            for (Industry industry : industries) {
+                fullTextEntityManager.index(industry);
             }
 
         }

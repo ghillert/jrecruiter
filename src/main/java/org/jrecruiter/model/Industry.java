@@ -26,6 +26,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 /**
 * This class represents an industry (assignable to a job posting).
 *
@@ -34,16 +42,18 @@ import javax.persistence.Transient;
 */
 @Entity
 @Table(uniqueConstraints = {  })
+@Indexed
+@Analyzer(impl = org.apache.lucene.analysis.standard.StandardAnalyzer.class)
 public class Industry  implements java.io.Serializable {
 
-	/** serialVersionUID. */
-	private static final long serialVersionUID = 5352730251720839547L;
+    /** serialVersionUID. */
+    private static final long serialVersionUID = 5352730251720839547L;
 
 
     // Fields
 
-	/** Primary id of the industry */
-	private Long id;
+    /** Primary id of the industry */
+    private Long id;
     private String name;
     private Set<Job> jobs = new HashSet<Job>(0);
 
@@ -52,7 +62,7 @@ public class Industry  implements java.io.Serializable {
     /** default constructor */
     public Industry() {}
 
-	/** minimal constructor */
+    /** minimal constructor */
     public Industry(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -67,6 +77,7 @@ public class Industry  implements java.io.Serializable {
     // Property accessors
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(unique=true, nullable=false, insertable=true, updatable=true)
+    @DocumentId
     public Long getId() {
         return this.id;
     }
@@ -76,6 +87,7 @@ public class Industry  implements java.io.Serializable {
     }
 
     @Column(unique=false, nullable=false, insertable=true, updatable=true)
+        @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getName() {
         return this.name;
     }
@@ -86,6 +98,7 @@ public class Industry  implements java.io.Serializable {
 
     //@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="job")
     @Transient
+    @ContainedIn
     public Set<Job> getJobs() {
         return this.jobs;
     }

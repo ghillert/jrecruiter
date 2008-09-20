@@ -17,6 +17,7 @@ package org.jrecruiter.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
@@ -44,7 +46,12 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
+import de.rrze.idmone.utils.jpwgen.BlankRemover;
+import de.rrze.idmone.utils.jpwgen.PwGenerator;
+
 /**
+ * Provides user specific services.
+ *
  * @author Dorota Puchala
  * @author Gunnar Hillert
  *
@@ -87,6 +94,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * Access to settings.
      */
     private @Autowired ConfigurationDao configurationDao;
+
+    private @Autowired StringDigester stringDigester;
 
     /**
      * {@inheritDoc}
@@ -153,7 +162,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      * {@inheritDoc}
      */
-    public void sendPassword(User user) {
+    public void resetPassword(User user) {
+
+        String flags = "-N 1 -M 100 -B -n -c -y -s 10 -o ";
+        flags = BlankRemover.itrim(flags);
+        String[] ar = flags.split(" ");
+        PwGenerator generator = new PwGenerator();
+        List <String> passwords = generator.process(ar);
+
+        String password = null;
+
+        for (Iterator<String> iterator = passwords.iterator(); iterator.hasNext();) {
+            password = iterator.next();
+            System.out.printf("Password: * %s\n", password);
+        }
+
+        user.setPassword(this.stringDigester.digest(password));
+
+        this.updateUser(user);
 
         final SimpleMailMessage msg = new SimpleMailMessage(this.message);
         msg.setSubject(configurationDao.get("mail.password.subject").getMessageText());
@@ -162,7 +188,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 + "<" + user.getEmail() + ">");
 
         final Map < String, Object > model = new HashMap < String, Object > ();
-        model.put("password", user.getPassword());
+        model.put("password", password);
 
         String result = null;
         try {

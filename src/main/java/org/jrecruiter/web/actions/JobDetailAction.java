@@ -111,7 +111,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
              statistics.setCounter(new Long(counter));
              statistics.setLastAccess(new Date());
-             //service.updateJobStatistic(statistics);
+             jobService.updateJob(this.job);
 
             }
 

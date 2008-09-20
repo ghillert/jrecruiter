@@ -54,7 +54,7 @@
                   <ref bean="templateLoader"/>
               </entry>
               <entry key="ds.resource.loader.resource.table">
-                  <value>jrecruiter.configuration</value>
+                  <value>configurations</value>
               </entry>
               <entry key="ds.resource.loader.resource.keycolumn">
                   <value>message_key</value>
@@ -77,18 +77,4 @@
       class="org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader">
       <property name="dataSource"><ref bean="dataSource"/></property>
   </bean>
-
-  <!-- When loading the Velocity from the class path use this
-  <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-      <property name="velocityProperties">
-          <props>
-              <prop key="resource.loader">class</prop>
-              <prop key="class.resource.loader.class">
-                  org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-              </prop>
-          </props>
-      </property>
-  </bean>
-  -->
-
 </beans>

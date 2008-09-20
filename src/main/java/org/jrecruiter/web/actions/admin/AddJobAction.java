@@ -1,25 +1,15 @@
 package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.common.Constants.JobStatus;
-import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
-import org.jrecruiter.web.actions.BaseAction;
 import org.texturemedia.smarturls.Result;
 
-import com.opensymphony.xwork2.ModelDriven;
-import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -30,7 +20,7 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 /**
- * List all the jobs.
+ * Add a job posting.
  *
  * @author Gunnar Hillert
  * @version $Id$
@@ -38,7 +28,7 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
  */
 @Validation
 @Result(name="success", location="index", type="redirectAction")
-public class AddJobAction extends BaseAction implements Preparable, ModelDriven<Job> {
+public class AddJobAction extends JobBaseAction {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 4614516114027504626L;
@@ -48,31 +38,8 @@ public class AddJobAction extends BaseAction implements Preparable, ModelDriven<
      */
     private final Log LOGGER = LogFactory.getLog(AddJobAction.class);
 
-    private Job job = new Job();
-
-    private Set<OfferedBy>offeredBySet;
-    private List<Region> regions;
-    private List<Industry>industries;
-    private Map<Boolean, String>yesNoList;
-
-    /** Prepare the select boxes of the form. */
-    public void prepare() throws Exception {
-        this.offeredBySet = EnumSet.allOf(OfferedBy.class);
-        this.regions = jobService.getRegions();
-        this.industries = jobService.getIndustries();
-        this.yesNoList = new HashMap<Boolean, String>();
-        this.yesNoList.put(Boolean.FALSE, "False");
-        this.yesNoList.put(Boolean.TRUE, "True");
-    }
-
-    public Job getModel() {
-        return this.job;
-    }
-    public void setModel(Job job) {
-        this.job = job;
-    }
     /**
-     *
+     * Initialize the form.
      */
     @Override
     @SkipValidation
@@ -80,9 +47,13 @@ public class AddJobAction extends BaseAction implements Preparable, ModelDriven<
         return INPUT;
     }
 
+
+    /**
+     * Save the job.
+     */
     @Validations(
             requiredFields = {
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "businessEmail", message = "You must enter an Emal Address."),
+                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "businessEmail", message = "You must enter an Email Address."),
                     @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "industry", message = "You must select an industry."),
                     @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "offeredBy", message = "Please select whether you are the hiring company or a recruiter."),
                     @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "region", message = "Please select a region."),
@@ -104,63 +75,23 @@ public class AddJobAction extends BaseAction implements Preparable, ModelDriven<
 
         LOGGER.debug("Adding Job...");
 
-        final Region region = jobService.getRegion(job.getRegion().getId());
-        final Industry industry = jobService.getIndustry(job.getIndustry().getId());
+        final Region region = jobService.getRegion(this.model.getJob().getRegion().getId());
+        final Industry industry = jobService.getIndustry(this.model.getJob().getIndustry().getId());
 
-        job.setRegion(region);
-        job.setIndustry(industry);
+        this.model.getJob().setRegion(region);
+        this.model.getJob().setIndustry(industry);
 
-        job.setStatus(JobStatus.ACTIVE);
-        job.setUser(super.getLoggedInUser());
-        job.setRegistrationDate(new Date());
-        job.setUpdateDate(new Date());
+        this.model.getJob().setStatus(JobStatus.ACTIVE);
+        this.model.getJob().setUser(super.getLoggedInUser());
+        this.model.getJob().setRegistrationDate(new Date());
+        this.model.getJob().setUpdateDate(new Date());
 
-        jobService.addJob(job);
-       // jobService.sendJobPostingToMailingList(job);
+        jobService.addJob(this.model.getJob());
+
+        jobService.sendJobPostingToMailingList(this.model.getJob());
 
         super.addActionMessage(getText("job.add.success"));
 
         return SUCCESS;
     }
-
-    public Job getJob() {
-        return job;
-    }
-
-    public void setJob(Job job) {
-        this.job = job;
-    }
-
-    public Set<OfferedBy> getOfferedBySet() {
-        return offeredBySet;
-    }
-
-    public void setOfferedBySet(Set<OfferedBy> offeredBySet) {
-        this.offeredBySet = offeredBySet;
-    }
-
-    public List<Region> getRegions() {
-        return regions;
-    }
-
-    public void setRegions(List<Region> regions) {
-        this.regions = regions;
-    }
-
-    public List<Industry> getIndustries() {
-        return industries;
-    }
-
-    public void setIndustries(List<Industry> industries) {
-        this.industries = industries;
-    }
-
-    public Map<Boolean, String> getYesNoList() {
-        return yesNoList;
-    }
-
-    public void setYesNoList(Map<Boolean, String> yesNoList) {
-        this.yesNoList = yesNoList;
-    }
-
 }

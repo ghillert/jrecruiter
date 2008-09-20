@@ -53,21 +53,21 @@
     </table>
 
     <table name="users">
-		<column>id</column>
-		<column>username</column>
-		<column>email</column>
-		<column>registration_date</column>
-		<column>first_name</column>
-		<column>last_name</column>
-		<column>company</column>
-		<column>phone</column>
-		<column>fax</column>
-		<column>expiration_date</column>
-		<column>password</column>
+    <column>id</column>
+    <column>username</column>
+    <column>email</column>
+    <column>registration_date</column>
+    <column>first_name</column>
+    <column>last_name</column>
+    <column>company</column>
+    <column>phone</column>
+    <column>fax</column>
+    <column>expiration_date</column>
+    <column>password</column>
         <row>
             <value>-1</value>
             <value>admin</value>
-            <value>admin@jrecuiter.org</value>
+            <value>jobs@jrecruiter.org</value>
             <value>2008-01-10 14:12:00</value>
             <value>ADMIN</value>
             <value>ADMIN</value>
@@ -89,11 +89,65 @@
     <table name="configurations">
         <column>message_key</column>
         <column>message_text</column>
-        <row><value>mail.from</value><value>a</value></row>
-        <row><value>mail.jobposting.body</value><value>b</value></row>
-        <row><value>mail.jobposting.email</value><value>n</value></row>
-        <row><value>mail.jobposting.subject</value><value>n</value></row>
-        <row><value>mail.password.body</value><value>n</value></row>
-        <row><value>mail.password.subject</value><value>n</value></row>
+        <row><value>mail.from</value><value>no_reply@jrecruiter.org</value></row>
+        <row>
+            <value>mail.jobposting.body</value>
+            <value><![CDATA[
+            A new job has been added:
+
+Job ID:               ${jobId}
+
+Job Title:            ${jobTitle}
+
+Location:             ${businessLocation}
+
+Business Name:        ${businessName}
+
+Email:        ${businessEmail}
+
+
+
+Job Description:
+
+----------------
+
+
+
+${description}
+
+
+
+Job Restrictions:
+
+----------------
+
+
+
+${jobRestrictions}
+
+
+
+This job was posted on: ${updateDate}
+
+
+
+For more information, please visit: http://www.ajug.org/ajugjobs/showJobDetail.do?id=${jobId}
+
+
+
+            ]]></value>
+        </row>
+        <row><value>mail.jobposting.email</value><value>jobs@jrecruiter.org</value></row>
+        <row><value>mail.jobposting.subject</value><value><![CDATA[[ajug-jobs] ${jobTitle}]]></value></row>
+        <row><value>mail.password.body</value><value><![CDATA[Hello,
+
+
+
+Your requested password is: ${password}
+
+
+
+]]></value></row>
+        <row><value>mail.password.subject</value><value>jRecruiter Account Information - Lost Password</value></row>
     </table>
 </dataset>

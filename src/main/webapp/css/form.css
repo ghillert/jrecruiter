@@ -112,3 +112,12 @@ textarea {
   font-style: normal;
 width: 350px;
 }
+
+div.submit input, .button {
+  background:url(../images/button_background.png) right no-repeat;
+  font-size:1em;
+}
+div.submit input:hover, .button:hover {
+    background:url(../images/button_background_h.png) right no-repeat;
+}
+

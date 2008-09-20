@@ -82,7 +82,7 @@ public class UserServiceTest extends BaseTest {
         User savedUser = userService.addUser(user);
         entityManager.flush();
 
-        userService.sendPassword(savedUser);
+        userService.resetPassword(savedUser);
 
     }
 
