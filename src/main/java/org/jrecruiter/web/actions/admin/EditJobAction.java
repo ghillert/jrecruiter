@@ -102,7 +102,7 @@ public class EditJobAction extends JobBaseAction {
         }
 
         if (this.model.getJob().getRegion() != null && this.model.getJob().getRegion().getId() != null) {
-            final Region region = jobService.getRegion(jobFromDB.getRegion().getId());
+            final Region region = jobService.getRegion(this.model.getJob().getRegion().getId());
 
             if (region == null) {
                 throw new IllegalArgumentException("Region with id " + this.model.getJob().getRegion().getId() + " does not exist.");
@@ -127,6 +127,19 @@ public class EditJobAction extends JobBaseAction {
         jobFromDB.setBusinessPhone(model.getJob().getBusinessPhone());
         jobFromDB.setBusinessEmail(model.getJob().getBusinessEmail());
         jobFromDB.setJobRestrictions(model.getJob().getJobRestrictions());
+
+        if (model.getJob().getUsesMap()) {
+            jobFromDB.setUsesMap(Boolean.TRUE);
+            jobFromDB.setLongitude(model.getJob().getLongitude());
+            jobFromDB.setLatitude(model.getJob().getLatitude());
+            jobFromDB.setZoomLevel(model.getJob().getZoomLevel());
+        } else {
+            jobFromDB.setUsesMap(Boolean.FALSE);
+            jobFromDB.setLongitude(null);
+            jobFromDB.setLatitude(null);
+            jobFromDB.setZoomLevel(null);
+        }
+
         jobFromDB.setUpdateDate(new Date());
         jobService.updateJob(jobFromDB);
 

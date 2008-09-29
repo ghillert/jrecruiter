@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -92,6 +94,10 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
             for (Sort sort : sortSet.getSorts()) {
                 sortOrders.put(sort.getProperty(), sort.getOrder().name());
             }
+        }
+
+        if (sortOrders.isEmpty()) {
+            sortOrders.put("updateDate", "DESC");
         }
 
         if (filterSet.isFiltered()) {
