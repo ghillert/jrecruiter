@@ -14,10 +14,8 @@
                     listValue="name" listKey="id"/>
     </div>
 
-    <s:set name="displayIndustryOtherDiv" value="%{'none'}"/>
-    <s:property value="%{#displayIndustryOtherDiv}"/>bb
-    <div class="required" id="industryOtherDiv" style="display: ${displayIndustryOtherDiv}">
-       <label for="industryOther">&nbsp;</label>
+    <div class="optional" id="industryOtherDiv" style="display: ${displayIndustryOtherDiv}">
+       <label for="industryOther">Other</label>
         <s:textfield name="job.industryOther" id="job.industryOther" size="40" tabindex="4"/>
     </div>
     <div class="optional">

@@ -10,12 +10,22 @@
     #footer { display: none; }
 -->
 </style>
+<style>
 
-   <ul id="jobHeader">
-        <s:url id="showJobsUrl" action="show-jobs" includeParams="none"/>
-        <li class="back"><a href="${showJobsUrl}">Back</a></li>
-        <li class="print"><a href="#" onclick="window.print();return false;">Print</a></li>
-   </ul>
+
+</style>
+
+<div id="jobHeader">
+    <ul>
+        <s:url id="showJobsUrl"  action="show-jobs"                    includeParams="none"/>
+        <s:url id="exportPdfUrl" action="job-detail" method="exportJobAsPdf" includeParams="false">
+            <s:param name="jobId" value="job.id"/>
+        </s:url>
+        <li    ><a class="back" href="${showJobsUrl}">Back</a></li>
+        <li    ><a class="print" href="#" onclick="window.print();return false;">Print</a></li>
+        <li    ><a class="pdf" href="${exportPdfUrl}">Pdf</a></li>
+    </ul>
+</div>
 
         <s:if test="job.usesMap">
           <fieldset id="jobDetailMap">
@@ -27,24 +37,24 @@
         </s:if>
         <fieldset id="jobDetail">
             <legend>Summary</legend>
-          <div class="optional strong">
-              <label><fmt:message key="field.jobTitle"/>:</label>
-              <s:property value="%{job.jobTitle}" escape="true"/>
-          </div>
+            <div class="optional strong">
+                <label><fmt:message key="field.jobTitle"/>:</label>
+                <s:property value="%{job.jobTitle}" escape="true"/>
+            </div>
             <div class="optional strong">
                 <label><fmt:message key="field.businessName"/>:</label>
                     ${job.businessName}
             </div>
-                        <div class="optional">
-<label><fmt:message key="field.offered.by"/>:</label>
-                    <s:property value="%{getText(job.offeredBy.descriptionKey)}"/>
-
+            <div class="optional">
+                <label><fmt:message key="field.offered.by"/>:</label>
+                <s:property value="%{getText(job.offeredBy.descriptionKey)}"/>
             </div>
-                        <div class="optional">
-<label><fmt:message key="field.location"/>:</label>
-                    ${job.region.name}
-
-            </div>
+            <s:if test="job.region.name != null">
+                <div class="optional">
+                    <label><fmt:message key="field.location"/>:</label>
+                        ${job.region.name}
+                </div>
+            </s:if>
             <s:if test="job.industry.name != null">
                 <div class="optional">
                   <label><fmt:message key="field.industry"/>:</label>
@@ -56,36 +66,43 @@
                     ${job.salary}
                 </div>
             </s:if>
-
-                        <div class="optional">
-<label><fmt:message key="field.phone"/>:</label>
+            <s:if test="job.businessPhone != null">
+                <div class="optional">
+                    <label><fmt:message key="field.phone"/>:</label>
                     ${job.businessPhone}
-
-            </div>
-            <div class="optional">
-                <label><fmt:message key="field.email"/>:</label>
-                <a href="mailto:${job.businessEmail}">${job.businessEmail}</a>
-            </div>
-            <div class="optional">
-                <label><fmt:message key="field.businessName"/>:</label>
-                    ${job.businessName}
-            </div>
-                        <div class="optional">
-<label><fmt:message key="field.address"/>:</label>
-                ${job.businessAddress1}
-
-            </div>
-                        <div class="optional">
-<label>&nbsp;</label>${job.businessAddress2}
-
-            </div>
-                        <div class="optional">
-<label><fmt:message key="field.city"/>:</label>${job.businessCity}
-
-            </div>
+                </div>
+            </s:if>
+            <s:if test="job.businessEmail != null">
+                <div class="optional">
+                    <label><fmt:message key="field.email"/>:</label>
+                    <a href="mailto:${job.businessEmail}">${job.businessEmail}</a>
+                </div>
+            </s:if>
+            <s:if test="job.businessName != null">
+                <div class="optional">
+                    <label><fmt:message key="field.businessName"/>:</label>
+                      ${job.businessName}
+                </div>
+            </s:if>
+            <s:if test="job.businessAddress1 != null">
+                <div class="optional">
+                    <label><fmt:message key="field.address"/>:</label>
+                    ${job.businessAddress1}
+                </div>
+            </s:if>
+            <s:if test="job.businessAddress2 != null">
+                <div class="optional">
+                     <label>&nbsp;</label>${job.businessAddress2}
+                </div>
+            </s:if>
+            <s:if test="job.city != null">
+                <div class="optional">
+                    <label><fmt:message key="field.city"/>:</label>${job.businessCity}
+                </div>
+            </s:if>
             <s:if test="job.businessState != null">
               <div class="optional">
-                 <label><fmt:message key="field.state"/>:</label><s:property value="%{job.businessState"/>
+                 <label><fmt:message key="field.state"/>:</label><s:property value="%{job.businessState}"/>
               </div>
             </s:if>
             <s:if test="job.businessZip != null">

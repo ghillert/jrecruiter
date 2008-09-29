@@ -1,82 +1,96 @@
 /* Contains the CSS for the job posting detail page */
-
-
-#jobHeader {
-  height: 20px;
-  margin: 1em 0pt;
-  padding: 0;
-  background-color: #90B5E6;
-  list-style-image:none;
-  list-style-position:outside;
-  list-style-type:none;
+#jobHeader ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: left;
 }
 
-#jobHeader li {
-    background-position: 0pt 50%;
-    background-repeat:no-repeat;
-    float:left;
-    margin: 0 0 0 5px;
-    padding: 2px 5px 2px 20px;
+#jobHeader ul li {
+    display: inline;
 }
 
-#jobHeader li.print {
-  background-image: url(../images/icons/crystal/agt_print.png);
+#jobHeader ul li a {
+    text-decoration: none;
+    border: 1px solid #aaaaaa;
+    padding: .2em 1em 0.2em 20px;
+    color: #000000;
+    background-color: #ffffff;
 }
-#jobHeader li.back {
-  background-image: url(../images/icons/crystal/back.png);
+
+#jobHeader ul li a:hover {
+    color: #000000;
+    background-color: #cccccc;
+}
+
+
+#jobHeader ul li a.print {
+    background: url(../images/icons/crystal/agt_print.png) no-repeat 2px 50%;
+}
+
+#jobHeader ul li a.back {
+    background: url(../images/icons/crystal/back.png) no-repeat 2px 50%;
+}
+#jobHeader ul li a.pdf {
+    background: url(../images/icons/crystal/pdf.png) no-repeat 2px 50%;
 }
 
 #jobDetailMap {
     width: 300px;
     float: right;
-    position:relative;
-    background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
-    border:1px solid #AAAAAA;
-    margin: 0px;
+    position: relative;
+    background: transparent url(../images/test/fieldset_back.png) no-repeat
+        left top;
+    border: 1px solid #AAAAAA;
+    margin: 1em 0em 0em 1em;
     padding: 1em;
 }
 
 #jobDetail {
-  background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
-  border:1px solid #AAAAAA;
-  margin: 1em 1em 0 0em;
-  padding: 1em;
+    background: transparent url(../images/test/fieldset_back.png) no-repeat
+        left top;
+    border: 1px solid #AAAAAA;
+    margin: 1em 0em 0 0em;
+    padding: 1em;
 }
 
 #jobDetail div.optional {
-  margin: 1em 1em;
+    margin: 1em 1em;
 }
+
 #jobDetail div.optional {
-  clear:left;
+    clear: left;
 }
 
 #jobDetail div.optional label {
-  padding-right: 1em;
-  text-align:right;
+    padding-right: 1em;
+    text-align: right;
 }
 
 #jobDetail div.strong {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 #jobDetail div.optional label {
-  display:block;
-  float:left;
-  margin-bottom: 5px;
-  width:120px;
+    display: block;
+    float: left;
+    margin-bottom: 5px;
+    width: 120px;
 }
 
 #jobDetailDescription {
-  background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
-  border:1px solid #AAAAAA;
-  margin: 1em 0em 0 0em;
-  padding: 1em;
-  clear: right;
+    background: transparent url(../images/test/fieldset_back.png) no-repeat
+        left top;
+    border: 1px solid #AAAAAA;
+    margin: 1em 0em 0 0em;
+    padding: 1em;
+    clear: right;
 }
 
 #jobDetailRestriction {
-  background:transparent url(../images/test/fieldset_back.png) no-repeat left top;
-  border:1px solid #AAAAAA;
-  margin: 1em 0em 0 0em;
-  padding: 1em;
+    background: transparent url(../images/test/fieldset_back.png) no-repeat
+        left top;
+    border: 1px solid #AAAAAA;
+    margin: 1em 0em 0 0em;
+    padding: 1em;
 }
