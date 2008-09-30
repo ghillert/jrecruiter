@@ -579,7 +579,7 @@ public class Job implements Serializable {
     /**
      * @return the longitude
      */
-    @Column(name="longitude", unique=false, nullable=true, insertable=true, updatable=true)
+    @Column(name="longitude", unique=false, nullable=true, insertable=true, updatable=true, precision=12, scale=6)
     public BigDecimal getLongitude() {
         return longitude;
     }
@@ -603,7 +603,7 @@ public class Job implements Serializable {
     /**
      * @return the latitude
      */
-    @Column(name="latitude", unique=false, nullable=true, insertable=true, updatable=true)
+    @Column(name="latitude", unique=false, nullable=true, insertable=true, updatable=true, precision=12, scale=6)
     public BigDecimal getLatitude() {
         return latitude;
     }
