@@ -16,6 +16,7 @@
 package org.jrecruiter.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jrecruiter.model.User;
 
@@ -45,4 +46,20 @@ public interface UserDao extends GenericDao < User, Long >{
      */
     void deleteUser(String[] usernameList);
 
+    /**
+     * Method for returning list of available users.
+     * @param pageSize Max number of results returned
+     * @param pageNumber Which page are you one?
+     * @param fieldSorted Which field shall be sorted
+     * @param sortOrder What is the sort order?
+     * @return List of users.
+     */
+    List < User > getUsers(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> userFilters);
+
+    /**
+     * Returns the number of totally available users in the system.
+     *
+     * @return Total number of jobs
+     */
+    Long getUsersCount();
 }
