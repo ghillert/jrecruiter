@@ -16,12 +16,13 @@
 package org.jrecruiter.service;
 
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * Provides user related methods.
@@ -69,6 +70,20 @@ public interface UserService {
      * @return List of users
      */
     List<User> getAllUsers();
+
+    /**
+     * Method for returning a filtered list of available job postings.
+     *
+     * @return List of jobs.
+     */
+    List < User > getUsers(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> userFilters);
+
+    /**
+     * Returns the number of totally available jobs in the system.
+     *
+     * @return Total number of jobs
+     */
+    Long getUsersCount();
 
     /**
      * Delete a user from the system.
