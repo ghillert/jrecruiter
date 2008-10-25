@@ -6,7 +6,6 @@ package org.jrecruiter.model.statistics;
 import java.util.Calendar;
 
 import org.apache.log4j.Logger;
-import org.jrecruiter.service.impl.JobServiceImpl;
 
 /**
  * Used for portraying statistical information regarding how many jobs have been

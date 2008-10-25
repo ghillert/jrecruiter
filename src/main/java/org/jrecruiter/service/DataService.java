@@ -17,17 +17,6 @@ package org.jrecruiter.service;
 
 import java.awt.Image;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.jrecruiter.common.Constants;
-import org.jrecruiter.model.Configuration;
-import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Region;
-import org.jrecruiter.model.Statistic;
-import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**
  *
