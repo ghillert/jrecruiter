@@ -22,10 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
@@ -44,6 +40,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import de.rrze.idmone.utils.jpwgen.BlankRemover;
@@ -236,6 +236,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     public User getUser(Long userId) {
         return userDao.get(userId);
+    }
+
+    /* (non-Javadoc)
+     * @see org.jrecruiter.service.JobService#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     */
+    public List<User> getUsers(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> userFilters) {
+        return userDao.getUsers(pageSize, pageNumber, sortOrders, userFilters);
+    }
+
+    /* (non-Javadoc)
+     * @see org.jrecruiter.service.JobService#getJobsCount()
+     */
+    public Long getUsersCount() {
+        return userDao.getUsersCount();
     }
 
 }
