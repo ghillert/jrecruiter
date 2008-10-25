@@ -1,9 +1,7 @@
 package org.jrecruiter.web.actions;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,17 +20,11 @@ import org.jrecruiter.service.DataService;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.texturemedia.smarturls.ActionName;
-import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
 
-import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;

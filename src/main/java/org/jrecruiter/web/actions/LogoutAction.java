@@ -2,12 +2,12 @@ package org.jrecruiter.web.actions;
 
 import java.util.Map;
 
-import org.jrecruiter.web.interceptor.StoreMessages;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.SessionAware;
+import org.jrecruiter.web.interceptor.StoreMessages;
+import org.springframework.security.context.SecurityContext;
+import org.springframework.security.context.SecurityContextHolder;
 import org.texturemedia.smarturls.Result;
 
 /**

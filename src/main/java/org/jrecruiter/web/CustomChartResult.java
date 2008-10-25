@@ -21,13 +21,14 @@
 
 package org.jrecruiter.web;
 
+import java.io.OutputStream;
+
 import org.apache.struts2.ServletActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.Result;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 
-import java.io.OutputStream;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.Result;
 
 /**
  * <!-- START SNIPPET: description -->
