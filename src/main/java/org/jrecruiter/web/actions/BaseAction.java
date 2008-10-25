@@ -1,13 +1,13 @@
 package org.jrecruiter.web.actions;
 
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
+import org.springframework.security.Authentication;
+import org.springframework.security.context.SecurityContext;
+import org.springframework.security.context.SecurityContextHolder;
 
 import com.opensymphony.xwork2.ActionSupport;
 

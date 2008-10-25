@@ -1,18 +1,10 @@
 package org.jrecruiter.web.actions;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.interceptor.StoreMessages;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.texturemedia.smarturls.Result;
-
-import de.rrze.idmone.utils.jpwgen.BlankRemover;
-import de.rrze.idmone.utils.jpwgen.PwGenerator;
 
 /**
  * Resets the users passwords and emails it back to the user.
