@@ -4,9 +4,10 @@ package org.jrecruiter.hibernate;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.hibernate.AssertionFailure;
+import org.hibernate.cfg.DefaultNamingStrategy;
 import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.util.StringHelper;
-import org.hibernate.AssertionFailure;
 import org.jvnet.inflector.Noun;
 
 /**
