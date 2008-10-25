@@ -4,30 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.SessionAware;
-import org.displaytag.properties.SortOrderEnum;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
 import org.jmesa.limit.Filter;
 import org.jmesa.limit.FilterSet;
 import org.jmesa.limit.Limit;
-import org.jmesa.limit.Order;
 import org.jmesa.limit.Sort;
 import org.jmesa.limit.SortSet;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.util.FilteringUtils.JobFilterableProperty;
-import org.jrecruiter.model.util.FilteringUtils.SortOrder;
-import org.jrecruiter.web.DisplaytagPaginatedList;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
-import org.springframework.web.HttpRequestHandler;
 import org.texturemedia.smarturls.ActionName;
 import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
@@ -62,7 +52,6 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
 
     private HttpServletRequest request;
 
-    private String ajax;
     private List<Job> jobs           = CollectionUtils.getArrayList();
     private Limit limit;
 
@@ -87,7 +76,7 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
         int page     = limit.getRowSelect().getPage();
         int maxRows  = limit.getRowSelect().getMaxRows();
 
-        final Map<String, String> sortOrders              = CollectionUtils.getHashMap();
+        final Map<String, String> sortOrders = CollectionUtils.getHashMap();
         final Map<String, String> jobFilters = CollectionUtils.getHashMap();
 
         if (sortSet.isSorted()) {
@@ -113,10 +102,6 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
 
         this.jobs = jobService.getJobs(maxRows, page, sortOrders, jobFilters);
 
-        if (ajax != null && ajax.equalsIgnoreCase("true")) {
-            return "ajax";
-        }
-
         return SUCCESS;
     }
 
@@ -140,14 +125,6 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
 
     public void setLimit(Limit limit) {
         this.limit = limit;
-    }
-
-    public String getAjax() {
-        return ajax;
-    }
-
-    public void setAjax(String ajax) {
-        this.ajax = ajax;
     }
 
 }
