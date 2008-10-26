@@ -26,7 +26,6 @@ import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.web.JobForm;
 import org.jrecruiter.web.actions.BaseAction;
-import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;

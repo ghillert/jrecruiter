@@ -1,11 +1,11 @@
 package org.jrecruiter.web.actions.admin;
 
-import org.springframework.security.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.springframework.security.context.SecurityContextHolder;
 import org.texturemedia.smarturls.Result;
 
 /**

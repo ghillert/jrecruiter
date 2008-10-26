@@ -14,7 +14,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.texturemedia.smarturls.ActionName;
 import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
