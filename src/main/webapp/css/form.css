@@ -93,14 +93,8 @@ input {
 }
 
 textarea {
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  border-left-style: solid;
+  border-width: 1px;
+  border-style: solid;
   border-top-color: #333333;
   border-right-color: #999999;
   border-bottom-color: #999999;
@@ -110,14 +104,13 @@ textarea {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
   font-style: normal;
-width: 350px;
+  width: 350px;
 }
 
-div.submit input, .button {
+div.submit input, input.button {
   background:url(../images/button_background.png) right no-repeat;
-  font-size:1em;
 }
-div.submit input:hover, .button:hover {
+div.submit input:hover, input.button:hover {
     background:url(../images/button_background_h.png) right no-repeat;
 }
 
