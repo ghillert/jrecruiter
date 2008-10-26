@@ -77,4 +77,15 @@
       class="org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader">
       <property name="dataSource"><ref bean="dataSource"/></property>
   </bean>
+
+  <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+          <property name="privateKey" value="your private key" />
+          <property name="publicKey" value="6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn" />
+          <property name="recaptchaServer" value="http://api.recaptcha.net" />
+          <!-- Or, if you want to use SSL, then use this:
+                  <property name="recaptchaServer" value="http://secure-api.recaptcha.net" />
+          -->
+          <property name="includeNoscript" value="false" />
+  </bean>
+
 </beans>

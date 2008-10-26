@@ -1,13 +1,18 @@
 package org.jrecruiter.web.actions.registration;
 
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
@@ -33,7 +38,12 @@ public class SignupAction extends BaseAction {
     private String password;
     private String password2;
 
+    private String recaptcha_challenge_field;
+    private String recaptcha_response_field;
+
     private StringDigester stringDigester;
+
+    private @Autowired ReCaptcha reCaptcha;
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
@@ -57,7 +67,6 @@ public class SignupAction extends BaseAction {
             stringLengthFields =
                     {
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.username",  message = "The user name must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, minLength = "6",  fieldName = "password",       message = "The password must be at least ${minLength} characters."),
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.firstName", message = "The first name must be shorter than ${maxLength} characters."),
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.lastName",  message = "The last name must be shorter than ${maxLength} characters."),
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.company",   message = "The company name must be shorter than ${maxLength} characters."),
@@ -69,6 +78,13 @@ public class SignupAction extends BaseAction {
     public String save() {
 
         this.user.setPassword(this.stringDigester.digest(this.password));
+
+        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
+
+        if (!reCaptchaResponse.isValid()) {
+            addActionError("Not a good captcha.");
+            return INPUT;
+        }
 
         try {
            userService.addUser(user);
@@ -130,6 +146,22 @@ public class SignupAction extends BaseAction {
 
     public void setStringDigester(StringDigester stringDigester) {
         this.stringDigester = stringDigester;
+    }
+
+    public String getRecaptcha_challenge_field() {
+        return recaptcha_challenge_field;
+    }
+
+    public void setRecaptcha_challenge_field(String recaptcha_challenge_field) {
+        this.recaptcha_challenge_field = recaptcha_challenge_field;
+    }
+
+    public String getRecaptcha_response_field() {
+        return recaptcha_response_field;
+    }
+
+    public void setRecaptcha_response_field(String recaptcha_response_field) {
+        this.recaptcha_response_field = recaptcha_response_field;
     }
 
 }

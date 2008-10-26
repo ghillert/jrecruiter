@@ -67,6 +67,20 @@
             <s:textfield id="email" name="user.email" required="true" maxlength="25" tabindex="8"/>
         </div>
         </fieldset>
+        <div style="margin: 0 auto 0 auto; width: 320px;">
+            <script type="text/javascript"
+                src="http://api.recaptcha.net/challenge?k=6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn">
+            </script>
+
+            <noscript>
+                <iframe src="http://api.recaptcha.net/noscript?k=6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn"
+                    height="300" width="500" frameborder="0"></iframe><br>
+                <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+                </textarea>
+                <input type="hidden" name="recaptcha_response_field"
+                    value="manual_challenge">
+            </noscript>
+        </div>
         <fieldset>
           <div class="submit">
           <s:submit value="Submit" method="save"/><s:submit value="Cancel" method="cancel"/>
