@@ -2,9 +2,7 @@ package org.jrecruiter.web.actions.admin;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jrecruiter.model.User;
 import org.jrecruiter.service.DemoService;
-import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.springframework.beans.factory.annotation.Autowired;
