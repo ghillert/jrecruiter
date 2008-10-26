@@ -27,7 +27,7 @@
 
     <title>Error</title>
 
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/stylesheet.css"></link>
+<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/global.css"></link>
 <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/jobDetail.css"></link>
 <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/jobList.css"></link>
 <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/showStatistics.css"></link>
@@ -40,18 +40,18 @@
 
   </head>
   <body>
-    <div id="container">
-      <div id="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
-      <div id="header_menu">
+    <div class="container">
+      <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
+      <div class="header_menu">
           <ul><li><a href="<c:url value='/'/>">Home</a></li>
             </ul>
       </div>
-      <div id="content" style="overflow: auto;">
+      <div class="content" style="overflow: auto;">
         You are not authorized to view this page.
       </div>
-      <div id="footer"><a class="footerLogo"
+      <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"
-        title="Main website of the jRecruiter project">jRecruiter</a>
+        title="Main website of the jRecruiter project"><span>j</span>Recruiter</a>
       </div>
     </div>
   </body>
