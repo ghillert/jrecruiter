@@ -37,11 +37,21 @@
 
     <!-- Java Script Imports -->
     <jwr:script src="/bundles/lib.js"/>
+
+        <script type="text/javascript">
+        jQuery(init());
+
+        jQuery(function() {
+            jQuery(':input').bind('focus', function(event) { jQuery(event.target).addClass('selected'); });
+            jQuery(':input').bind('blur', function(event) { jQuery(event.target).removeClass('selected'); });
+        });
+    </script>
+
   </head>
   <body>
-    <div id="container">
-      <div id="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
-      <div id="header_menu">
+    <div class="container">
+      <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
+      <div class="header_menu">
           <ul><li><a href="<c:url value='/'/>">Home</a></li>
             <li>
                             <s:url id="searchUrl" action="search" namespace="/"/>
@@ -51,21 +61,64 @@
             <a href="${adminUrl}">Admin</a></li>
             <li>
             <s:url id="contactUrl" action="contact" namespace="/"/>
-            <a href="${contactUrl}">Contact</a></li>
+            <a href="#" id="contact">Contact</a></li>
             <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job postings as RSS feed.">&nbsp;<span>RSS Feed</span></a></li></ul>
       </div>
-      <div id="content"><%@ include
+      <div class="content"><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
       </div>
-      <div id="footer"><a class="footerLogo"
+      <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"
-        title="Main website of the jRecruiter project">jRecruiter</a>
+        title="Main website of the jRecruiter project"><span>j</span>Recruiter</a>
       </div>
     </div>
 
-    <script type="text/javascript">
-        jQuery(init());
-    </script>
+       <div id="baseModal"style="display:none">
+
+        <h1 style="padding-left: 1em;">Test</h1>
+        <div class="contents" style="background-color: white; margin: 1em;">
+                Loading...
+        </div>
+        <div class="buttons">
+          <div class="modalClose"><a href="#" class="button close"><span>&nbsp;</span>Close</a></div>
+        </div>
+      </div>
+
+        <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#contact').click(function (e) {
+                e.preventDefault();
+                $('#baseModal').modal({
+                    onShow: function (dialog) {
+                        $("#baseModal .contents").load("${contactUrl}");
+                    },
+                    onOpen: function (dialog) {
+
+                        dialog.overlay.fadeIn(200, function () {
+                        dialog.container.fadeIn(200, function () {
+                        dialog.data.fadeIn(200, function () {
+
+                                });
+                            });
+                        });
+
+                    },
+                    onClose: function (dialog) {
+
+                        dialog.data.fadeOut(200, function () {
+                        dialog.container.fadeOut(200, function () {
+                        dialog.overlay.fadeOut(200, function () {
+                        $.modal.close();
+                             });
+                            });
+                        });
+                    }
+                });
+            });
+        });
+
+        </script>
 
   </body>
 </html>
