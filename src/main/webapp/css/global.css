@@ -1,0 +1,348 @@
+
+img { border-width: 0; }
+fieldset { border: 1px solid #AAAAAA; }
+
+a:active {  color: #6666EE; text-decoration: none; }
+a:visited {  color: #6666EE; text-decoration: none}
+a:link { color: #6666EE; text-decoration: none;}
+a:hover { color: #6666EE; text-decoration: underline;}
+
+
+button {
+  border:0;
+  cursor:pointer;
+  font-weight:bold;
+  padding:0 0 0 0;
+  text-align:center;
+}
+button span {
+  position:relative;
+  display:block;
+  white-space:nowrap;
+  padding:0 3px 0 5px;
+}
+
+
+body {
+  font: normal 11px verdana, arial, helvetica, sans-serif;
+  color: #000000;
+  background-color: #BED5D9;
+}
+
+.container {
+    width: 800px;
+    margin: 1em auto 1em auto;
+}
+
+/* Header *********************************************************************/
+
+.container .header {
+
+  text-align: center;
+  padding: 15px 0 15px 0;
+  width: 100%;
+
+  margin: 0 auto 0 auto;
+  background: #90B5E6 url(../images/musa_header.jpg) no-repeat left;
+  font-size: 25px;
+
+}
+
+.container .header span.ajug {
+  color: #00538F;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.container .header span.separator {
+  color: #FF0000;
+}
+.container .header_menu {
+  width: 100%;
+  border-top: 1px solid #FF3C00;
+  background: #0076CC;
+  padding: 0;
+}
+
+.container .header_menu ul {
+    padding: 0;
+    margin: 0;
+    color: White;
+    float: left;
+    width: 100%;
+    background: url(../images/header_menu_background.png);
+}
+
+.container .header_menu ul li { display: inline; }
+
+.container .header_menu  a {
+    padding: 0.2em 1em;
+    text-decoration: none;
+    float: left;
+    border-right: 1px solid #fff;
+}
+
+.container .header_menu  a:active {  color: #CCCCCC; text-decoration: none; }
+.container .header_menu  a:visited {  color: #CCCCCC; text-decoration: none}
+.container .header_menu  a:link { color: #CCCCCC; text-decoration: none;}
+.container .header_menu  a:hover { color: #FFFFFF; text-decoration: none;}
+
+.container .header_menu  a.icon {
+    background: url(../images/icons/feed-icon-14x14.png) no-repeat center;
+}
+
+.container .header_menu  a.icon span {
+    position: absolute;
+    left: -5000px;
+    width: 4000px;
+}
+
+.container .header_menu  a:hover {
+    background-color: #369;
+}
+
+/* Contents *******************************************************************/
+
+.container .content {
+  clear: both;
+  background-color: #F5F5FF;
+  border: 1px solid #00508a;
+  padding: 1em;
+}
+
+.container .content h1 {
+  border-bottom: 1px solid #ccccef;
+  margin: 0 0 0 0;
+  font-size: 14px;
+  font-style: normal;
+  color: #00538F;
+}
+
+.container .errorMessages {
+  display: block;
+  border: 1px solid #FF0000;
+  border-collapse: collapse;
+  margin: 1em 5em 2em 5em;
+  background-color: #FFFFFF;
+}
+.container .errorMessages td {
+  vertical-align: middle;
+  min-height: 40px;
+  background:transparent url(../images/icons/crystal/agt_update_critical.png) no-repeat 1em 50%;
+}
+.container .errorMessages li {
+  margin-left: 5em;
+  margin-right: 5em;
+}
+
+.container .successMessages {
+  display: block;
+  border: 1px solid #0076CC;
+  border-collapse: collapse;
+  margin: 1em 5em 2em 5em;
+  background-color: #FFFFFF;
+}
+.container td {
+  vertical-align: middle;
+  min-height: 40px;
+}
+
+.container .successMessages li {
+  margin-left: 5em;
+  margin-right: 5em;
+}
+
+/* Footer *********************************************************************/
+
+.container .footer {
+  text-align: center;
+  height: 1.3em;
+  margin: 0px auto auto auto;
+  background: url(../images/header_menu_background.png);
+  padding-bottom: 3px;
+}
+
+a.footerLogo {
+
+  text-decoration: none;
+  color: #cccccc;
+}
+a.footerLogo span {
+  color: #E07125;
+}
+
+/* ****************************************************************************/
+
+div.back {
+
+  width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+
+}
+
+.hover {
+
+  cursor: pointer;
+  background-color: #F0F0FF;
+
+}
+
+
+  .headerFormSelected {
+
+  display: block;
+  text-align: left ;
+  vertical-align: middle;
+  width: 120px;
+  height:15px;
+  background-color: #ffffff;
+  padding: 2px;
+  float: left;
+
+
+  }
+
+
+
+.adminMain {
+
+  padding-top: 15px;
+  background-image: url("../images/colocasia.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+
+}
+
+.welcomeMain {
+    position: relative;
+    float: right;
+    top: 0px;
+
+    margin-left: 0px;
+    margin-right: 50px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #333333;
+
+}
+.center {
+    padding-top: 10px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#login {
+        margin: 0px auto 0px auto;
+        border: 1px solid #ccccef;
+        width: 300px;
+    }
+    #login td {
+            padding: 3px 10px 3px 10px;
+    }
+
+    #login td.top {
+        padding: 20px 10px 3px 10px;
+    }
+
+table.default {
+        margin: 0px auto 0px auto;
+        border: 1px solid #ccccef;
+        padding: 3px 10px 3px 10px;
+        width: 400px;
+    }
+
+.formError {
+        display: block;
+        margin: 0px auto 1em auto;
+        border: 1px solid red;
+        padding: 3px 10px 3px 10px;
+        width: 378px;
+}
+
+/* Social bookmarks */
+    small { font-size:10px; }
+    #socialinks { border: 1px solid #ccccef; margin: 1em auto 1em auto; width: 20%;}
+    #socialinks td {text-align: center; vertical-align: middle; width: 5%}
+
+.menuList {
+  margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.menuList li { margin: 0 0 3px 0; }
+
+.menuList a {
+  width: 160px;
+}
+
+/* Generic Hyperlink Button */
+
+a.button {
+  display: block;
+  padding: 2px 2px 2px 2px;
+  border: 1px solid #333;
+  background: url(../images/button_background.png) no-repeat left center;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #004880;
+}
+a.button:link,
+a.button:visited {
+ color: #004880;
+}
+
+a.button:hover {
+  background-image: url(../images/button_background_h.png);
+  text-decoration: none;
+}
+
+.button span {
+  display: block;
+  float: left;
+  width: 20px;
+  background-repeat: no-repeat;
+}
+
+.button span.showJobs {
+  background-image: url(../images/icons/crystal/viewmag.png);
+}
+.button span.manageAccount {
+  background-image: url(../images/icons/crystal/configure.png);
+}
+.button span.addUser {
+  background-image: url(../images/icons/crystal/add_user.png);
+}
+
+a.close {
+  width: 60px;
+  margin-left: auto;
+  margin-right: auto;
+}
+a.close span {
+  background-image: url(../images/icons/crystal/button_ok.png);
+}
+
+
+
+/* Form Buttons */
+
+
+input.searchBox {
+  background-image: url(../images/icons/crystal/viewmag.png);
+  background-repeat: no-repeat;
+  background-position: 2px 50%;
+  padding-left: 20px !important;
+
+}
+
+#startPageMenuContainer {
+  background-image: url(../images/atlanta.jpg);
+  background-repeat: no-repeat;
+  background-position: 100% 0%;
+}
