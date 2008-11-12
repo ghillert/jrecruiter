@@ -146,10 +146,10 @@
     <url-pattern>*.js</url-pattern>
     <url-pattern>/dwr/*</url-pattern>
   </filter-mapping>
-  <listener>
-      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-      <listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
-  </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
   <servlet>
     <servlet-name>dwr-invoker</servlet-name>
