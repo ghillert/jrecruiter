@@ -4,28 +4,38 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.DataService;
 import org.jrecruiter.service.JobService;
+import org.jrecruiter.web.actions.util.JobDetailPageEvents;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.texturemedia.smarturls.Result;
 
 import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPRow;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -52,7 +62,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(JobDetailAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(JobDetailAction.class);
 
     @SuppressWarnings("unchecked")
     public void setSession(Map session) {
@@ -139,6 +149,44 @@ public class JobDetailAction extends BaseAction implements SessionAware {
     return SUCCESS;
     }
 
+    private void addPdfHeader(PdfWriter pdfWriter, Document document, String headerString) throws DocumentException {
+
+        final Paragraph jobLocationHeader = new Paragraph(new Phrase(headerString, FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD)));
+        document.add(jobLocationHeader);
+
+        float pos = pdfWriter.getVerticalPosition(false) - 2;
+
+        PdfContentByte cb = pdfWriter.getDirectContent();
+
+        cb.moveTo(document.leftMargin(), pos);
+        cb.lineTo(document.right()+document.rightMargin(), pos);
+        cb.setColorStroke(Color.RED);
+        cb.stroke();
+
+        cb.moveTo(document.leftMargin(), pos - 40);
+
+    }
+
+    private void addPdfRow(PdfPTable table, String label, String value) throws DocumentException {
+
+        final PdfPCell labelCell = new PdfPCell(new Phrase(label));
+        final PdfPCell valueCell = new PdfPCell(new Phrase(value));
+
+        labelCell.disableBorderSide(PdfPCell.LEFT);
+        labelCell.disableBorderSide(PdfPCell.TOP);
+        labelCell.disableBorderSide(PdfPCell.RIGHT);
+        labelCell.disableBorderSide(PdfPCell.BOTTOM);
+
+        valueCell.disableBorderSide(PdfPCell.LEFT);
+        valueCell.disableBorderSide(PdfPCell.TOP);
+        valueCell.disableBorderSide(PdfPCell.RIGHT);
+        valueCell.disableBorderSide(PdfPCell.BOTTOM);
+
+        table.addCell(labelCell);
+        table.addCell(valueCell);
+
+    }
+
     public String exportJobAsPdf() throws Exception {
 
         if (this.jobId == null) {
@@ -146,149 +194,110 @@ public class JobDetailAction extends BaseAction implements SessionAware {
             return "showJobs";
         }
 
-        HttpServletResponse response = ServletActionContext.getResponse();
+        final HttpServletResponse response = ServletActionContext.getResponse();
 
         response.setContentType("application/pdf");
 
-        Document document = new Document();
+        final Document document = new Document();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PdfWriter.getInstance(document, baos);
+
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final PdfWriter pdfWriter = PdfWriter.getInstance(document, baos);
+
+        pdfWriter.setPageEvent(new JobDetailPageEvents());
+
         document.open();
+        PdfContentByte cb = pdfWriter.getDirectContent();
+
+        document.addCreationDate();
+        document.addAuthor("www.jRecruiter.org");
+        document.addTitle("jRecruiter Job Posting Detail");
 
         this.job = jobService.getJobForId(jobId);
+
 
         if (this.job == null) {
             response.setHeader("Content-disposition",
                     "attachment; filename=" +
                     "No_Job.pdf");
 
-            document.add(new Paragraph("test"));
+            document.add(new Paragraph("No job posting found for the provided id."));
         } else {
 
             response.setHeader("Content-disposition",
                     "attachment; filename=" + "JobDetail_" + job.getId());
 
-            Paragraph header = new Paragraph(new Phrase(job.getJobTitle()));
-            document.add(header);
+            //~~~~Render Job Summary~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            PdfPTable table = new PdfPTable(2);
+            this.addPdfHeader(pdfWriter, document, "Summary");
 
-            com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(
-                    dataService.getGoogleMapImage(job.getLongitude(), job.getLatitude(), job.getZoomLevel()),
-                    Color.WHITE);
+            final PdfPTable table = new PdfPTable(2);
 
-            document.add(img);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10);
 
-            table.setWidths(new float[]{50, 50});
+            table.setWidths(new float[]{25, 75});
 
-            PdfPCell labelCell0 = new PdfPCell(new Phrase("Email"));
-            PdfPCell valueCell0 = new PdfPCell(new Phrase(job.getBusinessEmail()));
-
-            PdfPCell labelCell1 = new PdfPCell(new Phrase("Address 1"));
-            PdfPCell valueCell1 = new PdfPCell(new Phrase(job.getBusinessAddress1()));
-
-            PdfPCell labelCell2 = new PdfPCell(new Phrase("Address 2"));
-            PdfPCell valueCell2 = new PdfPCell(new Phrase(job.getBusinessAddress2()));
-
-            PdfPCell labelCell3 = new PdfPCell(new Phrase("City"));
-            PdfPCell valueCell3 = new PdfPCell(new Phrase(job.getBusinessCity()));
-
-            PdfPCell labelCell4 = new PdfPCell(new Phrase("Business Name"));
-            PdfPCell valueCell4 = new PdfPCell(new Phrase(job.getBusinessName()));
-
-            PdfPCell labelCell5 = new PdfPCell(new Phrase("Phone"));
-            PdfPCell valueCell5 = new PdfPCell(new Phrase(job.getBusinessPhone()));
-
-            PdfPCell labelCell6 = new PdfPCell(new Phrase("State"));
-            PdfPCell valueCell6 = new PdfPCell(new Phrase(job.getBusinessState()));
-
-            PdfPCell labelCell7 = new PdfPCell(new Phrase("Zip"));
-            PdfPCell valueCell7 = new PdfPCell(new Phrase(job.getBusinessZip()));
-
-            PdfPCell labelCell8 = new PdfPCell(new Phrase("Description"));
-            PdfPCell valueCell8 = new PdfPCell(new Phrase(job.getDescription()));
-
-            PdfPCell labelCell9 = new PdfPCell(new Phrase("Job Id"));
-            PdfPCell valueCell9 = new PdfPCell(new Phrase(job.getId()));
-
-            PdfPCell labelCell10 = new PdfPCell(new Phrase("Industry"));
-            PdfPCell valueCell10 = new PdfPCell(new Phrase(job.getIndustry().getName()));
-
-            PdfPCell labelCell11 = new PdfPCell(new Phrase("Industry Other"));
-            PdfPCell valueCell11 = new PdfPCell(new Phrase(job.getIndustryOther()));
-
-            PdfPCell labelCell12 = new PdfPCell(new Phrase("Restriction"));
-            PdfPCell valueCell12 = new PdfPCell(new Phrase(job.getJobRestrictions()));
-
-            PdfPCell labelCell13 = new PdfPCell(new Phrase("Latitude"));
-            PdfPCell valueCell13 = new PdfPCell(new Phrase(String.valueOf(job.getLatitude())));
-
-            PdfPCell labelCell14 = new PdfPCell(new Phrase("Longitude"));
-            PdfPCell valueCell14 = new PdfPCell(new Phrase(String.valueOf(job.getLongitude())));
-
-            PdfPCell labelCell15 = new PdfPCell(new Phrase("Offered By"));
-            PdfPCell valueCell15 = new PdfPCell(new Phrase(job.getOfferedBy().getName()));
-
+            addPdfRow(table, "Job Title", job.getJobTitle());
+            addPdfRow(table, "Business Name", job.getBusinessName());
+            addPdfRow(table, "Email", job.getBusinessEmail());
+            addPdfRow(table, "Address 1", job.getBusinessAddress1());
+            addPdfRow(table, "Address 2", job.getBusinessAddress2());
+            addPdfRow(table, "City", job.getBusinessCity());
+            addPdfRow(table, "Business Name", job.getBusinessName());
+            addPdfRow(table, "Phone", job.getBusinessPhone());
+            addPdfRow(table, "State", job.getBusinessState());
+            addPdfRow(table, "Zip", job.getBusinessZip());
+            addPdfRow(table, "Job Id", String.valueOf(job.getId()));
+            addPdfRow(table, "Industry", job.getIndustry().getName());
+            addPdfRow(table, "Industry Other", job.getIndustryOther());
+            addPdfRow(table, "Offered By", job.getOfferedBy().getName());
 
             if (job.getRegion() != null) {
-                PdfPCell labelCell16 = new PdfPCell(new Phrase("Region"));
-                PdfPCell valueCell16 = new PdfPCell(new Phrase(job.getRegion().getName()));
-                table.addCell(labelCell16);
-                table.addCell(valueCell16);
+                addPdfRow(table, "Region", job.getRegion().getName());
             }
 
-            PdfPCell labelCell17 = new PdfPCell(new Phrase("Region Other"));
-            PdfPCell valueCell17 = new PdfPCell(new Phrase(job.getRegionOther()));
-
-            PdfPCell labelCell18 = new PdfPCell(new Phrase("Date"));
-            PdfPCell valueCell18 = new PdfPCell(new Phrase(String.valueOf(job.getUpdateDate())));
-
-            PdfPCell labelCell19 = new PdfPCell(new Phrase("Website"));
-            PdfPCell valueCell19 = new PdfPCell(new Phrase(job.getWebsite()));
-
-            table.addCell(labelCell0);
-            table.addCell(valueCell0);
-            table.addCell(labelCell1);
-            table.addCell(valueCell1);
-            table.addCell(labelCell2);
-            table.addCell(valueCell2);
-            table.addCell(labelCell3);
-            table.addCell(valueCell3);
-            table.addCell(labelCell4);
-            table.addCell(valueCell4);
-            table.addCell(labelCell5);
-            table.addCell(valueCell5);
-            table.addCell(labelCell6);
-            table.addCell(valueCell6);
-            table.addCell(labelCell7);
-            table.addCell(valueCell7);
-            table.addCell(labelCell8);
-            table.addCell(valueCell8);
-            table.addCell(labelCell9);
-            table.addCell(valueCell9);
-            table.addCell(labelCell10);
-            table.addCell(valueCell10);
-            table.addCell(labelCell11);
-            table.addCell(valueCell11);
-            table.addCell(labelCell12);
-            table.addCell(valueCell12);
-            table.addCell(labelCell13);
-            table.addCell(valueCell13);
-            table.addCell(labelCell14);
-            table.addCell(valueCell14);
-            table.addCell(labelCell15);
-            table.addCell(valueCell15);
-
-            table.addCell(labelCell17);
-            table.addCell(valueCell17);
-            table.addCell(labelCell18);
-            table.addCell(valueCell18);
-
-            table.addCell(labelCell19);
-            table.addCell(valueCell19);
-
+            addPdfRow(table, "Region Other", job.getRegionOther());
+            addPdfRow(table, "Date", String.valueOf(job.getUpdateDate()));
+            addPdfRow(table, "Website", job.getWebsite());
             document.add(table);
+
+            final Paragraph header = new Paragraph(new Phrase(job.getJobTitle()));
+            document.add(header);
+
+            //~~~~~Render Map Location if available~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            if (job.getUsesMap()) {
+
+                this.addPdfHeader(pdfWriter, document, "Job Location");
+
+                com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(
+                        dataService.getGoogleMapImage(job.getLongitude(), job.getLatitude(), job.getZoomLevel()),
+                        Color.WHITE);
+                img.scalePercent(75);
+                img.setBorder(Rectangle.BOX);
+                img.enableBorderSide(Rectangle.BOX);
+                img.setBorderColor(Color.BLACK);
+                img.setBorderWidth(1);
+
+                document.add(img);
+
+            }
+
+            //~~~~~Render Job Description~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            this.addPdfHeader(pdfWriter, document, "Job Description");
+
+            Paragraph jobDescription = new Paragraph(job.getDescription());
+            document.add(jobDescription);
+
+            //~~~~~Render Job Restrictions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            this.addPdfHeader(pdfWriter, document, "Job Restrictions");
+
+            Paragraph jobRestrictions = new Paragraph(job.getJobRestrictions());
+            document.add(jobRestrictions);
+
         }
 
         document.close();
