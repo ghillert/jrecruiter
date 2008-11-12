@@ -9,19 +9,40 @@
     </div>
     <p style="clear: both;"/>
     <s:if test="jobs != null && !jobs.empty">
-      <display:table name="jobs" pagesize="15" requestURI="" id="job" class="displaytag" export="false" sort="list">
-        <display:column class="joblist1" property="id" titleKey="field.jobNumber" sortable="true" media="html csv xml excel pdf"/>
+       <jmesa:tableFacade
+            id="tag"
+            items="${jobs}"
+            var="job"
+            stateAttr="restore"
+            >
+          <jmesa:htmlTable>
+            <jmesa:htmlRow>
+                    <jmesa:htmlColumn  property="usesMap" title="&nbsp;" filterable="false">
+                        <s:url id="jobDetailUrl" action="job-detail" includeParams="false">
+                          <s:param name="jobId" value="%{#attr.job.id}"/>
+                        </s:url>
+                        <a title="Job Detail - ${job.jobTitle}" href="${jobDetailUrl}">
+                            <img alt="Job Detail" title="Job Detail - ${job.jobTitle}" src="${ctx}/images/icons/crystal/viewmag.png" style="border-width: 0;"/>
+                        </a>
+                    </jmesa:htmlColumn>
+                    <jmesa:htmlColumn property="details" title="&nbsp;" filterable="false">
 
-        <s:url id="editJobPostingUrl" action="edit-job"><s:param name="id" value="#attr.row.job.id"/></s:url>
-
-        <display:column class="joblist2" property="jobTitle" titleKey="field.jobTitle" sortable="true" href="${editJobPostingUrl}" paramId="id" paramProperty="id" media="html csv xml excel pdf"/>
-        <display:column class="joblist3" property="region.name" titleKey="field.location" sortable="true" media="html csv xml excel pdf"/>
-        <display:column class="joblist4" titleKey="field.jobPostDate" sortable="true" media="html csv xml excel pdf" sortProperty="updateDate">
-          <fmt:formatDate value="${job.updateDate}" type="date" pattern="MM/dd/yy"/>
-        </display:column>
-      </display:table>
+                        <s:if test="#attr.job.usesMap">
+                            <img alt="Uses Map" title="This job posting uses the Google maps feature." src="${ctx}/images/icons/crystal/globe.png" style="border-width: 0;"/>
+                        </s:if>
+                        <s:else>&nbsp;</s:else>
+                    </jmesa:htmlColumn>
+                    <jmesa:htmlColumn property="jobTitle"     titleKey="jsp.show.jobs.job.title" />
+                    <jmesa:htmlColumn property="businessName" titleKey="jsp.show.jobs.business.name"/>
+                    <jmesa:htmlColumn property="region.name"  titleKey="jsp.show.jobs.job.location" filterable="false"/>
+                    <jmesa:htmlColumn property="updateDate"   titleKey="jsp.show.jobs.date" pattern="${datePattern}" cellEditor="org.jmesa.view.editor.DateCellEditor" filterable="false"/>
+            </jmesa:htmlRow>
+            </jmesa:htmlTable>
+        </jmesa:tableFacade>
     </s:if>
 </s:form>
+
+
 
 <script type="text/javascript">
 

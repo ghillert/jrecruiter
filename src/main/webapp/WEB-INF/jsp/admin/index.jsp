@@ -2,10 +2,6 @@
 
 <title>jRecruiter - Administrative Area</title>
 
-<style>
-    div fieldset { margin-right: 20em;}
-</style>
-
 <h2>Administrative Area</h2>
 <p class="info">
     <s:text name="admin.main.welcome"/>
@@ -36,7 +32,7 @@
           <s:url action="search-index" id="searchIndexUrl"/>
           <s:url action="setup-demo"            id="setupDemoUrl"/>
           <s:url action="logging" id="loggingUrl"/>
-      <fieldset>
+      <fieldset class="manageJobPostings">
           <legend>Manage Jobs Postings</legend>
                 <ul>
                     <li><a href="${addJobUrl}" ><s:text name="admin.main.label.add.job"/></a></li>
@@ -45,25 +41,25 @@
                     <li><a href="${showJobsNotAdminUrl}" ><s:text name="admin.main.label.view.jobs"/></a></li>
                 </ul>
       </fieldset>
-      <fieldset>
+      <fieldset class="userTasks">
                 <legend>User Task</legend>
                 <ul>
                     <li><a href="${editUserUrl}" ><s:text name="admin.main.label.edit.registration"/></a></li>
                     <li><a href="${logoutUrl}" ><s:text name="admin.main.label.logout"/></a></li>
                 </ul>
-            </fieldset>
-            <security:authorize ifAllGranted="ADMIN">
-              <fieldset>
-                  <legend>jRecruiter Administration</legend>
-                  <ul>
-            <li><a href="${userListUrl}" ><s:text name="admin.main.label.edit.user"/></a></li>
-            <li><a href="${addUserUrl}" ><s:text name="admin.main.label.add.user"/></a></li>
-            <li><a href="${editSettingsUrl}" ><s:text name="admin.main.label.edit.settings"/></a></li>
-            <li><a href="${searchIndexUrl}" >Re-Index Search Index</a></li>
-            <li><a href="${setupDemoUrl}" >Setup Demo Jobs</a></li>
-            <li><a href="${loggingUrl}" >Logging Settings</a></li>
-                  </ul>
-              </fieldset>
-            </security:authorize>
+      </fieldset>
+      <security:authorize ifAllGranted="ADMIN">
+          <fieldset class="jRecruiterAdmin">
+              <legend>jRecruiter Administration</legend>
+              <ul>
+                  <li><a href="${userListUrl}" ><s:text name="admin.main.label.edit.user"/></a></li>
+                  <li><a href="${addUserUrl}" ><s:text name="admin.main.label.add.user"/></a></li>
+                  <li><a href="${editSettingsUrl}" ><s:text name="admin.main.label.edit.settings"/></a></li>
+                  <li><a href="${searchIndexUrl}" >Re-Index Search Index</a></li>
+                  <li><a href="${setupDemoUrl}" >Setup Demo Jobs</a></li>
+                  <li><a href="${loggingUrl}" >Logging Settings</a></li>
+              </ul>
+          </fieldset>
+      </security:authorize>
     </div>
 

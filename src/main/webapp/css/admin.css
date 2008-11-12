@@ -1,0 +1,22 @@
+.adminMain {
+  padding-top: 15px;
+}
+
+.adminMain fieldset.manageJobPostings ul {
+  background-image:  url("../images/icons/crystal/48px/mydocuments.png");
+  background-repeat: no-repeat;
+  background-position: 90% 50%;
+  min-height: 70px;
+}
+.adminMain fieldset.userTasks ul {
+  background-image:  url("../images/icons/crystal/48px/kuser.png");
+  background-repeat: no-repeat;
+  background-position: 90% 50%;
+  min-height: 70px;
+}
+.adminMain fieldset.jRecruiterAdmin ul {
+  background-image:  url("../images/icons/crystal/48px/advancedsettings.png");
+  background-repeat: no-repeat;
+  background-position: 90% 50%;
+  min-height: 70px;
+}
