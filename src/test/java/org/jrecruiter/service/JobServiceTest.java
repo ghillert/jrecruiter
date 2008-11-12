@@ -23,7 +23,6 @@ import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
-import org.springframework.orm.ObjectRetrievalFailureException;
 
 /**
  *

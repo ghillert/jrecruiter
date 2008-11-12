@@ -43,19 +43,16 @@ public class GoogleMapsStaticTest extends BaseTest {
 
     public static void sendGetRequest()
     {
-    String result = null;
 
     // Send a GET request to the servlet
     try
     {
-    // Construct data
-    StringBuffer data = new StringBuffer();
 
     URL url = new URL("http://maps.google.com/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&key=key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORQ7EYV2ourIdp48QYZszNEA7gcaFhQRuKqKuYEC9ss4BL5bATDTf3IeLg");
     URLConnection conn = url.openConnection ();
 
     BufferedImage img = ImageIO.read(conn.getInputStream());
-    
+
     ImageIO.write(img, "png", new File("/temp/1.png"));
 
 

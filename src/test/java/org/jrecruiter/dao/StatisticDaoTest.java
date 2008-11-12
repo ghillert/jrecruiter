@@ -6,13 +6,14 @@ package org.jrecruiter.dao;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -21,37 +22,37 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class StatisticDaoTest extends BaseTest {
 
-	private @Autowired StatisticDao statisticDao;
+    private @Autowired StatisticDao statisticDao;
 
-	private @Autowired UserDao userDao;
+    private @Autowired UserDao userDao;
 
-	private @Autowired JobDao jobDao;
+    private @Autowired JobDao jobDao;
 
-	/**
-	 *   Initialize Logging.
-	 */
-	public static final Logger LOGGER = Logger.getLogger(StatisticDaoTest.class);
+    /**
+     *   Initialize Logging.
+     */
+    private final static Logger LOGGER = LoggerFactory.getLogger(StatisticDaoTest.class);
 
-	public void testGetAllStatistics() {
-		Statistic statistic = getStatistic();
+    public void testGetAllStatistics() {
+        Statistic statistic = getStatistic();
 
-		Statistic savedStatistic = statisticDao.save(statistic);
+        Statistic savedStatistic = statisticDao.save(statistic);
 
-		assertNotNull(savedStatistic.getId());
-	}
+        assertNotNull(savedStatistic.getId());
+    }
 
-	private Statistic getStatistic() {
+    private Statistic getStatistic() {
 
-		Statistic statistic = new Statistic();
-		Job job = getJob();
+        Statistic statistic = new Statistic();
+        Job job = getJob();
 
-		final User user = this.getUser();
+        final User user = this.getUser();
 
-		User savedUser = userDao.save(user);
+        User savedUser = userDao.save(user);
 
-		job.setUser(savedUser);
+        job.setUser(savedUser);
 
-		Job savedJob = jobDao.save(job);
+        Job savedJob = jobDao.save(job);
 
         statistic.setJob(savedJob);
         statistic.setCounter(new Long(0));
@@ -60,50 +61,50 @@ public class StatisticDaoTest extends BaseTest {
 
         return statistic;
 
-	}
+    }
 
-	private Job getJob() {
+    private Job getJob() {
 
-		Job job = new Job();
-		job.setBusinessAddress1("businessAddress1");
-		job.setBusinessAddress2("businessAddress2");
-		job.setBusinessCity("businessCity");
-		job.setBusinessEmail("businessEmail");
-		job.setRegionOther("businessLocation");
-		job.setBusinessName("businessName");
-		job.setBusinessPhone("businessPhone");
-		job.setBusinessState("businessState");
-		job.setBusinessZip("businessZip");
-		job.setDescription("description");
+        Job job = new Job();
+        job.setBusinessAddress1("businessAddress1");
+        job.setBusinessAddress2("businessAddress2");
+        job.setBusinessCity("businessCity");
+        job.setBusinessEmail("businessEmail");
+        job.setRegionOther("businessLocation");
+        job.setBusinessName("businessName");
+        job.setBusinessPhone("businessPhone");
+        job.setBusinessState("businessState");
+        job.setBusinessZip("businessZip");
+        job.setDescription("description");
 
-		job.setJobRestrictions("jobRestrictions");
-		job.setJobTitle("jobTitle");
-		job.setLatitude(BigDecimal.ONE);
-		job.setLongitude(BigDecimal.ZERO);
-		job.setOfferedBy(OfferedBy.RECRUITER);
-		job.setRegistrationDate(new Date());
-		job.setSalary(new BigDecimal(10000));
-		job.setStatus(JobStatus.ACTIVE);
-		job.setUpdateDate(new Date());
-		job.setWebsite("www.google.com");
+        job.setJobRestrictions("jobRestrictions");
+        job.setJobTitle("jobTitle");
+        job.setLatitude(BigDecimal.ONE);
+        job.setLongitude(BigDecimal.ZERO);
+        job.setOfferedBy(OfferedBy.RECRUITER);
+        job.setRegistrationDate(new Date());
+        job.setSalary(new BigDecimal(10000));
+        job.setStatus(JobStatus.ACTIVE);
+        job.setUpdateDate(new Date());
+        job.setWebsite("www.google.com");
 
-		return job;
+        return job;
 
-	}
+    }
 
-	private User getUser() {
+    private User getUser() {
 
-		User user = new User();
-		user.setUsername("demo44");
-		user.setEmail("demo@demo.com");
-		user.setFirstName("Demo First Name");
-		user.setLastName("Demo Last Name");
-		user.setPassword("demo");
-		user.setPhone("123456");
-		user.setRegistrationDate(new Date());
+        User user = new User();
+        user.setUsername("demo44");
+        user.setEmail("demo@demo.com");
+        user.setFirstName("Demo First Name");
+        user.setLastName("Demo Last Name");
+        user.setPassword("demo");
+        user.setPhone("123456");
+        user.setRegistrationDate(new Date());
 
-		return user;
+        return user;
 
-	}
+    }
 
 }

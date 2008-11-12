@@ -18,7 +18,8 @@ package org.jrecruiter.mock;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -30,40 +31,39 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
  */
 public class MockJavaMailSender extends JavaMailSenderImpl {
 
-	public MockJavaMailSender() {
-		super();
-	}
+    public MockJavaMailSender() {
+        super();
+    }
 
-	/**
-	 * Logger for this class.
-	 */
-	private static final Logger LOGGER = Logger
-			.getLogger(MockJavaMailSender.class);
+    /**
+     * Logger for this class.
+     */
+    private final static Logger LOGGER = LoggerFactory.getLogger(MockJavaMailSender.class);
 
-	private MimeMessage message;
+    private MimeMessage message;
 
-	@Override
-	public void send(MimeMessagePreparator preparator) throws MailException {
+    @Override
+    public void send(MimeMessagePreparator preparator) throws MailException {
 
-		message = new MimeMessage((Session) null);
-		try {
-			preparator.prepare(message);
-		} catch (Exception e) {
-			throw new IllegalStateException("Error while preparing message.", e);
-		}
+        message = new MimeMessage((Session) null);
+        try {
+            preparator.prepare(message);
+        } catch (Exception e) {
+            throw new IllegalStateException("Error while preparing message.", e);
+        }
 
-		LOGGER.info("send() - Mock message successfully sent.");
+        LOGGER.info("send() - Mock message successfully sent.");
 
-	}
+    }
 
-	@Override
-	public void send(SimpleMailMessage simpleMessage) throws MailException {
-		LOGGER.info("Sending...");
-	}
+    @Override
+    public void send(SimpleMailMessage simpleMessage) throws MailException {
+        LOGGER.info("Sending...");
+    }
 
-	@Override
-	public void send(MimeMessage msg) throws MailException {
-		message = msg;
-	}
+    @Override
+    public void send(MimeMessage msg) throws MailException {
+        message = msg;
+    }
 
 }
