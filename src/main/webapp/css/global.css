@@ -118,38 +118,46 @@ body {
   color: #00538F;
 }
 
-.container .errorMessages {
+/* Common error/success messages styles */
+
+.container .errorMessages,
+.container .successMessages  {
   display: block;
-  border: 1px solid #FF0000;
   border-collapse: collapse;
   margin: 1em 5em 2em 5em;
   background-color: #FFFFFF;
 }
-.container .errorMessages td {
-  vertical-align: middle;
-  min-height: 40px;
-  background:transparent url(../images/icons/crystal/agt_update_critical.png) no-repeat 1em 50%;
-}
-.container .errorMessages li {
-  margin-left: 5em;
-  margin-right: 5em;
-}
 
-.container .successMessages {
-  display: block;
-  border: 1px solid #0076CC;
-  border-collapse: collapse;
-  margin: 1em 5em 2em 5em;
-  background-color: #FFFFFF;
-}
-.container td {
+.container .errorMessages td,
+.container .successMessages td {
   vertical-align: middle;
   min-height: 40px;
 }
 
+.container .errorMessages li,
 .container .successMessages li {
   margin-left: 5em;
   margin-right: 5em;
+}
+
+/* Error Messages */
+
+.container .errorMessages {
+  border: 1px solid #FF0000;
+}
+
+.container .errorMessages td {
+  background:transparent url(../images/icons/crystal/agt_update_critical.png) no-repeat 1em 50%;
+}
+
+/* Success Messages */
+
+
+.container .successMessages {
+  border: 1px solid #0076CC;
+}
+.container .successMessages td {
+  background:transparent url(../images/icons/crystal/agt_action_success.png) no-repeat 1em 50%;
 }
 
 /* Footer *********************************************************************/
@@ -203,17 +211,6 @@ div.back {
 
 
   }
-
-
-
-.adminMain {
-
-  padding-top: 15px;
-  background-image: url("../images/colocasia.jpg");
-  background-repeat: no-repeat;
-  background-position: right;
-
-}
 
 .welcomeMain {
     position: relative;

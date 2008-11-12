@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
   <c:if test="${param.status == 'error'}">
-    <table id="errorMessages">
+    <table class="errorMessages">
       <tr>
         <td>
           <ul>
@@ -34,19 +34,16 @@
             <ul id="loginOptions" style="clear: left;">
                 <li class="registration">
                     <img src="${ctx}/images/icons/crystal/add_user.png"/>
-                    <s:url action="signup" namespace="registration" id="signupUrl"/>
+                    <s:url action="signup" namespace="registration" id="signupUrl" includeParams="none"/>
                   <a href="${signupUrl}"><fmt:message key="link.login.addUser"/></a>
                 </li>
                 <li class="getPassword">
                   <img src="${ctx}/images/icons/crystal/mail_get.png"/>
-                  <s:url action="get-password" namespace="/" id="getPasswordUrl"/>
+                  <s:url action="get-password" namespace="/" id="getPasswordUrl" includeParams="none"/>
                   <a href="${getPasswordUrl}"><fmt:message key="link.login.forgotYourPassword"/></a>
                 </li>
             </ul>
       </fieldset>
-
-
-
   </form>
 
 <script type="text/JavaScript" language="JavaScript">

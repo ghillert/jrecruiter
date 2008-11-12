@@ -2,7 +2,7 @@
 
 <%-- Success Messages --%>
 <s:if test="hasActionErrors() || hasFieldErrors()">
-  <table id="errorMessages">
+  <table class="errorMessages">
     <tr>
       <td>
       <ul>
@@ -21,7 +21,7 @@
 </s:if>
 
 <s:if test="hasActionMessages()">
-  <table id="errorMessages">
+  <table class="successMessages">
     <tr>
       <td>
       <ul>

@@ -19,9 +19,9 @@ function checkDelete(userId){
       <s:if test="users != null && users.size > 0">
         <%@include file="/WEB-INF/jsp/admin/user-list-table.jsp"%>
       </s:if>
-	  <s:else>
-	  	   <s:text name="message.noAvailableJobs"/>
-	  </s:else>
+        <p>
+            <s:text name="message.not.found.users"/>
+        </p>
 
       <s:submit method="cancel" onclick="javascript:return checkDelete();" value="%{getText('jobposting.button.cancel')}"/>
       <s:if test="users != null && users.size > 0">

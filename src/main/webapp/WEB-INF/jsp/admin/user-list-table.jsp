@@ -1,28 +1,34 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
-    <ajax:displayTag id="displayTagFrame" ajaxFlag="displayAjax" baseUrl="${ctx}/userList.do" postFunction="h()">
-        <display:table name="users" pagesize="15" requestURI="" id="user" class="displaytag" export="false" sort="list">
-          <display:column class="userlist1"                      titleKey="user.username"     sortable="true" media="html csv xml excel pdf" sortProperty="username">
-                <s:url action="edit-user" id="editUserUrl">
-                    <s:param name="userId" value="%{#attr.user.id}"/>
-                </s:url>
-                <a href="${editUserUrl}">${user.username}</a>
-          </display:column>
-          <display:column class="userlist2" property="firstName" titleKey="user.firstName"    sortable="true" media="html csv xml excel pdf"/>
-          <display:column class="userlist3" property="lastName"  titleKey="user.lastName"     sortable="true" media="html csv xml excel pdf"/>
-          <display:column class="userlist4"                      titleKey="user.registerDate" sortable="true" media="html csv xml excel pdf" sortProperty="updateDate">
-            <fmt:formatDate value="${user.updateDate}" type="date" pattern="MM/dd/yy"/>
-          </display:column>
-          <display:column class="userlist5" titleKey="userList.th.delete" sortable="false" media="html csv xml excel pdf" sortProperty="updateDate">
-            <s:checkbox name="userIds" fieldValue="%{#attr.user.id}" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
-            <s:property value="%{#attr.user.id}"/>
-          </display:column>
-        </display:table>
-    </ajax:displayTag>
 
-<script type="text/javascript">
-     function h() {
+   <jmesa:tableFacade
+        id="tag"
+        items="${users}"
+        limit="${limit}"
+        var="user"
+        stateAttr="restore"
+        >
+      <jmesa:htmlTable>
+        <jmesa:htmlRow>
+                <jmesa:htmlColumn  titleKey="user.username" filterable="false">
+                    <s:url action="edit-user" id="editUserUrl">
+                        <s:param name="userId" value="%{#attr.user.id}"/>
+                    </s:url>
+                    <a href="${editUserUrl}">${user.username}</a>
+                </jmesa:htmlColumn>
+              <jmesa:htmlColumn styleClass="userlist2" property="firstName" titleKey="user.firstName"    sortable="true"/>
+              <jmesa:htmlColumn styleClass="userlist3" property="lastName"  titleKey="user.lastName"     sortable="true"/>
+              <jmesa:htmlColumn styleClass="userlist4"                      titleKey="user.registerDate" sortable="true">
+                <fmt:formatDate value="${user.updateDate}" type="date" pattern="MM/dd/yy"/>
+              </jmesa:htmlColumn>
+              <jmesa:htmlColumn styleClass="userlist5" titleKey="userList.th.delete" sortable="false">
+                <s:checkbox name="userIds" fieldValue="%{#attr.user.id}" onblur="javascript:this.className='';" onfocus="javascript:this.className='selected';"/>
+                <s:property value="%{#attr.user.id}"/>
+              </jmesa:htmlColumn>
 
-     window.setTimeout("highlightTableRows('user')", 1000);
-
-     }
-</script>
+                <jmesa:htmlColumn property="jobTitle"     titleKey="jsp.show.jobs.job.title" />
+                <jmesa:htmlColumn property="businessName" titleKey="jsp.show.jobs.business.name"/>
+                <jmesa:htmlColumn property="region.name"  titleKey="jsp.show.jobs.job.location" filterable="false"/>
+                <jmesa:htmlColumn property="updateDate"   titleKey="jsp.show.jobs.date" pattern="${datePattern}" cellEditor="org.jmesa.view.editor.DateCellEditor" filterable="false"/>
+        </jmesa:htmlRow>
+        </jmesa:htmlTable>
+    </jmesa:tableFacade>

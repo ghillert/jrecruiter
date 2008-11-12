@@ -12,15 +12,15 @@
         <div id="usesMapDiv" style="display: block;">
             <div class="required">
                 <label for="longitude"><fmt:message key="field.longitude" /></label>
-                <s:textfield name="job.longitude" id="longitude" size="5" tabindex="16"/>
+                <s:textfield name="job.longitude" id="longitude" size="10" tabindex="16"/>
             </div>
             <div class="required">
             <label for="longitude"><fmt:message key="field.latitude" /></label>
-            <s:textfield name="job.latitude" id="latitude" size="5" tabindex="17"/>
+            <s:textfield name="job.latitude" id="latitude" size="10" tabindex="17"/>
             </div>
             <div class="required">
             <label for="zoomLevel"><fmt:message key="field.zoomLevel" /></label>
-            <s:textfield name="job.zoomLevel" id="zoomLevel" size="5" tabindex="18"/>
+            <s:textfield name="job.zoomLevel" id="zoomLevel" size="3" tabindex="18"/>
             </div>
             <div class="submit">
                 <input id="convertAddressButton"    type="button" value="Convert Address"

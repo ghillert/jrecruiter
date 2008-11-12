@@ -13,7 +13,7 @@
         </div>
         <div class="required">
               <label for="password"><fmt:message key="user.password" />*</label>
-              <s:password  id="password" name="user.password" required="true" maxlength="25" tabindex="2"
+              <s:password  id="password" name="password" required="true" maxlength="25" tabindex="2"
                            onblur="javascript:this.className='';"
                            onfocus="javascript:this.className='selected';"/>
         </div>
