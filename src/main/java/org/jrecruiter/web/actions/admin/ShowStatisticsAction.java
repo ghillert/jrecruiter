@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -37,6 +35,8 @@ import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.web.actions.BaseAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * List all the jobs.
@@ -53,7 +53,7 @@ public class ShowStatisticsAction extends BaseAction {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(ShowStatisticsAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ShowStatisticsAction.class);
 
     private JFreeChart chart;
 

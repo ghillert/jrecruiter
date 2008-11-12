@@ -3,11 +3,11 @@ package org.jrecruiter.web.actions.admin;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
 
 /**
@@ -24,7 +24,7 @@ public class DeleteUserAction extends BaseAction {
 
     private Set<Long>userIds = new HashSet<Long>(0);
 
-    private static final Log LOGGER = LogFactory.getLog(DeleteUserAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DeleteUserAction.class);
 
     /**
      * Initialize the edit user form with the registration information of the

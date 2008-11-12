@@ -26,7 +26,8 @@ import java.text.MessageFormat;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,7 +38,7 @@ import org.springframework.stereotype.Service;
 public class DataServiceImpl implements org.jrecruiter.service.DataService {
 
     /** Initialize Logging. */
-    private static final Logger LOGGER = Logger.getLogger(DataServiceImpl.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DataServiceImpl.class);
 
     public Image getGoogleMapImage(final BigDecimal longitude,
                                    final BigDecimal latitude,

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
@@ -18,6 +16,8 @@ import org.jmesa.limit.SortSet;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.ActionName;
 import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
@@ -48,7 +48,7 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(ShowJobsAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ShowJobsAction.class);
 
     private HttpServletRequest request;
 

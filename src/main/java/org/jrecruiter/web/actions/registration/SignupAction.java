@@ -3,8 +3,6 @@ package org.jrecruiter.web.actions.registration;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
@@ -12,6 +10,8 @@ import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.texturemedia.smarturls.Result;
 
@@ -47,7 +47,8 @@ public class SignupAction extends BaseAction {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
-    private final Log LOGGER = LogFactory.getLog(SignupAction.class);
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(SignupAction.class);
 
     @RetrieveMessages
     @StoreMessages

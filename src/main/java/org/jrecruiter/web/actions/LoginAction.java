@@ -1,8 +1,8 @@
 package org.jrecruiter.web.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Logs out from the application.
@@ -20,7 +20,9 @@ public class LoginAction extends BaseAction {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(LoginAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(LoginAction.class);
+
+    private String status;
 
     /**
      * Let's log out - Invalidate the session as well as the ACEGI security
@@ -29,6 +31,14 @@ public class LoginAction extends BaseAction {
     @RetrieveMessages
     public String execute () {
         return SUCCESS;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

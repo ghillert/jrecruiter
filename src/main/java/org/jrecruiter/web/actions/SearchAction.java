@@ -3,9 +3,9 @@ package org.jrecruiter.web.actions;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.Job;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * List all the jobs.
@@ -22,7 +22,7 @@ public class SearchAction extends BaseAction  {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(SearchAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(SearchAction.class);
 
     private String keyword;
     private List<Job>jobs = new ArrayList<Job>();

@@ -5,7 +5,8 @@ package org.jrecruiter.model.statistics;
 
 import java.util.Calendar;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Used for portraying statistical information regarding how many jobs have been
@@ -20,7 +21,7 @@ public class JobCountPerDay {
     private Long numberOfJobsPosted;
 
     /** Initialize Logging. */
-    private static final Logger LOGGER = Logger.getLogger(JobCountPerDay.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(JobCountPerDay.class);
 
     public JobCountPerDay(Integer year, Integer month, Integer day, Long numberOfJobsPosted) {
         super();

@@ -3,24 +3,21 @@ package org.jrecruiter.web.actions.admin;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.Category;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.web.actions.BaseAction;
+import org.jrecruiter.web.actions.util.LoggingUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.ActionName;
 import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
 import org.texturemedia.smarturls.Results;
 
 /**
- * Show the main index page of the admin screens.
+ * Show log files and allow to set log levels for the configured loggers (logback)
+ * to be changed dynamically at runtime.
  *
  * @author Gunnar Hillert
  * @version $Id: IndexAction.java 154 2008-02-21 01:34:19Z ghillert $
@@ -40,12 +37,16 @@ import org.texturemedia.smarturls.Results;
 public class LoggingAction extends BaseAction {
 
     private String log;
-    private String level;
+    private Integer level;
+    private boolean showAll = false;
 
     private List<LogFileInfo> logFileInfos = CollectionUtils.getArrayList();
+    private List<ch.qos.logback.classic.Logger> configuredLoggers = CollectionUtils.getArrayList();
 
     private String fileName;
     private InputStream fileToDownLoad;
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(LoggingAction.class);
 
     /**
      *
@@ -53,54 +54,28 @@ public class LoggingAction extends BaseAction {
     @Override
     public String execute() {
 
-        if (null != log) {
-            Logger logger = ("".equals(log) ? Logger.getRootLogger() : Logger
-                    .getLogger(log));
-            logger.setLevel(Level.toLevel(level, Level.DEBUG));
-
-
-        }
-
-        Enumeration<Category> enumeration = Logger.getRootLogger().getAllAppenders();
-        while (enumeration.hasMoreElements() ){
-          Appender app = (Appender)enumeration.nextElement();
-          if ( app instanceof FileAppender ){
-
-            String fileName = ((FileAppender) app).getFile();
-            File logFile = new File(fileName);
-
-            LogFileInfo logFileInfo = new LogFileInfo();
-
-            logFileInfo.setFileName(logFile.getName());
-            logFileInfo.setFileLastChanged(new Date(logFile.lastModified()));
-            logFileInfo.setFileSize(logFile.length());
-            logFileInfos.add(logFileInfo);
-
-          }
-        }
+        this.configuredLoggers = LoggingUtil.findNamesOfConfiguredAppenders(this.showAll);
+        this.logFileInfos = LoggingUtil.getLogFileInfos();
 
         return SUCCESS;
     }
 
+    /**
+     * Retrieve the requested log file.
+     * 
+     * @return
+     * @throws Exception
+     */
     public String download() throws Exception {
 
         if (this.fileName == null) {
             throw new IllegalArgumentException("FileName must not be null.");
         }
-
-        Enumeration<Category> enumeration = Logger.getRootLogger().getAllAppenders();
-        while (enumeration.hasMoreElements() ){
-          Appender app = (Appender)enumeration.nextElement();
-          if ( app instanceof FileAppender ){
-
-            String fileName = ((FileAppender) app).getFile();
-            File logFile = new File(fileName);
-
-            if (logFile.getName().equalsIgnoreCase(this.fileName)) {
-                this.fileToDownLoad = new FileInputStream(logFile);
-            }
-
-          }
+        
+        final File logFile = LoggingUtil.getLogFile(fileName);
+        
+        if (logFile != null) {
+        	this.fileToDownLoad = new FileInputStream(logFile);
         }
 
         return "download";
@@ -114,11 +89,11 @@ public class LoggingAction extends BaseAction {
         this.log = log;
     }
 
-    public String getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -144,6 +119,23 @@ public class LoggingAction extends BaseAction {
 
     public void setFileToDownLoad(InputStream fileToDownLoad) {
         this.fileToDownLoad = fileToDownLoad;
+    }
+
+    public List<ch.qos.logback.classic.Logger> getConfiguredLoggers() {
+        return configuredLoggers;
+    }
+
+    public void setConfiguredLoggers(
+            List<ch.qos.logback.classic.Logger> configuredLoggers) {
+        this.configuredLoggers = configuredLoggers;
+    }
+
+    public boolean isShowAll() {
+        return showAll;
+    }
+
+    public void setShowAll(boolean showAll) {
+        this.showAll = showAll;
     }
 
 }

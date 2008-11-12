@@ -22,12 +22,13 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -40,22 +41,22 @@ public class DwrAction extends BaseDwrAction {
     /**
      *   Initialize Logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(DwrAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DwrAction.class);
 
     private @Autowired JobService service;
 
-	/* (non-Javadoc)
+    /* (non-Javadoc)
      * @see org.ajug.service.JobServiceInterface#getJobs()
      */
     @SuppressWarnings("unchecked")
     public String getJob(Long jobId) throws Exception {
 
-    	WebContext context = WebContextFactory.get();
-    	HttpServletRequest request = context.getHttpServletRequest();
+        WebContext context = WebContextFactory.get();
+        HttpServletRequest request = context.getHttpServletRequest();
 
-    	String ret = "";
+        String ret = "";
 
-    	final Job job = service.getJobForId(jobId);
+        final Job job = service.getJobForId(jobId);
 
         if (job==null){
 
@@ -66,7 +67,7 @@ public class DwrAction extends BaseDwrAction {
 
         } else {
 
-        	 Statistic statistics = job.getStatistic();
+             Statistic statistics = job.getStatistic();
 
              if (statistics == null) {
 
@@ -121,7 +122,7 @@ public class DwrAction extends BaseDwrAction {
 
              request.setAttribute("jobDetail", job);
 
-         		ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
+                 ret = context.forwardToString(TEMPLATE_DIRECTORY + "/jobDetail.jsp");
 
             }
         return ret;

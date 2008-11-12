@@ -17,12 +17,12 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.web.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
 
 /**
@@ -41,7 +41,7 @@ public class EditJobAction extends JobBaseAction {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(EditJobAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(EditJobAction.class);
 
     /**
      * Delete the job.

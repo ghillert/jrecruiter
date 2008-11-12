@@ -2,10 +2,10 @@ package org.jrecruiter.web.actions;
 
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 import org.texturemedia.smarturls.Result;
@@ -33,7 +33,7 @@ public class LogoutAction extends BaseAction implements SessionAware  {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(LogoutAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(LogoutAction.class);
 
     /**
      * Let's log out - Invalidate the session as well as the ACEGI security

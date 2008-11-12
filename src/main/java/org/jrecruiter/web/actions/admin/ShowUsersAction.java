@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
@@ -18,6 +16,8 @@ import org.jmesa.limit.SortSet;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -36,7 +36,7 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(ShowUsersAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ShowUsersAction.class);
 
     private HttpServletRequest request;
 

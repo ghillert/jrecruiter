@@ -1,10 +1,13 @@
 package org.jrecruiter.web.actions.admin;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang.StringUtils;
+import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.context.SecurityContextHolder;
 import org.texturemedia.smarturls.Result;
 
@@ -16,12 +19,15 @@ import org.texturemedia.smarturls.Result;
 public class EditUserAction extends BaseAction {
 
     private User user;
-
+    private String password;
+    private String password2;
+    private @Autowired StringDigester stringDigester;
+    
     private Long userId;
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
-    private final Log LOGGER = LogFactory.getLog(EditUserAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(EditUserAction.class);
 
     /**
      * Save the user.
@@ -49,12 +55,17 @@ public class EditUserAction extends BaseAction {
             return INPUT;
         }
 
+        if (!StringUtils.isBlank(this.password)) {
+        	userFromDb.setPassword(this.stringDigester.digest(this.password));
+        } else {
+        	addActionMessage("Your password has not been changed.");
+        }
+        
         userFromDb.setCompany(this.user.getCompany());
         userFromDb.setEmail(this.user.getEmail());
         userFromDb.setFax(this.user.getFax());
         userFromDb.setFirstName(this.user.getFirstName());
         userFromDb.setLastName(this.user.getLastName());
-        userFromDb.setPassword(this.user.getPassword());
         userFromDb.setPhone(this.user.getPhone());
         userFromDb.setUsername(this.user.getUsername());
 
@@ -106,6 +117,22 @@ public class EditUserAction extends BaseAction {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
 
 
 }

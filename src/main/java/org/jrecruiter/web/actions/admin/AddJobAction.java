@@ -2,12 +2,12 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
@@ -36,7 +36,7 @@ public class AddJobAction extends JobBaseAction {
     /**
      * Logger Declaration.
      */
-    private final Log LOGGER = LogFactory.getLog(AddJobAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AddJobAction.class);
 
     /**
      * Initialize the form.
