@@ -15,14 +15,11 @@
 */
 package org.jrecruiter.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Set;
 
-import org.jrecruiter.common.CollectionUtils;
-
-import junit.framework.Assert;
 import junit.framework.TestCase;
+
+import org.jrecruiter.common.CollectionUtils;
 
 /**
  * Validate object creation of the job type object

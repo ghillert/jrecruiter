@@ -5,10 +5,11 @@ package org.jrecruiter.dao;
 
 import java.util.Date;
 
-import org.apache.log4j.Logger;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.test.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.userdetails.UserDetails;
 
@@ -24,8 +25,7 @@ public class DaoAuthenticationProviderTest extends BaseTest {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger
-            .getLogger(DaoAuthenticationProviderTest.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DaoAuthenticationProviderTest.class);
 
     public void testGetUser() {
 

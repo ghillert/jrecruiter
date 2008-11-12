@@ -5,9 +5,10 @@ package org.jrecruiter.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.test.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -21,8 +22,7 @@ public class IndustryDaoTest extends BaseTest {
     /**
      * Initialize Logging.
      */
-    public static final Logger LOGGER = Logger
-            .getLogger(IndustryDaoTest.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(IndustryDaoTest.class);
 
     public void testGetAll() {
 
