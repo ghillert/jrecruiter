@@ -22,12 +22,14 @@
   </bean>
 
   <security:http auto-config="true" access-decision-manager-ref="accessDecisionManager">
-    <security:intercept-url pattern="/admin/*.html**" access="MANAGER,ADMIN" />
+    <security:intercept-url pattern="/admin/*.html**" access="MANAGER,ADMIN" requires-channel="https"/>
     <security:form-login login-page="/login.html" default-target-url="/admin/index.html"
                          authentication-failure-url="/login.html?status=error"/>
+    <security:intercept-url pattern="/**"                                requires-channel="http" />
     <security:logout />
     <security:concurrent-session-control max-sessions="1" exception-if-maximum-exceeded="true" />
   </security:http>
+
 
   <security:authentication-provider user-service-ref='userService' >
        <security:password-encoder ref="passwordEncoder"/>

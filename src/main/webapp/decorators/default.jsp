@@ -62,7 +62,13 @@
             <li>
             <s:url id="contactUrl" action="contact" namespace="/"/>
             <a href="#" id="contact">Contact</a></li>
-            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job postings as RSS feed.">&nbsp;<span>RSS Feed</span></a></li></ul>
+            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job postings as RSS feed.">&nbsp;<span>RSS Feed</span></a></li>
+            <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
+                              <c:if test="${pageContext.request.secure}">
+          Site is SSL secured
+      </c:if></li>
+            </ul>
+
       </div>
       <div class="content"><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
