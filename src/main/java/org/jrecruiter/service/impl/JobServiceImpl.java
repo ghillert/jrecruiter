@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.jrecruiter.common.AcegiUtil;
@@ -40,6 +39,8 @@ import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.service.JobService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
@@ -55,7 +56,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 public class JobServiceImpl implements JobService {
 
     /** Initialize Logging. */
-    private static final Logger LOGGER = Logger.getLogger(JobServiceImpl.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(JobServiceImpl.class);
 
     /** Used for creating the Apache-Velocity-based Email template. */
     private @Autowired VelocityEngine velocityEngine;

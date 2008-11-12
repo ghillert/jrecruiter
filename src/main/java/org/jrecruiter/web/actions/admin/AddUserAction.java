@@ -1,11 +1,11 @@
 package org.jrecruiter.web.actions.admin;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.validator.annotations.Validation;
@@ -19,13 +19,13 @@ import com.opensymphony.xwork2.validator.annotations.Validation;
 @Result(name="success", location="index", type="redirectAction")
 public class AddUserAction extends BaseAction {
 
-	private User user;
+    private User user;
 
-	/** serialVersionUID. */
-	private static final long serialVersionUID = -3422780336408883930L;
-	private final Log LOGGER = LogFactory.getLog(AddUserAction.class);
+    /** serialVersionUID. */
+    private static final long serialVersionUID = -3422780336408883930L;
+    private final static Logger LOGGER = LoggerFactory.getLogger(AddUserAction.class);
 
-	@StoreMessages
+    @StoreMessages
     public String save() {
 
         try {
@@ -35,7 +35,7 @@ public class AddUserAction extends BaseAction {
 
             LOGGER.warn(e.getMessage());
               addFieldError("username", getText("error.duplicateUsername"));
-			  return INPUT;
+              return INPUT;
         }
 
         addActionMessage(getText("user.add.success", user.getUsername()));
@@ -46,12 +46,12 @@ public class AddUserAction extends BaseAction {
         return INPUT;
     }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

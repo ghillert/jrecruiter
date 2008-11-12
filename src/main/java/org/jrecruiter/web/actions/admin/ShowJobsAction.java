@@ -2,12 +2,12 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
 import org.texturemedia.smarturls.Results;
 
@@ -31,7 +31,7 @@ public class ShowJobsAction extends BaseAction {
     private static final long serialVersionUID = -6536348867574805926L;
 
     /** Logger Declaration. */
-    private final Log LOGGER = LogFactory.getLog(ShowJobsAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ShowJobsAction.class);
 
     List<Job> jobs;
 

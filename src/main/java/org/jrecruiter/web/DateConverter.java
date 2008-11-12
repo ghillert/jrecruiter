@@ -19,8 +19,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.apache.struts2.util.StrutsTypeConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 * From Appfuse
@@ -34,7 +35,7 @@ public class DateConverter extends StrutsTypeConverter {
     /**
      *   Initialize Logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(DateConverter.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DateConverter.class);
 
     @Override
     public Object convertFromString(Map ctx, String[] value, Class arg2) {

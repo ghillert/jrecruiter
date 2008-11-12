@@ -2,11 +2,11 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.GregorianCalendar;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.forms.ConfigurationForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.ModelDriven;
@@ -22,34 +22,34 @@ import com.opensymphony.xwork2.Preparable;
 @Result(name="success", location="index", type="redirectAction")
 public class EditSettingsAction extends BaseAction implements Preparable, ModelDriven<ConfigurationForm>  {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = -2725680709601753520L;
+    /** serialVersionUID */
+    private static final long serialVersionUID = -2725680709601753520L;
 
-	/**
-	 * Logger Declaration.
-	 */
-    private final Log LOGGER = LogFactory.getLog(EditSettingsAction.class);
+    /**
+     * Logger Declaration.
+     */
+    private final static Logger LOGGER = LoggerFactory.getLogger(EditSettingsAction.class);
 
     ConfigurationForm form = new ConfigurationForm();
 
-	public void prepare() throws Exception { }
+    public void prepare() throws Exception { }
 
-	public String execute() {
+    public String execute() {
         form.setMailingListSubject( ((Configuration)jobService.getJRecruiterSetting("mail.jobposting.subject")).getMessageText());
         form.setMailingListTemplate(((Configuration)jobService.getJRecruiterSetting("mail.jobposting.body")).getMessageText());
         form.setMailingListEmail(   ((Configuration)jobService.getJRecruiterSetting("mail.jobposting.email")).getMessageText());
         form.setMailFrom(           ((Configuration)jobService.getJRecruiterSetting("mail.from")).getMessageText());
         form.setPasswordSubject(    ((Configuration)jobService.getJRecruiterSetting("mail.password.subject")).getMessageText());
         form.setPasswordTemplate(   ((Configuration)jobService.getJRecruiterSetting("mail.password.body")).getMessageText());
-		return INPUT;
-	}
+        return INPUT;
+    }
 
     /**
      *
      */
     public String save() {
 
-		LOGGER.debug("entering 'onSubmit' method...");
+        LOGGER.debug("entering 'onSubmit' method...");
 
         Configuration configuration = new Configuration();
         configuration.setMessageKey("mail.jobposting.subject");
@@ -91,13 +91,13 @@ public class EditSettingsAction extends BaseAction implements Preparable, ModelD
 
         return SUCCESS;
 
-	}
+    }
 
-	public ConfigurationForm getModel() {
-		return form;
-	}
+    public ConfigurationForm getModel() {
+        return form;
+    }
 
-	public void setModel(ConfigurationForm form) {
-		this.form = form;
-	}
+    public void setModel(ConfigurationForm form) {
+        this.form = form;
+    }
 }

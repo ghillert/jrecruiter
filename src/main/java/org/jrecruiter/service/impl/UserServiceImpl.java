@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.jasypt.digest.StringDigester;
@@ -35,6 +34,8 @@ import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.mail.MailException;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     /**
      *   Used for creating the Apache-Velocity-based Email template.
@@ -226,7 +227,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + username + " found.");
         }
 
-        LOGGER.info(user.getAuthorities());
+        LOGGER.info("User {} loaded.", user.getUsername());
 
         return user;
     }

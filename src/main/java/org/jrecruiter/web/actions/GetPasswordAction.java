@@ -1,9 +1,9 @@
 package org.jrecruiter.web.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.interceptor.StoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
 
 /**
@@ -20,7 +20,7 @@ public class GetPasswordAction extends BaseAction {
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
 
-    private final Log LOG = LogFactory.getLog(GetPasswordAction.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(GetPasswordAction.class);
 
     public String execute() {
         return INPUT;

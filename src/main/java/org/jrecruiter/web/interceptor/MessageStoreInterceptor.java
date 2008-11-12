@@ -26,8 +26,8 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -141,8 +141,7 @@ public class MessageStoreInterceptor implements Interceptor {
 
     private static final long serialVersionUID = 4491997514314242420L;
 
-    private static final Log _log = LogFactory.getLog(MessageStoreInterceptor.class);
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(MessageStoreInterceptor.class);
 
     public static final String STORE_MODE = "STORE";
     public static final String RETRIEVE_MODE = "RETRIEVE";
@@ -166,12 +165,12 @@ public class MessageStoreInterceptor implements Interceptor {
 
 
     public boolean isAutoRetrieveMode() {
-		return autoRetrieveMode;
-	}
-	public void setAutoRetrieveMode(boolean autoRetrieveMode) {
-		this.autoRetrieveMode = autoRetrieveMode;
-	}
-	public void setAllowRequestParameterSwitch(boolean allowRequestParameterSwitch) {
+        return autoRetrieveMode;
+    }
+    public void setAutoRetrieveMode(boolean autoRetrieveMode) {
+        this.autoRetrieveMode = autoRetrieveMode;
+    }
+    public void setAllowRequestParameterSwitch(boolean allowRequestParameterSwitch) {
         this.allowRequestParameterSwitch = allowRequestParameterSwitch;
     }
     public boolean getAllowRequestParameterSwitch() {
@@ -202,13 +201,13 @@ public class MessageStoreInterceptor implements Interceptor {
     }
 
     public String intercept(ActionInvocation invocation) throws Exception {
-        _log.debug("entering MessageStoreInterceptor ...");
+        LOGGER.debug("entering MessageStoreInterceptor ...");
 
         before(invocation);
         String result = invocation.invoke();
         after(invocation, result);
 
-        _log.debug("exit executing MessageStoreInterceptor");
+        LOGGER.debug("exit executing MessageStoreInterceptor");
         return result;
     }
 
@@ -230,7 +229,7 @@ public class MessageStoreInterceptor implements Interceptor {
             Method method = getActionMethod(action.getClass(), invocation.getProxy().getMethod());
             RetrieveMessages retrieveMessages = (RetrieveMessages) method.getAnnotation(RetrieveMessages.class);
             if (retrieveMessages != null) {
-            	isRetrieve = true;
+                isRetrieve = true;
             }
         }
 
@@ -242,7 +241,7 @@ public class MessageStoreInterceptor implements Interceptor {
                 Map session = (Map) invocation.getInvocationContext().get(ActionContext.SESSION);
                 ValidationAware validationAwareAction = (ValidationAware) action;
 
-                _log.debug("retrieve error / message from session to populate into action ["+action+"]");
+                LOGGER.debug("retrieve error / message from session to populate into action ["+action+"]");
 
                 Collection actionErrors = (Collection) session.get(actionErrorsSessionKey);
                 Collection actionMessages = (Collection) session.get(actionMessagesSessionKey);
@@ -287,7 +286,7 @@ public class MessageStoreInterceptor implements Interceptor {
             Method method = getActionMethod(action.getClass(), invocation.getProxy().getMethod());
             StoreMessages storeMessages = (StoreMessages) method.getAnnotation(StoreMessages.class);
             if (storeMessages != null) {
-            	isStore = true;
+                isStore = true;
             }
         }
 
@@ -299,7 +298,7 @@ public class MessageStoreInterceptor implements Interceptor {
                 // store error / messages into session
                 Map session = (Map) invocation.getInvocationContext().get(ActionContext.SESSION);
 
-                _log.debug("store action ["+action+"] error/messages into session ");
+                LOGGER.debug("store action ["+action+"] error/messages into session ");
 
                 ValidationAware validationAwareAction = (ValidationAware) action;
                 session.put(actionErrorsSessionKey, validationAwareAction.getActionErrors());
@@ -307,7 +306,7 @@ public class MessageStoreInterceptor implements Interceptor {
                 session.put(fieldErrorsSessionKey, validationAwareAction.getFieldErrors());
             }
             else {
-                _log.debug("Action ["+action+"] is not ValidationAware, no message / error that are storeable");
+                LOGGER.debug("Action ["+action+"] is not ValidationAware, no message / error that are storeable");
             }
         }
     }

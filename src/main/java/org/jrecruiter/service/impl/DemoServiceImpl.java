@@ -20,7 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
@@ -31,6 +30,8 @@ import org.jrecruiter.service.DemoService;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class DemoServiceImpl implements DemoService {
     /**
      *   Initialize Logging.
      */
-    public static final Logger LOGGER = Logger.getLogger(DemoServiceImpl.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DemoServiceImpl.class);
 
     private @Autowired JobService  jobService;
     private @Autowired UserService userService;
