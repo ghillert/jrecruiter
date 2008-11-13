@@ -16,8 +16,6 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletConfig;
@@ -32,13 +30,6 @@ public class DwrActionT {
     private DwrAction ajaxService;
     private JobService jobService;
     private UserService userService;
-
-
-    /**
-     *   Initialize Logging.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(DwrActionT.class);
-
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -71,9 +62,7 @@ public class DwrActionT {
         userService.addUser(user);
         job.setUser(user);
         jobService.addJob(job);
-
-        String ret = ajaxService.getJob(job.getId());
-
+        
     //	assertNotNull(ret);
     }
 
