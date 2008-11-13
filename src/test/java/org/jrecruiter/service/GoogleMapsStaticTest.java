@@ -28,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  *
  * @author Gunnar Hillert
- * @version $Id: JobServiceTest.java 189 2008-04-21 02:50:07Z ghillert $
+ * @version $Id$
  */
 public class GoogleMapsStaticTest extends BaseTest {
 
