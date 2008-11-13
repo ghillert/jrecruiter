@@ -19,7 +19,6 @@ import org.jrecruiter.test.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.ObjectRetrievalFailureException;
 
 /**
  * @author Gunnar Hillert
@@ -59,7 +58,7 @@ public class JobDaoTest extends BaseTest {
 
         Statistic statistic = new Statistic();
         statistic.setJob(job);
-        statistic.setCounter(new Long(0));
+        statistic.setCounter(Long.valueOf(0));
         statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
 
@@ -212,7 +211,7 @@ public class JobDaoTest extends BaseTest {
         Statistic statistic = new Statistic();
 
         statistic.setJob(job);
-        statistic.setCounter(new Long(0));
+        statistic.setCounter(Long.valueOf(0));
         statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
         job.setStatistic(statistic);
@@ -243,7 +242,7 @@ public class JobDaoTest extends BaseTest {
         Statistic statistic = new Statistic();
 
         statistic.setJob(savedJob);
-        statistic.setCounter(new Long(0));
+        statistic.setCounter(Long.valueOf(0));
         statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
 

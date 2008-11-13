@@ -4,8 +4,6 @@ package org.jrecruiter.test;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
 /**
@@ -15,8 +13,6 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
  * @version $Id$
  */
 public abstract class BaseTest extends AbstractTransactionalDataSourceSpringContextTests {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(BaseTest.class);
 
     protected @PersistenceContext(unitName="base") EntityManager entityManager;
 

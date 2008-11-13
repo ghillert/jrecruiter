@@ -12,8 +12,6 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -27,11 +25,6 @@ public class StatisticDaoTest extends BaseTest {
     private @Autowired UserDao userDao;
 
     private @Autowired JobDao jobDao;
-
-    /**
-     *   Initialize Logging.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(StatisticDaoTest.class);
 
     public void testGetAllStatistics() {
         Statistic statistic = getStatistic();
@@ -55,7 +48,7 @@ public class StatisticDaoTest extends BaseTest {
         Job savedJob = jobDao.save(job);
 
         statistic.setJob(savedJob);
-        statistic.setCounter(new Long(0));
+        statistic.setCounter(Long.valueOf(0));
         statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
 
