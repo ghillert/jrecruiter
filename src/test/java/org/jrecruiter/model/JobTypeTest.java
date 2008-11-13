@@ -25,7 +25,7 @@ import org.jrecruiter.common.CollectionUtils;
  * Validate object creation of the job type object
  *
  * @author Gunnar Hillert
- * @version $Id: DateConverterTest.java 162 2008-02-26 04:55:29Z ghillert $
+ * @version $Id$
  */
 public class JobTypeTest extends TestCase {
 
