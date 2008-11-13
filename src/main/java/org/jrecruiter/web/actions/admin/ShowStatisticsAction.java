@@ -35,8 +35,6 @@ import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.web.actions.BaseAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * List all the jobs.
@@ -49,11 +47,6 @@ public class ShowStatisticsAction extends BaseAction {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 4467043520853890820L;
-
-    /**
-     * Logger Declaration.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(ShowStatisticsAction.class);
 
     private JFreeChart chart;
 
@@ -180,7 +173,7 @@ public class ShowStatisticsAction extends BaseAction {
             final Calendar calendar30    = Calendar.getInstance();
             calendar30.add(Calendar.DAY_OF_MONTH, -300);
 
-            long jobCount = jobService.JobCount(calendar30.getTime());
+            long jobCount = jobService.jobCount(calendar30.getTime());
             List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
 
             TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );

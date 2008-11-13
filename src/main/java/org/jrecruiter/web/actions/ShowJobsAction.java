@@ -58,7 +58,6 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
     /* (non-Javadoc)
      * @see com.opensymphony.xwork2.ActionSupport#execute()
      */
-    @SuppressWarnings("unchecked")
     @RetrieveMessages
     @Override
     public String execute() throws Exception {

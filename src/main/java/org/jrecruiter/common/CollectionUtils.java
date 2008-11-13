@@ -25,7 +25,7 @@ import java.util.HashSet;
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class CollectionUtils {
+public final class CollectionUtils {
 
     /** Private Constructor.
      *  Supress default constructor for non-instantiability */

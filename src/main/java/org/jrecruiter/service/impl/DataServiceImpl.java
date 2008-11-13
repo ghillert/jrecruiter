@@ -26,19 +26,14 @@ import java.text.MessageFormat;
 
 import javax.imageio.ImageIO;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: JobServiceImpl.java 242 2008-08-18 13:02:34Z ghillert $
+ * @version $Id$
  */
 @Service("dataService")
 public class DataServiceImpl implements org.jrecruiter.service.DataService {
-
-    /** Initialize Logging. */
-    private final static Logger LOGGER = LoggerFactory.getLogger(DataServiceImpl.class);
 
     public Image getGoogleMapImage(final BigDecimal longitude,
                                    final BigDecimal latitude,

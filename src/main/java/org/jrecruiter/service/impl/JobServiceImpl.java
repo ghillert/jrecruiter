@@ -244,7 +244,7 @@ public class JobServiceImpl implements JobService {
             mailSender.send(msg);
         } catch (MailException ex) {
             LOGGER.error(ex.getMessage());
-            throw new RuntimeException(ex);
+            throw new IllegalStateException(ex);
         }
 
     }
@@ -295,7 +295,7 @@ public class JobServiceImpl implements JobService {
         return jobDao.getJobCountPerDayAndPeriod(fromDate, toDate);
     }
 
-    public Long JobCount(Date day) {
+    public Long jobCount(Date day) {
         return jobDao.getJobCount(day);
     }
 

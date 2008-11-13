@@ -175,7 +175,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         for (Iterator<String> iterator = passwords.iterator(); iterator.hasNext();) {
             password = iterator.next();
-            System.out.printf("Password: * %s\n", password);
         }
 
         user.setPassword(this.stringDigester.digest(password));
@@ -208,7 +207,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             mailSender.send(msg);
         } catch (MailException ex) {
             LOGGER.error(ex.getMessage());
-            throw new RuntimeException(ex);
+            throw new IllegalStateException(ex);
         }
 
     }
@@ -216,7 +215,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 
         final UserDetails user = this.getUser(username);

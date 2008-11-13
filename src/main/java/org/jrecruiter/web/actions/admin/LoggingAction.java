@@ -8,8 +8,6 @@ import java.util.List;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.actions.util.LoggingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.ActionName;
 import org.texturemedia.smarturls.ActionNames;
 import org.texturemedia.smarturls.Result;
@@ -20,7 +18,7 @@ import org.texturemedia.smarturls.Results;
  * to be changed dynamically at runtime.
  *
  * @author Gunnar Hillert
- * @version $Id: IndexAction.java 154 2008-02-21 01:34:19Z ghillert $
+ * @version $Id$
  *
  */
 @ActionNames({
@@ -36,7 +34,10 @@ import org.texturemedia.smarturls.Results;
     })
 public class LoggingAction extends BaseAction {
 
-    private String log;
+    /** serialVersionUID. */
+	private static final long serialVersionUID = -8382245048461549536L;
+	
+	private String log;
     private Integer level;
     private boolean showAll = false;
 
@@ -45,9 +46,7 @@ public class LoggingAction extends BaseAction {
 
     private String fileName;
     private InputStream fileToDownLoad;
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(LoggingAction.class);
-
+    
     /**
      *
      */

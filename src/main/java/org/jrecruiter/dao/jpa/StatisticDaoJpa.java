@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @version @version $Id$
  */
 @Repository("statisticDao")
-public class StatisticDaoJpa extends GenericDaoJpa< Statistic, Long>
+public final class StatisticDaoJpa extends GenericDaoJpa< Statistic, Long>
 								   implements StatisticDao {
 
     /**

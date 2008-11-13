@@ -73,8 +73,8 @@ public class DwrAction extends BaseDwrAction {
 
                  statistics = new Statistic();
                  statistics.setJob(job);
-                 statistics.setCounter(new Long(0));
-                 statistics.setUniqueVisits(new Long(0));
+                 statistics.setCounter(Long.valueOf(0));
+                 statistics.setUniqueVisits(Long.valueOf(0));
                  job.setStatistic(statistics);
              }
 
@@ -89,7 +89,7 @@ public class DwrAction extends BaseDwrAction {
 
                  } else {
                      long counter = statistics.getUniqueVisits().longValue() + 1 ;
-                     statistics.setUniqueVisits(new Long (counter));
+                     statistics.setUniqueVisits(Long.valueOf(counter));
                      viewedPostings.add(jobId);
                  }
 
@@ -105,7 +105,7 @@ public class DwrAction extends BaseDwrAction {
                  }
 
 
-                 statistics.setUniqueVisits(new Long (counter));
+                 statistics.setUniqueVisits(Long.valueOf(counter));
 
                  viewedPostings.add(jobId);
                  request.getSession().setAttribute("visited", viewedPostings);
@@ -115,7 +115,7 @@ public class DwrAction extends BaseDwrAction {
              Long counter = statistics.getCounter().longValue();
              counter ++;
 
-             statistics.setCounter(new Long(counter));
+             statistics.setCounter(Long.valueOf(counter));
              statistics.setLastAccess(new Date());
              //service.updateJobStatistic(statistics);
 

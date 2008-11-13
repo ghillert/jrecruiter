@@ -6,8 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jrecruiter.dao.GenericDao;
 
 /**
@@ -30,9 +28,6 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
 
     protected EntityManager entityManager;
 
-
-
-    private final Log log = LogFactory.getLog(getClass());
     private Class<T> persistentClass;
 
     public GenericDaoJpa(Class<T> persistentClass) {
@@ -48,14 +43,12 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
     public T get(PK id) {
         T entity = this.entityManager.find(this.persistentClass, id);
         return entity;
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
     public boolean exists(PK id) {
         T entity = this.entityManager.find(this.persistentClass, id);
         return entity != null;
