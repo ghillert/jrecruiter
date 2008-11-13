@@ -58,7 +58,7 @@ public class UserDaoTest extends BaseTest {
 
             LOGGER.info("Retrieving User: " + savedUser.getUsername());
             User userFromDb = userDao.getUser(savedUser.getUsername());
-            LOGGER.info(userFromDb.toString());
+
             if (userFromDb != null) {
                 fail("User found in database");
             }

@@ -31,7 +31,7 @@ import com.opensymphony.xwork2.ActionContext;
  * Test the Struts 2 Logout Action
  *
  * @author Gunnar Hillert
- * @version $Id: ShowJobsActionTest.java 173 2008-02-29 06:17:07Z ghillert $
+ * @version $Id$
  */
 public class BaseActionTest extends TestCase {
 
@@ -56,8 +56,6 @@ public class BaseActionTest extends TestCase {
         LogoutAction logoutAction = new LogoutAction();
 
         JobService jobService = EasyMock.createMock(JobService.class);
-
-        logoutAction.setSession(new HashMap<String, Object>());
 
         EasyMock.replay(jobService);
 
