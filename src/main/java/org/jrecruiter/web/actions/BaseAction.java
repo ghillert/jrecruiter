@@ -17,9 +17,12 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public abstract class BaseAction extends ActionSupport {
 
+    /** serialVersionUID. */
+	private static final long serialVersionUID = -2918623405168805282L;
+	
     //~~~~~Services~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    /**
+	/**
      * User related services.
      */
     protected UserService userService;

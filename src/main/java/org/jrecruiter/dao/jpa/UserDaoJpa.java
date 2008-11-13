@@ -37,13 +37,8 @@ import org.springframework.stereotype.Repository;
  * @version $Id$
  */
 @Repository("userDao")
-public class UserDaoJpa extends GenericDaoJpa< User, Long>
+public final class UserDaoJpa extends GenericDaoJpa< User, Long>
 implements UserDao {
-
-    /**
-     *   Initialize Logging.
-     */
-    //public static final Logger LOGGER = Logger.getLogger(UserDaoJpa.class);
 
     /**
      * Constructor.

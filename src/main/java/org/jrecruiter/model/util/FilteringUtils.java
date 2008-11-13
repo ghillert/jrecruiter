@@ -19,7 +19,7 @@ package org.jrecruiter.model.util;
 /**
 *
 * @author Gunnar Hillert
-* @version $Id: Job.java 232 2008-08-01 03:31:21Z ghillert $
+* @version $Id$
 */
 public class FilteringUtils {
 

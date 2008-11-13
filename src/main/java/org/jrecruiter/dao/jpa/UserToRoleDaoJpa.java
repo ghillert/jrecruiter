@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @version @version $Id$
  */
 @Repository("userToRoleDao")
-public class UserToRoleDaoJpa extends GenericDaoJpa< UserToRole, Long> implements UserToRoleDao {
+public final class UserToRoleDaoJpa extends GenericDaoJpa< UserToRole, Long> implements UserToRoleDao {
 
 	/**
      * Constructor.

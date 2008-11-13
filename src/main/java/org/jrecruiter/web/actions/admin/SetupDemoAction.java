@@ -3,8 +3,6 @@ package org.jrecruiter.web.actions.admin;
 import org.jrecruiter.service.DemoService;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.texturemedia.smarturls.Result;
 
@@ -21,7 +19,6 @@ public class SetupDemoAction extends BaseAction {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
-    private final static Logger LOGGER = LoggerFactory.getLogger(SetupDemoAction.class);
 
     private @Autowired DemoService demoService;
 

@@ -34,12 +34,15 @@ import com.opensymphony.xwork2.Preparable;
  * Edit a job. Save the changes or delete the job posting altogether.
  *
  * @author Gunnar Hillert
- * @version $Id: EditJobAction.java 232 2008-08-01 03:31:21Z ghillert $
+ * @version $Id$
  *
  */
 public abstract class JobBaseAction extends BaseAction implements Preparable, ModelDriven<JobForm> {
 
-    protected JobForm model = new JobForm();
+    /** serialVersionUID. */
+	private static final long serialVersionUID = 5109535527147122330L;
+
+	protected JobForm model = new JobForm();
 
     private Set<OfferedBy>offeredBySet;
     private List<Region> regions;

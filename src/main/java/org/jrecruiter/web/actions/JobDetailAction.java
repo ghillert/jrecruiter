@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,16 +25,13 @@ import org.texturemedia.smarturls.Result;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPRow;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -98,8 +94,8 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
                  statistics = new Statistic();
                  statistics.setJob(job);
-                 statistics.setCounter(new Long(0));
-                 statistics.setUniqueVisits(new Long(0));
+                 statistics.setCounter(Long.valueOf(0));
+                 statistics.setUniqueVisits(Long.valueOf(0));
                  job.setStatistic(statistics);
              }
 
@@ -114,7 +110,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
                  } else {
                      long counter = statistics.getUniqueVisits().longValue() + 1 ;
-                     statistics.setUniqueVisits(new Long (counter));
+                     statistics.setUniqueVisits(Long.valueOf(counter));
                      viewedPostings.add(jobId);
                  }
 
@@ -130,7 +126,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
                  }
 
 
-                 statistics.setUniqueVisits(new Long (counter));
+                 statistics.setUniqueVisits(Long.valueOf(counter));
 
                  viewedPostings.add(jobId);
                  session.put("visited", viewedPostings);
@@ -140,7 +136,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
              Long counter = statistics.getCounter().longValue();
              counter ++;
 
-             statistics.setCounter(new Long(counter));
+             statistics.setCounter(Long.valueOf(counter));
              statistics.setLastAccess(new Date());
              jobService.updateJob(this.job);
 
@@ -207,7 +203,6 @@ public class JobDetailAction extends BaseAction implements SessionAware {
         pdfWriter.setPageEvent(new JobDetailPageEvents());
 
         document.open();
-        PdfContentByte cb = pdfWriter.getDirectContent();
 
         document.addCreationDate();
         document.addAuthor("www.jRecruiter.org");

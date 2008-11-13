@@ -6,7 +6,7 @@ import java.util.Date;
  * Log file information.
  *
  * @author Gunnar Hillert
- * @version $Id: IndexAction.java 154 2008-02-21 01:34:19Z ghillert $
+ * @version $Id$
  *
  */
 public class LogFileInfo {

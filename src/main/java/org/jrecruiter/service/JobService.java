@@ -189,6 +189,6 @@ public interface JobService {
 
     public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
 
-    public Long JobCount(Date day);
+    public Long jobCount(Date day);
 
 }

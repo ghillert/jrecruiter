@@ -1,8 +1,5 @@
 package org.jrecruiter.web.actions;
 
-import java.util.Map;
-
-import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +15,10 @@ import org.texturemedia.smarturls.Result;
  *
  */
 @Result(name="success", location="/",  type="redirect")
-@SuppressWarnings("unchecked")
-public class LogoutAction extends BaseAction implements SessionAware  {
+public class LogoutAction extends BaseAction {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -7129460964433090813L;
-
-    private Map<String, Object> session = null;
-
-    public void setSession(final Map session) {
-        this.session = session;
-    }
 
     /**
      * Logger Declaration.
@@ -49,13 +39,6 @@ public class LogoutAction extends BaseAction implements SessionAware  {
         } else {
             LOGGER.warn("User not logged in.");
         }
-//    	if (session instanceof org.apache.struts2.dispatcher.SessionMap) {
-//    	    try {
-//    	        ((org.apache.struts2.dispatcher.SessionMap) session).invalidate();
-//    	    } catch (IllegalStateException e) {
-//    	    	LOGGER.error("You are attempting to invalidate an already invalid session", e);
-//    	    }
-//    	}
 
         context.setAuthentication(null);
 

@@ -29,7 +29,7 @@ import org.springframework.stereotype.Repository;
  * @version $Id$
  */
 @Repository("industryDao")
-public class IndustryDaoJpa extends GenericDaoJpa< Industry, Long>
+public final class IndustryDaoJpa extends GenericDaoJpa< Industry, Long>
                                   implements IndustryDao {
 
     /**

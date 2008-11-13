@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * @version $Id$
  */
 @Repository("regionDao")
-public class RegionDaoJpa extends GenericDaoJpa< Region, Long>
+public final class RegionDaoJpa extends GenericDaoJpa< Region, Long>
                                   implements RegionDao {
 
     /**

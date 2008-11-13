@@ -30,8 +30,6 @@ import org.jrecruiter.service.DemoService;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,15 +37,10 @@ import de.svenjacobs.loremipsum.LoremIpsum;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: UserServiceImpl.java 216 2008-05-19 01:00:34Z ghillert $
+ * @version $Id$
  */
 @Service("demoService")
 public class DemoServiceImpl implements DemoService {
-
-    /**
-     *   Initialize Logging.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(DemoServiceImpl.class);
 
     private @Autowired JobService  jobService;
     private @Autowired UserService userService;
