@@ -4,6 +4,8 @@
     </decorator>
     <excludes>
         <pattern>/show-jobs-ajax.html*</pattern>
+        <pattern>/admin/logging-ajax-log-file-table*</pattern>
+        <pattern>/admin/logging-ajax-logger-table*</pattern>
         <pattern>/contact.html*</pattern>
     </excludes>
 </decorators>
