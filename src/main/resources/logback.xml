@@ -30,9 +30,6 @@
       <pattern>%d %5p [ %F:%L ] - %m%n</pattern>
     </layout>
   </appender>
-  <logger name="org.acegisecurity.intercept.event.LoggerListener">
-    <level value="INFO"/>
-  </logger>
   <logger name="org.springframework.security">
     <level value="DEBUG"/>
   </logger>
@@ -52,9 +49,6 @@
     <level value="WARN"/>
   </logger>
   <logger name="org.hibernate.SQL">
-    <level value="INFO"/>
-  </logger>
-  <logger name="org.acegisecurity">
     <level value="INFO"/>
   </logger>
   <logger name="org.hibernate">
