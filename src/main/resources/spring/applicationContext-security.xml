@@ -22,10 +22,14 @@
   </bean>
 
   <security:http auto-config="true" access-decision-manager-ref="accessDecisionManager">
-    <security:intercept-url pattern="/admin/*.html**" access="MANAGER,ADMIN" requires-channel="https"/>
+    <security:intercept-url pattern="/admin/*.html**" access="MANAGER,ADMIN"                  requires-channel="https"/>
+    <security:intercept-url pattern="/login.html**"   access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="https" />
+    <security:intercept-url pattern="/contact.html**" access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
+    <security:intercept-url pattern="/*.html**"       access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any"/>
+    <security:intercept-url pattern="/**"             access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
+    
     <security:form-login login-page="/login.html" default-target-url="/admin/index.html"
                          authentication-failure-url="/login.html?status=error"/>
-    <security:intercept-url pattern="/**"                                requires-channel="http" />
     <security:logout />
     <security:concurrent-session-control max-sessions="1" exception-if-maximum-exceeded="true" />
   </security:http>
@@ -47,5 +51,6 @@
       </list>
     </property>
   </bean>
-  <bean id="authenticatedVoter" class="org.springframework.security.vote.AuthenticatedVoter"/>
+  <bean id="authenticatedVoter" class="org.springframework.security.vote.AuthenticatedVoter">
+  </bean>
 </beans>
