@@ -22,11 +22,16 @@ import org.texturemedia.smarturls.Results;
  *
  */
 @ActionNames({
-      @ActionName(name="logging", method="execute"),
-      @ActionName(name="downloadLogFile", method="download")
-    })
+	@ActionName(name="logging-ajax-log-file-table",    method="executeAjaxLoggingLogFileTable"),
+	@ActionName(name="logging-ajax-logger-table",      method="executeAjaxLoggerTable"),
+    @ActionName(name="logging",         method="execute"),
+    @ActionName(name="downloadLogFile", method="download")
+})
 @Results({
-      @Result(name="download", location="fileToDownLoad", type="stream",
+    @Result(name="ajaxLoggingLogFileTable", location="/WEB-INF/jsp/admin/loggingLogFileTable.jsp"),
+    @Result(name="ajaxLoggerTable",         location="/WEB-INF/jsp/admin/loggingLoggerTable.jsp"),
+    @Result(name="success",                 location="/WEB-INF/jsp/admin/logging.jsp"),
+    @Result(name="download",                location="fileToDownLoad", type="stream",
               params={"contentType","text/plain",
                       "inputName","fileToDownLoad",
                       "contentDisposition","attachment; filename=logfile.txt",
@@ -40,17 +45,25 @@ public class LoggingAction extends BaseAction {
 	private String log;
     private Integer level;
     private boolean showAll = false;
-
+    
     private List<LogFileInfo> logFileInfos = CollectionUtils.getArrayList();
     private List<ch.qos.logback.classic.Logger> configuredLoggers = CollectionUtils.getArrayList();
 
     private String fileName;
-    private InputStream fileToDownLoad;
+    private transient InputStream fileToDownLoad;
     
     /**
      *
      */
-    @Override
+    public String executeAjaxLoggingLogFileTable() {
+        this.logFileInfos = LoggingUtil.getLogFileInfos();
+        return "ajaxLoggingLogFileTable";
+    }
+    public String executeAjaxLoggerTable() {
+    	this.configuredLoggers = LoggingUtil.findNamesOfConfiguredAppenders(this.showAll);
+        return "ajaxLoggerTable";
+    }
+        @Override
     public String execute() {
 
         this.configuredLoggers = LoggingUtil.findNamesOfConfiguredAppenders(this.showAll);
@@ -58,7 +71,6 @@ public class LoggingAction extends BaseAction {
 
         return SUCCESS;
     }
-
     /**
      * Retrieve the requested log file.
      * 
