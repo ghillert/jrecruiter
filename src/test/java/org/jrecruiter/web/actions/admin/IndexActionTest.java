@@ -22,7 +22,7 @@ import junit.framework.TestCase;
  * Test the Struts 2 Admin Index Action
  *
  * @author Gunnar Hillert
- * @version $Id: EnumConverterTest.java 162 2008-02-26 04:55:29Z ghillert $
+ * @version $Id$
  */
 public class IndexActionTest extends TestCase {
 

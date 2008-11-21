@@ -2,28 +2,40 @@
 
 <h2>Logging Settings</h2>
 
+  <s:url id="showLoggersUrl"  action="logging-ajax-logger-table"/>
+  <s:url id="showLogFilesUrl" action="logging-ajax-log-file-table"/>
+
+  <script type="text/javascript">
+
+  function onInvokeAction(id) {
+
+      setExportToLimit(id, '');
+
+      var parameterString = createParameterStringForLimit(id);
+
+      var url;
+
+      if (id == 'loggingLoggerTable') {
+    	   url = '<s:property value="%{#showLoggersUrl}"/>';
+      } else {
+    	  url = '<s:property value="%{#showLogFilesUrl}"/>';
+      }
+      alert(url);
+      jQuery.get(url + '?ajax=true&tableId=id' + parameterString, function(data) {
+          jQuery("#" + id + 'Div').html(data);
+      });
+  }
+  </script>
+
 <form>
 
 <h3>Log Files</h3>
 
-<jmesa:tableFacade id="logFileInfo" items="${logFileInfos}" var="logFileInfo">
-	<jmesa:htmlTable>
-		<jmesa:htmlRow>
-			<jmesa:htmlColumn title="File Name" property="fileName" />
-			<jmesa:htmlColumn title="File Size"                      >
-				<s:property value="%{#attr.logFileInfo.fileSize/1024}" /> Kb
-		    </jmesa:htmlColumn>
-			<jmesa:htmlColumn title="Last Updated" property="fileLastChanged" />
-			<jmesa:htmlColumn title="1" property="fileSize">
-				<s:url id="downLoadUrl" action="downloadLogFile">
-					<s:param name="fileName" value="%{#attr.logFileInfo.fileName}" />
-				</s:url>
-				<a href="<s:property value="%{downLoadUrl}"/>"><img
-					src="${ctx}/images/icons/crystal/viewmag.png" /></a>
-			</jmesa:htmlColumn>
-		</jmesa:htmlRow>
-	</jmesa:htmlTable>
-</jmesa:tableFacade> <s:url id="showAllLoggersUrl" includeParams="none">
+<div id="loggingLogFileTableDiv">
+    <jsp:include page="loggingLogFileTable.jsp"/>
+</div>
+
+<s:url id="showAllLoggersUrl" includeParams="none">
 	<s:param name="showAll" value="true" />
 </s:url> <s:url id="showConfiguredLoggersUrl" includeParams="none">
 </s:url> <s:if test="showAll">
@@ -32,24 +44,11 @@
 </s:if> <s:else>
 	<h3>Configured Loggers | <a href="${showAllLoggersUrl}">All
 	Loggers</a></h3>
-</s:else> <jmesa:tableFacade id="logger" items="${configuredLoggers}" var="bean">
-	<jmesa:htmlTable>
-		<jmesa:htmlRow>
-			<jmesa:htmlColumn title="Level" property="level" />
-			<jmesa:htmlColumn title="Logger" property="name" />
-			<jmesa:htmlColumn title="Set New Log Level">
-				<c:forTokens var="level" delims=","
-					items="DEBUG,INFO,WARN,ERROR,OFF">
-					<s:url id="loggingUrl" includeParams="none">
-						<s:param name="level" value="%{#attr.level}" />
-						<s:param name="log" value="%{#logger.name}" />
-					</s:url>
-					<a href="${loggingUrl}">${level}</a>
-				</c:forTokens>
-			</jmesa:htmlColumn>
-		</jmesa:htmlRow>
-	</jmesa:htmlTable>
-</jmesa:tableFacade>
+</s:else> 
+
+<div id="loggingLoggerTableDiv">
+    <jsp:include page="loggingLoggerTable.jsp"/>
+</div>
 
 	<fieldset><legend>Add a new Logger</legend>
 	
