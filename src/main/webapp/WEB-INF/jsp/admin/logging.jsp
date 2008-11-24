@@ -2,17 +2,17 @@
 
 <h2>Logging Settings</h2>
 
-  <s:url id="showLoggersUrl"  action="logging-ajax-logger-table"/>
-  <s:url id="showLogFilesUrl" action="logging-ajax-log-file-table"/>
+  <s:url id="showLoggersUrl"  action="logging-ajax-logger-table"   includeParams="none"/>
+  <s:url id="showLogFilesUrl" action="logging-ajax-log-file-table" includeParams="none"/>
 
   <script type="text/javascript">
 
   function onInvokeAction(id) {
 
-      setExportToLimit(id, '');
+	  jQuery.jmesa.setExportToLimit(id, '');
 
-      var parameterString = createParameterStringForLimit(id);
-
+      var parameterString = jQuery.jmesa.createParameterStringForLimit(id);
+      var showAll = '<s:property value="%{showAll}"/>';
       var url;
 
       if (id == 'loggingLoggerTable') {
@@ -20,14 +20,14 @@
       } else {
     	  url = '<s:property value="%{#showLogFilesUrl}"/>';
       }
-      alert(url);
-      jQuery.get(url + '?ajax=true&tableId=id' + parameterString, function(data) {
+
+      jQuery.get(url + '?showAll=' + showAll + '&' + parameterString, function(data) {
           jQuery("#" + id + 'Div').html(data);
       });
   }
   </script>
 
-<form>
+<s:form>
 
 <h3>Log Files</h3>
 
@@ -49,23 +49,21 @@
 <div id="loggingLoggerTableDiv">
     <jsp:include page="loggingLoggerTable.jsp"/>
 </div>
-
-	<fieldset><legend>Add a new Logger</legend>
-	
-	        <div class="required">
-	          <label for="username">Logger Name*</label>
-	          <s:textfield id="loggerName" name="log" required="true" tabindex="1"/>
+            <div class="submit" style="margin-right: auto; margin-left: 0; margin-top: 0.5em;">
+              <s:submit value="Update Log Levels" method="updateLagLevels"/>
+            </div>
+            
+	<fieldset style="margin: 1em 0 0 0;"><legend>Add a new Logger</legend>
+	        <div class="optional">
+	          <label for="username">Logger Name</label>
+	          <s:textfield id="loggerName" name="newLogger.loggerName" required="true" tabindex="1" size="40"/>
 	        </div>
-	        <div class="required">
-	          <label for="username">Log Level*</label>
-	          <select name="level">
-	            <c:forTokens var="level" delims="," items="DEBUG,INFO,WARN,ERROR,OFF">
-	                <option>${level}</option>
-	            </c:forTokens>
-	          </select>
+	        <div class="optional">
+	          <label for="username">Log Level</label>
+              <s:select list="logLevels" listValue="logLevelName" value="%{#attr.bean.logLevel}" name="newLogger.newLogLevel"/>
 	        </div>
 	        <div class="submit">
-	          <s:submit value="Add New Logger"/>
+	          <s:submit value="Add New Logger" method="addNewLogger"/>
 	        </div>
 	</fieldset>
-</form>
+</s:form>
