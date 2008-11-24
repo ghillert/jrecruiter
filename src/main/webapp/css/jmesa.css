@@ -71,7 +71,7 @@
 
 .jmesa .filter #dynFilterDiv {
     position: absolute;
-    top: -2px;
+    top: -3px;
     left: -2px;
     padding: 0;
     margin: 0;
@@ -83,7 +83,7 @@
 .jmesa .filter #dynFilterInput {
     font-family: verdana, arial, helvetica, sans-serif;
     font-size: 12px;
-    padding: 0;
+    padding: 0px 0px 0px 2px;
     margin: 0;
     border-style: none;
     background-color: #e1ebf4;
@@ -111,7 +111,7 @@
 
 .jmesa .header td {
     white-space: nowrap;
-    background-color: #729fcf;
+    background-color: #00508a;
     color: white;
     font-size: 11px;
     font-weight: bold;
@@ -217,15 +217,15 @@
     padding: 0;
     margin: 0;
     height: 17px;
-    border: 1px solid #c0c0c0;
+    border-style: none;
     background-color: #ededed;
 }
 
 .jmesa #wsColumnInput {
     font-family: verdana, arial, helvetica, sans-serif;
     font-size: 12px;
-    padding: 0;
+    padding: 0px 0px 0px 2px;
     margin: 0;
     border-style: none;
-    background-color: #ededed;
+    background-color: #e1ebf4;
 }
