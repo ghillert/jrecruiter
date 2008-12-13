@@ -8,7 +8,7 @@
 <s:form action="show-statistics">
     <s:hidden name="backTo"/>
     <div id="jobs">
-        <jsp:include page="jobsTable.jsp"></jsp:include>
+        <jsp:include page="showStatisticsTable.jsp"></jsp:include>
     </div>
 
     <s:url id="chartJobsHitsAllUrl" namespace="/chart" action="viewJobChart">
@@ -24,8 +24,9 @@
     <div class="center">
         <img src="${chartJobsHitsUniqueUrl}" alt="Job statistics graph - Unique Hits"/>
     </div>
-
-    <s:submit value="%{getText('jobposting.button.back')}" name="back"/>
+    <div class="submit">
+        <s:submit value="%{getText('jobposting.button.back')}" name="back"/>
+    </div>
   </s:form>
 
 

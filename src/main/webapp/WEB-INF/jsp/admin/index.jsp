@@ -1,7 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <title>jRecruiter - Administrative Area</title>
-
 <h2>Administrative Area</h2>
 <p class="info">
     <s:text name="admin.main.welcome"/>
