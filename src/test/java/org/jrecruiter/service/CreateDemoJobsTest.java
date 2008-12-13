@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.service;
 
+import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,7 +32,8 @@ public class CreateDemoJobsTest extends BaseTest {
 
         final int numberOfJobs = 30;
 
-        demoService.createDemoJobs(numberOfJobs);
+        User user = demoService.createDemoUser();
+        demoService.createDemoJobs(user, numberOfJobs);
 
     }
 
