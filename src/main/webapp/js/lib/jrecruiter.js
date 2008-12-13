@@ -89,4 +89,49 @@ function addAddressToMapCallBack(response) {
   }
 }
 
+var confirmHelper = { open: function (dialog) {
 
+    dialog.overlay.fadeIn(200, function () {
+    dialog.container.fadeIn(200, function () {
+    dialog.data.fadeIn(200, function () {
+
+            });
+        });
+    });
+
+ },
+ close: function (dialog) {
+
+    dialog.data.fadeOut(200, function () {
+    dialog.container.fadeOut(200, function () {
+    dialog.overlay.fadeOut(200, function () {
+        $.modal.close();
+            });
+        });
+    });
+
+ }
+};
+
+function confirm(message, callback) {
+    $('#confirm').modal({
+        close:false,
+        overlayId:'confirmModalOverlay',
+        containerId:'confirmModalContainer',
+        onShow: function (dialog) {
+            dialog.data.find('.message').append(message);
+
+            // if the user clicks "yes"
+            dialog.data.find('.yes').click(function () {
+                // call the callback
+                if ($.isFunction(callback)) {
+                    callback.apply();
+                }
+                // close the dialog
+                $.modal.close();
+            });
+        },
+        onOpen:  confirmHelper.open,
+        onClose: confirmHelper.close
+    });
+}
