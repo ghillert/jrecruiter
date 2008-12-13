@@ -4,7 +4,7 @@
 
 jRecruiter - A job posting service
 
-  This project provides a light-weight Java EE based job posting solution. jREcruiter uses
+  This project provides a light-weight Java EE based job posting solution. jRecruiter uses
   the following frameworks and libraries:
 
   * Struts 2
@@ -17,13 +17,13 @@ jRecruiter - A job posting service
 
   * Acegi Security
 
-  * Displaytag
+  * jMesa
 
-  * AjaxTags
+  * jQuery
 
   * JFreeChart
 
-  * Velocity
+  * Freemarker
 
   * DWR
 
