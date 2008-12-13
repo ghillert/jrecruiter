@@ -5,7 +5,7 @@
       <author email="gunnar at hillert dot com">Gunnar Hillert</author>
    </properties>
    <body>
-      <release version="2.0" date="TBD" description="New Major Feature Release">
+      <release version="2.0" date="January 2009" description="New Major Feature Release">
            <action dev="Gunnar Hillert" type="add">
                (Almost) No more Struts XML-configuration files. Uses the
                smarturls Struts 2 plugin for annotation based
