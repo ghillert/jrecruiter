@@ -27,6 +27,7 @@ import org.jrecruiter.common.Constants;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.dao.ConfigurationDao;
+import org.jrecruiter.dao.JobCountPerDayDao;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.dao.StatisticDao;
@@ -38,6 +39,7 @@ import org.jrecruiter.model.Role;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.service.impl.JobServiceImpl;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -54,12 +56,25 @@ public class JobServiceUnitTest extends TestCase {
 
         JobServiceImpl jobService = new JobServiceImpl();
 
-        JobDao jobDao = EasyMock.createMock(JobDao.class);
-
+        final JobDao jobDao = EasyMock.createMock(JobDao.class);
+        final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
+        
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+        ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
+        
         jobDao.remove(1L);
-        EasyMock.replay(jobDao);
 
+        JobCountPerDay jobCountPerDay = new JobCountPerDay();
+        
+        EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
+        
+        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
+        
+        EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
+
+        EasyMock.replay(jobDao);
+        EasyMock.replay(jobCountPerDayDao);
+        
         final Job job = new Job();
         job.setId(1L);
 
@@ -330,32 +345,46 @@ public class JobServiceUnitTest extends TestCase {
         Job job = this.getJob(1L);
 
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
+        final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
+        
+        
         EasyMock.expect(jobDao.save(job)).andReturn(job);
+        
+        JobCountPerDay jobCountPerDay = new JobCountPerDay();
+        
+        EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
+        
+        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
+        
+        EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
+        
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+        ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
 
         EasyMock.replay(jobDao);
+        EasyMock.replay(jobCountPerDayDao);
 
         jobService.addJob(job);
 
     }
 
-    public void testGetJobForId() throws Exception {
-
-        final JobServiceImpl jobService = new JobServiceImpl();
-
-        Job job = this.getJob(1L);
-
-        final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
-        EasyMock.expect(jobDao.save(job)).andReturn(job);
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-
-
-
-        EasyMock.replay(jobDao);
-
-        jobService.addJob(job);
-
-    }
+//    public void testGetJobForId() throws Exception {
+//
+//        final JobServiceImpl jobService = new JobServiceImpl();
+//
+//        Job job = this.getJob(1L);
+//
+//        final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
+//        EasyMock.expect(jobDao.save(job)).andReturn(job);
+//        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+//
+//
+//
+//        EasyMock.replay(jobDao);
+//
+//        jobService.addJob(job);
+//
+//    }
 
 
     public void testUpdateJobTest() throws Exception {
@@ -364,10 +393,23 @@ public class JobServiceUnitTest extends TestCase {
         final Job job = this.getJob(1L);
 
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
+        final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
+        
         EasyMock.expect(jobDao.save(job)).andReturn(job);
+        
+        JobCountPerDay jobCountPerDay = new JobCountPerDay();
+        
+        EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
+        
+        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
+        
+        EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
+        
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+        ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
 
         EasyMock.replay(jobDao);
+        EasyMock.replay(jobCountPerDayDao);
 
         jobService.updateJob(job);
 
