@@ -5,6 +5,8 @@
     <excludes>
         <pattern>/show-jobs-ajax.html*</pattern>
         <pattern>/admin/logging-ajax-log-file-table*</pattern>
+        <pattern>/admin/show-jobs-ajax*</pattern>
+        <pattern>/admin/show-users-ajax*</pattern>
         <pattern>/admin/logging-ajax-logger-table*</pattern>
         <pattern>/contact.html*</pattern>
     </excludes>
