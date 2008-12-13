@@ -61,7 +61,7 @@
             <a href="${adminUrl}">Admin</a></li>
             <li>
             <s:url id="contactUrl" action="contact" namespace="/"/>
-            <a href="#" id="contact">Contact</a></li>
+            <a href="#" id="contact">About...</a></li>
             <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job postings as RSS feed.">&nbsp;<span>RSS Feed</span></a></li>
             <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
                               <c:if test="${pageContext.request.secure}">
@@ -70,7 +70,11 @@
             </ul>
 
       </div>
-      <div class="content"><%@ include
+      <div class="content"><security:authorize ifAnyGranted="MANAGER, ADMIN">
+        <s:url action="logout" id="logoutUrl" namespace="/admin"/>
+        <div style="text-align: right; margin-top: -0.5em;">You are logged in as 
+        <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> | <a href="${logoutUrl}" ><s:text name="admin.main.label.logout"/></a></div>
+      </security:authorize><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
       </div>
       <div class="footer"><a class="footerLogo"
@@ -79,9 +83,9 @@
       </div>
     </div>
 
-       <div id="baseModal"style="display:none">
+       <div id="baseModal" style="display:none">
 
-        <h1 style="padding-left: 1em;">Test</h1>
+        <h1 style="padding-left: 1em;">About...</h1>
         <div class="contents" style="background-color: white; margin: 1em;">
                 Loading...
         </div>
