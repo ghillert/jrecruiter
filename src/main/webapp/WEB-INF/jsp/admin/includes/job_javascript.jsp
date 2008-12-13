@@ -30,14 +30,21 @@
             document.getElementById('regionOtherDiv').style.display = 'none';
         }
       });
-jQuery('#convertAddressButton').bind('click', function(event) { getCoordinatesFromAddress(); });
 
+
+   jQuery('#convertAddressButton').bind('click', function(event) { 
+
+	  getCoordinatesFromAddress(); });
       usesMapChange();
-      document.getElementById('jobTitle').focus();
-
+      
     });
 
+jQuery('#showCoordinatesButton').bind('click', function(event) { 
+    alert(jQuery('#longitude').val()); 
+    showJob('map', jQuery('#longitude').val(), jQuery('#latitude').val(), jQuery('#zoomLevel').val());
 
+  });
+    
 
 
 

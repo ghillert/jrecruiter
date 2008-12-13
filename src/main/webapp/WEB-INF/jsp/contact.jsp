@@ -1,8 +1,9 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
+<img src="${ctx}/images/developers/gunnar_hillert.png" alt="Gunnar Hillert" title="Gunnar Hillert" style="float: right; margin-left: 1em;"/>
 <p>
-    <strong>jRecruiter</strong> is a show-case application for a variety of interesting Java related technologies. It is actively developed
-    by Gunnar Hillert (gunnar at hillert dot com). Version 2.0 is based in parts on earlier work done by
+    <strong><span style="color: #E07125">j</span>Recruiter</strong> is a show-case application for a variety of interesting Java related technologies. It is actively developed
+    by Gunnar Hillert (gunnar at hillert dot com).</p><p>Version 2.0 is based in parts on earlier work done by
     Jerzy Puchala and Dorota Puchala. For more information please visit: <a href="http://www.jrecruiter.org/">http://www.jrecruiter.org/</a>
 </p>
 <fieldset>
