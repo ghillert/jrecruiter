@@ -2,7 +2,6 @@ package org.jrecruiter.web.actions.util;
 
 import java.io.File;
 import java.util.Date;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.FileAppender;
 
 /**
+ * Contains utility methods to interact with the logback during runtime.
  * 
  * @author Gunnar Hillert
  * @version $Id$
@@ -24,6 +24,14 @@ import ch.qos.logback.core.FileAppender;
  */
 public class LoggingUtil {
 
+	/**
+	 * re-defines the logback logging levels as a Java enumeration. This is quite
+	 * helpful if you need to render the various log-levels as select-box. I wish
+	 * logback @see {@link ch.qos.logback.classic.Level} would not use static variables
+	 * but use enums instead. 
+	 * 
+	 * @author Gunnar Hillert
+	 */
 	public enum LogLevels {
 
 		OFF(Integer.MAX_VALUE, "Off"),
@@ -50,7 +58,7 @@ public class LoggingUtil {
 			return this.logLevelName;
 		}
 
-		public static LogLevels getLogLevelFromId(int logLevelAsInt) {
+		public static LogLevels getLogLevelFromId(final int logLevelAsInt) {
 
 			for (LogLevels logLevel : LogLevels.values()) {
 
@@ -66,30 +74,33 @@ public class LoggingUtil {
 	}
 
 	/**
-	 *
-	 * @return
+	 * Retrieve all configured logback loggers. 
+	 * 
+	 * @param showAll If set return ALL loggers, not only the configured ones.
+	 * @return List of Loggers
 	 */
-	public static List<ch.qos.logback.classic.Logger> findNamesOfConfiguredAppenders(boolean showAll) {
+	public static List<ch.qos.logback.classic.Logger> getLoggers(final boolean showAll) {
 
 		final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-		final List<ch.qos.logback.classic.Logger> configuredLoggers = CollectionUtils.getArrayList();
+		final List<ch.qos.logback.classic.Logger> loggers = CollectionUtils.getArrayList();
 
 		for (ch.qos.logback.classic.Logger log : lc.getLoggerList()) {
 			if(showAll == false) {
 				if(log.getLevel() != null || LoggingUtil.hasAppenders(log)) {
-					configuredLoggers.add(log);
+					loggers.add(log);
 				}
 			} else {
-				configuredLoggers.add(log);
+				loggers.add(log);
 			}
 		}
 
-		return configuredLoggers;
+		return loggers;
 	}
 
 	/**
-	 *
-	 * @return
+	 * Get a single logger. 
+	 * 
+	 * @return Logger
 	 */
 	public static ch.qos.logback.classic.Logger getLogger(final String loggerName) {
 
@@ -99,12 +110,24 @@ public class LoggingUtil {
 		
 	}
 	
+	/** 
+	 * Test whether the provided logger has appenders. 
+	 * 
+	 * @param logger The logger to test
+	 * @return true if the logger has appenders.
+	 */
 	public static boolean hasAppenders(ch.qos.logback.classic.Logger logger) {
 		Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
 		return it.hasNext();
 	}
 
+	/**
+	 * Get the logfile information for the roor logger.
+	 * 
+	 * @return List of LogFileInfo obejcts
+	 */
 	public static List<LogFileInfo> getLogFileInfos() {
+		
 		final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
 		final List<LogFileInfo> logFileInfos = CollectionUtils.getArrayList();
@@ -135,6 +158,12 @@ public class LoggingUtil {
 		return logFileInfos;
 	}
 
+	/**
+	 * Get the log file.
+	 * 
+	 * @param logFileName The name of the log file 
+	 * @return The actual file
+	 */
 	public static File getLogFile(final String logFileName) {
 
 		if (logFileName == null) {

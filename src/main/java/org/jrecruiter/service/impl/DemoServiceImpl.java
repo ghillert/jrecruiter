@@ -32,6 +32,7 @@ import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
 
@@ -40,26 +41,17 @@ import de.svenjacobs.loremipsum.LoremIpsum;
  * @version $Id$
  */
 @Service("demoService")
+@Transactional
 public class DemoServiceImpl implements DemoService {
 
     private @Autowired JobService  jobService;
     private @Autowired UserService userService;
 
-    public void createDemoJobs(Integer numberOfJobsToCreate) {
+    public void createDemoJobs(final User user, final Integer numberOfJobsToCreate) {
         final LoremIpsum loremIpsum = new LoremIpsum();
 
-        final User user;
-
-        try {
-            user = userService.addUser(this.getUser());
-        } catch (DuplicateUserException e) {
-            return;
-        }
-
-
         Random random = new Random();
-
-
+        
         for (int i = 0; i <= numberOfJobsToCreate; i++) {
 
             final Job job = new Job();
@@ -101,7 +93,31 @@ public class DemoServiceImpl implements DemoService {
         }
     }
 
-    private User getUser() {
+   
+    @Override
+	public User createDemoUser() {
+		User demoUser = getUser();
+		
+		User userFromDb = userService.getUser(demoUser.getUsername());
+		
+		if (userFromDb != null) {
+			return userFromDb;
+		} else {
+			
+			try {
+				demoUser = userService.addUser(demoUser);
+	        } catch (DuplicateUserException e) {
+	            throw new IllegalStateException(e);
+	        }
+	        
+		}
+		
+		return demoUser;
+	}
+
+
+
+	private User getUser() {
 
         User user = new User();
         user.setUsername("demo44");

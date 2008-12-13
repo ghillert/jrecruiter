@@ -17,6 +17,7 @@ package org.jrecruiter.web.actions.admin;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.ItemLabelAnchor;
@@ -121,15 +123,15 @@ public class ShowStatisticsAction extends BaseAction {
                 if (job.getStatistic() != null) {
 
                     if (mode != null && mode.equals("unique")) {
-                        if (job.getStatistic().getUniqueVisits().longValue() > 0) {
+                        if (job.getStatistic().getUniqueVisits().longValue() >= 0) {
                             dataset.addValue(job.getStatistic()
-                                    .getUniqueVisits(), job.getJobTitle(), "");
+                                    .getUniqueVisits(), job.getJobTitle() + "_" + job.getId(), "");
                         }
 
                     } else {
-                        if (job.getStatistic().getCounter().longValue() > 0) {
+                        if (job.getStatistic().getCounter().longValue() >= 0) {
                             dataset.addValue(job.getStatistic().getCounter(),
-                                    job.getJobTitle(), "");
+                                    job.getJobTitle() + "_" + job.getId(), "");
                         }
                     }
 
@@ -185,19 +187,29 @@ public class ShowStatisticsAction extends BaseAction {
     public final String chartJobCount() throws Exception {
 
             final Calendar calendarToday = Calendar.getInstance();
+            
+            final Calendar calendarTodayDate = Calendar.getInstance();
+            calendarTodayDate.clear();
+            
+            calendarTodayDate.set(calendarToday.get(Calendar.YEAR), calendarToday.get(Calendar.MONTH), calendarToday.get(Calendar.DAY_OF_MONTH));
             final Calendar calendar30    = Calendar.getInstance();
-            calendar30.add(Calendar.DAY_OF_MONTH, -300);
+            calendar30.add(Calendar.DAY_OF_MONTH, -355);
 
-            long jobCount = jobService.jobCount(calendar30.getTime());
             List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
 
             TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );
 
             for(JobCountPerDay jobCountPerDay : jobCountPerDayList )
             {
-              jobCount = jobCount + jobCountPerDay.getNumberOfJobsPosted();
-              hitsPerDayData.add( new Day(jobCountPerDay.getJobDate()),  jobCount);
+              hitsPerDayData.add( new Day(jobCountPerDay.getJobDate()),  jobCountPerDay.getTotalNumberOfJobs());
             }
+            
+            if (!jobCountPerDayList.isEmpty() && jobCountPerDayList.size() > 1) {
+	            if (!calendarTodayDate.getTime().equals(jobCountPerDayList.get(jobCountPerDayList.size()-1).getJobDate())) {
+	            	hitsPerDayData.add( new Day(calendarTodayDate.getTime()),  jobCountPerDayList.get(jobCountPerDayList.size()-1).getTotalNumberOfJobs());
+	            }
+            }
+            
             XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
 
             this.chart = ChartFactory.createTimeSeriesChart("",
@@ -224,8 +236,10 @@ public class ShowStatisticsAction extends BaseAction {
             }
 
             DateAxis dateaxis = (DateAxis)xyplot.getDomainAxis();
-            dateaxis.setDateFormatOverride(new SimpleDateFormat("MMM-yyyy"));
-
+  
+            dateaxis.setAutoRange(true);
+            dateaxis.setAutoTickUnitSelection(true);
+            
             NumberAxis valueAxis = (NumberAxis)xyplot.getRangeAxis();
             valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 

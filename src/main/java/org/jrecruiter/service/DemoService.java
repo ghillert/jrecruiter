@@ -15,6 +15,8 @@
 */
 package org.jrecruiter.service;
 
+import org.jrecruiter.model.User;
+
 
 /**
  * Special services allowing the administrator to populate the sytem with
@@ -29,8 +31,15 @@ public interface DemoService {
     /**
      * Adds specifiable number of demo jobs to the system.
      *
+     * @param user user for which the jobs are being generated.
      * @param numberOfJobsToCreate How many job shall be created.
      */
-    void createDemoJobs(Integer numberOfJobsToCreate);
+    void createDemoJobs(User user, Integer numberOfJobsToCreate);
 
+    /**
+     * Creates a single default user. If the user does not exist, yet, a new 
+     * user is created, otherwise the default user is returned.
+     *
+     */
+    User createDemoUser();
 }

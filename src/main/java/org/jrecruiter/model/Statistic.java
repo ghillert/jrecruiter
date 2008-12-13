@@ -99,7 +99,7 @@ public class Statistic implements Serializable {
         this.counter = counter;
     }
 
-    @Column(name="last_access", unique=false, nullable=false, insertable=true, updatable=true, length=8)
+    @Column(name="last_access", unique=false, nullable=true, insertable=true, updatable=true, length=8)
     public Date getLastAccess() {
         return this.lastAccess;
     }

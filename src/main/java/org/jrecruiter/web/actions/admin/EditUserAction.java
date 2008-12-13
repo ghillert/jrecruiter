@@ -30,7 +30,7 @@ import org.texturemedia.smarturls.Result;
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
-@Result(name="success", location="index", type="redirectAction")
+@Result(name="success", location="show-users", type="redirectAction")
 public class EditUserAction extends BaseAction {
 
     private User user;
@@ -63,7 +63,7 @@ public class EditUserAction extends BaseAction {
         //already exists in the system.
         final User duplicateUserFromDb = userService.getUser(user.getUsername());
 
-        if (userFromDb != null && !userFromDb.getId().equals(duplicateUserFromDb.getId())) {
+        if (duplicateUserFromDb != null && !userFromDb.getId().equals(duplicateUserFromDb.getId())) {
             LOGGER.warn("Duplicate user name ("+ user.getUsername() +") for id "
                     + userFromDb.getId());
             addFieldError("username", getText("error.duplicateUsername"));

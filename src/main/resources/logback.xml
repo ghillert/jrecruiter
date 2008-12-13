@@ -31,6 +31,9 @@
     </layout>
   </appender>
   <logger name="org.springframework.security">
+    <level value="INFO"/>
+  </logger>
+    <logger name="org.springframework.web">
     <level value="DEBUG"/>
   </logger>
   <logger name="org.apache.struts">

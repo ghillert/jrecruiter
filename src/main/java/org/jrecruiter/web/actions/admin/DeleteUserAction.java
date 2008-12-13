@@ -16,8 +16,10 @@
 package org.jrecruiter.web.actions.admin;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
@@ -31,13 +33,13 @@ import org.texturemedia.smarturls.Result;
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
-@Result(name="success", location="index", type="redirectAction")
+@Result(name="success", location="show-users", type="redirectAction")
 public class DeleteUserAction extends BaseAction {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -2825056640805045453L;
 
-    private Set<Long>userIds = new HashSet<Long>(0);
+    private List<Long>userIds;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DeleteUserAction.class);
 
@@ -50,21 +52,28 @@ public class DeleteUserAction extends BaseAction {
 
         if (this.userIds != null && !this.userIds.isEmpty()) {
 
+        	int validUserIds = 0;
+        	
             for (Long userId : userIds) {
-                User user = userService.getUser(userId);
-
-                if (user.getId() == -1) {
-                    LOGGER.warn("User tried to delete admin user.");
-                    super.addActionMessage("Cannot delete admin user.");
-                } else {
-                    userService.deleteUser(user);
-                }
+            	
+            	if (userId != null) {
+            		
+	                User user = userService.getUser(userId);
+	
+	                if (user.getId() == -1) {
+	                    LOGGER.warn("User tried to delete admin user.");
+	                    super.addActionMessage("Cannot delete admin user.");
+	                } else {
+	                	validUserIds++;
+	                    userService.deleteUser(user);
+	                }
+            	}
             }
 
-            if (this.userIds.size() == 1) {
-                super.addActionMessage(this.userIds.size() + " user was deleted.");
+            if (validUserIds == 1) {
+                super.addActionMessage(validUserIds + " user was deleted.");
             } else {
-                super.addActionMessage(this.userIds.size() + " users were deleted.");
+                super.addActionMessage(validUserIds + " users were deleted.");
             }
 
         } else {
@@ -74,11 +83,11 @@ public class DeleteUserAction extends BaseAction {
         return SUCCESS;
     }
 
-    public Set<Long> getUserIds() {
+    public List<Long> getUserIds() {
         return userIds;
     }
 
-    public void setUserIds(Set<Long> userIds) {
+    public void setUserIds(List<Long> userIds) {
         this.userIds = userIds;
     }
 

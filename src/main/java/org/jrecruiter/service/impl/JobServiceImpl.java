@@ -27,6 +27,7 @@ import org.jrecruiter.common.Constants.Roles;
 import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.IndustryDao;
+import org.jrecruiter.dao.JobCountPerDayDao;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.dao.StatisticDao;
@@ -46,12 +47,15 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  * @author Gunnar Hillert
  * @version $Id$
  */
+@Transactional
 @Service("jobService")
 public class JobServiceImpl implements JobService {
 
@@ -70,6 +74,9 @@ public class JobServiceImpl implements JobService {
     /** Job Dao. */
     private @Autowired JobDao jobDao;
 
+    /** Job Count Per Day Dao. */
+    private @Autowired JobCountPerDayDao jobCountPerDayDao;
+    
     /** User Dao. */
     private @Autowired UserDao userDao;
 
@@ -174,14 +181,54 @@ public class JobServiceImpl implements JobService {
     * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
     */
     public Job addJob(final Job job) {
-        return jobDao.save(job);
+    	
+    	if (job.getStatistic() == null) {
+    		Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
+    		statistic.setJob(job);
+    		job.setStatistic(statistic);
+    	}
+    	
+    	final Job savedJob = jobDao.save(job);
+    		
+    	saveJobStatistics(savedJob);
+    	
+        return savedJob;
     }
-
+    
+    private void saveJobStatistics(Job job) {
+    	
+    	Date currentDate = new Date();
+    	
+    	JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(currentDate);
+    	
+    	if (jobCountPerDay == null) {
+    		jobCountPerDay = new JobCountPerDay();
+    		jobCountPerDay.setJobDate(new Date());
+    		jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(0));
+    		jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(1));
+    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount());
+    		jobCountPerDayDao.save(jobCountPerDay);
+    	} else {
+    		jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() + 1);
+    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() + 1);
+    		jobCountPerDayDao.save(jobCountPerDay);
+    	}
+    }
+    
     /* (non-Javadoc)
     * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
     */
-    public void updateJob(final Job jobs) {
-        jobDao.save(jobs);
+    public void updateJob(final Job job) {
+    	
+    	if (job.getStatistic() == null) {
+    		Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
+    		statistic.setJob(job);
+    		job.setStatistic(statistic);
+    	}
+    	
+        final Job savedJob = jobDao.save(job);
+        
+        saveJobStatistics(savedJob);
     }
 
     /* (non-Javadoc)
@@ -201,6 +248,21 @@ public class JobServiceImpl implements JobService {
      */
     public void deleteJobForId(final Long jobId) {
         jobDao.remove(jobId);
+        
+	  	JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(new Date());
+      
+		if (jobCountPerDay == null) {
+			jobCountPerDay = new JobCountPerDay();
+			jobCountPerDay.setJobDate(new Date());
+			jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(1));
+			jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(0));
+			jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() - 1 );
+			jobCountPerDayDao.save(jobCountPerDay);
+		} else {
+			jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() -1);
+			jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() -1 );
+			jobCountPerDayDao.save(jobCountPerDay);
+		}
     }
 
 
@@ -292,7 +354,7 @@ public class JobServiceImpl implements JobService {
     }
 
     public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
-        return jobDao.getJobCountPerDayAndPeriod(fromDate, toDate);
+        return jobCountPerDayDao.getJobCountPerDayAndPeriod(fromDate, toDate);
     }
 
     public Long jobCount(Date day) {
