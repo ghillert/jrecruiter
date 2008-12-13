@@ -300,23 +300,6 @@ implements JobDao {
 
         /** {@inheritDoc} */
         @SuppressWarnings("unchecked")
-        public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
-
-            Session session = (Session)entityManager.getDelegate();
-            Query query = session.createQuery("select new org.jrecruiter.model.statistics.JobCountPerDay(year(job.registrationDate), month(job.registrationDate), day(job.registrationDate), count(*)) from Job job "
-                    + " where job.registrationDate >= :fromDate and job.registrationDate <= :toDate "
-                    + "group by day(job.registrationDate), year(job.registrationDate), month(job.registrationDate)"
-                    + "order by year(job.registrationDate) asc, month(job.registrationDate) asc, day(job.registrationDate) asc");
-            query.setDate("fromDate", fromDate);
-            query.setDate("toDate", toDate);
-
-            List<JobCountPerDay> jobCountPerDayList = query.list();
-
-            return jobCountPerDayList;
-        }
-
-        /** {@inheritDoc} */
-        @SuppressWarnings("unchecked")
         public void reindexSearch() {
 
             FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);

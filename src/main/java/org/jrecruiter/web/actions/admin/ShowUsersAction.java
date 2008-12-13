@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
 import org.jmesa.limit.Filter;
@@ -31,8 +32,14 @@ import org.jmesa.limit.SortSet;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
+import org.jrecruiter.web.interceptor.RetrieveMessages;
+import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.texturemedia.smarturls.ActionName;
+import org.texturemedia.smarturls.ActionNames;
+import org.texturemedia.smarturls.Result;
+import org.texturemedia.smarturls.Results;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -43,6 +50,18 @@ import com.opensymphony.xwork2.Preparable;
  * @version $Id$
  *
  */
+@ActionNames({
+	@ActionName(name="show-users-ajax",  method="executeAjaxUsersTable"),
+    @ActionName(name="show-users",       method="execute")
+})
+@Results(
+    {
+        @Result(name="success",         location="index", type="redirectAction"),
+        @Result(name="ajaxUsersTable",  location="/WEB-INF/jsp/admin/user-list-table.jsp"),
+        @Result(name="cancel",          location="index", type="redirectAction")
+    }
+    
+)
 public class ShowUsersAction extends BaseAction implements Preparable, ServletRequestAware {
 
     /** serialVersionUID. */
@@ -57,12 +76,28 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
 
     private Limit limit;
     private List<User>users;
-
+    
     /**
      *
      */
+    @RetrieveMessages
     public String execute() {
-
+    	populateTable();
+        return INPUT;
+    }
+    
+    @SkipValidation
+    @Override
+    public String cancel() {
+        return "cancel";
+    }
+    
+    public String executeAjaxUsersTable() {
+    	populateTable();
+        return "ajaxUsersTable";
+    }
+    
+    private void populateTable() {
         final TableFacade tableFacade = TableFacadeFactory.createTableFacade("usersTable", request);
 
         limit                     = tableFacade.getLimit();
@@ -101,11 +136,8 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
                         + ";Page: " + page);
 
         this.users = userService.getUsers(maxRows, page, sortOrders, jobFilters);
-
-        return SUCCESS;
-
     }
-
+    
     public void prepare() throws Exception {
 
     }

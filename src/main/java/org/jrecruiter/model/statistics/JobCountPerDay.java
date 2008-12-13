@@ -3,7 +3,15 @@
  */
 package org.jrecruiter.model.statistics;
 
-import java.util.Calendar;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,39 +23,32 @@ import org.slf4j.LoggerFactory;
  * @author Gunnar Hillert
  * @version $Id$
  */
+@Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames="jobDate"))
 public class JobCountPerDay {
-
-    private java.util.Date jobDate;
-    private Long numberOfJobsPosted;
 
     /** Initialize Logging. */
     private final static Logger LOGGER = LoggerFactory.getLogger(JobCountPerDay.class);
 
-    public JobCountPerDay(Integer year, Integer month, Integer day, Long numberOfJobsPosted) {
-        super();
+    //~~~~~Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+    
+    @Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
+    @Temporal(TemporalType.DATE)
+    private java.util.Date jobDate;
+    
+    @Column(unique=false, nullable=false, insertable=true, updatable=true, precision=0, scale=10)
+    private Long numberOfJobsPosted  = Long.valueOf(0);
+    
+    @Column(unique=false, nullable=false, insertable=true, updatable=true, precision=0, scale=10)
+    private Long numberOfJobsDeleted = Long.valueOf(0);
+    
+    @Column(unique=false, nullable=false, insertable=true, updatable=true, precision=0, scale=10)
+    private Long totalNumberOfJobs   = Long.valueOf(0);
 
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.setLenient(false);
-        cal.set(year, month-1, day);
-
-        this.jobDate = cal.getTime();
-
-        this.numberOfJobsPosted = numberOfJobsPosted;
-
-        LOGGER.info("year=" + year + "; month=" + month + "; day=" + day + "; numberOfJobsPosted=" + numberOfJobsPosted
-            + "--> jobDate=" + this.jobDate + "; numberOfJobsPosted=" + this.numberOfJobsPosted);
-    }
-
-
-    public java.util.Date getJobDate() {
-        return this.jobDate;
-    }
-
-    public Long getNumberOfJobsPosted() {
-        return numberOfJobsPosted;
-    }
-
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -61,6 +62,46 @@ public class JobCountPerDay {
                 this.numberOfJobsPosted);
     }
 
+    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    public java.util.Date getJobDate() {
+        return this.jobDate;
+    }
 
+    public Long getNumberOfJobsPosted() {
+        return numberOfJobsPosted;
+    }
+
+	public Long getNumberOfJobsDeleted() {
+		return numberOfJobsDeleted;
+	}
+
+	public void setNumberOfJobsDeleted(Long numberOfJobsDeleted) {
+		this.numberOfJobsDeleted = numberOfJobsDeleted;
+	}
+
+	public Long getTotalNumberOfJobs() {
+		return totalNumberOfJobs;
+	}
+
+	public void setTotalNumberOfJobs(Long totalNumberOfJobs) {
+		this.totalNumberOfJobs = totalNumberOfJobs;
+	}
+
+	public void setJobDate(java.util.Date jobDate) {
+		this.jobDate = jobDate;
+	}
+
+	public void setNumberOfJobsPosted(Long numberOfJobsPosted) {
+		this.numberOfJobsPosted = numberOfJobsPosted;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 }

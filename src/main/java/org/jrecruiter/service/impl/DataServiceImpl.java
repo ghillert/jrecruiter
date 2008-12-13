@@ -27,12 +27,14 @@ import java.text.MessageFormat;
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Gunnar Hillert
  * @version $Id$
  */
 @Service("dataService")
+@Transactional
 public class DataServiceImpl implements org.jrecruiter.service.DataService {
 
     public Image getGoogleMapImage(final BigDecimal longitude,

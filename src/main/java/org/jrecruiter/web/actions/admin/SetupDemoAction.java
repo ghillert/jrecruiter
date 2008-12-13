@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.web.actions.admin;
 
+import org.jrecruiter.model.User;
 import org.jrecruiter.service.DemoService;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
@@ -40,7 +41,8 @@ public class SetupDemoAction extends BaseAction {
     @StoreMessages
     public String execute() {
 
-        demoService.createDemoJobs(300);
+    	User user = demoService.createDemoUser();
+        demoService.createDemoJobs(user, 300);
 
         addActionMessage("300 demo jobs have been created.");
         return SUCCESS;

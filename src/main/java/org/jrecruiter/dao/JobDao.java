@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**
  * Interface for any job-related persistence calls.
@@ -87,15 +86,6 @@ public interface JobDao extends GenericDao < Job, Long >{
      * @return
      */
     Long getJobCount(Date day);
-
-    /**
-     *
-     * @param fromDate
-     * @param toDate
-     * @return
-     */
-    List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
-
 
     /**
      * Method for getting users jobs for statistical purposes.

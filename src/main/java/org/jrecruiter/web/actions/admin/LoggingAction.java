@@ -113,7 +113,7 @@ public class LoggingAction extends BaseAction implements Preparable, ModelDriven
 	private void loadLoggers() {
 		this.configuredLoggers.clear();
 		
-    	final List<Logger> loggers = LoggingUtil.findNamesOfConfiguredAppenders(this.showAll);
+    	final List<Logger> loggers = LoggingUtil.getLoggers(this.showAll);
     	
     	for (Logger logger : loggers) {
     		

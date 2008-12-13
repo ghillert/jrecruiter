@@ -45,6 +45,7 @@ import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import de.rrze.idmone.utils.jpwgen.BlankRemover;
@@ -59,6 +60,7 @@ import de.rrze.idmone.utils.jpwgen.PwGenerator;
  * @version $Id$
  */
 @Service("userService")
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**

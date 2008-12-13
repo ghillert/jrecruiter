@@ -27,7 +27,6 @@ public class IndexAction extends BaseAction {
      */
     @RetrieveMessages
     public String execute () {
-    	LOGGER.info("22");
         return SUCCESS;
     }
 
