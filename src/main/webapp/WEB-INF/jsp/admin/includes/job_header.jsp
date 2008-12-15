@@ -13,8 +13,7 @@
                     list="industries" headerKey="" headerValue="Please select an industry."
                     listValue="name" listKey="id"/>
     </div>
-
-    <div class="optional" id="industryOtherDiv" style="display: ${displayIndustryOtherDiv}">
+    <div class="optional" id="industryOtherDiv" style="display: <s:property value="%{job.industry.id == '-16' ? 'block' : 'none'}"/>">
        <label for="industryOther">Other</label>
         <s:textfield name="job.industryOther" id="job.industryOther" size="40" tabindex="4"/>
     </div>

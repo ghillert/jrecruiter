@@ -21,6 +21,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
+import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
@@ -86,6 +87,7 @@ public class AddJobAction extends JobBaseAction {
             stringLengthFields =
                     {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
             )
+    @StoreMessages
     public String save() {
 
         LOGGER.debug("Adding Job...");
