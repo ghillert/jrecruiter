@@ -50,7 +50,7 @@ public class DataServiceImpl implements org.jrecruiter.service.DataService {
          final String urlString       = "http://maps.google.com/staticmap?center={0},{1}&zoom={2}&size={3}x{4}&key={5}&markers={0},{1},{6}{7}";
          MessageFormat mf = new MessageFormat(urlString);
 
-         final Object[] urlParams = {String.valueOf(longitude), String.valueOf(latitude), zoomLevel, width, height, mapKey, color, letter};
+         final Object[] urlParams = {String.valueOf(latitude), String.valueOf(longitude), zoomLevel, width, height, mapKey, color, letter};
 
         if (longitude == null) {
             throw new IllegalArgumentException("Longitude cannot be null.");

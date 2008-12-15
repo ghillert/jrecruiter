@@ -35,7 +35,7 @@ function usesMapChange() {
     }
 }
 
-function showJob(jobDivId, longitude, latitude, zoomLevel) {
+function showJob(jobDivId, latitude, longitude, zoomLevel) {
 
   if (GBrowserIsCompatible()) {
       var point = new GLatLng(parseFloat(latitude), parseFloat(longitude));
@@ -83,9 +83,9 @@ function addAddressToMapCallBack(response) {
     alert("Sorry, we were unable to geocode that address");
   } else {
     var place = response.Placemark[0];
-    document.getElementById('longitude').value=place.Point.coordinates[1];
-    document.getElementById('latitude').value=place.Point.coordinates[0];
-    showJob('map', place.Point.coordinates[0], place.Point.coordinates[1], jQuery('#zoomLevel').val());
+    document.getElementById('longitude').value=place.Point.coordinates[0];
+    document.getElementById('latitude').value=place.Point.coordinates[1];
+    showJob('map', place.Point.coordinates[1], place.Point.coordinates[0], jQuery('#zoomLevel').val());
   }
 }
 

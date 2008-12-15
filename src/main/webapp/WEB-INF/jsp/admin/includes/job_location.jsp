@@ -10,7 +10,7 @@
                         listValue="name" listKey="id"/>
         </div>
       <s:set name="displayRegionOtherDiv" value="%{job.industry.id == -16 ? 'block' : 'none'}"/>
-      <div class="required" id="regionOtherDiv" style="display: ${displayRegionOtherDiv}">
+      <div class="required" id="regionOtherDiv" style="display: <s:property value="%{job.region.id == '-1' ? 'block' : 'none'}"/>">
          <label for="regionOther">&nbsp;</label>
           <s:textfield name="job.regionOther" id="job.regionOther" size="40" tabindex="4"/>
       </div>

@@ -40,8 +40,7 @@
     });
 
 jQuery('#showCoordinatesButton').bind('click', function(event) { 
-    alert(jQuery('#longitude').val()); 
-    showJob('map', jQuery('#longitude').val(), jQuery('#latitude').val(), jQuery('#zoomLevel').val());
+    showJob('map', jQuery('#latitude').val(), jQuery('#longitude').val(), jQuery('#zoomLevel').val());
 
   });
     

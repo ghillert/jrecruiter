@@ -34,7 +34,7 @@
     <level value="INFO"/>
   </logger>
     <logger name="org.springframework.web">
-    <level value="DEBUG"/>
+    <level value="INFO"/>
   </logger>
   <logger name="org.apache.struts">
     <level value="INFO"/>

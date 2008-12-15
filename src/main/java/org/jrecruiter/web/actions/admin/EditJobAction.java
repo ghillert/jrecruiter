@@ -17,10 +17,12 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.web.WebUtil;
+import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.texturemedia.smarturls.Result;
@@ -54,6 +56,7 @@ public class EditJobAction extends JobBaseAction {
     /**
      * Delete the job.
      */
+    @StoreMessages
     public String delete() {
 
          final Job jobFromDB = jobService.getJobForId(this.model.getJob().getId());
@@ -111,6 +114,7 @@ public class EditJobAction extends JobBaseAction {
             stringLengthFields =
                     {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
             )
+    @StoreMessages
     public String save() {
 
         final Job jobFromDB = jobService.getJobForId(model.getJob().getId());
@@ -177,4 +181,19 @@ public class EditJobAction extends JobBaseAction {
 
     }
 
+    public void validateSave() {
+    	
+    	if (Long.valueOf(-16).equals(this.model.getJob().getIndustry().getId())
+    			&& StringUtils.isEmpty(this.model.getJob().getIndustryOther())) {
+    		
+    		super.addFieldError("job.industryOther", "Please enter an industry.");
+    		
+    	}
+    	if (Long.valueOf(-1).equals(this.model.getJob().getRegion().getId())
+    			&& StringUtils.isEmpty(this.model.getJob().getRegionOther())) {
+    		
+    		super.addFieldError("job.regionOther", "Please enter a region.");
+    		
+    	}
+    }
 }
