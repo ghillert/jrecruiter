@@ -54,7 +54,8 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
 
     private List<Job> jobs           = CollectionUtils.getArrayList();
     private Limit limit;
-
+    private boolean ajax = false;
+    
     /* (non-Javadoc)
      * @see com.opensymphony.xwork2.ActionSupport#execute()
      */
@@ -101,6 +102,10 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
 
         this.jobs = jobService.getJobs(maxRows, page, sortOrders, jobFilters);
 
+        if (this.ajax) {
+        	return "ajax";
+        }
+        
         return SUCCESS;
     }
 
@@ -125,5 +130,13 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
     public void setLimit(Limit limit) {
         this.limit = limit;
     }
+
+	public boolean isAjax() {
+		return ajax;
+	}
+
+	public void setAjax(boolean ajax) {
+		this.ajax = ajax;
+	}
 
 }

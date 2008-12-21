@@ -19,10 +19,10 @@ import java.awt.Image;
 import java.math.BigDecimal;
 
 /**
- *
- * @author Jerzy Puchala
+ * Provides methods that call external data services such as Google's.
+ *  
  * @author Gunnar Hillert
- * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
+ * @version $Id$
  */
 public interface DataService {
 
@@ -34,6 +34,6 @@ public interface DataService {
      * @param zoomLevel
      *
      */
-    Image getGoogleMapImage(BigDecimal longitude, BigDecimal latitude, Integer zoomLevel);
+    Image getGoogleMapImage(BigDecimal latitude, BigDecimal longitude, Integer zoomLevel);
 
 }

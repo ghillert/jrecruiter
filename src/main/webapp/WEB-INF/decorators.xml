@@ -3,7 +3,7 @@
         <pattern>/*.html</pattern>
     </decorator>
     <excludes>
-        <pattern>/show-jobs-ajax.html*</pattern>
+        <pattern>/show-jobs-ajax*</pattern>
         <pattern>/admin/logging-ajax-log-file-table*</pattern>
         <pattern>/admin/show-jobs-ajax*</pattern>
         <pattern>/admin/show-users-ajax*</pattern>
