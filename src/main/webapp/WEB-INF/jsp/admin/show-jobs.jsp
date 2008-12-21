@@ -1,5 +1,13 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
+<style>
+
+#modalContainer {
+  height: 150px;
+}
+
+</style>
+
 <h2>Job Administration</h2>
 <p class="info">
     Located below are all jobs you have access to. You can either select a job for
@@ -30,13 +38,14 @@
 </div>
 
 <div id="confirm" style="display:none">
-    <a href="#" title="Close" class="modalCloseX modalClose">x</a>
-    <div class="header"><span>Confirm</span></div>
+    <h1 style="padding-left: 1em;">Confirm</h1>
     <p class="message"></p>
     <div class="buttons">
-        <div class="no modalClose">No</div><div class="yes">Yes</div>
+      <a href="#" class="button close"><span>&nbsp;</span>Yes</a></li>
+      <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a></li>
     </div>
 </div>
+
 
 <script type="text/javascript">
 

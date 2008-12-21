@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
    <jmesa:tableFacade
-        id="tag"
+        id="jobsTable"
         items="${jobs}"
         limit="${limit}"
         var="job"

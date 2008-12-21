@@ -30,7 +30,7 @@
             <s:password  id="password2" name="password2" required="true" maxlength="25" tabindex="2"/>
         </div>
 
-        <div class="required">
+        <div class="required infoBox">
             <ol>
            <li>Make your password 8 characters or more</li>
            <li>Use mixed case letters (upper and lower case)</li>

@@ -3,21 +3,28 @@
 
 <s:url id="tableUrl" includeParams="none"/>
 <s:url id="tableUrlAjax" action="show-jobs-ajax" includeParams="none"/>
+
+<h2>Job Postings</h2>
+<p class="info">Please feel free to browse all active job postings below. All job postings
+that show a "globe icon" provide job location information using Google Maps. Otherwise, click
+on the hour glass to view the job posting's details.
+</p>
+
 <s:form name="jobsForm" action="show-jobs-ajax">
     <s:hidden name="backTo"/>
-    <div id="jobs">
+    <div id="jobsTableDiv">
         <jsp:include page="jobsTable.jsp"></jsp:include>
     </div>
 
   <script type="text/javascript">
 
   function onInvokeAction(id) {
-      setExportToLimit(id, '');
+	  jQuery.jmesa.setExportToLimit(id, '');
 
-      var parameterString = createParameterStringForLimit(id);
+      var parameterString = jQuery.jmesa.createParameterStringForLimit(id);
 
       jQuery.get('<s:property value="%{#tableUrlAjax}"/>?ajax=true&' + parameterString, function(data) {
-          jQuery("#jobs").html(data);
+    	  jQuery("#" + id + 'Div').html(data);
       });
   }
   </script>
@@ -39,7 +46,7 @@
     </tr>
   </table>
 
-  <div class="submit">
+  <div class="submit" style="margin-left: 0;">
       <s:submit value="Back" method="cancel"/>
   </div>
 </s:form>

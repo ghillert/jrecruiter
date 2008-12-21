@@ -1,5 +1,13 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
+<style>
+
+#modalContainer {
+  height: 150px;
+}
+
+</style>
+
 <h2>User Administration</h2>
 <p class="info">
     Located below are all user accounts of the system.  You can either select a user for
@@ -68,11 +76,12 @@ jQuery(document).ready(function () {
       </div>
   </s:form>
 
-  <div id="confirm" style="display:none">
-    <a href="#" title="Close" class="modalCloseX modalClose">x</a>
-    <div class="header"><span>Confirm</span></div>
-    <p class="message"></p>
-    <div class="buttons">
-        <div class="no modalClose">No</div><div class="yes">Yes</div>
-    </div>
+	<div id="confirm" style="display:none">
+	    <h1 style="padding-left: 1em;">Confirm</h1>
+	    <p class="message"></p>
+	    <div class="buttons">
+	      <a href="#" class="button close"><span>&nbsp;</span>Yes</a></li>
+	      <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a></li>
+	    </div>
+	</div>
 </div>

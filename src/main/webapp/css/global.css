@@ -259,6 +259,19 @@ table.default {
         width: 378px;
 }
 
+/* Info boxes */
+
+div.infoBox {
+	background: url(../images/icons/crystal/48px/info.png) no-repeat left center;
+	background-color: #FFFFFF;
+	border: 1px solid #AAAAAA;
+}
+
+div.infoBox ol {
+    margin-left: 4em;
+    margin-right: 1em;
+}
+
 /* Social bookmarks */
     small { font-size:10px; }
     #socialinks { border: 1px solid #ccccef; margin: 1em auto 1em auto; width: 20%;}
@@ -324,7 +337,14 @@ a.close {
 a.close span {
   background-image: url(../images/icons/crystal/button_ok.png);
 }
-
+a.cancel {
+  width: 60px;
+  margin-left: auto;
+  margin-right: auto;
+}
+a.cancel span {
+  background-image: url(../images/icons/crystal/cancel.png);
+}
 
 
 /* Form Buttons */
