@@ -3,13 +3,19 @@
  */
 package org.jrecruiter.web.forms;
 
+import java.io.Serializable;
+
 /**
- * @author hillert
+ * @author Gunnar Hillert
+ * @version $Id$
  *
  */
-public class ConfigurationForm {
+public class ConfigurationForm implements Serializable {
 
-    private String mailingListSubject;
+    /** serialVersionUID. */
+	private static final long serialVersionUID = 7593027618105623364L;
+	
+	private String mailingListSubject;
     private String mailingListTemplate;
     private String mailingListEmail;
     private String mailFrom;

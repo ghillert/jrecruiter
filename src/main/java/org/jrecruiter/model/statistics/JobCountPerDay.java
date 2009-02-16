@@ -3,6 +3,8 @@
  */
 package org.jrecruiter.model.statistics;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +29,7 @@ import org.slf4j.LoggerFactory;
 @Table(uniqueConstraints=@UniqueConstraint(columnNames="jobDate"))
 public class JobCountPerDay {
 
-    /** Initialize Logging. */
+	/** Initialize Logging. */
     private final static Logger LOGGER = LoggerFactory.getLogger(JobCountPerDay.class);
 
     //~~~~~Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,6 +50,29 @@ public class JobCountPerDay {
     @Column(unique=false, nullable=false, insertable=true, updatable=true, precision=0, scale=10)
     private Long totalNumberOfJobs   = Long.valueOf(0);
 
+    //~~~~~Constructor~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    /**
+	 * @param jobDate
+	 * @param numberOfJobsPosted
+	 * @param numberOfJobsDeleted
+	 * @param totalNumberOfJobs
+	 */
+	public JobCountPerDay(Date jobDate, Long numberOfJobsPosted,
+			Long numberOfJobsDeleted, Long totalNumberOfJobs) {
+		super();
+		this.jobDate = jobDate;
+		this.numberOfJobsPosted = numberOfJobsPosted;
+		this.numberOfJobsDeleted = numberOfJobsDeleted;
+		this.totalNumberOfJobs = totalNumberOfJobs;
+	}
+    
+    /**
+	 */
+	public JobCountPerDay() {
+		super();
+	}
+	
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /* (non-Javadoc)

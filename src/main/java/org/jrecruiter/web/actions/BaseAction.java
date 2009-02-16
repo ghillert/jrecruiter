@@ -5,6 +5,7 @@ import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
+import org.springframework.context.MessageSource;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
@@ -26,7 +27,8 @@ public abstract class BaseAction extends ActionSupport {
      * User related services.
      */
     protected UserService userService;
-
+    protected MessageSource messageSource;
+    
     private String backTo;
 
     /**
@@ -34,6 +36,8 @@ public abstract class BaseAction extends ActionSupport {
      */
     protected JobService jobService;
 
+    
+    
     //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -53,6 +57,11 @@ public abstract class BaseAction extends ActionSupport {
         return SUCCESS;
     }
 
+    @Override
+    public String getText(final String code) {
+        return this.messageSource.getMessage(code, null, super.getLocale());
+    }
+    
     //~~~~~Security Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     protected SecurityContext getSecurityContext() {
@@ -93,4 +102,10 @@ public abstract class BaseAction extends ActionSupport {
     public void setBackTo(String backTo) {
         this.backTo = backTo;
     }
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+    
+    
 }

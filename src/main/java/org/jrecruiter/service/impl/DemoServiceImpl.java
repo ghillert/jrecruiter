@@ -47,6 +47,7 @@ public class DemoServiceImpl implements DemoService {
     private @Autowired JobService  jobService;
     private @Autowired UserService userService;
 
+    /** {@inheritDoc} */
     public void createDemoJobs(final User user, final Integer numberOfJobsToCreate) {
         final LoremIpsum loremIpsum = new LoremIpsum();
 
@@ -94,7 +95,7 @@ public class DemoServiceImpl implements DemoService {
     }
 
    
-    @Override
+    /** {@inheritDoc} */
 	public User createDemoUser() {
 		User demoUser = getUser();
 		
@@ -115,7 +116,7 @@ public class DemoServiceImpl implements DemoService {
 		return demoUser;
 	}
 
-
+    //~~~~~Helper Method~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	private User getUser() {
 

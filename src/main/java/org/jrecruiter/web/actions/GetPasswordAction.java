@@ -1,10 +1,10 @@
 package org.jrecruiter.web.actions;
 
+import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.texturemedia.smarturls.Result;
 
 /**
  * Resets the users passwords and emails it back to the user.

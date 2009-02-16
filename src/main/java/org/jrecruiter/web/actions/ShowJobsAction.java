@@ -5,6 +5,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
@@ -18,10 +22,6 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.texturemedia.smarturls.ActionName;
-import org.texturemedia.smarturls.ActionNames;
-import org.texturemedia.smarturls.Result;
-import org.texturemedia.smarturls.Results;
 
 /**
  * Show a list of jobs.
@@ -35,10 +35,7 @@ import org.texturemedia.smarturls.Results;
             @Result(name="success", location="/WEB-INF/jsp/show-jobs.jsp")
         }
     )
-@ActionNames({
-  @ActionName(name="show-jobs"),
-  @ActionName(name="show-jobs-ajax")
-})
+
 public class ShowJobsAction extends BaseAction implements ServletRequestAware {
 
 
@@ -50,7 +47,7 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(ShowJobsAction.class);
 
-    private HttpServletRequest request;
+    private transient HttpServletRequest request;
 
     private List<Job> jobs           = CollectionUtils.getArrayList();
     private Limit limit;
@@ -61,6 +58,10 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
      */
     @RetrieveMessages
     @Override
+    @Actions({
+    	  @Action("show-jobs"),
+    	  @Action("show-jobs-ajax")
+    	})
     public String execute() throws Exception {
 
         final TableFacade tableFacade = TableFacadeFactory.createTableFacade("jobsTable", request);

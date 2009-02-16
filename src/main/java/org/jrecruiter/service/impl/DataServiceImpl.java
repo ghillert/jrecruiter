@@ -27,19 +27,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.web.actions.JobDetailAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.lowagie.text.Font;
 
 /**
  * @author Gunnar Hillert
@@ -54,6 +51,8 @@ public class DataServiceImpl implements org.jrecruiter.service.DataService {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(DataServiceImpl.class);
     
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Image getGoogleMapImage(final BigDecimal latitude,
                                    final BigDecimal longitude,
                                    final Integer zoomLevel) {

@@ -17,8 +17,6 @@ package org.jrecruiter.web.actions.admin;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,7 +24,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.ItemLabelAnchor;
@@ -47,6 +44,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
+import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
@@ -186,34 +184,23 @@ public class ShowStatisticsAction extends BaseAction {
 
     public final String chartJobCount() throws Exception {
 
-            final Calendar calendarToday = Calendar.getInstance();
+            final Calendar calendarToday = CalendarUtils.getCalendarWithoutTime();
             
-            final Calendar calendarTodayDate = Calendar.getInstance();
-            calendarTodayDate.clear();
-            
-            calendarTodayDate.set(calendarToday.get(Calendar.YEAR), calendarToday.get(Calendar.MONTH), calendarToday.get(Calendar.DAY_OF_MONTH));
-            final Calendar calendar30    = Calendar.getInstance();
-            calendar30.add(Calendar.DAY_OF_MONTH, -355);
+            final Calendar calendar30    = CalendarUtils.getCalendarWithoutTime();
+            calendar30.add(Calendar.MONTH, -6);
 
-            List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
+            final List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
 
-            TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );
+            final TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );
 
-            for(JobCountPerDay jobCountPerDay : jobCountPerDayList )
-            {
+            for(JobCountPerDay jobCountPerDay : jobCountPerDayList ) {
               hitsPerDayData.add( new Day(jobCountPerDay.getJobDate()),  jobCountPerDay.getTotalNumberOfJobs());
             }
-            
-            if (!jobCountPerDayList.isEmpty() && jobCountPerDayList.size() > 1) {
-	            if (!calendarTodayDate.getTime().equals(jobCountPerDayList.get(jobCountPerDayList.size()-1).getJobDate())) {
-	            	hitsPerDayData.add( new Day(calendarTodayDate.getTime()),  jobCountPerDayList.get(jobCountPerDayList.size()-1).getTotalNumberOfJobs());
-	            }
-            }
-            
-            XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
+                        
+            final XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
 
             this.chart = ChartFactory.createTimeSeriesChart("",
-                    "Jobs", "", hitsPerDayDataset, false, true, false);
+                    super.getText("class.ShowStatisticsAcion.chart.job.count.caption"), "", hitsPerDayDataset, false, true, false);
 
 
             chart.setBackgroundPaint(new Color(255,255,255,0));

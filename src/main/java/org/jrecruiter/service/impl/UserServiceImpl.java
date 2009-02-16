@@ -45,6 +45,7 @@ import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
@@ -100,9 +101,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private @Autowired StringDigester stringDigester;
 
-    /**
-     * {@inheritDoc}
-     */
+    //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    /** {@inheritDoc} */
     public User addUser(User user) throws DuplicateUserException{
 
         Date registerDate = new Date();
@@ -134,37 +135,37 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return this.saveUser(user);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public User saveUser(User user) {
         return userDao.save(user);
     }
 
-
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public User getUser(String username) {
-
         return userDao.getUser(username);
     }
 
+    /** {@inheritDoc} */
     public void updateUser(User user) {
         Date updateDate = new Date();
         user.setUpdateDate(updateDate);
         userDao.save(user);
     }
 
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<User> getAllUsers() {
 
         return userDao.getAllUsers();
     }
 
+    /** {@inheritDoc} */
     public void deleteUser(User user){
         userDao.remove(user.getId());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void resetPassword(User user) {
 
         String flags = "-N 1 -M 100 -B -n -c -y -s 10 -o ";
@@ -214,9 +215,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 
         final UserDetails user = this.getUser(username);
@@ -232,23 +232,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public User getUser(Long userId) {
         return userDao.get(userId);
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobService#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<User> getUsers(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> userFilters) {
         return userDao.getUsers(pageSize, pageNumber, sortOrders, userFilters);
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobService#getJobsCount()
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Long getUsersCount() {
         return userDao.getUsersCount();
     }

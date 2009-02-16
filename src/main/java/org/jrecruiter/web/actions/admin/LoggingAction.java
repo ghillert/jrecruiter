@@ -22,14 +22,13 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.actions.util.LoggingUtil;
 import org.jrecruiter.web.actions.util.LoggingUtil.LogLevels;
-import org.texturemedia.smarturls.ActionName;
-import org.texturemedia.smarturls.ActionNames;
-import org.texturemedia.smarturls.Result;
-import org.texturemedia.smarturls.Results;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -45,12 +44,6 @@ import com.opensymphony.xwork2.Preparable;
  * @version $Id$
  *
  */
-@ActionNames({
-	@ActionName(name="logging-ajax-log-file-table",    method="executeAjaxLoggingLogFileTable"),
-	@ActionName(name="logging-ajax-logger-table",      method="executeAjaxLoggerTable"),
-    @ActionName(name="logging",         method="execute"),
-    @ActionName(name="downloadLogFile", method="download")
-})
 @Results({
     @Result(name="ajaxLoggingLogFileTable", location="/WEB-INF/jsp/admin/loggingLogFileTable.jsp"),
     @Result(name="ajaxLoggerTable",         location="/WEB-INF/jsp/admin/loggingLoggerTable.jsp"),
@@ -128,12 +121,14 @@ public class LoggingAction extends BaseAction implements Preparable, ModelDriven
 	//~~~~~Ajax Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	
     /** Reload the data for table that displays log file data. */
+	@Action(value="logging-ajax-log-file-table")
     public String executeAjaxLoggingLogFileTable() {
         loadLogFiles();
         return "ajaxLoggingLogFileTable";
     }
 
     /** Reload the data for table that displays loggers. */
+	@Action(value="logging-ajax-logger-table")
 	public String executeAjaxLoggerTable() {
 		loadLoggers();        
         return "ajaxLoggerTable";
@@ -143,6 +138,7 @@ public class LoggingAction extends BaseAction implements Preparable, ModelDriven
 	
 	/** Loads the page with default parameters. */
 	@Override
+	@Action("logging")
 	public String execute() {
 		return SUCCESS;
 	}
@@ -193,6 +189,7 @@ public class LoggingAction extends BaseAction implements Preparable, ModelDriven
      * @return
      * @throws Exception
      */
+	@Action("downloadLogFile")
     public String download() throws Exception {
 
         if (this.model.getFileName() == null) {

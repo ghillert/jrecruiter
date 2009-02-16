@@ -308,5 +308,24 @@ public class User implements Serializable, UserDetails{
             return new GrantedAuthority[0];
         }
     }
+    
+    @Override
+    public String toString()
+    {
+        final String TAB = " | ";
+        
+        final StringBuilder retValue = new StringBuilder();
+        
+        retValue.append("User ( ")
+            .append(super.toString()).append(TAB)
+            .append("id = ").append(this.getId()).append(TAB)
+            .append("Username = ").append(this.getUsername()).append(TAB)
+            .append("Email = ").append(this.getEmail()).append(TAB)
+            .append("FirstName = ").append(this.getFirstName()).append(TAB)
+            .append("LastName = ").append(this.getLastName()).append(TAB)
+            .append(" )");
+        
+        return retValue.toString();
+    }
 
 }

@@ -20,6 +20,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jmesa.facade.TableFacade;
@@ -33,13 +36,8 @@ import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.texturemedia.smarturls.ActionName;
-import org.texturemedia.smarturls.ActionNames;
-import org.texturemedia.smarturls.Result;
-import org.texturemedia.smarturls.Results;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -50,10 +48,6 @@ import com.opensymphony.xwork2.Preparable;
  * @version $Id$
  *
  */
-@ActionNames({
-	@ActionName(name="show-users-ajax",  method="executeAjaxUsersTable"),
-    @ActionName(name="show-users",       method="execute")
-})
 @Results(
     {
         @Result(name="success",         location="index", type="redirectAction"),
@@ -72,7 +66,7 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(ShowUsersAction.class);
 
-    private HttpServletRequest request;
+    private transient HttpServletRequest request;
 
     private Limit limit;
     private List<User>users;
@@ -81,6 +75,7 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
      *
      */
     @RetrieveMessages
+    @Action("show-users")
     public String execute() {
     	populateTable();
         return INPUT;
@@ -92,6 +87,7 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
         return "cancel";
     }
     
+	@Action("show-users-ajax")
     public String executeAjaxUsersTable() {
     	populateTable();
         return "ajaxUsersTable";

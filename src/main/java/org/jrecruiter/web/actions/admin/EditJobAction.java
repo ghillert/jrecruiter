@@ -18,6 +18,7 @@ package org.jrecruiter.web.actions.admin;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
@@ -25,7 +26,6 @@ import org.jrecruiter.web.WebUtil;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;

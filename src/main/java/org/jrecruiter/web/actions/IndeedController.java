@@ -1,19 +1,16 @@
 package org.jrecruiter.web.actions;
 
-import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.texturemedia.smarturls.Result;
 
 /**
- * Resets the users passwords and emails it back to the user.
+ * Retrieves all jobs and returns an XML document. The structure conforms to the layout
+ * defined by Indeed.com
  *
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
@@ -28,10 +25,10 @@ public class IndeedController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(IndeedController.class);
 
-    @RequestMapping("/indeed.spring")
-    public void execute() {
-        
-    	//return new ModelAndView()
+    @RequestMapping("/indeed.xml")
+    public String execute(ModelMap model) {
+    	model.addAttribute("jobs", jobService.getJobs());
+    	return "indeedView";
     }
 
 }

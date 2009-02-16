@@ -117,5 +117,23 @@ public class Statistic implements Serializable {
         this.uniqueVisits = uniqueVisits;
     }
 
+    @Override
+    public String toString()
+    {
+        final String TAB = " | ";
+        
+        final StringBuilder retValue = new StringBuilder();
+        
+        retValue.append("Statistic ( ")
+            .append(super.toString()).append(TAB)
+            .append("id = ").append(this.getId()).append(TAB)
+            .append("counter = ").append(this.getCounter()).append(TAB)
+            .append("lastAccess = ").append(this.getLastAccess()).append(TAB)
+            .append("uniqueVisits = ").append(this.getUniqueVisits()).append(TAB)
+            .append(" )");
+        
+        return retValue.toString();
+    }
+    
 }
 

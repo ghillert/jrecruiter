@@ -8,7 +8,7 @@
       <release version="2.0" date="January 2009" description="New Major Feature Release">
            <action dev="Gunnar Hillert" type="add">
                (Almost) No more Struts XML-configuration files. Uses the
-               smarturls Struts 2 plugin for annotation based
+               Struts 2.1 Convention plugin for annotation based
                configuration.
            </action>
            <action dev="Gunnar Hillert" type="add">
@@ -28,7 +28,7 @@
                Social bookmarks on the job posting list
            </action>
            <action dev="Gunnar Hillert" type="add">
-               Application is now Struts 2 based
+               Application is now Struts 2.1 based
            </action>
            <action dev="Gunnar Hillert" type="add">
                Using jasypt for password digesting
