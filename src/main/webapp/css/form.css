@@ -40,6 +40,17 @@ form fieldset {
     border: 1px solid #aaaaaa;
     background:url(../images/test/fieldset_back.png) top left no-repeat;
 }
+form fieldset {
+    position: relative;    
+    top:  1em;
+    left: 0.7em; 
+}
+form fieldset legend {
+    position: absolute;
+    top: -.5em;
+    left: 0em;
+    margin-left: 1em;    
+}
 
 form div.required {
     margin: 1em 5em 1em 5em;

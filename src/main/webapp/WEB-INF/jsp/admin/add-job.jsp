@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<h2><fmt:message key="jsp.addjobposting.title" /></h2>
+<h2><spring:message code="jsp.admin.add-job.title" /></h2>
 
 <s:form id="addJobForm">
 
@@ -12,10 +12,10 @@
 
     <fieldset>
       <div class="submit">
-          <s:submit value="Submit" method="save" tabindex="23"/><s:submit value="Cancel" method="cancel" tabindex="24"/>
+          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save" tabindex="23"/><s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel" tabindex="24"/>
       </div>
     </fieldset>
-    <fmt:message key="jobposting.add.label.mandatory" />
+    <spring:message code="jsp._ALL.marked.fields.are.required" />
 </s:form>
 <jsp:include page="includes/job_javascript.jsp"/>
 

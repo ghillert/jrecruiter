@@ -25,7 +25,7 @@
     </s:if>
     <s:else>
         <p>
-            <s:text name="message.noAvailableJobs"/>
+            <s:text name="jsp.admin.show-jobs.message.noAvailableJobs"/>
         </p>
     </s:else>
     <div class="submit">
@@ -41,8 +41,8 @@
     <h1 style="padding-left: 1em;">Confirm</h1>
     <p class="message"></p>
     <div class="buttons">
-      <a href="#" class="button close"><span>&nbsp;</span>Yes</a></li>
-      <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a></li>
+      <a href="#" class="button close"><span>&nbsp;</span>Yes</a>
+      <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a>
     </div>
 </div>
 

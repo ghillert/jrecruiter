@@ -10,14 +10,14 @@
 </style>
 
 <fieldset class="statisticContainer">
-    <legend>Statistics</legend>
+    <legend><spring:message code="jsp.admin.edit-job.fieldset.legend.statistics"/></legend>
     <ul>
-        <li><label>Page Visits:</label><s:property value="%{job.statistic.counter}" default="N/A"/></li>
-        <li><label>Unique Visits:</label><s:property value="%{job.statistic.uniqueVisits}" default="N/A"/></li>
-        <li><label>Last Access:</label><fmt:formatDate value="${job.statistic.lastAccess}" type="date" pattern="${datePattern}"/></li>
+        <li><label><spring:message code="jsp.admin.edit-job.fieldset.label.page.visits"/>:</label><s:property value="%{job.statistic.counter}" default="N/A"/></li>
+        <li><label><spring:message code="jsp.admin.edit-job.fieldset.label.unique.visits"/>:</label><s:property value="%{job.statistic.uniqueVisits}" default="N/A"/></li>
+        <li><label><spring:message code="jsp.admin.edit-job.fieldset.label.last.access"/>:</label><fmt:formatDate value="${job.statistic.lastAccess}" type="date" pattern="${datePattern}"/></li>
     </ul>
 </fieldset>
-<h2><fmt:message key="admin.edit.job.title"/></h2>
+<h2><spring:message code="jsp.admin.edit.job.title"/></h2>
 
 <s:form id="editJobForm">
     <s:hidden name="job.id"/>
@@ -29,10 +29,10 @@
 
     <fieldset>
       <div class="submit">
-          <s:submit value="Submit" method="save" tabindex="23" /><s:submit value="Cancel" method="cancel" tabindex="24"/>
+          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save" tabindex="23" /><s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel" tabindex="24"/>
       </div>
     </fieldset>
-    <fmt:message key="jobposting.add.label.mandatory" />
+    <spring:message code="jsp._ALL.marked.fields.are.required"/>
 
 </s:form>
 <jsp:include page="includes/job_javascript.jsp"/>

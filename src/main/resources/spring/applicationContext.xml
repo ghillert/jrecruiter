@@ -24,12 +24,10 @@
 		(countries-servlet.xml).
 	-->
 	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename">
-			<value>messages</value>
-		</property>
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages"/>
+		<property name="defaultEncoding" value="utf-8"/>
 	</bean>
-
 
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
@@ -88,4 +86,24 @@
 		-->
 		<property name="includeNoscript" value="false" />
 	</bean>
+
+	<bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+	    <!-- wait 10 seconds before starting repeated execution -->
+	    <property name="delay" value="10000" />
+	    <property name="period" value="80000000" />
+	    <property name="timerTask" ref="updateJobCountPerDays" />
+	</bean>
+
+	<bean id="updateJobCountPerDays" class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+	    <property name="targetObject" ref="jobService" />
+	    <property name="targetMethod" value="updateJobCountPerDays" />
+	</bean>
+
+    <bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
+        <property name="scheduledTimerTasks">
+            <list>
+                <ref bean="scheduledTask"/>
+            </list>
+        </property>
+    </bean>
 </beans>

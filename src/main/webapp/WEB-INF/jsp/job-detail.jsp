@@ -30,64 +30,64 @@
 
         <s:if test="job.usesMap">
           <fieldset id="jobDetailMap">
-              <legend>Map Location</legend>
+              <legend><spring:message code="jsp._ALL.job.field.location"/></legend>
               <div id="map_canvas" style="width: 100%; height: 300px; background-color: white;">
               ${job.latitude}, ${job.longitude}
               </div>
           </fieldset>
         </s:if>
         <fieldset id="jobDetail">
-            <legend>Summary</legend>
+            <legend><spring:message code="jsp.job-detail.label.summary"/></legend>
             <div class="optional strong">
-                <label><fmt:message key="field.jobTitle"/>:</label>
+                <label><spring:message code="jsp._ALL.job.field.jobTitle"/>:</label>
                 <s:property value="%{job.jobTitle}" escape="true"/>
             </div>
             <div class="optional strong">
-                <label><fmt:message key="field.businessName"/>:</label>
+                <label><spring:message code="jsp._ALL.job.field.businessName"/>:</label>
                     ${job.businessName}
             </div>
             <div class="optional">
-                <label><fmt:message key="field.offered.by"/>:</label>
+                <label><spring:message code="jsp._ALL.job.field.offered.by"/>:</label>
                 <s:property value="%{getText(job.offeredBy.descriptionKey)}"/>
             </div>
             <s:if test="job.region.name != null">
                 <div class="optional">
-                    <label><fmt:message key="field.location"/>:</label>
+                    <label><spring:message code="jsp._ALL.job.field.location"/>:</label>
                         ${job.region.name}
                 </div>
             </s:if>
             <s:if test="job.industry.name != null">
                 <div class="optional">
-                  <label><fmt:message key="field.industry"/>:</label>
+                  <label><spring:message code="jsp._ALL.job.field.industry"/>:</label>
                       ${job.industry.name}
                 </div>
             </s:if>
             <s:if test="job.salary != null">
-                <div class="optional"><label><fmt:message key="field.salary"/>:</label>
+                <div class="optional"><label><spring:message code="field.salary"/>:</label>
                     ${job.salary}
                 </div>
             </s:if>
             <s:if test="job.businessPhone != null">
                 <div class="optional">
-                    <label><fmt:message key="field.phone"/>:</label>
+                    <label><spring:message code="jsp._ALL.job.field.phone"/>:</label>
                     ${job.businessPhone}
                 </div>
             </s:if>
             <s:if test="job.businessEmail != null">
                 <div class="optional">
-                    <label><fmt:message key="field.email"/>:</label>
+                    <label><spring:message code="jsp._ALL.job.field.email"/>:</label>
                     <a href="mailto:${job.businessEmail}">${job.businessEmail}</a>
                 </div>
             </s:if>
             <s:if test="job.businessName != null">
                 <div class="optional">
-                    <label><fmt:message key="field.businessName"/>:</label>
+                    <label><spring:message code="jsp._ALL.job.field.businessName"/>:</label>
                       ${job.businessName}
                 </div>
             </s:if>
             <s:if test="job.businessAddress1 != null">
                 <div class="optional">
-                    <label><fmt:message key="field.address"/>:</label>
+                    <label><spring:message code="jsp._ALL.job.field.address"/>:</label>
                     ${job.businessAddress1}
                 </div>
             </s:if>
@@ -98,22 +98,22 @@
             </s:if>
             <s:if test="job.city != null">
                 <div class="optional">
-                    <label><fmt:message key="field.city"/>:</label>${job.businessCity}
+                    <label><spring:message code="jsp._ALL.job.field.city"/>:</label>${job.businessCity}
                 </div>
             </s:if>
             <s:if test="job.businessState != null">
               <div class="optional">
-                 <label><fmt:message key="field.state"/>:</label><s:property value="%{job.businessState}"/>
+                 <label><spring:message code="jsp._ALL.job.field.state"/>:</label><s:property value="%{job.businessState}"/>
               </div>
             </s:if>
             <s:if test="job.businessZip != null">
               <div class="optional">
-                  <label><fmt:message key="field.zip"/>:</label><s:property value="%{job.businessZip}"/>
+                  <label><spring:message code="jsp._ALL.job.field.zip"/>:</label><s:property value="%{job.businessZip}"/>
               </div>
             </s:if>
             <s:if test="job.website != null">
                 <div class="optional">
-                   <label><fmt:message key="field.website"/>:</label>
+                   <label><spring:message code="jsp._ALL.job.field.website"/>:</label>
                     <c:if test="${not fn:contains(job.website, 'http')}">
                       <a href="http://${job.website}">${job.website}</a>
                     </c:if>
@@ -124,7 +124,7 @@
             </s:if>
         </fieldset>
         <fieldset id="jobDetailDescription">
-            <legend><fmt:message key="field.jobDescription"/></legend>
+            <legend><spring:message code="jsp._ALL.job.field.jobDescription"/></legend>
                 <c:set var="restr"><c:out value="${job.description}" escapeXml="true"/></c:set>
                 <c:set var="restr"><c:out value="${fn:replace(restr, lf, '<br/>')}" escapeXml="false"/></c:set>
                     <c:choose>
@@ -138,7 +138,7 @@
         </fieldset>
         <s:if test="job.jobRestrictions != null">
           <fieldset id="jobDetailRestriction">
-              <legend><fmt:message key="field.jobRestrictions"/></legend>
+              <legend><spring:message code="jsp._ALL.job.field.jobRestrictions"/></legend>
                 <c:set var="restr"><c:out value="${job.jobRestrictions}" escapeXml="true"/></c:set>
                 <c:set var="restr"><c:out value="${fn:replace(restr, lf, '<br/>')}" escapeXml="false"/></c:set>
                       <c:choose>

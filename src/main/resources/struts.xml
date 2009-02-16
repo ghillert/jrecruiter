@@ -2,8 +2,26 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
+
     <!-- Include Struts defaults -->
     <include file="struts-default.xml"/>
+
+    <constant name="struts.convention.result.path" value="/WEB-INF/jsp" />
+    <constant name="struts.convention.action.packages" value="org.jrecruiter.web.actions" />
+    <constant name="struts.convention.default.parent.package" value="default" />
+    <!-- http://cwiki.apache.org/WW/strutsproperties.html -->
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.action.extension" value="html,rss" />
+    <constant name="struts.custom.i18n.resources" value="messages, struts-messages" />
+    <constant name="struts.multipart.maxSize" value="2097152" />
+
+    <constant name="struts.devMode" value="${struts.devMode}" />
+
+    <!-- Configuration reloading This will cause the configuration to reload xwork.xml when it is changed -->
+    <constant name="struts.configuration.xml.reload" value="true"/>
+
+    <constant name="struts.ui.templateSuffix" value="java" />
+    <constant name="struts.ui.theme" value="simple" />
 
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">

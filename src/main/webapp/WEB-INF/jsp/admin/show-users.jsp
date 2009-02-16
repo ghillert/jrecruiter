@@ -65,7 +65,7 @@ jQuery(document).ready(function () {
       </s:if>
       <s:else>
         <p>
-            <s:text name="message.not.found.users"/>
+            <s:text name="jsp.admin.show-users.message.not.found.users"/>
         </p>
       </s:else>
       <div class="submit">
@@ -80,8 +80,7 @@ jQuery(document).ready(function () {
 	    <h1 style="padding-left: 1em;">Confirm</h1>
 	    <p class="message"></p>
 	    <div class="buttons">
-	      <a href="#" class="button close"><span>&nbsp;</span>Yes</a></li>
-	      <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a></li>
+	      <a href="#" class="button close"><span>&nbsp;</span>Yes</a>
+	      <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a>
 	    </div>
 	</div>
-</div>
