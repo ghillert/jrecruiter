@@ -4,11 +4,8 @@
 <s:url id="tableUrl" includeParams="none"/>
 <s:url id="tableUrlAjax" action="show-jobs-ajax" includeParams="none"/>
 
-<h2>Job Postings</h2>
-<p class="info">Please feel free to browse all active job postings below. All job postings
-that show a "globe icon" provide job location information using Google Maps. Otherwise, click
-on the hour glass to view the job posting's details.
-</p>
+<h2><spring:message code="jsp.show.jobs.title"/></h2>
+<p class="info"><spring:message code="jsp.show.jobs.description"/></p>
 
 <s:form name="jobsForm" action="show-jobs-ajax">
     <s:hidden name="backTo"/>
@@ -47,6 +44,6 @@ on the hour glass to view the job posting's details.
   </table>
 
   <div class="submit" style="margin-left: 0;">
-      <s:submit value="Back" method="cancel"/>
+      <s:submit value="%{getText('jsp.show.jobs.button.back')}" method="cancel"/>
   </div>
 </s:form>

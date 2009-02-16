@@ -17,6 +17,8 @@ response.setHeader("Expires","0");
 <%@ taglib uri="/struts-tags" prefix="s" %>
 <%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <c:set var="datePattern"><s:text name="date.format"/></c:set>
 <c:set var="ctx" value="${pageContext['request'].contextPath}"/>
 

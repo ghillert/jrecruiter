@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
+﻿<%@include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -52,17 +52,18 @@
     <div class="container">
       <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
       <div class="header_menu">
-          <ul><li><a href="<c:url value='/'/>">Home</a></li>
+          <ul><li><a href="<c:url value='/'/>"><spring:message code="jsp.decorators.default.menu.home"/></a></li>
             <li>
                             <s:url id="searchUrl" action="search" namespace="/"/>
-                            <a href="${searchUrl}">Search Jobs</a></li>
+                            <a href="${searchUrl}"><spring:message code="jsp.decorators.default.menu.search.jobs"/></a></li>
             <li>
             <s:url id="adminUrl" action="index" namespace="/admin"/>
-            <a href="${adminUrl}">Admin</a></li>
+            <a href="${adminUrl}"><spring:message code="jsp.decorators.default.menu.admin"/></a></li>
             <li>
             <s:url id="contactUrl" action="contact" namespace="/"/>
-            <a href="#" id="contact">About...</a></li>
-            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="Get the latest 20 job postings as RSS feed.">&nbsp;<span>RSS Feed</span></a></li>
+            <a href="#" id="contact"><spring:message code="jsp.decorators.default.menu.about"/></a></li>
+            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="<spring:message code="jsp.decorators.default.menu.rss.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.rss"/></span></a></li>
+            <li>             <a href="<c:url value='/s/indeed.xml'/>"              title="<spring:message code="jsp.decorators.default.menu.xml.title"/>"><spring:message code="jsp.decorators.default.menu.xml"/></a></li>
             <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
                               <c:if test="${pageContext.request.secure}">
           Site is SSL secured
@@ -73,7 +74,7 @@
       <div class="content"><security:authorize ifAnyGranted="MANAGER, ADMIN">
         <s:url action="logout" id="logoutUrl" namespace="/admin"/>
         <div style="text-align: right; margin-top: -0.5em;">You are logged in as 
-        <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> | <a href="${logoutUrl}" ><s:text name="admin.main.label.logout"/></a></div>
+        <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> | <a href="${logoutUrl}" ><spring:message code="jsp.decorators.default.logout"/></a></div>
       </security:authorize><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
       </div>

@@ -1,30 +1,29 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
     <fieldset style="clear: left;">
         <legend>
-            <fmt:message key="jsp.addjobposting.job.fieldset.geographic.information" />
+            <spring:message code="jsp.addjobposting.job.fieldset.geographic.information" />
         </legend>
         <div class="optional">
-           <label for="usesMap">
-                   Give your jobs more exposure! Do you like to show the job posting on a map?</label>
+           <label for="usesMap"><spring:message code="jsp.job_mapDiv.text.uses.map" /></label>
            <s:select name="job.usesMap" id="usesMap" list="yesNoList" tabindex="15"/>
         </div>
 
         <div id="usesMapDiv" style="display: block;">
             <div class="required">
-                <label for="longitude"><fmt:message key="field.longitude" /></label>
+                <label for="longitude"><spring:message code="jsp._ALL.job.field.longitude" /></label>
                 <s:textfield name="job.longitude" id="longitude" size="10" tabindex="16"/>
             </div>
             <div class="required">
-            <label for="longitude"><fmt:message key="field.latitude" /></label>
+            <label for="longitude"><spring:message code="jsp._ALL.job.field.latitude" /></label>
             <s:textfield name="job.latitude" id="latitude" size="10" tabindex="17"/>
             </div>
             <div class="required">
-            <label for="zoomLevel"><fmt:message key="field.zoomLevel" /></label>
+            <label for="zoomLevel"><spring:message code="jsp._ALL.job.field.zoomLevel" /></label>
             <s:textfield name="job.zoomLevel" id="zoomLevel" size="3" tabindex="18"/>
             </div>
             <div class="submit">
-                <input id="convertAddressButton"    type="button" value="Convert Address"
-                /><input id="showCoordinatesButton" type="button" value="Show Coordinates"/>
+                <input id="convertAddressButton"    type="button" value="%{getText('jsp.job_header.button.convert.address')}"
+                /><input id="showCoordinatesButton" type="button" value="%{getText('jsp.job_header.button.show.coordinates')}"/>
             </div>
 
             <div id="map"

@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<title>jRecruiter - Administrative Area</title>
-<h2>Administrative Area</h2>
+<title>jRecruiter - <spring:message code="jsp.admin.index.header"/></title>
+<h2><spring:message code="jsp.admin.index.header"/></h2>
 <p class="info">
     <s:text name="admin.main.welcome"/>
     <security:authentication property="principal.firstName"/>
@@ -32,31 +32,31 @@
           <s:url action="setup-demo"            id="setupDemoUrl"/>
           <s:url action="logging" id="loggingUrl"/>
       <fieldset class="manageJobPostings">
-          <legend>Manage Jobs Postings</legend>
+          <legend><spring:message code="jsp.admin.index.legend.manage.jobs"/></legend>
                 <ul>
-                    <li><a href="${addJobUrl}" ><s:text name="admin.main.label.add.job"/></a></li>
-                    <li><a href="${showJobsForAdminUrl}" ><s:text name="admin.main.label.edit.jobs"/></a></li>
-                    <li><a href="${showStatisticsUrl}" ><s:text name="admin.main.label.show.statistics"/></a></li>
-                    <li><a href="${showJobsNotAdminUrl}" ><s:text name="admin.main.label.view.jobs"/></a></li>
+                    <li><a href="${addJobUrl}" ><spring:message code="jsp.admin.index.label.add.job"/></a></li>
+                    <li><a href="${showJobsForAdminUrl}" ><spring:message code="jsp.admin.index.label.edit.jobs"/></a></li>
+                    <li><a href="${showStatisticsUrl}" ><spring:message code="jsp.admin.index.label.show.statistics"/></a></li>
+                    <li><a href="${showJobsNotAdminUrl}" ><spring:message code="jsp.admin.index.label.view.jobs"/></a></li>
                 </ul>
       </fieldset>
       <fieldset class="userTasks">
-                <legend>User Task</legend>
+                <legend><spring:message code="jsp.admin.index.legend.user.task"/></legend>
                 <ul>
-                    <li><a href="${editUserUrl}" ><s:text name="admin.main.label.edit.registration"/></a></li>
-                    <li><a href="${logoutUrl}" ><s:text name="admin.main.label.logout"/></a></li>
+                    <li><a href="${editUserUrl}" ><spring:message code="jsp.admin.index.label.edit.registration"/></a></li>
+                    <li><a href="${logoutUrl}" ><spring:message code="jsp.admin.index.label.logout"/></a></li>
                 </ul>
       </fieldset>
       <security:authorize ifAllGranted="ADMIN">
           <fieldset class="jRecruiterAdmin">
-              <legend>jRecruiter Administration</legend>
+              <legend><spring:message code="jsp.admin.index.legend.administration"/></legend>
               <ul>
-                  <li><a href="${userListUrl}" ><s:text name="admin.main.label.edit.user"/></a></li>
-                  <li><a href="${addUserUrl}" ><s:text name="admin.main.label.add.user"/></a></li>
-                  <li><a href="${editSettingsUrl}" ><s:text name="admin.main.label.edit.settings"/></a></li>
-                  <li><a href="${searchIndexUrl}" >Re-Index Search Index</a></li>
-                  <li><a href="${setupDemoUrl}" >Setup Demo Jobs</a></li>
-                  <li><a href="${loggingUrl}" >Logging Settings</a></li>
+                  <li><a href="${userListUrl}" ><spring:message code="jsp.admin.index.label.edit.user"/></a></li>
+                  <li><a href="${addUserUrl}" ><spring:message code="jsp.admin.index.label.add.user"/></a></li>
+                  <li><a href="${editSettingsUrl}" ><spring:message code="jsp.admin.index.label.edit.settings"/></a></li>
+                  <li><a href="${searchIndexUrl}" ><spring:message code="jsp.admin.index.label.reindex.search.index"/></a></li>
+                  <li><a href="${setupDemoUrl}" ><spring:message code="jsp.admin.index.label.setup.demo.jobs"/></a></li>
+                  <li><a href="${loggingUrl}" ><spring:message code="jsp.admin.index.label.logging.settings"/></a></li>
               </ul>
           </fieldset>
       </security:authorize>
