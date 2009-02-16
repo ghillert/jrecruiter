@@ -38,7 +38,6 @@ import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
-import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.springframework.stereotype.Repository;
 
 /**

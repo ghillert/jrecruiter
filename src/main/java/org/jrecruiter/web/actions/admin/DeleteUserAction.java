@@ -15,17 +15,14 @@
 */
 package org.jrecruiter.web.actions.admin;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.jrecruiter.common.CollectionUtils;
+import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.texturemedia.smarturls.Result;
 
 /**
  * Deletes one or more users.

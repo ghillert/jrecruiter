@@ -18,22 +18,22 @@
     <table name="industries">
         <column>id</column>
         <column>name</column>
-        <row><value>-1</value><value>Aerospace</value></row>
-        <row><value>-2</value><value>Automotive</value></row>
-        <row><value>-3</value><value>Consulting</value></row>
-        <row><value>-4</value><value>Energy</value></row>
-        <row><value>-5</value><value>IT</value></row>
-        <row><value>-6</value><value>Education</value></row>
-        <row><value>-7</value><value>Electronics</value></row>
-        <row><value>-8</value><value>Financial</value></row>
-        <row><value>-9</value><value>Government</value></row>
-        <row><value>-10</value><value>Healthcare</value></row>
-        <row><value>-11</value><value>Manufacturing</value></row>
-        <row><value>-12</value><value>Media</value></row>
-        <row><value>-13</value><value>Retail</value></row>
-        <row><value>-14</value><value>Telecommunications</value></row>
-        <row><value>-15</value><value>Transportation</value></row>
-        <row><value>-16</value><value>Other</value></row>
+        <row><value>-1</value><value>Other</value></row>
+        <row><value>-2</value><value>Aerospace</value></row>
+        <row><value>-3</value><value>Automotive</value></row>
+        <row><value>-4</value><value>Consulting</value></row>
+        <row><value>-5</value><value>Energy</value></row>
+        <row><value>-6</value><value>IT</value></row>
+        <row><value>-7</value><value>Education</value></row>
+        <row><value>-8</value><value>Electronics</value></row>
+        <row><value>-9</value><value>Financial</value></row>
+        <row><value>-10</value><value>Government</value></row>
+        <row><value>-11</value><value>Healthcare</value></row>
+        <row><value>-12</value><value>Manufacturing</value></row>
+        <row><value>-13</value><value>Media</value></row>
+        <row><value>-14</value><value>Retail</value></row>
+        <row><value>-15</value><value>Telecommunications</value></row>
+        <row><value>-16</value><value>Transportation</value></row>
     </table>
 
     <table name="job_types">

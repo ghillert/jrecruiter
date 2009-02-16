@@ -15,22 +15,19 @@
 */
 package org.jrecruiter.web.actions.admin;
 
+import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.texturemedia.smarturls.Result;
-
-import com.opensymphony.xwork2.validator.annotations.Validation;
 
 /**
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 
-@Validation
 @Result(name="success", location="index", type="redirectAction")
 public class AddUserAction extends BaseAction {
 

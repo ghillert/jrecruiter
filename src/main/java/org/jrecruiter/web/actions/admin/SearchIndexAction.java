@@ -15,9 +15,9 @@
 */
 package org.jrecruiter.web.actions.admin;
 
+import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
-import org.texturemedia.smarturls.Result;
 
 /**
  * Re-index the Hibernate Search Index

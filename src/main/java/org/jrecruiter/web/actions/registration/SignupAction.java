@@ -4,6 +4,7 @@ import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Result;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
@@ -13,14 +14,12 @@ import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.Validation;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
@@ -29,7 +28,6 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 @Conversion
-@Validation
 @Result(name="success", location="index", type="redirectAction")
 public class SignupAction extends BaseAction {
 

@@ -17,12 +17,12 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.GregorianCalendar;
 
+import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.forms.ConfigurationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.texturemedia.smarturls.Result;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -102,7 +102,7 @@ public class EditSettingsAction extends BaseAction implements Preparable, ModelD
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         jobService.saveJRecruiterSetting(configuration);
 
-        super.addActionMessage(getText("settings.edit.success"));
+        super.addActionMessage(getText("class.admin.EditSettingsAction.success"));
 
         return SUCCESS;
 

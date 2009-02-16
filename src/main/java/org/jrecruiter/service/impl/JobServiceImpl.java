@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.service.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.Map;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.jrecruiter.common.AcegiUtil;
+import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.Constants.Roles;
 import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.ConfigurationDao;
@@ -95,30 +97,26 @@ public class JobServiceImpl implements JobService {
 
     //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    /* (non-Javadoc)
-     * @see org.ajug.service.JobServiceInterface#getJobs()
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getJobs() {
         return jobDao.getAllJobs();
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobService#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getJobs(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> jobFilters) {
         return jobDao.getJobs(pageSize, pageNumber, sortOrders, jobFilters);
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobService#getJobsCount()
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Long getJobsCount() {
         return jobDao.getJobsCount();
     }
 
-    /* (non-Javadoc)
-     * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getUsersJobs(final String username) {
 
         List <Job> jobs = null;
@@ -139,9 +137,8 @@ public class JobServiceImpl implements JobService {
         return jobs;
     }
 
-    /* (non-Javadoc)
-     * @see org.ajug.service.JobServiceInterface#getUsersJobs(java.lang.String)
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getUsersJobsForStatistics(final String username) {
 
         final User user = userDao.getUser(username);
@@ -157,9 +154,8 @@ public class JobServiceImpl implements JobService {
         return jobDao.getAllUserJobsForStatistics(user.getId());
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.JobService#getUsersJobsForStatistics(java.lang.String, java.lang.Integer, org.jrecruiter.Constants.StatsMode)
-     */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
 
         final User user = userDao.getUser(username);
@@ -177,9 +173,7 @@ public class JobServiceImpl implements JobService {
         return jobDao.getUsersJobsForStatistics(user.getId(), maxResult, statsMode, administrator);
     }
 
-    /* (non-Javadoc)
-    * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
-    */
+    /** {@inheritDoc} */
     public Job addJob(final Job job) {
     	
     	if (job.getStatistic() == null) {
@@ -190,34 +184,34 @@ public class JobServiceImpl implements JobService {
     	
     	final Job savedJob = jobDao.save(job);
     		
-    	saveJobStatistics(savedJob);
+    	saveJobStatistics(job);
     	
         return savedJob;
     }
     
-    private void saveJobStatistics(Job job) {
+    /** {@inheritDoc} */
+    public void saveJobStatistics(Job job) {
     	
-    	Date currentDate = new Date();
-    	
-    	JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(currentDate);
-    	
-    	if (jobCountPerDay == null) {
-    		jobCountPerDay = new JobCountPerDay();
-    		jobCountPerDay.setJobDate(new Date());
-    		jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(0));
-    		jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(1));
-    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount());
-    		jobCountPerDayDao.save(jobCountPerDay);
-    	} else {
-    		jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() + 1);
-    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() + 1);
-    		jobCountPerDayDao.save(jobCountPerDay);
+    	if (job.getId() == null) {
+	    	
+	    	JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(job.getRegistrationDate());
+	    	
+	    	if (jobCountPerDay == null) {
+	    		jobCountPerDay = new JobCountPerDay();
+	    		jobCountPerDay.setJobDate(job.getRegistrationDate());
+	    		jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(0));
+	    		jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(1));
+	    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount());
+	    		jobCountPerDayDao.save(jobCountPerDay);
+	    	} else {
+	    		jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() + 1);
+	    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() + 1);
+	    		jobCountPerDayDao.save(jobCountPerDay);
+	    	}
     	}
     }
     
-    /* (non-Javadoc)
-    * @see org.ajug.service.JobServiceInterface#addJob(org.jrecruiter.persistent.pojo.Job)
-    */
+    /** {@inheritDoc} */
     public void updateJob(final Job job) {
     	
     	if (job.getStatistic() == null) {
@@ -231,21 +225,19 @@ public class JobServiceImpl implements JobService {
         saveJobStatistics(savedJob);
     }
 
-    /* (non-Javadoc)
-    * @see org.ajug.service.JobServiceInterface#getJobForId(java.lang.Long)
-    */
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Job getJobForId(final Long jobId) {
-
         return jobDao.get(jobId);
     }
 
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> searchByKeyword(final String keyword) {
         return jobDao.searchByKeyword(keyword);
     }
 
-    /* (non-Javadoc)
-     * @see org.ajug.service.JobServiceInterface#deleteJobForId(java.lang.Long)
-     */
+    /** {@inheritDoc} */
     public void deleteJobForId(final Long jobId) {
         jobDao.remove(jobId);
         
@@ -265,10 +257,7 @@ public class JobServiceImpl implements JobService {
 		}
     }
 
-
-    /* (non-Javadoc)
-     * @see org.ajug.service.JobServiceInterface#sendJobPostingToMailingList(java.lang.Long)
-     */
+    /** {@inheritDoc} */
     public void sendJobPostingToMailingList(final Job jobs) {
 
         final SimpleMailMessage msg = new SimpleMailMessage(this.message);
@@ -311,56 +300,110 @@ public class JobServiceImpl implements JobService {
 
     }
 
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Configuration> getJRecruiterSettings() {
         return configurationDao.getAll();
     }
 
+    /** {@inheritDoc} */
     public Configuration getJRecruiterSetting(final String key) {
         return configurationDao.get(key);
     }
 
+    /** {@inheritDoc} */
     public void saveJRecruiterSetting(final Configuration configuration) {
         configurationDao.save(configuration);
 
     }
 
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Industry> getIndustries() {
         return this.industryDao.getAllIndustriesOrdered();
     }
 
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Region> getRegions() {
         return this.regionDao.getAllRegionsOrdered();
     }
 
+    /** {@inheritDoc} */
     public void updateJobStatistic(Statistic statistics) {
-        if (statistics.getId() != null) {
             this.statisticDao.save(statistics);
-        } else {
-            this.statisticDao.save(statistics);
-        }
-
     }
 
+    /** {@inheritDoc} */
     public void reindexSearch() {
         jobDao.reindexSearch();
     }
 
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Industry getIndustry(Long industryId) {
         return industryDao.get(industryId);
     }
 
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Region getRegion(Long regionId) {
         return regionDao.get(regionId);
     }
 
-    public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
-        return jobCountPerDayDao.getJobCountPerDayAndPeriod(fromDate, toDate);
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
+    public List<JobCountPerDay> getJobCountPerDayAndPeriod(final Date fromDate, final Date toDate) {
+
+    	//Make sure we have values at least for today and the previous day.
+    	this.updateJobCountPerDays();
+   
+    	final List<JobCountPerDay> jobCountPerDays = jobCountPerDayDao.getJobCountPerDayAndPeriod(fromDate, toDate);
+        return jobCountPerDays;
     }
 
-    public Long jobCount(Date day) {
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
+    public Long jobCount(final Date day) {
         return jobDao.getJobCount(day);
     }
 
+    /** {@inheritDoc} */
+	public void updateJobCountPerDays() {
+		this.updateJobCountPerDays(CalendarUtils.getCalendarWithoutTime());
+	}
 
+    /** {@inheritDoc} */
+	public void updateJobCountPerDays(final Calendar asOfDay) {
+		
+    	final Calendar today = CalendarUtils.getCalendarWithoutTime();
+    	today.setTime(asOfDay.getTime());
+    	final Calendar yesterday = CalendarUtils.getCalendarWithoutTime();
+    	yesterday.add(Calendar.DAY_OF_YEAR, -1);
+    	
+    	final List<JobCountPerDay> latestTwoJobCountPerDays = jobCountPerDayDao.getLatestTwoJobCounts();
+    	
+    	//If nothing exists yet, create an entry with zero jobs.
+    	if (latestTwoJobCountPerDays.isEmpty()) {
+    		jobCountPerDayDao.save(new JobCountPerDay(yesterday.getTime(), 0L, 0L, 0L));
+    	}
+    	
+    	boolean containsToday = false;
+    	
+    	//Let's make sure we have a value for today
+    	for (JobCountPerDay jobCountPerDay : latestTwoJobCountPerDays) {
+    		if (today.getTime().equals(jobCountPerDay.getJobDate())) {
+    			containsToday = true;
+    			break;
+    		}
+    	}
+    	
+    	if (!containsToday) {
+    		//We need to create a value for today
+    		final Long totalNumberOfJobs = this.getJobsCount();
+    		jobCountPerDayDao.save(new JobCountPerDay(today.getTime(), 0L, 0L, totalNumberOfJobs));
+    	}
 
+    	
+	}
 }

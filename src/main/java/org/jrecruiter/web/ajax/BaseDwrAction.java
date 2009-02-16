@@ -20,5 +20,5 @@ package org.jrecruiter.web.ajax;
  * @version $Id$
  */
 public class BaseDwrAction {
-    final String TEMPLATE_DIRECTORY = "/WEB-INF/jsp/includes/dwr";
+    final static String TEMPLATE_DIRECTORY = "/WEB-INF/jsp/includes/dwr";
 }

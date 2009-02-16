@@ -16,6 +16,7 @@
 package org.jrecruiter.web.actions.admin;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.convention.annotation.Result;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
@@ -24,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.context.SecurityContextHolder;
-import org.texturemedia.smarturls.Result;
 
 /**
  * @author Gunnar Hillert

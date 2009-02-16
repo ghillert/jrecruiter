@@ -27,6 +27,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -336,7 +337,8 @@ public class Job implements Serializable {
     /**
      * @return the description
      */
-    @Column(name="description", unique=false, nullable=false, insertable=true, updatable=true, length=2000)
+    @Lob
+    @Column(name="description", unique=false, nullable=false, insertable=true, updatable=true)
     @Field(index=Index.TOKENIZED, store=Store.YES)
     public String getDescription() {
         return description;
@@ -496,7 +498,8 @@ public class Job implements Serializable {
     /**
      * @return the jobRestrictions
      */
-    @Column(name="job_restrictions", unique=false, nullable=true, insertable=true, updatable=true, length=2000)
+    @Lob
+    @Column(name="job_restrictions", unique=false, nullable=true, insertable=true, updatable=true, length=4000)
     @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getJobRestrictions() {
         return jobRestrictions;
@@ -512,7 +515,7 @@ public class Job implements Serializable {
     /**
      * @return the registrationDate
      */
-    @Column(name="registration_date", unique=false, nullable=true, insertable=true, updatable=true, length=8)
+    @Column(name="registration_date", unique=false, nullable=false, insertable=true, updatable=true, length=8)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getRegistrationDate() {
         return registrationDate;
@@ -636,5 +639,23 @@ public class Job implements Serializable {
         this.statistic = statistic;
     }
 
+    @Override
+    public String toString()
+    {
+        final String TAB = " | ";
+        
+        final StringBuilder retValue = new StringBuilder();
+        
+        retValue.append("Job ( ")
+            .append(super.toString()).append(TAB)
+            .append("id = ").append(this.getId()).append(TAB)
+            .append("registrationDate = ").append(this.getRegistrationDate()).append(TAB)
+            .append("updateDate = ").append(this.getUpdateDate()).append(TAB)
+            .append("jobTitle = ").append(this.getJobTitle()).append(TAB)
+            .append(" )");
+        
+        return retValue.toString();
+    }
+    
 }
 

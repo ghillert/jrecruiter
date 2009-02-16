@@ -15,18 +15,19 @@
 */
 package org.jrecruiter.dao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import org.jrecruiter.common.Constants;
-import org.jrecruiter.model.Job;
+import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**
- * Interface for any job-related persistence calls.
+ * Interface for any jobCountPerDay    	final Calendar today     = CalendarUtils.getCalendarWithoutTime();
+    	final Calendar yesterday = CalendarUtils.getCalendarWithoutTime();
+    	yesterday.add(Calendar.DAY_OF_YEAR, -1);-related persistence calls.
  *
- * @author Jerzy Puchala, Gunnar Hillert
+ * @author Gunnar Hillert
  * @version @version $Id: JobDao.java 251 2008-08-18 13:10:45Z ghillert $
  */
 public interface JobCountPerDayDao extends GenericDao < JobCountPerDay, Long >{
@@ -47,5 +48,11 @@ public interface JobCountPerDayDao extends GenericDao < JobCountPerDay, Long >{
      * @return
      */
     List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
+
+    /**
+     * 
+     * @return
+     */
+	List<JobCountPerDay> getLatestTwoJobCounts();
 
 }

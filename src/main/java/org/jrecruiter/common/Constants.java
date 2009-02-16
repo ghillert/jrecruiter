@@ -82,7 +82,7 @@ public class Constants {
     public enum JobStatus {
 
         ACTIVE("Active",     "jobStatus.active.description"),
-        DISABLED("disabled", "jobStatus.disabled.description");
+        DISABLED("Disabled", "jobStatus.disabled.description");
 
         String name;
         String descriptionKey;

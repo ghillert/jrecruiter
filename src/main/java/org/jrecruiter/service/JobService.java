@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -187,8 +188,11 @@ public interface JobService {
     /** Re-index the Hibernate Search */
     void reindexSearch();
 
-    public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
+    List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
 
-    public Long jobCount(Date day);
+    Long jobCount(Date day);
 
+    void updateJobCountPerDays();
+    
+    void updateJobCountPerDays(Calendar asOfDay);
 }

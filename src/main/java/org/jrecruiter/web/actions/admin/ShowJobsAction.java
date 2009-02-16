@@ -17,15 +17,14 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.List;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.BaseAction;
 import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.jrecruiter.web.interceptor.StoreMessages;
-import org.texturemedia.smarturls.ActionName;
-import org.texturemedia.smarturls.ActionNames;
-import org.texturemedia.smarturls.Result;
-import org.texturemedia.smarturls.Results;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -36,12 +35,6 @@ import com.opensymphony.xwork2.Preparable;
  * @version $Id$
  *
  */
-@ActionNames({
-	@ActionName(name="show-jobs-ajax",  method="executeAjaxJobsTable"),
-    @ActionName(name="show-jobs",       method="execute"),
-    @ActionName(name="delete-jobs",     method="delete"),
-    @ActionName(name="downloadLogFile", method="download")
-})
 @Results(
     {
         @Result(name="inputRedirected", location="show-jobs", type="redirectAction"),
@@ -64,10 +57,12 @@ public class ShowJobsAction extends BaseAction implements Preparable {
      *
      */
     @RetrieveMessages
+    @Action("show-jobs")
     public String execute() {
         return INPUT;
     }
 
+    @Action("show-jobs-ajax")
     public String executeAjaxJobsTable() {
         return "ajaxJobsTable";
     }
@@ -80,6 +75,7 @@ public class ShowJobsAction extends BaseAction implements Preparable {
      *  Delete any selected jobs.
      */
     @StoreMessages
+    @Action("delete-jobs")
     public String delete() {
 
     	//TODO improve security

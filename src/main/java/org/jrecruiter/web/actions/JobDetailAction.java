@@ -11,6 +11,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
@@ -21,7 +22,6 @@ import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.texturemedia.smarturls.Result;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -51,8 +51,8 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
     private Job job;
 
-    private @Autowired JobService jobService;
-    private @Autowired DataService dataService;
+    private transient @Autowired JobService jobService;
+    private transient @Autowired DataService dataService;
     private Map<String, Object>session;
 
     /**
