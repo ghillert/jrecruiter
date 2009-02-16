@@ -14,7 +14,6 @@ import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
-import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.test.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
