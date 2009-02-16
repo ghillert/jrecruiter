@@ -15,8 +15,6 @@
 */
 package org.jrecruiter.web.actions;
 
-import java.util.HashMap;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
