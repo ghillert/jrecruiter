@@ -15,11 +15,9 @@
 */
 package org.jrecruiter.dao;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**

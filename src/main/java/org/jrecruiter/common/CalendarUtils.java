@@ -15,10 +15,7 @@
  */
 package org.jrecruiter.common;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Provide common helper methods to work around the issues with Java Calendar and Date

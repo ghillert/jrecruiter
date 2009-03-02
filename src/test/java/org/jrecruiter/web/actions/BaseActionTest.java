@@ -16,7 +16,6 @@
 package org.jrecruiter.web.actions;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -39,8 +38,8 @@ public class BaseActionTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
     	ActionContext ac = new ActionContext(new HashMap<String, Object>());
-    	ac.setContext(ac);
-        ac.getContext().setSession(new HashMap<String, Object>());
+    	ActionContext.setContext(ac);
+    	ActionContext.getContext().setSession(new HashMap<String, Object>());
 
         // populate the request so getRequest().getSession() doesn't fail in BaseAction.java
         ServletActionContext.setRequest(new MockHttpServletRequest());

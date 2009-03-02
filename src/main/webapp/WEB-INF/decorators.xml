@@ -9,5 +9,6 @@
         <pattern>/admin/show-users-ajax*</pattern>
         <pattern>/admin/logging-ajax-logger-table*</pattern>
         <pattern>/contact.html*</pattern>
+        <pattern>/dwr/*</pattern>
     </excludes>
 </decorators>

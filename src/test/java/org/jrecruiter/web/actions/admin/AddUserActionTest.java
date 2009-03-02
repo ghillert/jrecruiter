@@ -17,9 +17,6 @@ package org.jrecruiter.web.actions.admin;
 
 import junit.framework.Assert;
 
-import org.easymock.EasyMock;
-import org.jrecruiter.model.User;
-import org.jrecruiter.service.UserService;
 import org.jrecruiter.web.actions.BaseActionTest;
 
 /**

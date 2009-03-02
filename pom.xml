@@ -502,7 +502,7 @@
         <dependency>
           <groupId>org.directwebremoting</groupId>
           <artifactId>dwr</artifactId>
-          <version>2.0.1</version>
+          <version>2.0.3</version>
         </dependency>
 
         <dependency>
@@ -674,7 +674,7 @@
         <dependency>
           <groupId>net.jawr</groupId>
           <artifactId>jawr</artifactId>
-          <version>2.5.1</version>
+          <version>2.7</version>
 
           <exclusions>
             <exclusion>
@@ -872,6 +872,7 @@
             <activation><activeByDefault/></activation>
             <properties>
                 <struts.devMode>true</struts.devMode>
+                <hibernate.show_sql>true</hibernate.show_sql>
                 <jawr.debug.on>true</jawr.debug.on>
                 <web.xml.DwrServlet.debug>true</web.xml.DwrServlet.debug>
             </properties>
@@ -880,6 +881,7 @@
             <id>prod</id>
             <properties>
                 <struts.devMode>false</struts.devMode>
+                <hibernate.show_sql>false</hibernate.show_sql>
                 <jawr.debug.on>false</jawr.debug.on>
                 <web.xml.DwrServlet.debug>false</web.xml.DwrServlet.debug>
             </properties>
@@ -901,7 +903,6 @@
         <profile>
             <id>h2</id>
             <properties>
-                <dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
                 <dbunit.dataTypeFactoryName>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</dbunit.dataTypeFactoryName>
                 <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
                 <jdbc.groupId>com.h2database</jdbc.groupId>
@@ -916,7 +917,6 @@
         <profile>
             <id>hsqldb</id>
             <properties>
-                <dbunit.operation.type>INSERT</dbunit.operation.type>
                 <dbunit.dataTypeFactoryName>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</dbunit.dataTypeFactoryName>
                 <hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
                 <jdbc.groupId>hsqldb</jdbc.groupId>
@@ -946,7 +946,6 @@
         <profile>
             <id>postgresql</id>
             <properties>
-                <dbunit.operation.type>INSERT</dbunit.operation.type>
                 <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
                 <jdbc.groupId>postgresql</jdbc.groupId>
                 <jdbc.artifactId>postgresql</jdbc.artifactId>
@@ -991,7 +990,18 @@
     </profiles>
 
     <properties>
-
+    
+        <dbunit.dataTypeFactoryName>org.dbunit.dataset.datatype.DefaultDataTypeFactory</dbunit.dataTypeFactoryName>
+        <dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
+        <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
+        <jdbc.groupId>mysql</jdbc.groupId>
+        <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
+        <jdbc.version>5.1.6</jdbc.version>
+        <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+        <jdbc.url><![CDATA[jdbc:mysql://localhost/appfuse?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
+        <jdbc.username>root</jdbc.username>
+        <jdbc.password/>
+        
         <!-- Framework dependency versions -->
         <spring.version>2.5.6</spring.version>
 
