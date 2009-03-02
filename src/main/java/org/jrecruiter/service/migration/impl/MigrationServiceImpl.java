@@ -17,7 +17,6 @@ package org.jrecruiter.service.migration.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -25,7 +24,6 @@ import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
 import org.jasypt.digest.StringDigester;
-import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.JobDao;

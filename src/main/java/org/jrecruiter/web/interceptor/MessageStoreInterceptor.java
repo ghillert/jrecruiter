@@ -159,9 +159,9 @@ public class MessageStoreInterceptor implements Interceptor {
 
     private String operationMode = NONE;
 
-    public static String fieldErrorsSessionKey = "__MessageStoreInterceptor_FieldErrors_SessionKey";
-    public static String actionErrorsSessionKey = "__MessageStoreInterceptor_ActionErrors_SessionKey";
-    public static String actionMessagesSessionKey = "__MessageStoreInterceptor_ActionMessages_SessionKey";
+    public final static String fieldErrorsSessionKey = "__MessageStoreInterceptor_FieldErrors_SessionKey";
+    public final static String actionErrorsSessionKey = "__MessageStoreInterceptor_ActionErrors_SessionKey";
+    public final static String actionMessagesSessionKey = "__MessageStoreInterceptor_ActionMessages_SessionKey";
 
 
     public boolean isAutoRetrieveMode() {
