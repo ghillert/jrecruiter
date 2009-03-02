@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd"
-  version="2.5">
+  version="2.4">
 
   <display-name>jRecruiter 2.0</display-name>
   <description>jRecruiter is a job posting service.</description>
@@ -123,7 +122,7 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>struts</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>*.html</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>responseAddHttpHeadersFilter</filter-name>
@@ -173,7 +172,7 @@
                   <param-name>configLocation</param-name>
                   <param-value>/jawr.properties</param-value>
           </init-param>
-          <load-on-startup>1</load-on-startup>
+          <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet>
           <servlet-name>CSSServlet</servlet-name>
@@ -188,7 +187,7 @@
                   <param-name>type</param-name>
                   <param-value>css</param-value>
           </init-param>
-          <load-on-startup>1</load-on-startup>
+          <load-on-startup>2</load-on-startup>
   </servlet>
   
     <servlet>

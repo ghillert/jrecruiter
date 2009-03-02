@@ -25,11 +25,6 @@
     <title><decorator:title default="Welcome to jRecruiter" /></title>
     <jwr:style src="/bundles/all.css" />
 
-    <!-- DWR specific -->
-    <script type="text/javascript" src="<c:url value='/dwr/interface/ajaxService.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
-
     <!-- Google Maps -->
     <script
       src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORQ7EYV2ourIdp48QYZszNEA7gcaFhQRuKqKuYEC9ss4BL5bATDTf3IeLg"

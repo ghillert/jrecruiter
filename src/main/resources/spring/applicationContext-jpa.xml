@@ -37,7 +37,7 @@
             <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
             <prop key="hibernate.cache.use_second_level_cache">true</prop>
             <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-            <prop key="hibernate.show_sql">true</prop>
+            <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
             <prop key="hibernate.format_sql">true</prop>
             <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
             <prop key="hibernate.search.default.indexBase">${hibernate.search.directory}</prop>
