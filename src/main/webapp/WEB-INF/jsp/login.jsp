@@ -15,7 +15,7 @@
       <fieldset id="loginSection">
           <legend>Login</legend>
           <div class="required">
-            <label for="j_username"><spring:message code="class.user.username" />*</label>
+            <label for="j_username"><spring:message code="class.user.email" />*</label>
             <s:textfield id="j_username" name="j_username" required="true" maxlength="25" tabindex="1"
                              onblur="javascript:this.className='';"
                              onfocus="javascript:this.className='selected';"/>
@@ -48,6 +48,8 @@
 
 <script type="text/JavaScript" language="JavaScript">
 <!--
-document.getElementById('j_username').focus();
+$(function() {
+	$('#j_username').focus();
+});
 //-->
 </script>
