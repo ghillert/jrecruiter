@@ -16,15 +16,19 @@
     <ul class="menuList" style="width: 15em; float: left;">
       <li>
         <s:url namespace="/" action="show-jobs" id="showJobsUrl"/>
-        <a href="${showJobsUrl}" class="button"><span class="showJobs">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
+        <a  id="showJobsButton" href="${showJobsUrl}" class="button"><span class="showJobs">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
+      </li>
+      <li>
+        <s:url namespace="/" action="show-jobs" id="showJobsUrl"/>
+        <a  id="showJobsFlexButton" href="${ctx}/flex-jobs/jobs.htm" class="button"><span class="showJobsFlex">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
       </li>
       <li>
         <s:url namespace="/admin" action="index" id="adminMainUrl"/>
-        <a href="${adminMainUrl}" class="button"><span class="manageAccount">&nbsp;</span><spring:message code="jsp.index.manageJobsAccount" /></a>
+        <a id="manageAccountButton" href="${adminMainUrl}" class="button"><span class="manageAccount">&nbsp;</span><spring:message code="jsp.index.manageJobsAccount" /></a>
       </li>
       <li>
         <s:url namespace="/registration" action="signup" id="signupUrl"/>
-        <a href="${signupUrl}" class="button"><span class="addUser">&nbsp;</span><spring:message code="jsp.index.createNewUser" /></a>
+        <a id="addUserButton" href="${signupUrl}" class="button"><span class="addUser">&nbsp;</span><spring:message code="jsp.index.createNewUser" /></a>
       </li>
     </ul>
     <div style="margin-left: 0; margin-right: auto;">
@@ -39,6 +43,67 @@
    <script type="text/javascript">
         jQuery(function() {
             jQuery('#keyword').focus();
+
+            $('#showJobsButton').qtip({
+            	   content: 'Show all available job postings.',
+            	   show: 'mouseover',
+            	   hide: 'mouseout',
+            	   position: {
+            		      corner: {
+            		         target: 'rightMiddle',
+            		         tooltip: 'leftMiddle'
+            		      }
+            	    },         		            	   
+           		   style: { 
+	                   tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+	               }
+           
+            });
+            $('#showJobsFlexButton').qtip({
+                   content: 'Show all available job postings using the Adobe Flex GUI.',
+                   show: 'mouseover',
+                   hide: 'mouseout',
+                   position: {
+                          corner: {
+                             target: 'rightMiddle',
+                             tooltip: 'leftMiddle'
+                          }
+                    },                                 
+                   style: { 
+                       tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+                   }
+            });
+            $('#manageAccountButton').qtip({
+                   content: 'Administrate your job postings.',
+                   show: 'mouseover',
+                   hide: 'mouseout',
+                   position: {
+                          corner: {
+                             target: 'rightMiddle',
+                             tooltip: 'leftMiddle'
+                          }
+                    },                                 
+                   style: { 
+                       tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+                   }
+            });
+            $('#addUserButton').qtip({
+                content: 'Register for a new user account.',
+                show: 'mouseover',
+                hide: 'mouseout',
+                position: {
+                       corner: {
+                          target: 'rightMiddle',
+                          tooltip: 'leftMiddle'
+                       }
+                 },                                 
+                style: { 
+                    tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+                }
+            });
+            
+            
+            
         });
    </script>
 
