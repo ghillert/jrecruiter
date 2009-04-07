@@ -51,7 +51,7 @@
         An Error has occurred in this application.
 
     <%
-     org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger("Application");
+     org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger("Application");
      LOGGER.error("Error JSP Page triggered!", exception);
     %>
 
