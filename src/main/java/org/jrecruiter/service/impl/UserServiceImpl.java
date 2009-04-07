@@ -217,17 +217,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /** {@inheritDoc} */
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+    public UserDetails loadUserByUsername(final String emailOrUserName) throws UsernameNotFoundException, DataAccessException {
 
-        final UserDetails user = this.getUser(username);
+        final User user = userDao.getUserByUsernameOrEmail(emailOrUserName.trim());
 
         if (user==null){
-
-            LOGGER.warn("loadUserByUsername() - No user with id " + username + " found.");
-            throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + username + " found.");
+            LOGGER.warn("loadUserByUsername() - No user with id " + emailOrUserName + " found.");
+            throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + emailOrUserName + " found.");
         }
 
-        LOGGER.info("User {} loaded.", user.getUsername());
+        LOGGER.info("User {0} ({1})loaded.", new Object[] { user.getUsername(), user.getEmail()});
 
         return user;
     }
