@@ -162,6 +162,29 @@ public class Job implements Serializable {
         this.id = jobId;
     }
 
+    /**
+     * Used for initializing job summaries.
+     * 
+     * @param id
+     * @param businessName
+     * @param jobTitle
+     * @param region
+     * @param updateDate
+     */
+    public Job(final Long id, final String businessName, final String jobTitle, final Region region, final Date updateDate, final Boolean usesMap
+    		, final BigDecimal latitude, final BigDecimal longitude, final Integer zoomlevel) {
+        this.id = id;
+        this.businessName = businessName;
+        this.jobTitle = jobTitle;
+        this.region = region;
+        this.updateDate = updateDate;
+        this.usesMap = usesMap;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.zoomLevel = zoomlevel;
+
+    }
+    
     /** minimal constructor */
     public Job(Long id, User user, String businessName, String jobTitle, String description, JobStatus status) {
         this.id = id;
