@@ -322,6 +322,9 @@ a.button:hover {
 .button span.showJobs {
   background-image: url(../images/icons/crystal/viewmag.png);
 }
+.button span.showJobsFlex {
+  background-image: url(../images/icons/flex-16x16.png);
+}
 .button span.manageAccount {
   background-image: url(../images/icons/crystal/configure.png);
 }
