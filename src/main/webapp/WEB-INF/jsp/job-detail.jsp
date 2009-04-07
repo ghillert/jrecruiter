@@ -19,9 +19,8 @@
     <div style="float: right; width: 200px; text-align: right;">Statistics: ${job.statistic.counter} hits | ${job.statistic.uniqueVisits} unique hits</div>
     <ul>
         <s:url id="showJobsUrl"  action="show-jobs"                    includeParams="none"/>
-        <s:url id="exportPdfUrl" action="job-detail" method="exportJobAsPdf" includeParams="false">
-            <s:param name="jobId" value="job.id"/>
-        </s:url>
+        <c:url var="exportPdfUrl" value="/s/${job.id}/jobDetail.pdf"/>
+
         <li    ><a class="back" href="${showJobsUrl}">Back</a></li>
         <li    ><a class="print" href="#" onclick="window.print();return false;">Print</a></li>
         <li    ><a class="pdf" href="${exportPdfUrl}">Pdf</a></li>
