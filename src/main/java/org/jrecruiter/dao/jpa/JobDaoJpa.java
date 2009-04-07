@@ -33,11 +33,13 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.jrecruiter.common.CollectionUtils;
+import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
+import org.jrecruiter.model.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -320,6 +322,16 @@ implements JobDao {
             }
 
         }
+
+        /** {@inheritDoc} */
+        @SuppressWarnings("unchecked")
+		public List<Job> getJobSummaries() {
+			
+	        final List < Job > jobs = entityManager
+	        .createQuery("select new Job(j.id, j.businessName, j.jobTitle, j.region, j.updateDate, j.usesMap, j.latitude, j.longitude, j.zoomLevel) from Job j left outer join j.region order by j.updateDate desc")
+	        .getResultList();
+	        return jobs;
+		}
 
     }
 

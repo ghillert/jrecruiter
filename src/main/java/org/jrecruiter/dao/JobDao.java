@@ -113,4 +113,7 @@ public interface JobDao extends GenericDao < Job, Long >{
      * Re-index the Hibernate Search index
      */
     void reindexSearch();
+
+    /** Get a summary list of jobs */
+	List<Job> getJobSummaries();
 }
