@@ -122,6 +122,15 @@
                     }
                 });
             });
+
+            
+            
+            $('fieldset').mouseover(function() {
+                    $(this).css("border-color", "#E07125");
+                }).mouseout(function() {
+                	$(this).css("border-color", "");
+                });
+            
         });
 
         </script>
