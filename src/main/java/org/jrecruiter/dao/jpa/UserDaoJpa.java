@@ -74,7 +74,28 @@ implements UserDao {
         return user;
     }
 
-    /**
+    @Override
+	public User getUserByUsernameOrEmail(final String usernameOrEmail) {
+        User user;
+
+        final Query query = entityManager.createQuery(
+                "select user from User user " +
+                "left join fetch user.userToRoles utr " +
+                "left join fetch utr.role "
+                + "where user.username = :usernameOrEmail or user.email = :usernameOrEmail ");
+        query.setParameter("usernameOrEmail", usernameOrEmail);
+        query.getResultList();
+
+        try {
+            user = (User) query.getSingleResult();
+        } catch(NoResultException e) {
+            user = null;
+        }
+
+        return user;
+	}
+
+	/**
      * Return all users from persistence store.
      * @return List of users
      */

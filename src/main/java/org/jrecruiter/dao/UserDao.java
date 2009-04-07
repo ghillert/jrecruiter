@@ -34,6 +34,15 @@ public interface UserDao extends GenericDao < User, Long >{
     User getUser(String username);
 
     /**
+     * Get a user from persistence store either by its username or the provided
+     * email address. 
+     * 
+     * @param username
+     * @return A single user
+     */
+    User getUserByUsernameOrEmail(String usernameOrEmail);
+    
+    /**
      * Return all users from persistence store.
      * @return List of users
      */
