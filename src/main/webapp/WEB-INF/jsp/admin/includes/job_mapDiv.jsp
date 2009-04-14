@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
     <fieldset style="clear: left;">
         <legend>
-            <spring:message code="jsp.addjobposting.job.fieldset.geographic.information" />
+            <spring:message code="jsp.admin.add-job.job.fieldset.geographic.information" />
         </legend>
         <div class="optional">
            <label for="usesMap"><spring:message code="jsp.job_mapDiv.text.uses.map" /></label>
