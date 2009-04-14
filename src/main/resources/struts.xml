@@ -32,6 +32,7 @@
                 <interceptor-ref name="store2" />
                 <interceptor-ref name="exception">
                   <param name="logEnabled">true</param>
+                  <param name="logCategory">org.jrecruiter.web</param>
                 </interceptor-ref>
                 <interceptor-ref name="alias"/>
                 <interceptor-ref name="i18n"/>
