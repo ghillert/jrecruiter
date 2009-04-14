@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: JobServiceImpl.java 320 2009-02-16 12:17:45Z ghillert $
+ * @version $Id$
  */
 @Transactional
 @Service("flexService")
