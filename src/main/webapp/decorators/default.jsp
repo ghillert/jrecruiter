@@ -68,14 +68,14 @@
       </div>
       <div class="content"><security:authorize ifAnyGranted="MANAGER, ADMIN">
         <s:url action="logout" id="logoutUrl" namespace="/admin"/>
-        <div style="text-align: right; margin-top: -0.5em;">You are logged in as 
+        <div style="text-align: right; margin-top: -0.5em;">You are logged in as
         <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> | <a href="${logoutUrl}" ><spring:message code="jsp.decorators.default.logout"/></a></div>
       </security:authorize><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
       </div>
       <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"
-        title="Main website of the jRecruiter project"><span>j</span>Recruiter</a>
+        title="Main website of the jRecruiter project"><span>j</span>Recruiter ($Revision$)</a>
       </div>
     </div>
 
@@ -123,14 +123,14 @@
                 });
             });
 
-            
-            
+
+
             $('fieldset').mouseover(function() {
                     $(this).css("border-color", "#E07125");
                 }).mouseout(function() {
-                	$(this).css("border-color", "");
+                    $(this).css("border-color", "");
                 });
-            
+
         });
 
         </script>
