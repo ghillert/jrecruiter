@@ -6,9 +6,9 @@ package org.jrecruiter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jrecruiter.common.CollectionUtils;
-
 import junit.framework.TestCase;
+
+import org.jrecruiter.common.CollectionUtils;
 
 /**
  * @author hillert

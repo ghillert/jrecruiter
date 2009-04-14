@@ -10,7 +10,7 @@ import org.springframework.test.annotation.Rollback;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: UserDaoTest.java 293 2008-11-13 02:26:55Z ghillert $
+ * @version $Id$
  */
 public class JobMigrationTest extends MigrationV1toV2Base {
     

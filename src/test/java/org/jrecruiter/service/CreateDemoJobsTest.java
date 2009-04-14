@@ -17,6 +17,7 @@ package org.jrecruiter.service;
 
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -28,6 +29,7 @@ public class CreateDemoJobsTest extends BaseTest {
 
     private @Autowired DemoService  demoService;
 
+    @Test
     public void testCreate30DemoJobsTest() throws Exception {
 
         final int numberOfJobs = 30;

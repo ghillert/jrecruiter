@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  * Base class for Migration Test Cases.
  *
  * @author Gunnar Hillert
- * @version $Id: BaseTest.java 293 2008-11-13 02:26:55Z ghillert $
+ * @version $Id$
  */
 @ContextConfiguration(locations = { "classpath:org/jrecruiter/migration/applicationContextV1_jdbc.xml",
 							        "classpath:spring/applicationContext.xml",
