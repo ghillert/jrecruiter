@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<h2><spring:message code="jsp.editSettings.title"/></h2>
+<h2><spring:message code="jsp.edit-settings.title"/></h2>
 
 <p class="info"><spring:message code="jsp.edit-settings.introduction.text" /></p>
 

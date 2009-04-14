@@ -17,7 +17,7 @@
         <li><label><spring:message code="jsp.admin.edit-job.fieldset.label.last.access"/>:</label><fmt:formatDate value="${job.statistic.lastAccess}" type="date" pattern="${datePattern}"/></li>
     </ul>
 </fieldset>
-<h2><spring:message code="jsp.admin.edit.job.title"/></h2>
+<h2><spring:message code="jsp.admin.edit-job.title"/></h2>
 
 <s:form id="editJobForm">
     <s:hidden name="job.id"/>
