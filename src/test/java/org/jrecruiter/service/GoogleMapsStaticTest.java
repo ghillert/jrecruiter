@@ -23,6 +23,7 @@ import java.net.URLConnection;
 import javax.imageio.ImageIO;
 
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -34,6 +35,7 @@ public class GoogleMapsStaticTest extends BaseTest {
 
     private @Autowired DemoService  demoService;
 
+    @Test
     public void testStaticMapTest() throws Exception {
 
         sendGetRequest();

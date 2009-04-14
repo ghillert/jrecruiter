@@ -6,8 +6,11 @@ package org.jrecruiter.dao;
 import java.util.Date;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,7 @@ public class UserDaoTest extends BaseTest {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(UserDaoTest.class);
 
+    @Test
     public void testGetAllUsers() {
 
         List<User> users = userDao.getAllUsers();
@@ -33,6 +37,7 @@ public class UserDaoTest extends BaseTest {
         LOGGER.info("Details of first user: " + users.get(0));
     }
 
+    @Test
     public void testGetSingleUser() {
         User user = userDao.getUser("admin");
         LOGGER.info(user.toString());
@@ -42,15 +47,16 @@ public class UserDaoTest extends BaseTest {
      *
      *
      */
+    @Test
     public void testAddAndRemoveUser() {
 
         final User user = getUser();
         User savedUser = userDao.save(user);
 
-        assertNotNull(savedUser.getUsername());
-        assertTrue(savedUser.getFirstName().equals("Demo First Name"));
+        Assert.assertNotNull(savedUser.getUsername());
+        Assert.assertTrue(savedUser.getFirstName().equals("Demo First Name"));
         entityManager.flush();
-        assertNotNull(savedUser.getId());
+        Assert.assertNotNull(savedUser.getId());
 
         userDao.deleteUser(new String[] { savedUser.getUsername() });
 
@@ -60,11 +66,11 @@ public class UserDaoTest extends BaseTest {
             User userFromDb = userDao.getUser(savedUser.getUsername());
 
             if (userFromDb != null) {
-                fail("User found in database");
+            	Assert.fail("User found in database");
             }
         } catch (DataAccessException dae) {
             LOGGER.debug("Expected exception: " + dae.getMessage());
-            assertNotNull(dae);
+            Assert.assertNotNull(dae);
         }
 
     }
