@@ -65,11 +65,17 @@ public class User implements Serializable, UserDetails{
     private String fax;
     private String email;
     private Date registrationDate;
-    private Date expirationDate;
     private Date updateDate;
     private Set<Job> jobs = new HashSet<Job>(0);
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
-
+    
+    /* Is this account verified */
+    private Boolean verified = Boolean.FALSE;
+    private Boolean enabled  = Boolean.FALSE;
+    
+    @Column(unique=true, length=36)
+    private String  verificationKey;
+    
     // Constructors
 
     /** default constructor */
@@ -90,7 +96,7 @@ public class User implements Serializable, UserDetails{
     /** full constructor */
     public User(Long id, String username, String password, String firstName,
             String lastName, String company, String phone, String fax,
-            String email, Date registerDate, Date expireDate,
+            String email, Date registerDate,
             Date updateDate, Set<Job> jobs,
             Set<UserToRole> userToRoles) {
         this.id = id;
@@ -103,7 +109,6 @@ public class User implements Serializable, UserDetails{
         this.fax = fax;
         this.email = email;
         this.registrationDate = registerDate;
-        this.expirationDate = expireDate;
         this.updateDate = updateDate;
         this.jobs = jobs;
         this.userToRoles = userToRoles;
@@ -212,16 +217,6 @@ public class User implements Serializable, UserDetails{
 
     @Column(unique=false, nullable=true, insertable=true,
             updatable=true, length=8)
-    public Date getExpirationDate() {
-        return this.expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    @Column(unique=false, nullable=true, insertable=true,
-            updatable=true, length=8)
     public Date getUpdateDate() {
         return this.updateDate;
     }
@@ -256,7 +251,6 @@ public class User implements Serializable, UserDetails{
         return true;
     }
 
-
     /**
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonLocked()
      * @return Returns the accountNonLocked.
@@ -272,12 +266,7 @@ public class User implements Serializable, UserDetails{
      */
     @Transient
     public boolean isCredentialsNonExpired() {
-        if (this.expirationDate == null ||
-                this.expirationDate.getTime() <= new Date().getTime()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -285,11 +274,28 @@ public class User implements Serializable, UserDetails{
      * @return Returns the enabled.
      */
     @Transient
+    @Override
     public boolean isEnabled() {
         return true;
     }
 
-    /* (non-Javadoc)
+    public Boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
+	}
+
+	public String getVerificationKey() {
+		return verificationKey;
+	}
+
+	public void setVerificationKey(String verificationKey) {
+		this.verificationKey = verificationKey;
+	}
+
+	/* (non-Javadoc)
      * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
      */
     @Transient
