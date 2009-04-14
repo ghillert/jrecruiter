@@ -119,7 +119,6 @@ public class MigrationServiceImpl implements MigrationService {
 				user.setEmail(rs.getString("email"));
 
 				user.setRegistrationDate(rs.getTimestamp("register_date"));
-				user.setExpirationDate(rs.getTimestamp("expire_date"));
 				user.setUpdateDate(rs.getTimestamp("update_date"));
 				user.setCompany(rs.getString("company"));
 
