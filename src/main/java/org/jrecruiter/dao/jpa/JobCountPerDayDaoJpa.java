@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * This DAO provides job-related database methods.
  *
  * @author 	 Puchala, Gunnar Hillert
- * @version $Id: JobDaoJpa.java 264 2008-10-25 21:36:15Z ghillert $
+ * @version $Id$
  */
 @Repository("jobCountPerDayDao")
 public final class JobCountPerDayDaoJpa extends GenericDaoJpa< JobCountPerDay, Long>
