@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: UserDaoTest.java 293 2008-11-13 02:26:55Z ghillert $
+ * @version $Id$
  */
 public class UserMigrationTest extends MigrationV1toV2Base {
 

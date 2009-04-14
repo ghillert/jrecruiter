@@ -25,6 +25,8 @@ import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -33,23 +35,12 @@ import org.jrecruiter.test.BaseTest;
  */
 public class JobServiceTest extends BaseTest {
 
-    JobService jobService;
-    UserService userService;
-
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    /**
-     * @param jobService the jobService to set
-     */
-    public void setJobService(JobService jobService) {
-        this.jobService = jobService;
-    }
+    @Autowired JobService jobService;
+    @Autowired UserService userService;
 
     public void addJobTest(){}
 
+    @Test
     public void testDeleteJobForIdTest() throws Exception {
         final Job job = this.getJob();
 
@@ -87,6 +78,7 @@ public class JobServiceTest extends BaseTest {
 
     public void searchByKeywordTest(){}
 
+    @Test
     public void testSendJobPostingToMailingList() throws Exception {
 
         final Job job = this.getJob();
