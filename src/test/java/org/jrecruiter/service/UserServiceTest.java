@@ -17,11 +17,15 @@ package org.jrecruiter.service;
 
 import java.util.Date;
 
+import junit.framework.Assert;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.userdetails.UserDetails;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 
 /**
  *
@@ -30,20 +34,10 @@ import org.jrecruiter.test.BaseTest;
  */
 public class UserServiceTest extends BaseTest {
 
-    UserService userService;
-    RoleDao roleDao;
+    @Autowired UserService userService;
+    @Autowired RoleDao roleDao;
 
-    /**
-     * @param userService the userService to set
-     */
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public void setRoleDao(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
-
+    @Test
     public void testAddUserTest(){
 
         final User user = getUser();
@@ -53,16 +47,16 @@ public class UserServiceTest extends BaseTest {
             userService.addUser(user);
             entityManager.flush();
         } catch (DuplicateUserException e) {
-            fail();
+        	Assert.fail();
         }
         try {
             userService.addUser(user2);
             entityManager.flush();
         } catch (DuplicateUserException e) {
-            assertNotNull(e.getMessage());
+        	Assert.assertNotNull(e.getMessage());
             return;
         }
-        fail();
+        Assert.fail();
     };
 
     //TODO
@@ -77,6 +71,7 @@ public class UserServiceTest extends BaseTest {
     //TODO
     public void deleteUserTest(){}
 
+    @Test
     public void testSendPassword() throws Exception {
         final User user = getUser();
         User savedUser = userService.addUser(user);
@@ -86,6 +81,7 @@ public class UserServiceTest extends BaseTest {
 
     }
 
+    @Test
     public void testLoadUserByUsername() {
 
         final User user = getUser();
@@ -94,12 +90,12 @@ public class UserServiceTest extends BaseTest {
             userService.addUser(user);
             entityManager.flush();
         } catch (DuplicateUserException e) {
-            fail();
+        	Assert.fail();
         }
 
         final UserDetails user2 = userService.loadUserByUsername(user.getUsername());
 
-        assertNotNull(user2);
+        Assert.assertNotNull(user2);
     }
 
     private User getUser() {

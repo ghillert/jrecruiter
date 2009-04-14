@@ -5,8 +5,11 @@ package org.jrecruiter.dao;
 
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.jrecruiter.model.Role;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -17,27 +20,29 @@ public class RoleDaoTest extends BaseTest {
 
 	private @Autowired RoleDao roleDao;
 
+    @Test
 	public void testSave() {
 
 		final Role role = new Role(null, "TEST");
 		Role savedRole = roleDao.save(role);
 
-		assertNotNull(savedRole.getId());
+		Assert.assertNotNull(savedRole.getId());
 
 		List<Role> roles = roleDao.getAll();
 
-		assertTrue(roles.size() >= 1);
+		Assert.assertTrue(roles.size() >= 1);
 	}
 
+    @Test
 	public void testGetRole() {
 
 		final Role role = new Role(null, "TEST");
 		Role savedRole = roleDao.save(role);
 
-		assertNotNull(savedRole.getId());
+		Assert.assertNotNull(savedRole.getId());
 
 		Role role2 = roleDao.getRole("TEST");
 
-		assertNotNull(role2);
+		Assert.assertNotNull(role2);
 	}
 }

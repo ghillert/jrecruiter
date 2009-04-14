@@ -5,10 +5,13 @@ package org.jrecruiter.dao;
 
 import java.util.Date;
 
+import junit.framework.Assert;
+
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -21,6 +24,7 @@ public class UserToRoleDaoTest extends BaseTest {
 	private @Autowired UserToRoleDao userToRoleDao;
 	private @Autowired RoleDao       roleDao;
 
+    @Test
     public void testSaveUserToRole() {
 
         final Role role = new Role(null, "TEST");
@@ -34,9 +38,10 @@ public class UserToRoleDaoTest extends BaseTest {
         UserToRole savedUserToRole = userToRoleDao.save(userToRole);
         entityManager.flush();
 
-        assertNotNull(savedUserToRole.getId());
+        Assert.assertNotNull(savedUserToRole.getId());
     }
 
+    @Test
     public void testSaveUserToRole2() {
 
         final Role role = new Role(null, "TEST");
@@ -46,16 +51,16 @@ public class UserToRoleDaoTest extends BaseTest {
 
         UserToRole userToRole = new UserToRole(null, savedRole, user);
 
-        assertTrue(user.getUserToRoles().size() == 0);
+        Assert.assertTrue(user.getUserToRoles().size() == 0);
 
         user.getUserToRoles().add(userToRole);
 
-        assertTrue(user.getUserToRoles().size() == 1);
+        Assert.assertTrue(user.getUserToRoles().size() == 1);
 
         User savedUser = userDao.save(user);
         entityManager.flush();
 
-        assertTrue(savedUser.getUserToRoles().size() == 1);
+        Assert.assertTrue(savedUser.getUserToRoles().size() == 1);
     }
 
 

@@ -4,7 +4,8 @@ package org.jrecruiter.test;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 /**
  * Base class for Dao Test Cases.
@@ -12,19 +13,15 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
  * @author Gunnar Hillert
  * @version $Id$
  */
-public abstract class BaseTest extends AbstractTransactionalDataSourceSpringContextTests {
+@ContextConfiguration(
+        locations={
+                "classpath:/spring/applicationContext.xml",
+                "classpath:/spring/applicationContext-jpa.xml",
+                "classpath:/spring/test-applicationContext-mail.xml",
+                "classpath:/spring/applicationContext-resources.xml",
+                "classpath:/spring/applicationContext-security.xml"
+                 })
+public abstract class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-    protected @PersistenceContext(unitName="base") EntityManager entityManager;
-
-    protected String[] getConfigLocations() {
-        setAutowireMode(AUTOWIRE_BY_NAME);
-        return new String[] {
-        "/spring/applicationContext.xml",
-        "/spring/applicationContext-jpa.xml",
-        "/test-applicationContext-mail.xml",
-        "/spring/applicationContext-resources.xml",
-        "/spring/applicationContext-security.xml"
-        };
-    }
-
+    protected @PersistenceContext EntityManager entityManager;
 }

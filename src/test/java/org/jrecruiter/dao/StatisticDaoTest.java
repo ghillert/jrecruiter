@@ -6,12 +6,15 @@ package org.jrecruiter.dao;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import junit.framework.Assert;
+
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -26,12 +29,13 @@ public class StatisticDaoTest extends BaseTest {
 
     private @Autowired JobDao jobDao;
 
+    @Test
     public void testGetAllStatistics() {
         Statistic statistic = getStatistic();
 
         Statistic savedStatistic = statisticDao.save(statistic);
 
-        assertNotNull(savedStatistic.getId());
+        Assert.assertNotNull(savedStatistic.getId());
     }
 
     private Statistic getStatistic() {

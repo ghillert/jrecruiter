@@ -18,6 +18,8 @@ package org.jrecruiter.service;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import junit.framework.Assert;
+
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Job;
@@ -57,10 +59,10 @@ public class JobServiceTest extends BaseTest {
         Job savedJob = jobService.addJob(job);
 
         Job job2 = jobService.getJobForId(savedJob.getId());
-        assertNotNull(job2);
+        Assert.assertNotNull(job2);
         jobService.deleteJobForId(job2.getId());
 
-        assertNull(jobService.getJobForId(savedJob.getId()));
+        Assert.assertNull(jobService.getJobForId(savedJob.getId()));
     }
 
     public void getJobForIdTest(){}

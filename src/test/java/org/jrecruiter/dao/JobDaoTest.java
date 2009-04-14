@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.common.Constants.StatsMode;
@@ -15,6 +17,7 @@ import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,7 @@ public class JobDaoTest extends BaseTest {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(JobDaoTest.class);
 
+    @Test
     public void testGetJobsPaginated() {
 
         List<Job> jobs = jobDao.getJobs(20, 1, null, null);
@@ -47,11 +51,7 @@ public class JobDaoTest extends BaseTest {
         }
     }
 
-    //FIXME
-//    public void testSearchByKeyword() {
-//        jobDao.searchByKeyword("java");
-//    }
-
+    @Test
     public void testSaveJobWithStatistic() {
         final Job job = this.getJob();
 
@@ -68,9 +68,10 @@ public class JobDaoTest extends BaseTest {
         job.setUser(savedUser);
 
         Job savedJob = jobDao.save(job);
-        assertNotNull(savedJob.getId());
+        Assert.assertNotNull(savedJob.getId());
     }
 
+    @Test
     public void testGetJob() {
 
         final Job job = this.getJob();
@@ -83,14 +84,16 @@ public class JobDaoTest extends BaseTest {
 
         Job job2 = jobDao.get(savedJob.getId());
 
-        assertNotNull(job2);
+        Assert.assertNotNull(job2);
     }
 
+    @Test
     public void testGetNonExistingJob() {
 
-        assertNull(jobDao.get(9999999999999L));
+        Assert.assertNull(jobDao.get(9999999999999L));
     }
 
+    @Test
     public void testDoesJobExist() {
 
         final Job job = this.getJob();
@@ -100,13 +103,14 @@ public class JobDaoTest extends BaseTest {
 
         job.setUser(savedUser);
 
-        assertFalse(jobDao.exists(9999999L));
+        Assert.assertFalse(jobDao.exists(9999999L));
         Job savedJob = jobDao.save(job);
-        assertNotNull(savedJob.getId());
+        Assert.assertNotNull(savedJob.getId());
 
-        assertTrue(jobDao.exists(savedJob.getId()));
+        Assert.assertTrue(jobDao.exists(savedJob.getId()));
     }
 
+    @Test
     public void testGetAllUserJobs() {
 
         final Job job = this.getJob();
@@ -120,8 +124,8 @@ public class JobDaoTest extends BaseTest {
 
         List <Job> jobs = jobDao.getAllUserJobs("demo44");
 
-        assertNotNull(jobs);
-        assertTrue(jobs.size()>0);
+        Assert.assertNotNull(jobs);
+        Assert.assertTrue(jobs.size()>0);
     }
 
     private User getUser() {
@@ -168,6 +172,7 @@ public class JobDaoTest extends BaseTest {
 
     }
 
+    @Test
     public void testGetAllJobs() {
 
         final Job job = this.getJob();
@@ -180,10 +185,11 @@ public class JobDaoTest extends BaseTest {
 
         List <Job> jobs = jobDao.getAllJobs();
 
-        assertTrue(jobs.size() > 0);
+        Assert.assertTrue(jobs.size() > 0);
 
     }
 
+    @Test
     public void testGetAllUserJobsForStatistics() {
         final Job job = this.getJob();
         final User user = this.getUser();
@@ -195,10 +201,11 @@ public class JobDaoTest extends BaseTest {
 
         List <Job> jobs = jobDao.getAllUserJobsForStatistics(savedUser.getId());
 
-        assertNotNull(jobs);
-        assertTrue(jobs.size()>0);
+        Assert.assertNotNull(jobs);
+        Assert.assertTrue(jobs.size()>0);
     }
 
+    @Test
     public void testGetUsersJobsForStatistics() {
         final Job job = this.getJob();
         final User user = this.getUser();
@@ -221,15 +228,16 @@ public class JobDaoTest extends BaseTest {
 
         List <Job> jobs = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.PAGE_HITS, false);
 
-        assertNotNull(jobs);
-        assertTrue(jobs.size()>0);
+        Assert.assertNotNull(jobs);
+        Assert.assertTrue(jobs.size()>0);
 
         List <Job> jobs2 = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.UNIQUE_HITS, false);
 
-        assertNotNull(jobs2);
-        assertTrue(jobs2.size()>0);
+        Assert.assertNotNull(jobs2);
+        Assert.assertTrue(jobs2.size()>0);
     }
 
+    @Test
     public void testGetUsersJobsForStatisticsAdmin() {
         final Job job = this.getJob();
         final User user = this.getUser();
@@ -250,13 +258,14 @@ public class JobDaoTest extends BaseTest {
         List <Job> jobs = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.PAGE_HITS, true);
         List <Job> jobs2 = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.UNIQUE_HITS, true);
 
-        assertNotNull(jobs);
-        assertTrue(jobs2.size()>0);
+        Assert.assertNotNull(jobs);
+        Assert.assertTrue(jobs2.size()>0);
 
-        assertNotNull(jobs2);
-        assertTrue(jobs.size()>0);
+        Assert.assertNotNull(jobs2);
+        Assert.assertTrue(jobs.size()>0);
     }
 
+    @Test
     public void testGetJobsCount() {
         final Job job = this.getJob();
         final User user = this.getUser();
@@ -268,10 +277,11 @@ public class JobDaoTest extends BaseTest {
 
         Long totalNumberOfJobs = jobDao.getJobsCount();
 
-        assertNotNull(totalNumberOfJobs);
-        assertTrue(totalNumberOfJobs.intValue() > 0);
+        Assert.assertNotNull(totalNumberOfJobs);
+        Assert.assertTrue(totalNumberOfJobs.intValue() > 0);
     }
 
+    @Test
     public void testGetJobCountForDay() {
         Calendar cal1 = Calendar.getInstance();
         cal1.clear();
@@ -311,10 +321,11 @@ public class JobDaoTest extends BaseTest {
         queryDate.set(1500, 4, 25);
         Long totalNumberOfJobs = jobDao.getJobCount(queryDate.getTime());
 
-        assertNotNull(totalNumberOfJobs);
-        assertTrue(totalNumberOfJobs.intValue() == 2);
+        Assert.assertNotNull(totalNumberOfJobs);
+        Assert.assertTrue(totalNumberOfJobs.intValue() == 2);
     }
 
+    @Test
     public void testGetJobCountPerDayAndPeriod() {
         Calendar cal1 = Calendar.getInstance();
         cal1.clear();
@@ -355,10 +366,7 @@ public class JobDaoTest extends BaseTest {
 
     }
 
-    public void setStatisticDao(StatisticDao statisticDao) {
-        this.statisticDao = statisticDao;
-    }
-
+    @Test
     public void testUpdateJob() {
         final Job job = this.getJob();
         final User user = this.getUser();
@@ -369,14 +377,14 @@ public class JobDaoTest extends BaseTest {
 
         entityManager.flush();
 
-        assertEquals("www.google.com", savedJob.getWebsite());
+        Assert.assertEquals("www.google.com", savedJob.getWebsite());
 
         savedJob.setWebsite("www.hillert.com");
         jobDao.save(savedJob);
         entityManager.flush();
 
         Job job2 = jobDao.get(savedJob.getId());
-        assertEquals("www.hillert.com", job2.getWebsite());
+        Assert.assertEquals("www.hillert.com", job2.getWebsite());
 
     }
 
