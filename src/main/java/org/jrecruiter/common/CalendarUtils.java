@@ -19,9 +19,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 /**
  * Provide common helper methods to work around the issues with Java Calendar and Date
@@ -90,7 +90,17 @@ public final class CalendarUtils {
     	
     	final GregorianCalendar gregorianCalendar = new GregorianCalendar();
     	gregorianCalendar.setTime(calendar.getTime());
-		final XMLGregorianCalendar xmlCalendar = new XMLGregorianCalendarImpl(gregorianCalendar);
+    	
+    	
+    	final DatatypeFactory dataTypeFactory;
+    	
+    	try {
+    		dataTypeFactory = DatatypeFactory.newInstance();
+    	} catch (DatatypeConfigurationException e) {
+    		throw new IllegalStateException(e.getMessage(),e);
+    	}
+
+		final XMLGregorianCalendar xmlCalendar = dataTypeFactory.newXMLGregorianCalendar(gregorianCalendar);
 		
 		return xmlCalendar.toXMLFormat();
     }
