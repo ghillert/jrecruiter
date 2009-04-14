@@ -62,7 +62,6 @@
     <column>company</column>
     <column>phone</column>
     <column>fax</column>
-    <column>expiration_date</column>
     <column>password</column>
         <row>
             <value>-1</value>
@@ -74,7 +73,6 @@
             <value>none</value>
             <value></value>
             <value></value>
-            <value>2008-01-10 14:12:00</value>
             <value>aswCoBHvJHtCSyJWRHvch0e4sKflhzkRsP8bUsf1FPTjEkFi3nlQbgtbRx95GluwVr82Ol6WHaLiW/eeoJzXvwjZjEYPgrVYuZmm3Xn0Rek=</value>
         </row>
     </table>
