@@ -10,7 +10,7 @@
            <div class="optional">
                <label for="website"><spring:message code="jsp._ALL.job.field.website" /></label>
                <s:textfield name="job.website" id="website" size="21" tabindex="7" />
-               <spring:message code="field.website.note" />
+               <spring:message code="jsp._ALL.job.field.website_note" />
            </div>
            <div class="optional">
                <label for="businessPhone"><spring:message code="jsp._ALL.job.field.phone" /></label>

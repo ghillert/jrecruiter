@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
     <fieldset style="clear: left;">
         <legend>
-            <spring:message code="jsp.addjobposting.job.fieldset.job.details" />
+            <spring:message code="jsp.admin.add-job.job.fieldset.job.details" />
         </legend>
         <div class="required">
            <label for="description"><spring:message code="jsp._ALL.job.field.jobDescription" /></label>
