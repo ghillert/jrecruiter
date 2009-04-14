@@ -47,7 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: DataServiceImpl.java 319 2008-12-21 12:38:31Z ghillert $
+ * @version $Id$
  */
 @Service("migrationService")
 @Transactional
