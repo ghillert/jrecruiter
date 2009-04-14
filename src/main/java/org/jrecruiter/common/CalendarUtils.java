@@ -27,7 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * Provide common helper methods to work around the issues with Java Calendar and Date
  *
  * @author Gunnar Hillert
- * @version $Id: CollectionUtils.java 291 2008-11-13 02:20:08Z ghillert $
+ * @version $Id$
  */
 public final class CalendarUtils {
 
