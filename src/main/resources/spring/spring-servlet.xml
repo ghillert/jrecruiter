@@ -1,66 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<!--
-		- DispatcherServlet application context for the image database.
-	-->
+    <!--
+        - DispatcherServlet application context for the image database.
+    -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	<!-- VIEWS -->
-	<bean id="viewNameTranslator"
-		class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
+    <!-- VIEWS -->
+    <bean id="viewNameTranslator"
+        class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
 
-	<!-- View Resolver for JSPs -->
+    <!-- View Resolver for JSPs -->
 
-	<!-- FreeMarker Configurer and View Resolver -->
-	<bean id="freemarkerConfig"
-		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="/WEB-INF/views/" />
-		<property name="freemarkerSettings">
-			<props>
-				<prop key="datetime_format">MM/dd/yyyy</prop>
-				<prop key="number_format">0.######</prop>
-			</props>
-		</property>
-		<property name="freemarkerVariables">
-			<map>
-				<entry key="xml_escape" value-ref="fmXmlEscape" />
-			</map>
-		</property>
-	</bean>
-	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+    <!-- FreeMarker Configurer and View Resolver -->
+    <bean id="freemarkerConfig"
+        class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/views/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="datetime_format">MM/dd/yyyy</prop>
+                <prop key="number_format">0.######</prop>
+            </props>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape" />
+            </map>
+        </property>
+    </bean>
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
 
-	<bean id="beanNameViewResolver"
+    <bean id="beanNameViewResolver"
         class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <property name="order" value="0"/>
     </bean>
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="exposeSpringMacroHelpers" value="true" />
-		<property name="requestContextAttribute" value="rc" />
-		<property name="prefix" value="/" />
-		<property name="suffix" value=".ftl" />
-		<property name="order" value="1"/>
-	</bean>
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="requestContextAttribute" value="rc" />
+        <property name="prefix" value="/" />
+        <property name="suffix" value=".ftl" />
+        <property name="order" value="1"/>
+    </bean>
 
-	<!-- HANDLERS -->
-	<context:component-scan base-package="org.jrecruiter.web" />
+    <!-- HANDLERS -->
+    <context:component-scan base-package="org.jrecruiter.web" />
 
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-		<property name="order" value="0" />
-	</bean>
 
-	<bean
-		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
-		<property name="order" value="1" />
-	</bean>
 
-	<bean name="/**/*"
-		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
-		
-   <bean name="indeedView" class="org.jrecruiter.web.XmlView"/>
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order" value="2"/>
+        <property name="mappings">
+        <value>
+        /messagebroker/*=_messageBroker
+        </value>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="order" value="1"/>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+
+<!---->
+<!--	<bean-->
+<!--		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
+<!--		<property name="order" value="0" />-->
+<!--	</bean>-->
+<!---->
+<!--	<bean-->
+<!--		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">-->
+<!--		<property name="order" value="1" />-->
+<!--	</bean>-->
+
+<!--	<bean name="/**/*"-->
+<!--		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />-->
+
+   <bean name="indeedView" class="org.jrecruiter.web.views.XmlView"/>
+   <bean name="jobDetailPdfView" class="org.jrecruiter.web.views.JobDetailPdfView"/>
+
+       <flex:message-broker/>
+
+    <bean id="messageBrokerConfigProcessor" class="org.jrecruiter.web.flex.CustomMessageBrokerConfigProcessor"/>
 
 </beans>
 

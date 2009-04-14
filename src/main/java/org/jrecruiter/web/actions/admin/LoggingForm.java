@@ -24,7 +24,7 @@ import org.jrecruiter.common.CollectionUtils;
  * Form for the Logging Action.
  *
  * @author Gunnar Hillert
- * @version $Id: LogFileInfo.java 291 2008-11-13 02:20:08Z ghillert $
+ * @version $Id$
  *
  */
 public class LoggingForm implements Serializable {

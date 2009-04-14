@@ -23,7 +23,7 @@ import org.jrecruiter.web.actions.util.LoggingUtil.LogLevels;
  * Logger information.
  *
  * @author Gunnar Hillert
- * @version $Id: LogFileInfo.java 291 2008-11-13 02:20:08Z ghillert $
+ * @version $Id$
  *
  */
 public class LoggerInfo implements Serializable {

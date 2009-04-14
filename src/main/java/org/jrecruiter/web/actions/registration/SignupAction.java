@@ -1,9 +1,7 @@
 package org.jrecruiter.web.actions.registration;
 
 import net.tanesha.recaptcha.ReCaptcha;
-import net.tanesha.recaptcha.ReCaptchaResponse;
 
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
@@ -78,12 +76,12 @@ public class SignupAction extends BaseAction {
 
         this.user.setPassword(this.stringDigester.digest(this.password));
 
-        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
+        //ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
 
-        if (!reCaptchaResponse.isValid()) {
-            addActionError("Not a good captcha.");
-            return INPUT;
-        }
+//        if (!reCaptchaResponse.isValid()) {
+//            addActionError("Not a good captcha.");
+//            return INPUT;
+//        }
 
         try {
            userService.addUser(user);
