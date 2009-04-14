@@ -141,7 +141,7 @@ public interface JobService {
      * @param jobs
      */
     void sendJobPostingToMailingList(Job jobs);
-
+    
     /**
      * Method for update a job posting.
      *

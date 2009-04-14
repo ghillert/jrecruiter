@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
@@ -32,6 +33,7 @@ import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
+import org.jrecruiter.service.NotificationService;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.slf4j.Logger;
@@ -69,6 +71,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    private @Autowired NotificationService notificationService;
+
     /**
      *   Used for creating the Apache-Velocity-based Email template.
      */
@@ -102,14 +106,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private @Autowired StringDigester stringDigester;
 
     //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     /** {@inheritDoc} */
     public User addUser(User user) throws DuplicateUserException{
 
         Date registerDate = new Date();
         user.setRegistrationDate(registerDate);
         user.setUpdateDate(registerDate);
-
+        user.setVerified(Boolean.FALSE);
+        user.setVerificationKey(generateUuid());
         User duplicateUser = userDao.getUser(user.getUsername());
 
         if (duplicateUser!= null) {
@@ -132,7 +137,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         userToRoles.add(utr);
 
-        return this.saveUser(user);
+        User savedUser = this.saveUser(user);
+
+        Map context = new HashMap();
+        context.put("user", savedUser);
+        context.put("registrationCode", this.generateUuid());
+
+        notificationService.sendEmail(savedUser.getEmail(), context, "account-verification");
+        return savedUser;
+
+
     }
 
     /** {@inheritDoc} */
@@ -249,4 +263,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.getUsersCount();
     }
 
+    public String generateUuid() {
+        return UUID.randomUUID().toString();
+    }
 }
