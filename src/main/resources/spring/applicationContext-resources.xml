@@ -11,7 +11,7 @@
             <list>
                 <value>classpath:jdbc.properties</value>
                 <value>classpath:jdbc_custom.properties</value>
-                <value>classpath:mail.properties</value>
+                <value>classpath:jrecruiter.properties</value>
             </list>
         </property>
     </bean>

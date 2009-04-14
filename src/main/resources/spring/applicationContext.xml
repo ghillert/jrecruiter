@@ -1,114 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:flex="http://www.springframework.org/schema/flex"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans      http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:flex="http://www.springframework.org/schema/flex"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans      http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
                            http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
                            http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
                            http://www.springframework.org/schema/flex    http://www.springframework.org/schema/flex/spring-flex-1.0.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	<tx:annotation-driven/>
-	<context:annotation-config />
-	<context:component-scan base-package="org.jrecruiter.dao.jpa" />
-	<context:component-scan base-package="org.jrecruiter.service.impl" />
-	
-	<flex:message-broker disable-default-mapping="true">
-        <flex:config-processor ref="messageBrokerConfigProcessor" />
-    </flex:message-broker>
-    
-    <bean id="flexService" class="org.jrecruiter.service.impl.FlexServiceImpl" />
+    <tx:annotation-driven/>
+    <context:annotation-config />
+    <context:component-scan base-package="org.jrecruiter.dao.jpa" />
+    <context:component-scan base-package="org.jrecruiter.service.impl" />
 
-    <flex:remote-service ref="flexService" />
-    
-	<!--
-		- The message source for this context, loaded from localized
-		"messages_xx" files - in the classpath, i.e.
-		"/WEB-INF/classes/messages.properties" or -
-		"/WEB-INF/classes/messages_fr.properties". - - "getMessage" calls to
-		this context will use this source. - Child contexts can have their own
-		message sources, inheriting all messages from this - source, being
-		able to define new messages and override ones defined in this source.
-		- - We have no need for application messages in this tiny application,
-		so this - definition will simply be used by the next level
-		(countries-servlet.xml).
-	-->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="classpath:messages"/>
-		<property name="defaultEncoding" value="utf-8"/>
-	</bean>
 
-	<bean
-		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-	<aop:aspectj-autoproxy />
+    <!--
+        - The message source for this context, loaded from localized
+        "messages_xx" files - in the classpath, i.e.
+        "/WEB-INF/classes/messages.properties" or -
+        "/WEB-INF/classes/messages_fr.properties". - - "getMessage" calls to
+        this context will use this source. - Child contexts can have their own
+        message sources, inheriting all messages from this - source, being
+        able to define new messages and override ones defined in this source.
+        - - We have no need for application messages in this tiny application,
+        so this - definition will simply be used by the next level
+        (countries-servlet.xml).
+    -->
+    <bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
 
-	<bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction" />
+    <bean
+        class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
+    <aop:aspectj-autoproxy />
 
-	<!-- Velocity - Configure Velocity for sending e-mail -->
-	<bean id="velocityEngine"
-		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="velocityPropertiesMap">
-			<map>
-				<entry key="resource.loader">
-					<value>ds</value>
-				</entry>
-				<entry key="ds.resource.loader.instance">
-					<ref bean="templateLoader" />
-				</entry>
-				<entry key="ds.resource.loader.resource.table">
-					<value>configurations</value>
-				</entry>
-				<entry key="ds.resource.loader.resource.keycolumn">
-					<value>message_key</value>
-				</entry>
-				<entry key="ds.resource.loader.resource.templatecolumn">
-					<value>message_text</value>
-				</entry>
-				<entry key="ds.resource.loader.resource.timestampcolumn">
-					<value>last_modified</value>
-				</entry>
-				<entry key="velocimacro.library">
-					<value></value>
-				</entry>
-			</map>
-		</property>
-	</bean>
+    <bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction" />
 
-	<!-- Velocity Database Template Loader -->
-	<bean id="templateLoader"
-		class="org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader">
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
-	</bean>
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
-	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
-		<property name="privateKey" value="your private key" />
-		<property name="publicKey" value="6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn" />
-		<property name="recaptchaServer" value="http://api.recaptcha.net" />
-		<!--
-			Or, if you want to use SSL, then use this: <property
-			name="recaptchaServer" value="http://secure-api.recaptcha.net" />
-		-->
-		<property name="includeNoscript" value="false" />
-	</bean>
+    <!-- Velocity - Configure Velocity for sending e-mail -->
+    <bean id="velocityEngine"
+        class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityPropertiesMap">
+            <map>
+                <entry key="resource.loader">
+                    <value>ds</value>
+                </entry>
+                <entry key="ds.resource.loader.instance">
+                    <ref bean="templateLoader" />
+                </entry>
+                <entry key="ds.resource.loader.resource.table">
+                    <value>configurations</value>
+                </entry>
+                <entry key="ds.resource.loader.resource.keycolumn">
+                    <value>message_key</value>
+                </entry>
+                <entry key="ds.resource.loader.resource.templatecolumn">
+                    <value>message_text</value>
+                </entry>
+                <entry key="ds.resource.loader.resource.timestampcolumn">
+                    <value>last_modified</value>
+                </entry>
+                <entry key="velocimacro.library">
+                    <value></value>
+                </entry>
+            </map>
+        </property>
+    </bean>
 
-	<bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
-	    <!-- wait 10 seconds before starting repeated execution -->
-	    <property name="delay" value="10000" />
-	    <property name="period" value="80000000" />
-	    <property name="timerTask" ref="updateJobCountPerDays" />
-	</bean>
+    <!-- Velocity Database Template Loader -->
+    <bean id="templateLoader"
+        class="org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
 
-	<bean id="updateJobCountPerDays" class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
-	    <property name="targetObject" ref="jobService" />
-	    <property name="targetMethod" value="updateJobCountPerDays" />
-	</bean>
+     <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+       <property name="templateLoaderPath"><value>classpath:freemarker/</value></property>
+     </bean>
+
+    <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+        <property name="privateKey" value="your private key" />
+        <property name="publicKey" value="6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn" />
+        <property name="recaptchaServer" value="http://api.recaptcha.net" />
+        <!--
+            Or, if you want to use SSL, then use this: <property
+            name="recaptchaServer" value="http://secure-api.recaptcha.net" />
+        -->
+        <property name="includeNoscript" value="false" />
+    </bean>
+
+    <bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <!-- wait 10 seconds before starting repeated execution -->
+        <property name="delay" value="10000" />
+        <property name="period" value="80000000" />
+        <property name="timerTask" ref="updateJobCountPerDays" />
+    </bean>
+
+    <bean id="updateJobCountPerDays" class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+        <property name="targetObject" ref="jobService" />
+        <property name="targetMethod" value="updateJobCountPerDays" />
+    </bean>
 
     <bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
         <property name="scheduledTimerTasks">
@@ -117,8 +115,5 @@
             </list>
         </property>
     </bean>
-    
-
-    <bean id="messageBrokerConfigProcessor" class="org.jrecruiter.web.flex.CustomMessageBrokerConfigProcessor"/>
 
 </beans>
