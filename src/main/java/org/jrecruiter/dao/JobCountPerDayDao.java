@@ -26,7 +26,7 @@ import org.jrecruiter.model.statistics.JobCountPerDay;
     	yesterday.add(Calendar.DAY_OF_YEAR, -1);-related persistence calls.
  *
  * @author Gunnar Hillert
- * @version @version $Id: JobDao.java 251 2008-08-18 13:10:45Z ghillert $
+ * @version @version $Id$
  */
 public interface JobCountPerDayDao extends GenericDao < JobCountPerDay, Long >{
 
