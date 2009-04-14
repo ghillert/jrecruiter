@@ -12,7 +12,7 @@
           <s:textfield id="username" name="user.username" required="true" maxlength="25" tabindex="1"/>
         </div>
         <div class="required">
-            <label for="password"><spring:message code="user.password" />*</label>
+            <label for="password"><spring:message code="class.user.password" />*</label>
             <s:password  id="password" name="password" required="true" maxlength="25" tabindex="2"/>
         </div>
         <div class="optional">
