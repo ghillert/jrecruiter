@@ -1,27 +1,30 @@
-<project name="jRecruiter">
-	<bannerLeft>
-		<name>jRecruiter</name>
-		<src>images/logo.png</src>
-		<href>http://www.jrecruiter.org</href>
-	</bannerLeft>
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
+    name="jRecruiter">
+    <bannerLeft>
+        <name>jRecruiter</name>
+        <src>images/logo.png</src>
+        <href>http://www.jrecruiter.org</href>
+    </bannerLeft>
 
-	<body>
-    	<links>
-      		<item name="AJUG Job Postings" href="http://www.ajug.org/ajugjobs/" alt="Job Postings of the Atlanta Java 		User Group"/>
-    	</links>
-		<head>
-		<script src="http://www.google-analytics.com/urchin.js"
-			type="text/javascript">
-		</script>
-		<script type="text/javascript">
-			_uacct = "UA-177507-2"; urchinTracker();
-		</script>
-	</head>
-		
-		<menu name="Menu">
-			<item name="Overview" href="index.html" />
-			<item name="Installation" href="installation.html" />
-		</menu>
-		${reports}
-	</body>
+    <body>
+        <head>
+            <script src="http://www.google-analytics.com/urchin.js"
+                type="text/javascript">
+            </script>
+            <script type="text/javascript">
+                _uacct = "UA-177507-2"; urchinTracker();
+            </script>
+        </head>
+        <links>
+              <item name="AJUG Job Postings" href="http://www.ajug.org/ajugjobs/"  />
+        </links>
+        <menu name="Menu">
+            <item name="Overview" href="index.html" />
+            <item name="Installation" href="installation.html" />
+        </menu>
+        <menu ref="reports"/>
+
+    </body>
 </project>
