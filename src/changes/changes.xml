@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<document>
-   <properties>
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+<properties>
       <title>jRecruiter</title>
       <author email="gunnar at hillert dot com">Gunnar Hillert</author>
    </properties>
    <body>
-      <release version="2.0" date="January 2009" description="New Major Feature Release">
+      <release version="2.0" date="May 2009" description="New Major Feature Release">
            <action dev="Gunnar Hillert" type="add">
                (Almost) No more Struts XML-configuration files. Uses the
                Struts 2.1 Convention plugin for annotation based
