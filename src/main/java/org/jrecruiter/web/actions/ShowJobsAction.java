@@ -19,7 +19,6 @@ import org.jmesa.limit.Sort;
 import org.jmesa.limit.SortSet;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,16 +51,15 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
     private List<Job> jobs           = CollectionUtils.getArrayList();
     private Limit limit;
     private boolean ajax = false;
-    
+
     /* (non-Javadoc)
      * @see com.opensymphony.xwork2.ActionSupport#execute()
      */
-    @RetrieveMessages
     @Override
     @Actions({
-    	  @Action("show-jobs"),
-    	  @Action("show-jobs-ajax")
-    	})
+          @Action("show-jobs"),
+          @Action("show-jobs-ajax")
+        })
     public String execute() throws Exception {
 
         final TableFacade tableFacade = TableFacadeFactory.createTableFacade("jobsTable", request);
@@ -104,9 +102,9 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
         this.jobs = jobService.getJobs(maxRows, page, sortOrders, jobFilters);
 
         if (this.ajax) {
-        	return "ajax";
+            return "ajax";
         }
-        
+
         return SUCCESS;
     }
 
@@ -132,12 +130,12 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
         this.limit = limit;
     }
 
-	public boolean isAjax() {
-		return ajax;
-	}
+    public boolean isAjax() {
+        return ajax;
+    }
 
-	public void setAjax(boolean ajax) {
-		this.ajax = ajax;
-	}
+    public void setAjax(boolean ajax) {
+        this.ajax = ajax;
+    }
 
 }

@@ -68,14 +68,12 @@ public class User implements Serializable, UserDetails{
     private Date updateDate;
     private Set<Job> jobs = new HashSet<Job>(0);
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
-    
-    /* Is this account verified */
-    private Boolean verified = Boolean.FALSE;
+
     private Boolean enabled  = Boolean.FALSE;
-    
+
     @Column(unique=true, length=36)
     private String  verificationKey;
-    
+
     // Constructors
 
     /** default constructor */
@@ -273,29 +271,24 @@ public class User implements Serializable, UserDetails{
      * @see org.acegisecurity.userdetails.UserDetails#isEnabled()
      * @return Returns the enabled.
      */
-    @Transient
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 
-    public Boolean getVerified() {
-		return verified;
-	}
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	public void setVerified(Boolean verified) {
-		this.verified = verified;
-	}
+    public String getVerificationKey() {
+        return verificationKey;
+    }
 
-	public String getVerificationKey() {
-		return verificationKey;
-	}
+    public void setVerificationKey(String verificationKey) {
+        this.verificationKey = verificationKey;
+    }
 
-	public void setVerificationKey(String verificationKey) {
-		this.verificationKey = verificationKey;
-	}
-
-	/* (non-Javadoc)
+    /* (non-Javadoc)
      * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
      */
     @Transient
@@ -314,14 +307,14 @@ public class User implements Serializable, UserDetails{
             return new GrantedAuthority[0];
         }
     }
-    
+
     @Override
     public String toString()
     {
         final String TAB = " | ";
-        
+
         final StringBuilder retValue = new StringBuilder();
-        
+
         retValue.append("User ( ")
             .append(super.toString()).append(TAB)
             .append("id = ").append(this.getId()).append(TAB)
@@ -330,7 +323,7 @@ public class User implements Serializable, UserDetails{
             .append("FirstName = ").append(this.getFirstName()).append(TAB)
             .append("LastName = ").append(this.getLastName()).append(TAB)
             .append(" )");
-        
+
         return retValue.toString();
     }
 

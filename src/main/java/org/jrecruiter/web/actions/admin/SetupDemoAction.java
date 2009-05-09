@@ -19,7 +19,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.DemoService;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -35,10 +34,9 @@ public class SetupDemoAction extends BaseAction {
 
     private transient @Autowired DemoService demoService;
 
-    @StoreMessages
     public String execute() {
 
-    	User user = demoService.createDemoUser();
+        User user = demoService.createDemoUser();
         demoService.createDemoJobs(user, 300);
 
         addActionMessage("300 demo jobs have been created.");

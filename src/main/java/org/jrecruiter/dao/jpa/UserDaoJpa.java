@@ -75,7 +75,7 @@ implements UserDao {
     }
 
     @Override
-	public User getUserByUsernameOrEmail(final String usernameOrEmail) {
+    public User getUserByUsernameOrEmail(final String usernameOrEmail) {
         User user;
 
         final Query query = entityManager.createQuery(
@@ -93,9 +93,9 @@ implements UserDao {
         }
 
         return user;
-	}
+    }
 
-	/**
+    /**
      * Return all users from persistence store.
      * @return List of users
      */
@@ -204,5 +204,25 @@ implements UserDao {
         numberOfUsers = (Long) query.uniqueResult();
 
         return numberOfUsers;
+    }
+
+    /** {@inheritDoc} */
+    public User getUserByVerificationKey(final String key) {
+
+        User user;
+
+        final Query query = entityManager.createQuery(
+                "select user from User user "
+              + "where user.verificationKey = :key ");
+        query.setParameter("key", key);
+        query.getResultList();
+
+        try {
+            user = (User) query.getSingleResult();
+        } catch(NoResultException e) {
+            user = null;
+        }
+
+        return user;
     }
 }

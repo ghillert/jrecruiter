@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jrecruiter.web.views;
 
@@ -32,17 +32,17 @@ import com.lowagie.text.pdf.PdfWriter;
  */
 public class JobDetailPdfView extends AbstractPdfView {
 
-	@Override
-	protected void buildPdfDocument(final Map<String, Object> model, 
-			                        final Document document,
-			                        final PdfWriter pdfWriter, 
-			                        final HttpServletRequest request, 
-			                        final HttpServletResponse response)
-			throws Exception {
-		
-		final Job job = (Job)model.get("job");
-		final Image googleMapImage = (Image)model.get("googleMapImage");
-        
+    @Override
+    protected void buildPdfDocument(final Map<String, Object> model,
+                                    final Document document,
+                                    final PdfWriter pdfWriter,
+                                    final HttpServletRequest request,
+                                    final HttpServletResponse response)
+            throws Exception {
+
+        final Job job = (Job)model.get("job");
+        final Image googleMapImage = (Image)model.get("googleMapImage");
+
         super.setContentType("application/pdf");
 
         pdfWriter.setPageEvent(new JobDetailPageEvents());
@@ -88,9 +88,9 @@ public class JobDetailPdfView extends AbstractPdfView {
             addPdfRow(table, "Job Id", String.valueOf(job.getId()));
             addPdfRow(table, "Industry", job.getIndustry().getName());
             addPdfRow(table, "Industry Other", job.getIndustryOther());
-            
+
             if (job.getOfferedBy() != null) {
-            	addPdfRow(table, "Offered By", job.getOfferedBy().getName());
+                addPdfRow(table, "Offered By", job.getOfferedBy().getName());
             }
             if (job.getRegion() != null) {
                 addPdfRow(table, "Region", job.getRegion().getName());
@@ -135,24 +135,21 @@ public class JobDetailPdfView extends AbstractPdfView {
 
             Paragraph jobRestrictions = new Paragraph(job.getJobRestrictions());
             document.add(jobRestrictions);
-	
+
         }
 
-	}
+    }
 
-	/** XML Document **/
-	private org.jdom.Document document;
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.View#getContentType()
-	 */
-	@Override
-	public String getContentType() {
-		return "text/xml";
-	}
+    /* (non-Javadoc)
+     * @see org.springframework.web.servlet.View#getContentType()
+     */
+    @Override
+    public String getContentType() {
+        return "text/xml";
+    }
 
-	//~~~~~Helper~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
+    //~~~~~Helper~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     private void addPdfHeader(PdfWriter pdfWriter, Document document, String headerString) throws DocumentException {
 
         final Paragraph jobLocationHeader = new Paragraph(new Phrase(headerString, FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD)));
@@ -192,5 +189,5 @@ public class JobDetailPdfView extends AbstractPdfView {
     }
 
 
-	
+
 }

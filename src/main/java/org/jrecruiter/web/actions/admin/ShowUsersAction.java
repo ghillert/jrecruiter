@@ -35,7 +35,6 @@ import org.jmesa.limit.SortSet;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.RetrieveMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +53,7 @@ import com.opensymphony.xwork2.Preparable;
         @Result(name="ajaxUsersTable",  location="/WEB-INF/jsp/admin/user-list-table.jsp"),
         @Result(name="cancel",          location="index", type="redirectAction")
     }
-    
+
 )
 public class ShowUsersAction extends BaseAction implements Preparable, ServletRequestAware {
 
@@ -70,29 +69,28 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
 
     private Limit limit;
     private List<User>users;
-    
+
     /**
      *
      */
-    @RetrieveMessages
     @Action("show-users")
     public String execute() {
-    	populateTable();
+        populateTable();
         return INPUT;
     }
-    
+
     @SkipValidation
     @Override
     public String cancel() {
         return "cancel";
     }
-    
-	@Action("show-users-ajax")
+
+    @Action("show-users-ajax")
     public String executeAjaxUsersTable() {
-    	populateTable();
+        populateTable();
         return "ajaxUsersTable";
     }
-    
+
     private void populateTable() {
         final TableFacade tableFacade = TableFacadeFactory.createTableFacade("usersTable", request);
 
@@ -133,7 +131,7 @@ public class ShowUsersAction extends BaseAction implements Preparable, ServletRe
 
         this.users = userService.getUsers(maxRows, page, sortOrders, jobFilters);
     }
-    
+
     public void prepare() throws Exception {
 
     }

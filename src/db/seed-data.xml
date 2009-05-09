@@ -63,6 +63,7 @@
     <column>phone</column>
     <column>fax</column>
     <column>password</column>
+    <column>enabled</column>
         <row>
             <value>-1</value>
             <value>admin</value>
@@ -74,6 +75,7 @@
             <value></value>
             <value></value>
             <value>aswCoBHvJHtCSyJWRHvch0e4sKflhzkRsP8bUsf1FPTjEkFi3nlQbgtbRx95GluwVr82Ol6WHaLiW/eeoJzXvwjZjEYPgrVYuZmm3Xn0Rek=</value>
+            <value>true</value>
         </row>
     </table>
 
@@ -88,64 +90,7 @@
         <column>message_key</column>
         <column>message_text</column>
         <row><value>mail.from</value><value>no_reply@jrecruiter.org</value></row>
-        <row>
-            <value>mail.jobposting.body</value>
-            <value><![CDATA[
-            A new job has been added:
-
-Job ID:               ${jobId}
-
-Job Title:            ${jobTitle}
-
-Location:             ${businessLocation}
-
-Business Name:        ${businessName}
-
-Email:        ${businessEmail}
-
-
-
-Job Description:
-
-----------------
-
-
-
-${description}
-
-
-
-Job Restrictions:
-
-----------------
-
-
-
-${jobRestrictions}
-
-
-
-This job was posted on: ${updateDate}
-
-
-
-For more information, please visit: http://www.ajug.org/ajugjobs/showJobDetail.do?id=${jobId}
-
-
-
-            ]]></value>
-        </row>
         <row><value>mail.jobposting.email</value><value>jobs@jrecruiter.org</value></row>
         <row><value>mail.jobposting.subject</value><value><![CDATA[[ajug-jobs] ${jobTitle}]]></value></row>
-        <row><value>mail.password.body</value><value><![CDATA[Hello,
-
-
-
-Your requested password is: ${password}
-
-
-
-]]></value></row>
-        <row><value>mail.password.subject</value><value>jRecruiter Account Information - Lost Password</value></row>
     </table>
 </dataset>

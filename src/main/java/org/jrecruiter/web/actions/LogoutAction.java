@@ -1,7 +1,6 @@
 package org.jrecruiter.web.actions;
 
 import org.apache.struts2.convention.annotation.Result;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.context.SecurityContext;
@@ -29,7 +28,6 @@ public class LogoutAction extends BaseAction {
      * Let's log out - Invalidate the session as well as the ACEGI security
      * context.
      */
-    @StoreMessages
     public String execute () {
 
         final SecurityContext context = SecurityContextHolder.getContext();

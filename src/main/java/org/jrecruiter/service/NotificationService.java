@@ -20,19 +20,20 @@ import java.util.Map;
 /**
  * Repsonsible for handling any type of notifications e.g. password reminder email,
  * emails containing job posting information etc.
- *  
+ *
  * @author Gunnar Hillert
  * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public interface NotificationService {
 
-	/**
-	 * Method for sending emails.
-	 *
-	 * @param email The email address
-	 * @param context Map that contains data that needs to be rendered in the email
-	 * @param templatePrefix Freemarker template
-	 */
-	void sendEmail(String email, Map context, String templatePrefix);
-	
+    /**
+     * Method for sending emails.
+     *
+     * @param email The email address
+     * @param subject
+     * @param context Map that contains data that needs to be rendered in the email
+     * @param templatePrefix Freemarker template
+     */
+    void sendEmail(String email, String subject, Map context, String templatePrefix);
+
 }

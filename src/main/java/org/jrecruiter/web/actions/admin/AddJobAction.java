@@ -17,12 +17,14 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,7 +87,7 @@ public class AddJobAction extends JobBaseAction {
             stringLengthFields =
                     {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
             )
-    @StoreMessages
+
     public String save() {
 
         LOGGER.debug("Adding Job...");
@@ -101,9 +103,9 @@ public class AddJobAction extends JobBaseAction {
         this.model.getJob().setRegistrationDate(new Date());
         this.model.getJob().setUpdateDate(new Date());
 
-        jobService.addJob(this.model.getJob());
-
-        jobService.sendJobPostingToMailingList(this.model.getJob());
+        HttpServletRequest request = ServletActionContext.getRequest();
+        jobService.addJobAndSendToMailingList(this.model.getJob(),
+                request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/registration/account-validation.html");
 
         super.addActionMessage(getText("job.add.success"));
 

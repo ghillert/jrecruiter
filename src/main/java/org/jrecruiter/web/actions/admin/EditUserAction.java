@@ -20,7 +20,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class EditUserAction extends BaseAction {
     private String password;
     private String password2;
     private @Autowired StringDigester stringDigester;
-    
+
     private Long userId;
 
     /** serialVersionUID. */
@@ -48,7 +47,6 @@ public class EditUserAction extends BaseAction {
      * Save the user.
      * @return
      */
-    @StoreMessages
     public String save() {
 
         final User userFromDb = userService.getUser(this.user.getId());
@@ -71,11 +69,11 @@ public class EditUserAction extends BaseAction {
         }
 
         if (!StringUtils.isBlank(this.password)) {
-        	userFromDb.setPassword(this.stringDigester.digest(this.password));
+            userFromDb.setPassword(this.stringDigester.digest(this.password));
         } else {
-        	addActionMessage("Your password has not been changed.");
+            addActionMessage("Your password has not been changed.");
         }
-        
+
         userFromDb.setCompany(this.user.getCompany());
         userFromDb.setEmail(this.user.getEmail());
         userFromDb.setFax(this.user.getFax());
@@ -133,21 +131,21 @@ public class EditUserAction extends BaseAction {
         this.userId = userId;
     }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getPassword2() {
-		return password2;
-	}
+    public String getPassword2() {
+        return password2;
+    }
 
-	public void setPassword2(String password2) {
-		this.password2 = password2;
-	}
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
 
 
 }

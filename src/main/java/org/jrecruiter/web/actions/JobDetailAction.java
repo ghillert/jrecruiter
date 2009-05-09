@@ -9,9 +9,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
-import org.jrecruiter.service.DataService;
 import org.jrecruiter.service.JobService;
-import org.jrecruiter.web.interceptor.StoreMessages;
+import org.jrecruiter.web.ApiKeysHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,9 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
     private Job job;
 
+    private ApiKeysHolder apiKeysHolder;
+
     private transient @Autowired JobService jobService;
-    private transient @Autowired DataService dataService;
     private Map<String, Object>session;
 
     /**
@@ -51,7 +51,6 @@ public class JobDetailAction extends BaseAction implements SessionAware {
      */
     @Override
     @SuppressWarnings("unchecked")
-    @StoreMessages
     public String execute() throws Exception {
 
         if (this.jobId == null) {
@@ -140,6 +139,14 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
     public void setJob(Job job) {
         this.job = job;
+    }
+
+    public ApiKeysHolder getApiKeysHolder() {
+        return apiKeysHolder;
+    }
+
+    public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
+        this.apiKeysHolder = apiKeysHolder;
     }
 
 }

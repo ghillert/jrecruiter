@@ -1,5 +1,5 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="ehcache.xsd">
+         xsi:noNamespaceSchemaLocation="http://ehcache.sf.net/ehcache.xsd">
 
     <!-- Sets the path to the directory where cache .data files are created.
 
@@ -49,6 +49,6 @@
         timeToLiveSeconds="120"
         diskPersistent="false"
         diskExpiryThreadIntervalSeconds="120"/>
-        
+
     <!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for how to configure caching for your objects -->
 </ehcache>

@@ -17,7 +17,6 @@ package org.jrecruiter.web.actions.admin;
 
 import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.RetrieveMessages;
 
 /**
  * Re-index the Hibernate Search Index
@@ -36,7 +35,6 @@ public class SearchIndexAction extends BaseAction {
      *
      */
     @Override
-    @RetrieveMessages
     public String execute() {
             jobService.reindexSearch();
             super.addActionMessage("Re-indexing of the search index triggered.");

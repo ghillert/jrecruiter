@@ -1,14 +1,16 @@
 package org.jrecruiter.web.actions.registration;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.tanesha.recaptcha.ReCaptcha;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
+import org.jrecruiter.web.ApiKeysHolder;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.RetrieveMessages;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,16 +43,15 @@ public class SignupAction extends BaseAction {
 
     private @Autowired ReCaptcha reCaptcha;
 
+    private ApiKeysHolder apiKeysHolder;
+
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SignupAction.class);
 
-    @RetrieveMessages
-    @StoreMessages
     @Validations(
             requiredStrings = {
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username",  trim=true, message = "You must enter a username."),
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "password",       trim=true, message = "You must enter a password."),
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", trim=true, message = "You must enter a first name."),
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName",  trim=true, message = "You must enter a last name."),
@@ -84,15 +85,17 @@ public class SignupAction extends BaseAction {
 //        }
 
         try {
-           userService.addUser(user);
+           HttpServletRequest request = ServletActionContext.getRequest();
+           userService.addUser(user, request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/registration/account-validation.html");
+
         } catch (DuplicateUserException e) {
 
             LOGGER.warn(e.getMessage());
-              addFieldError("username", getText("error.duplicateUsername"));
+              addFieldError("username", getText("class._ALL.error.duplicateUsername"));
               return INPUT;
         }
 
-        addActionMessage(getText("user.add.success", user.getUsername()));
+        addActionMessage(getText("class.SignupAction.success"));
         return SUCCESS;
     }
 
@@ -111,7 +114,6 @@ public class SignupAction extends BaseAction {
 
     }
 
-    @RetrieveMessages
     public String execute() {
         return INPUT;
     }
@@ -159,6 +161,14 @@ public class SignupAction extends BaseAction {
 
     public void setRecaptcha_response_field(String recaptcha_response_field) {
         this.recaptcha_response_field = recaptcha_response_field;
+    }
+
+    public ApiKeysHolder getApiKeysHolder() {
+        return apiKeysHolder;
+    }
+
+    public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
+        this.apiKeysHolder = apiKeysHolder;
     }
 
 }
