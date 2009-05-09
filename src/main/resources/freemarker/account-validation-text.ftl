@@ -4,8 +4,8 @@ Thank you for registering your user account!</p>
 
 Please follow the following link to complete the registration process:
 
-123/${registrationCode}</a></b>
+${accountValidationUrl}?key=${registrationCode}
 
-Thank you very much!</p>
+Thank you very much!
 
 Your friendly jRecruiter Team
