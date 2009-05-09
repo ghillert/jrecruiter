@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-  <h2>Forgot Password</h2>
+  <h2><spring:message code="jsp.get-password.title"/></h2>
 
     <s:form id="getPasswordForm" action="get-password">
 

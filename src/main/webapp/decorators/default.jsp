@@ -25,11 +25,6 @@
     <title><decorator:title default="Welcome to jRecruiter" /></title>
     <jwr:style src="/bundles/all.css" />
 
-    <!-- Google Maps -->
-    <script
-      src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORQ7EYV2ourIdp48QYZszNEA7gcaFhQRuKqKuYEC9ss4BL5bATDTf3IeLg"
-      type="text/javascript"></script>
-
     <!-- Java Script Imports -->
     <jwr:script src="/bundles/lib.js"/>
 
@@ -49,14 +44,11 @@
       <div class="header_menu">
           <ul><li><a href="<c:url value='/'/>"><spring:message code="jsp.decorators.default.menu.home"/></a></li>
             <li>
-                            <s:url id="searchUrl" action="search" namespace="/"/>
-                            <a href="${searchUrl}"><spring:message code="jsp.decorators.default.menu.search.jobs"/></a></li>
+                <a href="<c:url value='/search.html'/>"><spring:message code="jsp.decorators.default.menu.search.jobs"/></a></li>
             <li>
-            <s:url id="adminUrl" action="index" namespace="/admin"/>
-            <a href="${adminUrl}"><spring:message code="jsp.decorators.default.menu.admin"/></a></li>
+                <a href="<c:url value='/admin/index.html'/>"><spring:message code="jsp.decorators.default.menu.admin"/></a></li>
             <li>
-            <s:url id="contactUrl" action="contact" namespace="/"/>
-            <a href="#" id="contact"><spring:message code="jsp.decorators.default.menu.about"/></a></li>
+                <a href="#" id="contact"><spring:message code="jsp.decorators.default.menu.about"/></a></li>
             <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="<spring:message code="jsp.decorators.default.menu.rss.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.rss"/></span></a></li>
             <li>             <a href="<c:url value='/s/indeed.xml'/>"              title="<spring:message code="jsp.decorators.default.menu.xml.title"/>"><spring:message code="jsp.decorators.default.menu.xml"/></a></li>
             <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
@@ -67,9 +59,8 @@
 
       </div>
       <div class="content"><security:authorize ifAnyGranted="MANAGER, ADMIN">
-        <s:url action="logout" id="logoutUrl" namespace="/admin"/>
         <div style="text-align: right; margin-top: -0.5em;">You are logged in as
-        <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> | <a href="${logoutUrl}" ><spring:message code="jsp.decorators.default.logout"/></a></div>
+        <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> | <a href="<c:url value='/logout.html'/>" ><spring:message code="jsp.decorators.default.logout"/></a></div>
       </security:authorize><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
       </div>
@@ -122,8 +113,6 @@
                     }
                 });
             });
-
-
 
             $('fieldset').mouseover(function() {
                     $(this).css("border-color", "#E07125");

@@ -11,8 +11,6 @@ import org.jrecruiter.model.User;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.userdetails.UserDetails;
 
@@ -24,11 +22,6 @@ public class DaoAuthenticationProviderTest extends BaseTest {
 
     private @Autowired UserService userService;
     private @Autowired UserDao userDao;
-
-    /**
-     *   Initialize Logging.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(DaoAuthenticationProviderTest.class);
 
     @Test
     public void testGetUser() {

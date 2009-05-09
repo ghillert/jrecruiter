@@ -23,5 +23,5 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
                  })
 public abstract class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-    protected @PersistenceContext EntityManager entityManager;
+    protected @PersistenceContext(unitName="base") EntityManager entityManager;
 }

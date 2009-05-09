@@ -150,6 +150,11 @@
                       </c:choose>
           </fieldset>
         </s:if>
+
+        <!-- Google Maps -->
+        <script
+          src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='${apiKeysHolder.googleMapsKey}'"
+          type="text/javascript"/>
         <script type="text/javascript">
 <!--
 

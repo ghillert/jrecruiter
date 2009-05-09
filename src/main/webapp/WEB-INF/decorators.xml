@@ -1,6 +1,6 @@
 <decorators defaultdir="/decorators">
     <decorator name="default" page="default.jsp">
-        <pattern>/*.html</pattern>
+        <pattern>/*</pattern>
     </decorator>
     <excludes>
         <pattern>/show-jobs-ajax*</pattern>
