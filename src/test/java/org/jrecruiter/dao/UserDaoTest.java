@@ -32,6 +32,14 @@ public class UserDaoTest extends BaseTest {
     @Test
     public void testGetAllUsers() {
 
+        final User user = getUser();
+        User savedUser = userDao.save(user);
+
+        Assert.assertNotNull(savedUser.getUsername());
+        Assert.assertTrue(savedUser.getFirstName().equals("Demo First Name"));
+        entityManager.flush();
+        Assert.assertNotNull(savedUser.getId());
+
         List<User> users = userDao.getAllUsers();
         LOGGER.info("Number of users found: " + users.size());
         LOGGER.info("Details of first user: " + users.get(0));
@@ -66,12 +74,32 @@ public class UserDaoTest extends BaseTest {
             User userFromDb = userDao.getUser(savedUser.getUsername());
 
             if (userFromDb != null) {
-            	Assert.fail("User found in database");
+                Assert.fail("User found in database");
             }
         } catch (DataAccessException dae) {
             LOGGER.debug("Expected exception: " + dae.getMessage());
             Assert.assertNotNull(dae);
         }
+
+    }
+
+    @Test
+    public void testGetUserByVerificationKey() {
+
+        final User user = getUser();
+        user.setVerificationKey("123456789");
+
+        User savedUser = userDao.save(user);
+
+        Assert.assertNotNull(savedUser.getUsername());
+        Assert.assertTrue(savedUser.getFirstName().equals("Demo First Name"));
+        entityManager.flush();
+
+        Assert.assertNotNull(savedUser.getId());
+
+        User userFromDb = userDao.getUserByVerificationKey("123456789");
+
+        Assert.assertNotNull(userFromDb);
 
     }
 

@@ -14,8 +14,6 @@
     <context:component-scan base-package="org.jrecruiter.dao.jpa" />
     <context:component-scan base-package="org.jrecruiter.service.impl" />
 
-
-
     <!--
         - The message source for this context, loaded from localized
         "messages_xx" files - in the classpath, i.e.
@@ -29,9 +27,15 @@
         (countries-servlet.xml).
     -->
     <bean id="messageSource"
-        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="classpath:messages"/>
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
+        <property name="basenames" >
+            <list>
+                <value>classpath:messages</value>
+                <value>classpath:struts-messages</value>
+            </list>
+        </property>
         <property name="defaultEncoding" value="utf-8"/>
+        <property name="cacheSeconds" value="0"/>
     </bean>
 
     <bean
@@ -43,43 +47,10 @@
 
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
-    <!-- Velocity - Configure Velocity for sending e-mail -->
-    <bean id="velocityEngine"
-        class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-        <property name="velocityPropertiesMap">
-            <map>
-                <entry key="resource.loader">
-                    <value>ds</value>
-                </entry>
-                <entry key="ds.resource.loader.instance">
-                    <ref bean="templateLoader" />
-                </entry>
-                <entry key="ds.resource.loader.resource.table">
-                    <value>configurations</value>
-                </entry>
-                <entry key="ds.resource.loader.resource.keycolumn">
-                    <value>message_key</value>
-                </entry>
-                <entry key="ds.resource.loader.resource.templatecolumn">
-                    <value>message_text</value>
-                </entry>
-                <entry key="ds.resource.loader.resource.timestampcolumn">
-                    <value>last_modified</value>
-                </entry>
-                <entry key="velocimacro.library">
-                    <value></value>
-                </entry>
-            </map>
-        </property>
-    </bean>
-
-    <!-- Velocity Database Template Loader -->
-    <bean id="templateLoader"
-        class="org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader">
-        <property name="dataSource">
-            <ref bean="dataSource" />
-        </property>
-    </bean>
+     <bean id="apiKeysHolder" class="org.jrecruiter.web.ApiKeysHolder">
+       <property name="googleMapsKey" value="${key.google.maps}"/>
+       <property name="reCaptchaKey"  value="${key.recaptcha}"/>
+     </bean>
 
      <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
        <property name="templateLoaderPath"><value>classpath:freemarker/</value></property>
@@ -87,7 +58,7 @@
 
     <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
         <property name="privateKey" value="your private key" />
-        <property name="publicKey" value="6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn" />
+        <property name="publicKey" value="${key.recaptcha}" />
         <property name="recaptchaServer" value="http://api.recaptcha.net" />
         <!--
             Or, if you want to use SSL, then use this: <property

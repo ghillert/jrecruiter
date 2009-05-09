@@ -8,8 +8,8 @@
 
     <fieldset>
         <div class="required">
-          <label for="username"><spring:message code="class.user.username" />*</label>
-          <s:textfield id="username" name="user.username" required="true" maxlength="25" tabindex="1"/>
+            <label for="email"><spring:message code="class.user.email" />*</label>
+            <s:textfield id="email" name="user.email" required="true" maxlength="25" tabindex="1"/>
         </div>
         <div class="required">
             <label for="password"><spring:message code="class.user.password" />*</label>
@@ -29,13 +29,13 @@
 
         <div class="required infoBox">
             <ol>
-	           <li><spring:message code="jsp.signup.text.password.tip1" /></li>
-	           <li><spring:message code="jsp.signup.text.password.tip2" /></li>
-	           <li><spring:message code="jsp.signup.text.password.tip3" /></li>
-	           <li><spring:message code="jsp.signup.text.password.tip4" /></li>
-	           <li><spring:message code="jsp.signup.text.password.tip5" /></li>
-	           <li><spring:message code="jsp.signup.text.password.tip6" /></li>
-	           <li><spring:message code="jsp.signup.text.password.tip7" /></li>
+               <li><spring:message code="jsp.signup.text.password.tip1" /></li>
+               <li><spring:message code="jsp.signup.text.password.tip2" /></li>
+               <li><spring:message code="jsp.signup.text.password.tip3" /></li>
+               <li><spring:message code="jsp.signup.text.password.tip4" /></li>
+               <li><spring:message code="jsp.signup.text.password.tip5" /></li>
+               <li><spring:message code="jsp.signup.text.password.tip6" /></li>
+               <li><spring:message code="jsp.signup.text.password.tip7" /></li>
             </ol>
         </div>
 
@@ -59,18 +59,14 @@
             <label for="fax"><spring:message code="class.user.fax" /></label>
             <s:textfield id="fax" name="user.fax" required="true" maxlength="25" tabindex="7"/>
         </div>
-        <div class="required">
-            <label for="email"><spring:message code="class.user.email" />*</label>
-            <s:textfield id="email" name="user.email" required="true" maxlength="25" tabindex="8"/>
-        </div>
         </fieldset>
         <div style="margin: 0 auto 0 auto; width: 320px;">
             <script type="text/javascript"
-                src="http://api.recaptcha.net/challenge?k=6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn">
+                src="http://api.recaptcha.net/challenge?k=${apiKeysHolder.reCaptchaKey}">
             </script>
 
             <noscript>
-                <iframe src="http://api.recaptcha.net/noscript?k=6LcqhAMAAAAAAKpIPOtIhizy6R-W1VU3Kccx8GIn"
+                <iframe src="http://api.recaptcha.net/noscript?k=${apiKeysHolder.reCaptchaKey}"
                     height="300" width="500" frameborder="0"></iframe><br>
                 <textarea name="recaptcha_challenge_field" rows="3" cols="40">
                 </textarea>
@@ -95,7 +91,7 @@
 
       jQuery('#password').bind('keyup', function(event) {
       testPassword(document.getElementById('password').value); });
-      jQuery('#username').focus();
+      jQuery('#email').focus();
     });
 
 </script>

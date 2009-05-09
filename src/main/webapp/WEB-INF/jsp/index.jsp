@@ -45,19 +45,19 @@
             jQuery('#keyword').focus();
 
             $('#showJobsButton').qtip({
-            	   content: 'Show all available job postings.',
-            	   show: 'mouseover',
-            	   hide: 'mouseout',
-            	   position: {
-            		      corner: {
-            		         target: 'rightMiddle',
-            		         tooltip: 'leftMiddle'
-            		      }
-            	    },         		            	   
-           		   style: { 
-	                   tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
-	               }
-           
+                   content: 'Show all available job postings.',
+                   show: 'mouseover',
+                   hide: 'mouseout',
+                   position: {
+                          corner: {
+                             target: 'rightMiddle',
+                             tooltip: 'leftMiddle'
+                          }
+                    },
+                      style: {
+                       tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+                   }
+
             });
             $('#showJobsFlexButton').qtip({
                    content: 'Show all available job postings using the Adobe Flex GUI.',
@@ -68,8 +68,8 @@
                              target: 'rightMiddle',
                              tooltip: 'leftMiddle'
                           }
-                    },                                 
-                   style: { 
+                    },
+                   style: {
                        tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
                    }
             });
@@ -82,8 +82,8 @@
                              target: 'rightMiddle',
                              tooltip: 'leftMiddle'
                           }
-                    },                                 
-                   style: { 
+                    },
+                   style: {
                        tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
                    }
             });
@@ -96,14 +96,14 @@
                           target: 'rightMiddle',
                           tooltip: 'leftMiddle'
                        }
-                 },                                 
-                style: { 
+                 },
+                style: {
                     tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
                 }
             });
-            
-            
-            
+
+
+
         });
    </script>
 
