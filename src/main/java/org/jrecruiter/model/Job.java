@@ -164,7 +164,7 @@ public class Job implements Serializable {
 
     /**
      * Used for initializing job summaries.
-     * 
+     *
      * @param id
      * @param businessName
      * @param jobTitle
@@ -172,7 +172,7 @@ public class Job implements Serializable {
      * @param updateDate
      */
     public Job(final Long id, final String businessName, final String jobTitle, final Region region, final Date updateDate, final Boolean usesMap
-    		, final BigDecimal latitude, final BigDecimal longitude, final Integer zoomlevel) {
+            , final BigDecimal latitude, final BigDecimal longitude, final Integer zoomlevel) {
         this.id = id;
         this.businessName = businessName;
         this.jobTitle = jobTitle;
@@ -184,7 +184,7 @@ public class Job implements Serializable {
         this.zoomLevel = zoomlevel;
 
     }
-    
+
     /** minimal constructor */
     public Job(Long id, User user, String businessName, String jobTitle, String description, JobStatus status) {
         this.id = id;
@@ -666,9 +666,9 @@ public class Job implements Serializable {
     public String toString()
     {
         final String TAB = " | ";
-        
+
         final StringBuilder retValue = new StringBuilder();
-        
+
         retValue.append("Job ( ")
             .append(super.toString()).append(TAB)
             .append("id = ").append(this.getId()).append(TAB)
@@ -676,9 +676,9 @@ public class Job implements Serializable {
             .append("updateDate = ").append(this.getUpdateDate()).append(TAB)
             .append("jobTitle = ").append(this.getJobTitle()).append(TAB)
             .append(" )");
-        
+
         return retValue.toString();
     }
-    
+
 }
 

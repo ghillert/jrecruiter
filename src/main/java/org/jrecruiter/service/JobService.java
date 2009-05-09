@@ -136,13 +136,6 @@ public interface JobService {
     List < Job > searchByKeyword(String keyword);
 
     /**
-     * Method for sending a job posting to the mailing list.
-     *
-     * @param jobs
-     */
-    void sendJobPostingToMailingList(Job jobs);
-    
-    /**
      * Method for update a job posting.
      *
      * @param jobs
@@ -193,6 +186,8 @@ public interface JobService {
     Long jobCount(Date day);
 
     void updateJobCountPerDays();
-    
+
     void updateJobCountPerDays(Calendar asOfDay);
+
+    void addJobAndSendToMailingList(Job job, String jobDetailUrl);
 }

@@ -181,7 +181,7 @@ implements JobDao {
         @SuppressWarnings("unchecked")
         public List<Job> searchByKeyword(final String keyword) {
 
-            FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
+            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
 
             MultiFieldQueryParser parser = new MultiFieldQueryParser(
                     new String[]{"description", "industry.name", "region.name", "regionOther",
@@ -323,13 +323,13 @@ implements JobDao {
 
         /** {@inheritDoc} */
         @SuppressWarnings("unchecked")
-		public List<Job> getJobSummaries() {
-			
-	        final List < Job > jobs = entityManager
-	        .createQuery("select new Job(j.id, j.businessName, j.jobTitle, j.region, j.updateDate, j.usesMap, j.latitude, j.longitude, j.zoomLevel) from Job j left outer join j.region order by j.updateDate desc")
-	        .getResultList();
-	        return jobs;
-		}
+        public List<Job> getJobSummaries() {
+
+            final List < Job > jobs = entityManager
+            .createQuery("select new Job(j.id, j.businessName, j.jobTitle, j.region, j.updateDate, j.usesMap, j.latitude, j.longitude, j.zoomLevel) from Job j left outer join j.region order by j.updateDate desc")
+            .getResultList();
+            return jobs;
+        }
 
     }
 

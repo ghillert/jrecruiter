@@ -20,8 +20,6 @@ import java.util.List;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.FlexService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,9 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service("flexService")
 public class FlexServiceImpl implements FlexService {
-
-    /** Initialize Logging. */
-    private final static Logger LOGGER = LoggerFactory.getLogger(FlexServiceImpl.class);
 
     /** Job Dao. */
     private @Autowired JobDao jobDao;
@@ -51,6 +46,6 @@ public class FlexServiceImpl implements FlexService {
 
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Job getJob(Long jobId) {
-    	return jobDao.get(jobId);
+        return jobDao.get(jobId);
     }
 }

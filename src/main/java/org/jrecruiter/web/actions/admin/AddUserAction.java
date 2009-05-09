@@ -19,7 +19,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +36,6 @@ public class AddUserAction extends BaseAction {
     private static final long serialVersionUID = -3422780336408883930L;
     private final static Logger LOGGER = LoggerFactory.getLogger(AddUserAction.class);
 
-    @StoreMessages
     public String save() {
 
         try {

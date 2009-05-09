@@ -2,9 +2,10 @@ package org.jrecruiter.web.actions;
 
 import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
-import org.jrecruiter.web.interceptor.StoreMessages;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 /**
  * Resets the users passwords and emails it back to the user.
@@ -20,20 +21,27 @@ public class GetPasswordAction extends BaseAction {
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GetPasswordAction.class);
-
     public String execute() {
         return INPUT;
     }
 
-    @StoreMessages
+    @Validations(
+            requiredStrings = {
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username", trim=true, key = "class.get-password.password.required")
+                     }
+            )
     public String process() {
 
         this.user = userService.getUser(this.user.getUsername());
 
+        if (this.user == null) {
+            super.addActionError(super.getText("class.get-password.user.not.found"));
+            return INPUT;
+        }
+
         userService.resetPassword(this.user);
 
-        super.addActionMessage("An email has been sent to " + user.getEmail());
+        super.addActionMessage(super.getText("class.get-password.success", new String[] {user.getEmail()}));
         return SUCCESS;
     }
 
@@ -44,4 +52,5 @@ public class GetPasswordAction extends BaseAction {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

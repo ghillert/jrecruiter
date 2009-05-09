@@ -1,8 +1,6 @@
 package org.jrecruiter.web.actions;
 
 import org.jrecruiter.service.JobService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,13 +22,11 @@ public class JobDetailController {
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(JobDetailController.class);
-
     @RequestMapping("/{id}/jobDetail.pdf")
     public String execute(@PathVariable Long id, ModelMap model) {
-    	
-    	model.addAttribute("job", jobService.getJobForId(id));
-    	return "jobDetailPdfView";
+
+        model.addAttribute("job", jobService.getJobForId(id));
+        return "jobDetailPdfView";
     }
 
 }

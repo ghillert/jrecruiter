@@ -35,13 +35,13 @@ public interface UserDao extends GenericDao < User, Long >{
 
     /**
      * Get a user from persistence store either by its username or the provided
-     * email address. 
-     * 
+     * email address.
+     *
      * @param username
      * @return A single user
      */
     User getUserByUsernameOrEmail(String usernameOrEmail);
-    
+
     /**
      * Return all users from persistence store.
      * @return List of users
@@ -71,4 +71,13 @@ public interface UserDao extends GenericDao < User, Long >{
      * @return Total number of jobs
      */
     Long getUsersCount();
+
+    /**
+     * Get a user by its verification key. This method is used to verify user
+     * account creation.
+     *
+     * @param key Key for which the corresponding user supposedly exists
+     * @return Return a user for the existing key
+     */
+    User getUserByVerificationKey(String key);
 }

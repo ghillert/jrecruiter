@@ -20,7 +20,6 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.StoreMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,27 +43,26 @@ public class DeleteUserAction extends BaseAction {
      * Initialize the edit user form with the registration information of the
      * currently logged in user.
      */
-    @StoreMessages
     public String execute() {
 
         if (this.userIds != null && !this.userIds.isEmpty()) {
 
-        	int validUserIds = 0;
-        	
+            int validUserIds = 0;
+
             for (Long userId : userIds) {
-            	
-            	if (userId != null) {
-            		
-	                User user = userService.getUser(userId);
-	
-	                if (user.getId() == -1) {
-	                    LOGGER.warn("User tried to delete admin user.");
-	                    super.addActionMessage("Cannot delete admin user.");
-	                } else {
-	                	validUserIds++;
-	                    userService.deleteUser(user);
-	                }
-            	}
+
+                if (userId != null) {
+
+                    User user = userService.getUser(userId);
+
+                    if (user.getId() == -1) {
+                        LOGGER.warn("User tried to delete admin user.");
+                        super.addActionMessage("Cannot delete admin user.");
+                    } else {
+                        validUserIds++;
+                        userService.deleteUser(user);
+                    }
+                }
             }
 
             if (validUserIds == 1) {

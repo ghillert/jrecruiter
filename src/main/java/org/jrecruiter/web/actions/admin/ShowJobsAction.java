@@ -23,8 +23,6 @@ import org.apache.struts2.convention.annotation.Results;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.RetrieveMessages;
-import org.jrecruiter.web.interceptor.StoreMessages;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -56,7 +54,6 @@ public class ShowJobsAction extends BaseAction implements Preparable {
     /**
      *
      */
-    @RetrieveMessages
     @Action("show-jobs")
     public String execute() {
         return INPUT;
@@ -68,44 +65,43 @@ public class ShowJobsAction extends BaseAction implements Preparable {
     }
 
     public void prepare() throws Exception {
-    	this.jobs = jobService.getUsersJobs(super.getLoggedInUser().getUsername());
+        this.jobs = jobService.getUsersJobs(super.getLoggedInUser().getUsername());
     }
 
     /**
      *  Delete any selected jobs.
      */
-    @StoreMessages
     @Action("delete-jobs")
     public String delete() {
 
-    	//TODO improve security
-    	
+        //TODO improve security
+
          if(!jobsToDelete.isEmpty()){
-        	 
-         	 int validJobIds = 0;
-        	 
+
+              int validJobIds = 0;
+
              for (Long jobId : jobsToDelete) {
                  if (jobId != null) {
                      jobService.deleteJobForId(jobId);
                      validJobIds++;
                  }
              }
-             
+
              if (validJobIds == 1) {
                  super.addActionMessage(getText("job.delete.success.one", new String[]{String.valueOf(validJobIds)}));
              } else {
                  super.addActionMessage(getText("job.delete.success.multiple", new String[]{String.valueOf(validJobIds)}));
              }
-             
+
          } else {
              super.addActionMessage("No Job Posting was deleted.");
          }
-         
+
          return "inputRedirected";
     }
 
     //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     public List<Job> getJobs() {
         return jobs;
     }
@@ -113,7 +109,7 @@ public class ShowJobsAction extends BaseAction implements Preparable {
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
     }
-    
+
     public List<Long> getJobsToDelete() {
         return jobsToDelete;
     }

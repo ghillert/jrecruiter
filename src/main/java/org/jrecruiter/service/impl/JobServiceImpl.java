@@ -17,14 +17,12 @@ package org.jrecruiter.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.exception.VelocityException;
 import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.common.CalendarUtils;
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.Roles;
 import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.ConfigurationDao;
@@ -42,16 +40,15 @@ import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.service.JobService;
+import org.jrecruiter.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  * @author Gunnar Hillert
@@ -64,9 +61,6 @@ public class JobServiceImpl implements JobService {
     /** Initialize Logging. */
     private final static Logger LOGGER = LoggerFactory.getLogger(JobServiceImpl.class);
 
-    /** Used for creating the Apache-Velocity-based Email template. */
-    private @Autowired VelocityEngine velocityEngine;
-
     /** Mailsender. */
     private @Autowired MailSender mailSender;
 
@@ -78,7 +72,7 @@ public class JobServiceImpl implements JobService {
 
     /** Job Count Per Day Dao. */
     private @Autowired JobCountPerDayDao jobCountPerDayDao;
-    
+
     /** User Dao. */
     private @Autowired UserDao userDao;
 
@@ -94,6 +88,7 @@ public class JobServiceImpl implements JobService {
     /** Settings Dao. */
     private @Autowired ConfigurationDao configurationDao;
 
+    private @Autowired NotificationService  notificationService;
 
     //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -175,53 +170,71 @@ public class JobServiceImpl implements JobService {
 
     /** {@inheritDoc} */
     public Job addJob(final Job job) {
-    	
-    	if (job.getStatistic() == null) {
-    		Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
-    		statistic.setJob(job);
-    		job.setStatistic(statistic);
-    	}
-    	
-    	final Job savedJob = jobDao.save(job);
-    		
-    	saveJobStatistics(job);
-    	
+
+        if (job.getStatistic() == null) {
+            Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
+            statistic.setJob(job);
+            job.setStatistic(statistic);
+        }
+
+        final Job savedJob = jobDao.save(job);
+
+        saveJobStatistics(job);
+
         return savedJob;
     }
-    
+
+    /** {@inheritDoc} */
+    public void addJobAndSendToMailingList(final Job job, final String mailingListUrl) {
+        this.addJob(job);
+
+        final Map<String, Object> context = CollectionUtils.getHashMap();
+        context.put("jobId", job.getId());
+        context.put("jobTitle", job.getJobTitle());
+        context.put("businessLocation", job.getRegionOther());
+        context.put("businessName", job.getBusinessName());
+        context.put("description", job.getDescription());
+        context.put("jobRestrictions", job.getJobRestrictions());
+        context.put("updateDate", job.getUpdateDate());
+        context.put("businessEmail", job.getBusinessEmail());
+
+        notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
+
+    }
+
     /** {@inheritDoc} */
     public void saveJobStatistics(Job job) {
-    	
-    	if (job.getId() == null) {
-	    	
-	    	JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(job.getRegistrationDate());
-	    	
-	    	if (jobCountPerDay == null) {
-	    		jobCountPerDay = new JobCountPerDay();
-	    		jobCountPerDay.setJobDate(job.getRegistrationDate());
-	    		jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(0));
-	    		jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(1));
-	    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount());
-	    		jobCountPerDayDao.save(jobCountPerDay);
-	    	} else {
-	    		jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() + 1);
-	    		jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() + 1);
-	    		jobCountPerDayDao.save(jobCountPerDay);
-	    	}
-    	}
+
+        if (job.getId() == null) {
+
+            JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(job.getRegistrationDate());
+
+            if (jobCountPerDay == null) {
+                jobCountPerDay = new JobCountPerDay();
+                jobCountPerDay.setJobDate(job.getRegistrationDate());
+                jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(0));
+                jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(1));
+                jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount());
+                jobCountPerDayDao.save(jobCountPerDay);
+            } else {
+                jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() + 1);
+                jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() + 1);
+                jobCountPerDayDao.save(jobCountPerDay);
+            }
+        }
     }
-    
+
     /** {@inheritDoc} */
     public void updateJob(final Job job) {
-    	
-    	if (job.getStatistic() == null) {
-    		Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
-    		statistic.setJob(job);
-    		job.setStatistic(statistic);
-    	}
-    	
+
+        if (job.getStatistic() == null) {
+            Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
+            statistic.setJob(job);
+            job.setStatistic(statistic);
+        }
+
         final Job savedJob = jobDao.save(job);
-        
+
         saveJobStatistics(savedJob);
     }
 
@@ -240,64 +253,21 @@ public class JobServiceImpl implements JobService {
     /** {@inheritDoc} */
     public void deleteJobForId(final Long jobId) {
         jobDao.remove(jobId);
-        
-	  	JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(new Date());
-      
-		if (jobCountPerDay == null) {
-			jobCountPerDay = new JobCountPerDay();
-			jobCountPerDay.setJobDate(new Date());
-			jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(1));
-			jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(0));
-			jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() - 1 );
-			jobCountPerDayDao.save(jobCountPerDay);
-		} else {
-			jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() -1);
-			jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() -1 );
-			jobCountPerDayDao.save(jobCountPerDay);
-		}
-    }
 
-    /** {@inheritDoc} */
-    public void sendJobPostingToMailingList(final Job jobs) {
+          JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(new Date());
 
-        final SimpleMailMessage msg = new SimpleMailMessage(this.message);
-        msg.setTo(configurationDao.get("mail.jobposting.email").getMessageText());
-
-        final Map < String,Object > model = new HashMap < String,Object > ();
-
-        model.put("jobId", jobs.getId());
-        model.put("jobTitle", jobs.getJobTitle());
-        model.put("businessLocation", jobs.getRegionOther());
-        model.put("businessName", jobs.getBusinessName());
-        model.put("description", jobs.getDescription());
-        model.put("jobRestrictions", jobs.getJobRestrictions());
-        model.put("updateDate", jobs.getUpdateDate());
-        model.put("businessEmail", jobs.getBusinessEmail());
-
-        String result = null;
-        String subject = null;
-        try {
-
-                result = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                   "mail.jobposting.body", model);
-            subject = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                    "mail.jobposting.subject", model);
-        } catch (VelocityException e) {
-            e.printStackTrace();
+        if (jobCountPerDay == null) {
+            jobCountPerDay = new JobCountPerDay();
+            jobCountPerDay.setJobDate(new Date());
+            jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(1));
+            jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(0));
+            jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() - 1 );
+            jobCountPerDayDao.save(jobCountPerDay);
+        } else {
+            jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() -1);
+            jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() -1 );
+            jobCountPerDayDao.save(jobCountPerDay);
         }
-
-        msg.setText(result);
-
-        msg.setSubject(subject);
-        msg.setFrom(configurationDao.get("mail.from").getMessageText());
-
-        try {
-            mailSender.send(msg);
-        } catch (MailException ex) {
-            LOGGER.error(ex.getMessage());
-            throw new IllegalStateException(ex);
-        }
-
     }
 
     /** {@inheritDoc} */
@@ -355,10 +325,10 @@ public class JobServiceImpl implements JobService {
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<JobCountPerDay> getJobCountPerDayAndPeriod(final Date fromDate, final Date toDate) {
 
-    	//Make sure we have values at least for today and the previous day.
-    	this.updateJobCountPerDays();
-   
-    	final List<JobCountPerDay> jobCountPerDays = jobCountPerDayDao.getJobCountPerDayAndPeriod(fromDate, toDate);
+        //Make sure we have values at least for today and the previous day.
+        this.updateJobCountPerDays();
+
+        final List<JobCountPerDay> jobCountPerDays = jobCountPerDayDao.getJobCountPerDayAndPeriod(fromDate, toDate);
         return jobCountPerDays;
     }
 
@@ -369,41 +339,41 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
-	public void updateJobCountPerDays() {
-		this.updateJobCountPerDays(CalendarUtils.getCalendarWithoutTime());
-	}
+    public void updateJobCountPerDays() {
+        this.updateJobCountPerDays(CalendarUtils.getCalendarWithoutTime());
+    }
 
     /** {@inheritDoc} */
-	public void updateJobCountPerDays(final Calendar asOfDay) {
-		
-    	final Calendar today = CalendarUtils.getCalendarWithoutTime();
-    	today.setTime(asOfDay.getTime());
-    	final Calendar yesterday = CalendarUtils.getCalendarWithoutTime();
-    	yesterday.add(Calendar.DAY_OF_YEAR, -1);
-    	
-    	final List<JobCountPerDay> latestTwoJobCountPerDays = jobCountPerDayDao.getLatestTwoJobCounts();
-    	
-    	//If nothing exists yet, create an entry with zero jobs.
-    	if (latestTwoJobCountPerDays.isEmpty()) {
-    		jobCountPerDayDao.save(new JobCountPerDay(yesterday.getTime(), 0L, 0L, 0L));
-    	}
-    	
-    	boolean containsToday = false;
-    	
-    	//Let's make sure we have a value for today
-    	for (JobCountPerDay jobCountPerDay : latestTwoJobCountPerDays) {
-    		if (today.getTime().equals(jobCountPerDay.getJobDate())) {
-    			containsToday = true;
-    			break;
-    		}
-    	}
-    	
-    	if (!containsToday) {
-    		//We need to create a value for today
-    		final Long totalNumberOfJobs = this.getJobsCount();
-    		jobCountPerDayDao.save(new JobCountPerDay(today.getTime(), 0L, 0L, totalNumberOfJobs));
-    	}
+    public void updateJobCountPerDays(final Calendar asOfDay) {
 
-    	
-	}
+        final Calendar today = CalendarUtils.getCalendarWithoutTime();
+        today.setTime(asOfDay.getTime());
+        final Calendar yesterday = CalendarUtils.getCalendarWithoutTime();
+        yesterday.add(Calendar.DAY_OF_YEAR, -1);
+
+        final List<JobCountPerDay> latestTwoJobCountPerDays = jobCountPerDayDao.getLatestTwoJobCounts();
+
+        //If nothing exists yet, create an entry with zero jobs.
+        if (latestTwoJobCountPerDays.isEmpty()) {
+            jobCountPerDayDao.save(new JobCountPerDay(yesterday.getTime(), 0L, 0L, 0L));
+        }
+
+        boolean containsToday = false;
+
+        //Let's make sure we have a value for today
+        for (JobCountPerDay jobCountPerDay : latestTwoJobCountPerDays) {
+            if (today.getTime().equals(jobCountPerDay.getJobDate())) {
+                containsToday = true;
+                break;
+            }
+        }
+
+        if (!containsToday) {
+            //We need to create a value for today
+            final Long totalNumberOfJobs = this.getJobsCount();
+            jobCountPerDayDao.save(new JobCountPerDay(today.getTime(), 0L, 0L, totalNumberOfJobs));
+        }
+
+
+    }
 }

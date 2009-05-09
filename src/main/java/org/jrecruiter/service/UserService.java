@@ -45,6 +45,17 @@ public interface UserService {
     User addUser(User user) throws DuplicateUserException;
 
     /**
+     * Adds a brand new user to the system. If a user
+     * with the username already exists a duplicate user exception
+     * is thrown.
+     *
+     * @param user The user to add
+     * @param accountValidationUrl Url that handles account validation
+     * @throws DuplicateUserException
+     */
+    User addUser(User user, String accountValidationUrl) throws DuplicateUserException;
+
+    /**
      * Load a user by the provided username
      * @param username
      * @return a single user
@@ -108,4 +119,13 @@ public interface UserService {
      */
     UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException, DataAccessException;
+
+    /**
+     * Get a user by its verification key. This method is used to verify user
+     * account creation.
+     *
+     * @param key Key for which the corresponding user supposedly exists
+     * @return Return a user for the existing key
+     */
+    User getUserByVerificationKey(String key);
 }

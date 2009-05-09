@@ -1,6 +1,5 @@
 package org.jrecruiter.web.actions;
 
-import org.jrecruiter.web.interceptor.RetrieveMessages;
 
 /**
  * Logs out from the application.
@@ -20,7 +19,6 @@ public class LoginAction extends BaseAction {
      * Let's log out - Invalidate the session as well as the ACEGI security
      * context.
      */
-    @RetrieveMessages
     public String execute () {
         return SUCCESS;
     }

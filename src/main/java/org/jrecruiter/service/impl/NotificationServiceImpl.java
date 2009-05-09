@@ -24,8 +24,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.jrecruiter.service.NotificationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.MailPreparationException;
@@ -41,16 +39,11 @@ import freemarker.template.TemplateException;
 
 /**
  * @author Gunnar Hillert
- * @version $Id: DataServiceImpl.java 320 2009-02-16 12:17:45Z ghillert $
+ * @version $Id$
  */
 @Service("notificationService")
 @Transactional
 public class NotificationServiceImpl implements NotificationService {
-
-    /**
-     * Logger Declaration.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
     /**
      * Mailsender.
@@ -59,20 +52,23 @@ public class NotificationServiceImpl implements NotificationService {
 
     private @Autowired Configuration freemarkerConfiguration;
 
- //TODO
-    public void sendEmail(final String email, final Map context, final String templateName) {
+
+    /**
+     *
+     */
+    public void sendEmail(final String email, final String subject, final Map context, final String templateName) {
 
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             public void prepare(MimeMessage mimeMessage) throws MessagingException, IOException {
 
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
                 message.setFrom("jobs@jrecruiter.org");
-                message.setTo("jobs@jrecruiter.org");
-                message.setSubject("Jobs");
+                message.setTo(email);
+                message.setSubject(subject);
 
-                Locale locale = LocaleContextHolder.getLocale();
+                final Locale locale = LocaleContextHolder.getLocale();
 
-                Template textTemplate = freemarkerConfiguration.getTemplate(templateName + "-text.ftl", locale);
+                final Template textTemplate = freemarkerConfiguration.getTemplate(templateName + "-text.ftl", locale);
 
                 final StringWriter textWriter = new StringWriter();
                 try {
@@ -81,7 +77,7 @@ public class NotificationServiceImpl implements NotificationService {
                     throw new MailPreparationException("Can't generate email body.", e);
                 }
 
-                Template htmlTemplate = freemarkerConfiguration.getTemplate(templateName + "-html.ftl", locale);
+                final Template htmlTemplate = freemarkerConfiguration.getTemplate(templateName + "-html.ftl", locale);
 
                 final StringWriter htmlWriter = new StringWriter();
                 try {

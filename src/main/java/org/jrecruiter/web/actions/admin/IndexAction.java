@@ -16,7 +16,6 @@
 package org.jrecruiter.web.actions.admin;
 
 import org.jrecruiter.web.actions.BaseAction;
-import org.jrecruiter.web.interceptor.RetrieveMessages;
 
 /**
  * Show the main index page of the admin screens.
@@ -34,7 +33,6 @@ public class IndexAction extends BaseAction {
      *
      */
     @Override
-    @RetrieveMessages
     public String execute() {
             super.getLoggedInUser();
             return SUCCESS;

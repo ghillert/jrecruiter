@@ -19,16 +19,16 @@ import com.opensymphony.xwork2.ActionSupport;
 public abstract class BaseAction extends ActionSupport {
 
     /** serialVersionUID. */
-	private static final long serialVersionUID = -2918623405168805282L;
-	
+    private static final long serialVersionUID = -2918623405168805282L;
+
     //~~~~~Services~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	/**
+    /**
      * User related services.
      */
     protected UserService userService;
     protected MessageSource messageSource;
-    
+
     private String backTo;
 
     /**
@@ -36,8 +36,7 @@ public abstract class BaseAction extends ActionSupport {
      */
     protected JobService jobService;
 
-    
-    
+
     //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -61,7 +60,7 @@ public abstract class BaseAction extends ActionSupport {
     public String getText(final String code) {
         return this.messageSource.getMessage(code, null, super.getLocale());
     }
-    
+
     //~~~~~Security Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     protected SecurityContext getSecurityContext() {
@@ -103,9 +102,9 @@ public abstract class BaseAction extends ActionSupport {
         this.backTo = backTo;
     }
 
-	public void setMessageSource(MessageSource messageSource) {
-		this.messageSource = messageSource;
-	}
-    
-    
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+
 }

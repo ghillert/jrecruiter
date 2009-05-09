@@ -26,10 +26,10 @@
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
         <interceptors>
-            <interceptor name="store2" class="org.jrecruiter.web.interceptor.MessageStoreInterceptor">
-            </interceptor>
             <interceptor-stack name="defaultStack">
-                <interceptor-ref name="store2" />
+                <interceptor-ref name="store">
+                    <param name="operationMode">AUTOMATIC</param>
+                </interceptor-ref>
                 <interceptor-ref name="exception">
                   <param name="logEnabled">true</param>
                   <param name="logCategory">org.jrecruiter.web</param>

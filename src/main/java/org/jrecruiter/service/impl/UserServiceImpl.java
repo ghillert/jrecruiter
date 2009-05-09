@@ -16,16 +16,14 @@
 package org.jrecruiter.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.exception.VelocityException;
 import org.jasypt.digest.StringDigester;
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
@@ -39,17 +37,15 @@ import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataAccessException;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import de.rrze.idmone.utils.jpwgen.BlankRemover;
 import de.rrze.idmone.utils.jpwgen.PwGenerator;
@@ -73,20 +69,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private @Autowired NotificationService notificationService;
 
-    /**
-     *   Used for creating the Apache-Velocity-based Email template.
-     */
-    private @Autowired VelocityEngine velocityEngine;
-
-    /**
-     * Mailsender.
-     */
-    private @Autowired MailSender mailSender;
-
-    /**
-     * Email message.
-     */
-    private @Autowired SimpleMailMessage message;
+    private @Autowired MessageSource messageSource;
 
     /**
      * User Dao.
@@ -110,11 +93,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /** {@inheritDoc} */
     public User addUser(User user) throws DuplicateUserException{
 
+        if (user == null) {
+            throw new IllegalArgumentException("User must not be null.");
+        }
+
         Date registerDate = new Date();
         user.setRegistrationDate(registerDate);
         user.setUpdateDate(registerDate);
-        user.setVerified(Boolean.FALSE);
+        user.setEnabled(Boolean.FALSE);
         user.setVerificationKey(generateUuid());
+        user.setUsername(user.getEmail());
         User duplicateUser = userDao.getUser(user.getUsername());
 
         if (duplicateUser!= null) {
@@ -139,11 +127,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User savedUser = this.saveUser(user);
 
-        Map context = new HashMap();
+        return savedUser;
+
+    }
+
+    /** {@inheritDoc} */
+    public User addUser(User user, String accountValidationUrl) throws DuplicateUserException{
+
+        if (user == null) {
+            throw new IllegalArgumentException("User must not be null.");
+        }
+        if (accountValidationUrl == null) {
+            throw new IllegalArgumentException("accountValidationUrl must not be null.");
+        }
+
+       // final User savedUser = this.addUser(user);
+        User savedUser = user;
+        final Map<String, Object> context = CollectionUtils.getHashMap();
         context.put("user", savedUser);
         context.put("registrationCode", this.generateUuid());
+        context.put("accountValidationUrl", accountValidationUrl);
 
-        notificationService.sendEmail(savedUser.getEmail(), context, "account-verification");
+        notificationService.sendEmail(savedUser.getEmail(), messageSource.getMessage("class.UserServiceImpl.addUser.account.validation.subject", null, LocaleContextHolder.getLocale()), context, "account-validation");
+
         return savedUser;
 
 
@@ -198,35 +204,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         this.updateUser(user);
 
-        final SimpleMailMessage msg = new SimpleMailMessage(this.message);
-        msg.setSubject(configurationDao.get("mail.password.subject").getMessageText());
-        msg.setFrom(configurationDao.get("mail.from").getMessageText());
-        msg.setTo(user.getFirstName() + " " + user.getLastName()
-                + "<" + user.getEmail() + ">");
+        final Map<String, Object> context = CollectionUtils.getHashMap();
+        context.put("user", user);
+        context.put("password", password);
 
-        final Map < String, Object > model = new HashMap < String, Object > ();
-        model.put("password", password);
+        this.notificationService.sendEmail(user.getEmail(),
+                                           messageSource.getMessage("class.UserServiceImpl.resetPassword.email.subject",
+                                           null,
+                                           LocaleContextHolder.getLocale()),
+                                           context,
+                                           "get-password");
 
-        String result = null;
-        try {
-
-            result = VelocityEngineUtils.mergeTemplateIntoString(
-                    velocityEngine, "mail.password.body", model);
-        } catch (VelocityException e) {
-            e.printStackTrace();
-        }
-        msg.setText(result);
-
-        //JavaMailSenderImpl sender=(JavaMailSenderImpl) this.mailSender;
-        try {
-            //JavaMailSenderImpl r = (JavaMailSenderImpl)mailSender;
-            //r.getSession().setDebug(true);
-            mailSender.send(msg);
-        } catch (MailException ex) {
-            LOGGER.error(ex.getMessage());
-            throw new IllegalStateException(ex);
-        }
-
+        LOGGER.info("resetPassword - Email sent to: " + user.getEmail() + "; id: " + user.getId());
     }
 
     /** {@inheritDoc} */
@@ -265,5 +254,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public String generateUuid() {
         return UUID.randomUUID().toString();
+    }
+
+    /** {@inheritDoc} */
+    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
+    public User getUserByVerificationKey(final String key) {
+        return userDao.getUserByVerificationKey(key);
     }
 }
