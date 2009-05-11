@@ -44,7 +44,7 @@
     <distributionManagement>
         <site>
             <id>website</id>
-            <url>scp://www.jrecruiter.org/home/jhillert/public_html/jrecruiter</url>
+            <url>scp://74.207.227.71:9922/srv/data/www/jrecruiter</url>
         </site>
     </distributionManagement>
     <ciManagement>
@@ -239,6 +239,14 @@
                 </execution>
               </executions>
             </plugin>
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>emma-maven-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <inherited>true</inherited>
+        </plugin>
+
         </plugins>
 
         <resources>
@@ -332,6 +340,12 @@
     <!-- Begin of dependencies -->
 
     <dependencies>
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
 
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -982,6 +996,11 @@
 <artifactId>asm-commons</artifactId>
     <version>2.2.3</version>
 </dependency>
+<dependency>
+    <groupId>emma</groupId>
+    <artifactId>emma</artifactId>
+    <version>2.0.5312</version>
+</dependency>
     </dependencies>
 
     <reporting>
@@ -1009,6 +1028,14 @@
 <!--            </configuration>-->
 <!---->
 <!--            </plugin>-->
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>emma-maven-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <inherited>true</inherited>
+        </plugin>
+
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
