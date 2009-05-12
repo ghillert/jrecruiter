@@ -3,6 +3,7 @@ package org.jrecruiter.web.actions.registration;
 import javax.servlet.http.HttpServletRequest;
 
 import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
@@ -77,12 +78,12 @@ public class SignupAction extends BaseAction {
 
         this.user.setPassword(this.stringDigester.digest(this.password));
 
-        //ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
+        final ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
 
-//        if (!reCaptchaResponse.isValid()) {
-//            addActionError("Not a good captcha.");
-//            return INPUT;
-//        }
+        if (!reCaptchaResponse.isValid()) {
+            addActionError(super.getText("class.SignupAction.error.not.a.good.captcha"));
+            return INPUT;
+        }
 
         try {
            HttpServletRequest request = ServletActionContext.getRequest();
@@ -91,7 +92,7 @@ public class SignupAction extends BaseAction {
         } catch (DuplicateUserException e) {
 
             LOGGER.warn(e.getMessage());
-              addFieldError("username", getText("class._ALL.error.duplicateUsername"));
+              addFieldError("username", getText("class._ALL.error.duplicateEmail"));
               return INPUT;
         }
 
