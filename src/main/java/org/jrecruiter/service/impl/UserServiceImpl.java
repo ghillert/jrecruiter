@@ -141,8 +141,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalArgumentException("accountValidationUrl must not be null.");
         }
 
-       // final User savedUser = this.addUser(user);
-        User savedUser = user;
+        final User savedUser = this.addUser(user);
+
         final Map<String, Object> context = CollectionUtils.getHashMap();
         context.put("user", savedUser);
         context.put("registrationCode", this.generateUuid());
