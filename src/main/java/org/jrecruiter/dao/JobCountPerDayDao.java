@@ -21,12 +21,10 @@ import java.util.List;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**
- * Interface for any jobCountPerDay    	final Calendar today     = CalendarUtils.getCalendarWithoutTime();
-    	final Calendar yesterday = CalendarUtils.getCalendarWithoutTime();
-    	yesterday.add(Calendar.DAY_OF_YEAR, -1);-related persistence calls.
+ * Interface for any jobCountPerDay-related persistence calls.
  *
  * @author Gunnar Hillert
- * @version @version $Id$
+ * @version $Id$
  */
 public interface JobCountPerDayDao extends GenericDao < JobCountPerDay, Long >{
 
@@ -48,9 +46,9 @@ public interface JobCountPerDayDao extends GenericDao < JobCountPerDay, Long >{
     List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate);
 
     /**
-     * 
+     *
      * @return
      */
-	List<JobCountPerDay> getLatestTwoJobCounts();
+    List<JobCountPerDay> getLatestTwoJobCounts();
 
 }
