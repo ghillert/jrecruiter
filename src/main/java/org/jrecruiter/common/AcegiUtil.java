@@ -11,72 +11,77 @@ import org.springframework.security.context.SecurityContextHolder;
 public final class AcegiUtil
 {
 
-    private AcegiUtil()
-    {
+    private AcegiUtil() {
         // private utility class constructor
     }
 
-    private static Authentication getAuthentication()
-    {
+    private static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public static boolean containsRole(final GrantedAuthority[] grantedAuthorities, final String role)
-    {
+    public static boolean containsRole(final GrantedAuthority[] grantedAuthorities, final String role) {
         for (final GrantedAuthority grantedAuthority : grantedAuthorities)
             if (grantedAuthority.getAuthority().equals(role))
                 return true;
         return false;
     }
 
-    public static boolean hasRole(final String role)
-    {
+    public static boolean hasRole(final String role) {
         final Authentication authentication = getAuthentication();
 
-        if (authentication == null)
+        if (authentication == null) {
             return false;
+        }
 
         return containsRole(authentication.getAuthorities(), role);
     }
 
-    public static boolean hasAnyRole(final String... roles)
-    {
+    public static boolean hasAnyRole(final String... roles) {
+
         final Authentication authentication = getAuthentication();
 
-        if (authentication == null)
+        if (authentication == null) {
             throw new AccessDeniedException("User is not authenticated");
+        }
 
         final GrantedAuthority[] authorities = authentication.getAuthorities();
-        for (final String role : roles)
-            if (containsRole(authorities, role))
+
+        for (final String role : roles) {
+            if (containsRole(authorities, role)) {
                 return true;
+            }
+        }
+
         return false;
     }
 
-    public static boolean hasAllRoles(final String... roles)
-    {
+    public static boolean hasAllRoles(final String... roles) {
         final Authentication authentication = getAuthentication();
 
-        if (authentication == null)
+        if (authentication == null) {
             throw new AccessDeniedException("User is not authenticated");
+        }
 
         final GrantedAuthority[] authorities = authentication.getAuthorities();
-        for (final String role : roles)
-            if (!containsRole(authorities, role))
+
+        for (final String role : roles) {
+            if (!containsRole(authorities, role)) {
                 return false;
+            }
+        }
         return true;
     }
 
-    public static void ensureAllRoles(final String... roles)
-    {
-        if (!hasAllRoles(roles))
+    public static void ensureAllRoles(final String... roles) {
+        if (!hasAllRoles(roles)) {
             throw new AccessDeniedException("User has not all of these roles: " + Arrays.toString(roles));
+        }
     }
 
-    public static void ensureAnyRole(final String... roles)
-    {
-        if (!hasAnyRole(roles))
+    public static void ensureAnyRole(final String... roles) {
+        if (!hasAnyRole(roles)) {
             throw new AccessDeniedException("User has none of these roles: " + Arrays.toString(roles));
+        }
     }
 
 }

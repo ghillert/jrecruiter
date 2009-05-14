@@ -25,5 +25,5 @@ import org.jrecruiter.model.Region;
  */
 public interface RegionDao extends GenericDao < Region, Long >{
 
-    List<Region> getAllRegionsOrdered();
+    List < Region > getAllRegionsOrdered();
 }

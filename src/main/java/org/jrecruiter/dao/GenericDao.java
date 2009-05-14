@@ -14,14 +14,14 @@ import java.util.List;
  * @param <T> a type variable
  * @param <PK> the primary key for that type
  */
-public interface GenericDao <T, PK extends Serializable> {
+public interface GenericDao < T, PK extends Serializable > {
 
     /**
      * Generic method used to get all objects of a particular type. This
      * is the same as lookup up all rows in a table.
      * @return List of populated objects
      */
-    List<T> getAll();
+    List < T > getAll();
 
     /**
      * Generic method to get an object based on class and identifier. An
