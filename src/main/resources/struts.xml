@@ -1,5 +1,5 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
 
@@ -36,13 +36,13 @@
                 </interceptor-ref>
                 <interceptor-ref name="alias"/>
                 <interceptor-ref name="i18n"/>
+                <interceptor-ref name="modelDriven"/>
                 <interceptor-ref name="params">
                     <param name="excludeParams">dojo\..*,^struts\..*</param>
                 </interceptor-ref>
                 <interceptor-ref name="servletConfig"/>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
-                <interceptor-ref name="modelDriven"/>
                 <interceptor-ref name="fileUpload"/>
                 <interceptor-ref name="checkbox"/>
                 <interceptor-ref name="staticParams"/>
