@@ -235,7 +235,7 @@ public class Job implements Serializable {
     /**
      * @return the id
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(generator="hibseq")
     @DocumentId
     public Long getId() {
         return id;

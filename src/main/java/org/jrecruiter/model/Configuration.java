@@ -38,6 +38,22 @@ import org.hibernate.annotations.Type;
 )
 public class Configuration implements Serializable {
 
+    public enum ConfigurationKey {
+
+        SEED_DATA("seed.data.is.setup");
+
+        private String key;
+
+        private ConfigurationKey(String key) {
+            this.key = key;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+    }
+
     /**
      * serialVersionUID.
      */

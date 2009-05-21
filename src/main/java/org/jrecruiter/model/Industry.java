@@ -75,7 +75,7 @@ public class Industry  implements java.io.Serializable {
     }
 
     // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(generator="hibseq")
     @Column(unique=true, nullable=false, insertable=true, updatable=true)
     @DocumentId
     public Long getId() {

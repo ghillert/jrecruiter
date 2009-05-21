@@ -68,7 +68,7 @@ public class JobType  implements java.io.Serializable {
     }
 
     // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(generator="hibseq")
     public Long getId() {
         return this.id;
     }

@@ -77,7 +77,7 @@ public class Region  implements java.io.Serializable {
     }
 
     // Property accessors
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(generator="hibseq")
         @DocumentId
     public Long getId() {
         return this.id;
