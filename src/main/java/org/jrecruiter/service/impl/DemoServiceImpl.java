@@ -52,7 +52,7 @@ public class DemoServiceImpl implements DemoService {
         final LoremIpsum loremIpsum = new LoremIpsum();
 
         Random random = new Random();
-        
+
         for (int i = 0; i <= numberOfJobsToCreate; i++) {
 
             final Job job = new Job();
@@ -65,7 +65,7 @@ public class DemoServiceImpl implements DemoService {
             job.setBusinessState(loremIpsum.getWords(1));
             job.setBusinessZip(loremIpsum.getWords(1));
             job.setDescription(loremIpsum.getParagraphs(2));
-            job.setIndustry(new Industry(-1L, null));
+            job.setIndustry(new Industry(1L, null));
             job.setJobRestrictions(loremIpsum.getWords(30));
             job.setJobTitle(loremIpsum.getWords(2));
             job.setLatitude(BigDecimal.TEN);
@@ -73,7 +73,7 @@ public class DemoServiceImpl implements DemoService {
             job.setOfferedBy(OfferedBy.RECRUITER);
 
             if (i % 2 == 0) {
-                job.setRegion(new Region(-2L, null));
+                job.setRegion(new Region(2L, null));
             } else {
                 job.setRegionOther("Some Other Region");
             }
@@ -94,31 +94,31 @@ public class DemoServiceImpl implements DemoService {
         }
     }
 
-   
+
     /** {@inheritDoc} */
-	public User createDemoUser() {
-		User demoUser = getUser();
-		
-		User userFromDb = userService.getUser(demoUser.getUsername());
-		
-		if (userFromDb != null) {
-			return userFromDb;
-		} else {
-			
-			try {
-				demoUser = userService.addUser(demoUser);
-	        } catch (DuplicateUserException e) {
-	            throw new IllegalStateException(e);
-	        }
-	        
-		}
-		
-		return demoUser;
-	}
+    public User createDemoUser() {
+        User demoUser = getUser();
+
+        User userFromDb = userService.getUser(demoUser.getEmail());
+
+        if (userFromDb != null) {
+            return userFromDb;
+        } else {
+
+            try {
+                demoUser = userService.addUser(demoUser);
+            } catch (DuplicateUserException e) {
+                throw new IllegalStateException(e);
+            }
+
+        }
+
+        return demoUser;
+    }
 
     //~~~~~Helper Method~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	private User getUser() {
+    private User getUser() {
 
         User user = new User();
         user.setUsername("demo44");
