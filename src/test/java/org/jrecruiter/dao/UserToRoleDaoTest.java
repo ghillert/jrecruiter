@@ -20,9 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UserToRoleDaoTest extends BaseTest {
 
-	private @Autowired UserDao       userDao;
-	private @Autowired UserToRoleDao userToRoleDao;
-	private @Autowired RoleDao       roleDao;
+    private @Autowired UserDao       userDao;
+    private @Autowired UserToRoleDao userToRoleDao;
+    private @Autowired RoleDao       roleDao;
 
     @Test
     public void testSaveUserToRole() {
@@ -31,7 +31,7 @@ public class UserToRoleDaoTest extends BaseTest {
         Role savedRole = roleDao.save(role);
         entityManager.flush();
 
-        User user = userDao.get(-1L);
+        User user = userDao.get(1L);
 
         UserToRole userToRole = new UserToRole(null, savedRole, user);
 
