@@ -12,10 +12,17 @@
 
     <fieldset>
       <div class="submit">
-          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save" tabindex="23"/><s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel" tabindex="24"/>
+          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"   tabindex="23"/>
+          <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel" tabindex="24"/>
       </div>
     </fieldset>
     <spring:message code="jsp._ALL.marked.fields.are.required" />
 </s:form>
-<jsp:include page="includes/job_javascript.jsp"/>
 
+
+<!-- Google Maps -->
+ <script
+   src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=${apiKeysHolder.googleMapsKey}"
+   type="text/javascript"></script>
+
+<jsp:include page="includes/job_javascript.jsp"/>
