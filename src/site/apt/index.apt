@@ -4,7 +4,19 @@
 
 jRecruiter - A job posting service
 
-  This project provides a light-weight Java EE based job posting solution. jRecruiter uses
+  This project provides a light-weight Java EE based job posting solution.
+
+
+=====================
+  <<News>>
+
+  Finally got Hudson up and running:
+
+  {{http://74.207.227.71:9080/hudson/job/jRecruiter/}}
+
+=====================
+
+  jRecruiter uses
   the following frameworks and libraries:
 
   * Struts 2
@@ -29,8 +41,22 @@ jRecruiter - A job posting service
 
 []
 
-  As database backend Postgres is used. However, support for other databases is easily
-  implementable since Hibernate is used for creating the table structure.
+  As database backend Postgres is used. However, support other databases out of
+  the box. The maven pom provides profiles for the following databases:
+
+  * PostgreSQL
+  
+  * MySQL
+  
+  * Oracle
+  
+  * Derby
+  
+  * HSQL (Testing)
+  
+  * H2 (Testing)
+
+[]
 
   The project website is located at:
 
