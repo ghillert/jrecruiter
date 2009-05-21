@@ -137,7 +137,9 @@ version="2.5">
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
+    <listener>
+        <listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
+    </listener>
     <servlet>
         <servlet-name>sitemesh-freemarker</servlet-name>
         <servlet-class>com.opensymphony.module.sitemesh.freemarker.FreemarkerDecoratorServlet</servlet-class>
@@ -147,7 +149,7 @@ version="2.5">
           </init-param>
           <init-param>
               <param-name>default_encoding</param-name>
-              <param-value>ISO-8859-1</param-value>
+              <param-value>UTF-8</param-value>
           </init-param>
     </servlet>
   <servlet>
@@ -258,4 +260,7 @@ version="2.5">
     <location>/error/error.jsp</location>
   </error-page>
 
+    <session-config>
+       <session-timeout>20</session-timeout>
+    </session-config>
 </web-app>
