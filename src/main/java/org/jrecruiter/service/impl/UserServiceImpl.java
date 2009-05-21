@@ -229,7 +229,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException("loadUserByUsername() - No user with id " + emailOrUserName + " found.");
         }
 
-        LOGGER.info("User {0} ({1})loaded.", new Object[] { user.getUsername(), user.getEmail()});
+        LOGGER.info("User {} ({}) loaded.", new Object[] { user.getUsername(), user.getEmail()});
 
         return user;
     }
