@@ -19,15 +19,21 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
+import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
+import org.jrecruiter.web.JobForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -44,7 +50,7 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
  *
  */
 @Result(name="success", location="index", type="redirectAction")
-public class AddJobAction extends JobBaseAction {
+public class AddJobAction extends JobBaseAction implements Preparable, ModelDriven<JobForm> {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 4614516114027504626L;
@@ -69,23 +75,22 @@ public class AddJobAction extends JobBaseAction {
      */
     @Validations(
             requiredFields = {
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "businessEmail", message = "You must enter an Email Address."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "industry", message = "You must select an industry."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "offeredBy", message = "Please select whether you are the hiring company or a recruiter."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "region", message = "Please select a region."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "usesMap", message = "Do you want to use Google Maps.")
+                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "model.job.industry.id",   message = "You must select an industry."),
+                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "model.job.offeredBy",     message = "Please select whether you are the hiring company or a recruiter."),
+                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "model.job.region.id",     message = "Please select a region."),
+                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "model.job.usesMap",       message = "Do you want to use Google Maps?")
                     },
             requiredStrings = {
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "jobTitle", message = "You must enter a job title."),
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "businessName", message = "You must provide a company name."),
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "description", message = "You must enter a job description.")
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "model.job.jobTitle",      message = "You must enter a job title."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "model.job.businessEmail", message = "You must enter an Email Address."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "model.job.description",   message = "You must enter a job description.")
                     },
             emails =
-                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "businessEmail", message = "You must enter a valid email.")},
+                    { @EmailValidator(type = ValidatorType.SIMPLE,            fieldName = "model.job.businessEmail",      message = "You must enter a valid email.")},
             urls =
-                    { @UrlValidator(type = ValidatorType.SIMPLE, fieldName = "website", message = "You must enter a valid url.")},
+                    { @UrlValidator(type = ValidatorType.SIMPLE,              fieldName = "model.job.website",            message = "You must enter a valid url.")},
             stringLengthFields =
-                    {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
+                    {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "model.job.jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
             )
 
     public String save() {
@@ -110,5 +115,41 @@ public class AddJobAction extends JobBaseAction {
         super.addActionMessage(getText("job.add.success"));
 
         return SUCCESS;
+    }
+
+    public void validateSave() {
+
+        if (OfferedBy.UNDEFINED.equals(this.model.getJob().getOfferedBy())) {
+            super.addFieldError("model.job.offeredBy", "Please select who is offering the job.");
+        }
+
+        if (CommongKeyIds.UNDEFINED.getId().equals(this.model.getJob().getIndustry().getId())) {
+            super.addFieldError("model.job.industry.id", "Please specify an industry.");
+        } else if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getIndustry().getId())) {
+            if (StringUtils.isBlank(this.model.getJob().getIndustryOther())) {
+                super.addFieldError("model.job.industryOther", "Please specify an industry.");
+            }
+        }
+
+        if (CommongKeyIds.UNDEFINED.getId().equals(this.model.getJob().getRegion().getId())) {
+            super.addFieldError("model.job.region.id", "Please specify a region.");
+        } else if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getRegion().getId())) {
+            if (StringUtils.isBlank(this.model.getJob().getRegionOther())) {
+                super.addFieldError("model.job.regionOther", "Please specify a region.");
+            }
+        }
+
+        if (this.model.getJob().getUsesMap()) {
+            if (this.model.getJob().getLongitude() == null) {
+                super.addFieldError("model.job.longitude", "Please specify a longitude.");
+            }
+            if (this.model.getJob().getLatitude() == null) {
+                super.addFieldError("model.job.latitude", "Please specify a latitude.");
+            }
+            if (this.model.getJob().getZoomLevel() == null) {
+                super.addFieldError("model.job.zoomLevel", "Please specify a zoom level.");
+            }
+        }
+
     }
 }

@@ -4,7 +4,7 @@ import org.jrecruiter.model.Job;
 
 public class JobForm {
 
-    private Job job = new Job();
+    private Job job;
 
     public Job getJob() {
         return job;
