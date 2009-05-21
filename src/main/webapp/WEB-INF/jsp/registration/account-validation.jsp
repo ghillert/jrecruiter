@@ -6,7 +6,7 @@
     <fieldset>
         <div class="required">
             <label for="validationKey"><spring:message code="jsp.registration.account-validation.form.code" />*</label>
-            <s:textfield id="validationKey" name="key" required="true" maxlength="50" tabindex="1"/>
+            <s:textfield id="validationKey" name="key" required="true" maxlength="50" tabindex="1" size="35"/>
         </div>
         <div class="submit">
             <s:submit value="%{getText('jsp.registration.account-validation.form.submit')}" method="process"/>
