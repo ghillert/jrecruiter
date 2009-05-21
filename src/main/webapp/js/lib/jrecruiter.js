@@ -28,7 +28,7 @@ function usesMapChange() {
         zoomLevel = jQuery('#zoomLevel').val();
         jobDivId  = 'map';
 
-        showJob(jobDivId, longitude, latitude, zoomLevel);
+        showJob(jobDivId, latitude, longitude, zoomLevel);
 
     } else {
         document.getElementById('usesMapDiv').style.display = 'none';
