@@ -35,12 +35,31 @@ public class Constants {
      *  generated. */
     public enum StatsMode { PAGE_HITS, UNIQUE_HITS }
 
+    /** Defines the roles of the system */
+    public enum CommongKeyIds {
+
+        OTHER(Long.valueOf(1)),
+        UNDEFINED(Long.valueOf(-1));
+
+        private Long id;
+
+        private CommongKeyIds(Long id) {
+            this.id = id;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+    }
+
     /**
      * Defines if a job was posted by a company (direct-hire) or
      * by a recruiter.
      */
     public enum OfferedBy {
 
+        UNDEFINED("-1", "Undefined"),
         RECRUITER("Recruiter", "enum.offeredBy.recruiter.description"),
         COMPANY  ("Company",   "enum.offeredBy.company.description");
 
