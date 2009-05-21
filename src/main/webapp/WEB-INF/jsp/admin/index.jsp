@@ -3,7 +3,7 @@
 <title>jRecruiter - <spring:message code="jsp.admin.index.header"/></title>
 <h2><spring:message code="jsp.admin.index.header"/></h2>
 <p class="info">
-    <s:text name="admin.main.welcome"/>
+    <spring:message code="jsp.admin.index.welcome"/>
     <security:authentication property="principal.firstName"/>
     <security:authentication property="principal.lastName"/> to the administrative area
     of jRecruiter. In this area you can post new jobs, change existing job postings
