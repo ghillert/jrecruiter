@@ -17,7 +17,7 @@
                     <a href="${jobDetailUrl}"><img alt="Edit this Job." title="Edit this Job." src="${ctx}/images/icons/crystal/edit.png" style="border-width: 0;"/></a>
                 </jmesa:htmlColumn>
                 <jmesa:htmlColumn filterable="false" title="Delete" style="text-align: center;">
-                     <input type="checkbox" name="jobsToDelete[${rowcount}]" value="${job.id}"></input>
+                     <input type="checkbox" name="jobsToDelete[${rowcount}]" value="${job.id}" class="checkbox"></input>
                 </jmesa:htmlColumn>
                 <jmesa:htmlColumn property="jobTitle"     titleKey="jsp.show.jobs.job.title" />
                 <jmesa:htmlColumn property="businessName" titleKey="jsp.show.jobs.business.name"/>
