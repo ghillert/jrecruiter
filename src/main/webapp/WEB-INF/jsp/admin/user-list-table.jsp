@@ -9,15 +9,15 @@
         >
       <jmesa:htmlTable>
           <jmesa:htmlRow>
-	          <jmesa:htmlColumn property="2" filterable="false" title="&nbsp;">
+              <jmesa:htmlColumn property="2" filterable="false" title="&nbsp;">
                   <s:url action="edit-user" id="editUserUrl">
                       <s:param name="userId" value="%{#attr.user.id}"/>
                   </s:url>
-	              <s:url id="editJobPostingUrl" action="edit-job"><s:param name="id" value="#attr.row.job.id"/></s:url>
-	              <a href="${editUserUrl}"><img alt="Edit this User." title="Edit this User." src="${ctx}/images/icons/crystal/edit.png" style="border-width: 0;"/></a>
-	          </jmesa:htmlColumn>
+                  <s:url id="editJobPostingUrl" action="edit-job"><s:param name="id" value="#attr.row.job.id"/></s:url>
+                  <a href="${editUserUrl}"><img alt="Edit this User." title="Edit this User." src="${ctx}/images/icons/crystal/edit.png" style="border-width: 0;"/></a>
+              </jmesa:htmlColumn>
             <jmesa:htmlColumn styleClass="userlist5" titleKey="userList.th.delete" sortable="false" property="1" filterable="false">
-                <input type="checkbox" name="userIds[${rowcount-1}]" value="${user.id}" />
+                <input type="checkbox" name="userIds[${rowcount-1}]" value="${user.id}" class="checkbox"/>
             </jmesa:htmlColumn>
             <jmesa:htmlColumn styleClass="userlist2" property="username" sortable="true">
                     <s:property value="%{#attr.user.username}" escape="true"/>
