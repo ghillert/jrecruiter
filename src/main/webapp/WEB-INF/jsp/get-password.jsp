@@ -9,13 +9,14 @@
     </p>
         <fieldset>
           <div class="required">
-              <label for="username"><spring:message code="class.user.username" />*</label>
+              <label for="username"><spring:message code="class.user.email" />*</label>
               <s:textfield id="username" name="user.username" required="true" maxlength="25" tabindex="1"/>
           </div>
         </fieldset>
         <fieldset>
             <div class="submit">
-                <s:submit value="%{getText('jsp._ALL.button.submit')}" method="process"/><s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
+                <s:submit value="%{getText('jsp._ALL.button.submit')}" method="process"/>
+                <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
             </div>
         </fieldset>
         <p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>
