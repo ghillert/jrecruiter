@@ -24,6 +24,7 @@
 
     <title><decorator:title default="Welcome to jRecruiter" /></title>
     <jwr:style src="/bundles/all.css" />
+    <jwr:style src="/bundles/all-IE.css" />
 
     <!-- Java Script Imports -->
     <jwr:script src="/bundles/lib.js"/>
@@ -60,13 +61,13 @@
       </div>
       <div class="content"><security:authorize ifAnyGranted="MANAGER, ADMIN">
         <div style="text-align: right; margin-top: -0.5em;">You are logged in as
-        <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> | <a href="<c:url value='/logout.html'/>" ><spring:message code="jsp.decorators.default.logout"/></a></div>
+        <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> (<security:authentication property="principal.email"/>) | <a href="<c:url value='/logout.html'/>" ><spring:message code="jsp.decorators.default.logout"/></a></div>
       </security:authorize><%@ include
         file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
       </div>
       <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"
-        title="Main website of the jRecruiter project"><span>j</span>Recruiter ($Revision$)</a>
+        title="Main website of the jRecruiter project"><span>j</span>Recruiter (Build: <spring:message code="jrecruiter.build.number"/>)</a>
       </div>
     </div>
 

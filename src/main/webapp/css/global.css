@@ -1,6 +1,6 @@
 
 img { border-width: 0; }
-fieldset { border: 1px solid #AAAAAA; }
+fieldset { border: 1px solid #AAAAAA; margin-bottom: 1em;}
 
 a:active {  color: #6666EE; text-decoration: none; }
 a:visited {  color: #6666EE; text-decoration: none}
@@ -262,9 +262,9 @@ table.default {
 /* Info boxes */
 
 div.infoBox {
-	background: url(../images/icons/crystal/48px/info.png) no-repeat left center;
-	background-color: #FFFFFF;
-	border: 1px solid #AAAAAA;
+    background: url(../images/icons/crystal/48px/info.png) no-repeat left center;
+    background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
 }
 
 div.infoBox ol {

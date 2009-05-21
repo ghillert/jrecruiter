@@ -41,15 +41,11 @@ form fieldset {
     background:url(../images/test/fieldset_back.png) top left no-repeat;
 }
 form fieldset {
-    position: relative;    
     top:  1em;
-    left: 0.7em; 
+    left: 0.7em;
 }
 form fieldset legend {
-    position: absolute;
-    top: -.5em;
-    left: 0em;
-    margin-left: 1em;    
+    margin-left: 1em;
 }
 
 form div.required {
@@ -101,6 +97,11 @@ input {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-style: normal;
+}
+
+input.checkbox {
+  border: none;
+  background-color: transparent;
 }
 
 textarea {
