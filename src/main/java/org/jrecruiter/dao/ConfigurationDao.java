@@ -24,7 +24,7 @@ import org.jrecruiter.model.Configuration;
 public interface ConfigurationDao extends GenericDao < Configuration, String >{
 
     /**
-     * Method for getting a job posting.
+     * Method for getting a configuration element.
      *
      * @param jobId job posting id
      *
