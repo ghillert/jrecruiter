@@ -54,8 +54,6 @@ public class GoogleMapsStaticTest extends BaseTest {
 
         BufferedImage img = ImageIO.read(conn.getInputStream());
 
-        ImageIO.write(img, "png", new File("/temp/1.png"));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
