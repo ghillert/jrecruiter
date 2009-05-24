@@ -1,24 +1,19 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <script type="text/javascript">
-function openJob(id)
-{
-  loc="<c:url value='/openEditJobPosting.do?method=openEditJobPosting&id='></c:url>";
-  window.location = loc+id;
-}
 
-function checkDelete(){
+    function checkDelete(){
 
-  if (confirm("<bean:message key='jsp.joblist.delete.confirm'/>"))
-  {
-    return true;
-  }
+      if (confirm("<bean:message key='jsp.joblist.delete.confirm'/>"))
+      {
+        return true;
+      }
 
-  else {
-     return false;
-  }
+      else {
+         return false;
+      }
 
-}
+    }
 </script>
 
 <s:form action="editJob">

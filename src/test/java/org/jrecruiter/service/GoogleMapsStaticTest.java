@@ -17,12 +17,15 @@ package org.jrecruiter.service;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
+import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.test.BaseTest;
+import org.jrecruiter.web.ApiKeysHolder;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,35 +36,29 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class GoogleMapsStaticTest extends BaseTest {
 
-    private @Autowired DemoService  demoService;
+    private @Autowired ApiKeysHolder apiKeysHolder;
 
     @Test
     public void testStaticMapTest() throws Exception {
-
         sendGetRequest();
-
     }
 
 
-    public static void sendGetRequest()
-    {
+    private void sendGetRequest() {
 
     // Send a GET request to the servlet
-    try
-    {
+    try {
 
-    URL url = new URL("http://maps.google.com/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&key=key=ABQIAAAAaRkHCsiKIvvB_UEon-SKORQ7EYV2ourIdp48QYZszNEA7gcaFhQRuKqKuYEC9ss4BL5bATDTf3IeLg");
-    URLConnection conn = url.openConnection ();
+        final URL url = GoogleMapsUtils.buildGoogleMapsStaticUrl(BigDecimal.TEN, BigDecimal.TEN, 10, this.apiKeysHolder.getGoogleMapsKey());
+        URLConnection conn = url.openConnection ();
 
-    BufferedImage img = ImageIO.read(conn.getInputStream());
+        BufferedImage img = ImageIO.read(conn.getInputStream());
 
-    ImageIO.write(img, "png", new File("/temp/1.png"));
+        ImageIO.write(img, "png", new File("/temp/1.png"));
 
-
-    } catch (Exception e)
-    {
-    e.printStackTrace();
-    }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

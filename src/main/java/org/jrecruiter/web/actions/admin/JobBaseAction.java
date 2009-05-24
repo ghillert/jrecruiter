@@ -24,10 +24,8 @@ import java.util.Set;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
-import org.jrecruiter.web.ApiKeysHolder;
 import org.jrecruiter.web.JobForm;
 import org.jrecruiter.web.actions.BaseAction;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -43,8 +41,6 @@ public abstract class JobBaseAction extends BaseAction implements Preparable, Mo
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 5109535527147122330L;
-
-    private @Autowired ApiKeysHolder apiKeysHolder;
 
     protected JobForm model = new JobForm();
 

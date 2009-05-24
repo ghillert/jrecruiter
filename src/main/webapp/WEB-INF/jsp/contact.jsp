@@ -10,7 +10,7 @@
  <legend>jRecruiter is powered by the following technologies:</legend>
  <ul>
     <li><a href="http://struts.apache.org/2.x/">Struts 2</a></li>
-    <li><a href="http://www.springframework.org/">Spring 2.5</a></li>
+    <li><a href="http://www.springframework.org/">Spring 3.0</a></li>
     <li><a href="http://www.hibernate.org/">JPA (Hibernate)</a></li>
     <li><a href="http://www.hibernate.org/">Hibernate Search</a></li>
     <li><a href="http://www.jfree.org/">jFreeChart</a></li>

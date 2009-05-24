@@ -22,16 +22,15 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
-import java.text.MessageFormat;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import org.jrecruiter.common.CollectionUtils;
+import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.web.ApiKeysHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,19 +60,6 @@ public class DataServiceImpl implements org.jrecruiter.service.DataService {
                                    final BigDecimal longitude,
                                    final Integer zoomLevel) {
 
-        final Integer width  = 300;
-        final Integer height = 300;
-        final String  color  = "orange";
-        final String  letter = "J";
-
-         final String urlString       = "http://maps.google.com/staticmap?center={0},{1}&zoom={2}&size={3}x{4}&key={5}&markers={0},{1},{6}{7}";
-         MessageFormat mf = new MessageFormat(urlString);
-
-         final Object[] urlParams = {String.valueOf(latitude),
-                                      String.valueOf(longitude),
-                                      zoomLevel, width, height,
-                                      apiKeysHolder.getGoogleMapsKey(), color, letter};
-
         if (longitude == null) {
             throw new IllegalArgumentException("Longitude cannot be null.");
         }
@@ -86,13 +72,8 @@ public class DataServiceImpl implements org.jrecruiter.service.DataService {
             throw new IllegalArgumentException("ZoomLevel cannot be null.");
         }
 
-        final URL url;
+        final URL url = GoogleMapsUtils.buildGoogleMapsStaticUrl(latitude, longitude, zoomLevel, apiKeysHolder.getGoogleMapsKey());
 
-        try {
-            url = new URL(mf.format(urlParams));
-        } catch (MalformedURLException e) {
-            throw new IllegalStateException(e);
-        }
 
         BufferedImage img;
         try {
@@ -100,7 +81,7 @@ public class DataServiceImpl implements org.jrecruiter.service.DataService {
             img = ImageIO.read(conn.getInputStream());
         } catch (UnknownHostException e) {
             LOGGER.error("Google static MAPS web service is not reachable (UnknownHostException).", e );
-            img = new BufferedImage(width, 100, BufferedImage.TYPE_INT_RGB);
+            img = new BufferedImage(GoogleMapsUtils.defaultWidth, 100, BufferedImage.TYPE_INT_RGB);
 
             final Graphics2D graphics = img.createGraphics();
 
@@ -109,7 +90,7 @@ public class DataServiceImpl implements org.jrecruiter.service.DataService {
             graphics.addRenderingHints(renderingHints);
             graphics.setBackground(Color.WHITE);
             graphics.setColor(Color.GRAY);
-            graphics.clearRect(0, 0, width, 100);
+            graphics.clearRect(0, 0, GoogleMapsUtils.defaultWidth, 100);
 
             graphics.drawString("Not Available", 30, 30);
 

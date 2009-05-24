@@ -2,6 +2,9 @@ package org.jrecruiter.web.actions.util;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BaseFont;
@@ -12,6 +15,9 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public class JobDetailPageEvents extends PdfPageEventHelper {
 
+    /** Initialize Logging. */
+    private final static Logger LOGGER = LoggerFactory.getLogger(JobDetailPageEvents.class);
+
     public BaseFont font;
     public PdfTemplate tpl;
 
@@ -20,24 +26,27 @@ public class JobDetailPageEvents extends PdfPageEventHelper {
      * @see com.lowagie.text.pdf.PdfPageEventHelper#onOpenDocument(com.lowagie.text.pdf.PdfWriter, com.lowagie.text.Document)
 
      */
-
+    @Override
     public void onOpenDocument(PdfWriter writer, Document document) {
 
+        tpl = writer.getDirectContent().createTemplate(100, 100);
+
         try {
-            tpl = writer.getDirectContent().createTemplate(100, 100);
-        font = BaseFont.createFont("Helvetica", BaseFont.WINANSI, false);
-        } catch (DocumentException e) {}
-          catch (IOException e) {}
+            font = BaseFont.createFont("Helvetica", BaseFont.WINANSI, false);
+        } catch (DocumentException e) {
+            LOGGER.error("Error creating font.", e);
+        } catch (IOException e) {
+            LOGGER.error("Error creating font.", e);
+        }
+
     }
-
-
 
     /**
 
      * @see com.lowagie.text.pdf.PdfPageEventHelper#onEndPage(com.lowagie.text.pdf.PdfWriter, com.lowagie.text.Document)
 
      */
-
+    @Override
     public void onEndPage(PdfWriter writer, Document document) {
 
         PdfContentByte cb = writer.getDirectContent();
@@ -101,7 +110,7 @@ public class JobDetailPageEvents extends PdfPageEventHelper {
      * @see com.lowagie.text.pdf.PdfPageEventHelper#onStartPage(com.lowagie.text.pdf.PdfWriter, com.lowagie.text.Document)
 
      */
-
+    @Override
     public void onStartPage(PdfWriter writer, Document document) {
 
     }
@@ -113,7 +122,7 @@ public class JobDetailPageEvents extends PdfPageEventHelper {
      * @see com.lowagie.text.pdf.PdfPageEventHelper#onCloseDocument(com.lowagie.text.pdf.PdfWriter, com.lowagie.text.Document)
 
      */
-
+    @Override
     public void onCloseDocument(PdfWriter writer, Document document) {
 
        tpl.beginText();
