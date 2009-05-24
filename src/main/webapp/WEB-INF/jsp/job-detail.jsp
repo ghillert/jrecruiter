@@ -47,7 +47,7 @@
             </div>
             <div class="optional">
                 <label><spring:message code="jsp._ALL.job.field.offered.by"/>:</label>
-                <s:property value="%{getText(job.offeredBy.descriptionKey)}"/>
+                <s:property value="%{getText(job.offeredBy.descriptionKey)}" default="N/A"/>
             </div>
             <s:if test="job.region.name != null">
                 <div class="optional">
@@ -154,7 +154,7 @@
         <!-- Google Maps -->
         <script
           src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='${apiKeysHolder.googleMapsKey}'"
-          type="text/javascript"/>
+          type="text/javascript"></script>
         <script type="text/javascript">
 <!--
 

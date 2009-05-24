@@ -32,6 +32,19 @@ import com.lowagie.text.pdf.PdfWriter;
  */
 public class JobDetailPdfView extends AbstractPdfView {
 
+    //~~~~~Initialization~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+    @Override
+    protected void prepareWriter(Map<String, Object> model, PdfWriter writer,
+            HttpServletRequest request) throws DocumentException {
+
+        super.prepareWriter(model, writer, request);
+        writer.setPageEvent(new JobDetailPageEvents());
+    }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     @Override
     protected void buildPdfDocument(final Map<String, Object> model,
                                     final Document document,
@@ -44,10 +57,6 @@ public class JobDetailPdfView extends AbstractPdfView {
         final Image googleMapImage = (Image)model.get("googleMapImage");
 
         super.setContentType("application/pdf");
-
-        pdfWriter.setPageEvent(new JobDetailPageEvents());
-
-        document.open();
 
         document.addCreationDate();
         document.addAuthor("www.jRecruiter.org");
@@ -64,7 +73,7 @@ public class JobDetailPdfView extends AbstractPdfView {
             response.setHeader("Content-disposition",
                     "attachment; filename=" + "JobDetail_" + job.getId());
 
-            //~~~~Render Job Summary~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       //~~~~Render Job Summary~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
             this.addPdfHeader(pdfWriter, document, "Summary");
 
@@ -108,7 +117,7 @@ public class JobDetailPdfView extends AbstractPdfView {
 
             if (job.getUsesMap() && googleMapImage != null) {
 
-                this.addPdfHeader(pdfWriter, document, "Job Location2");
+                this.addPdfHeader(pdfWriter, document, "Job Location");
 
                 com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(googleMapImage,
                         Color.WHITE);
@@ -138,14 +147,6 @@ public class JobDetailPdfView extends AbstractPdfView {
 
         }
 
-    }
-
-    /* (non-Javadoc)
-     * @see org.springframework.web.servlet.View#getContentType()
-     */
-    @Override
-    public String getContentType() {
-        return "text/xml";
     }
 
     //~~~~~Helper~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

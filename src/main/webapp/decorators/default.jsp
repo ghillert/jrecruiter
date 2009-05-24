@@ -82,6 +82,8 @@
         </div>
       </div>
 
+        <s:url id="contactUrl" action="contact" namespace="/"/>
+
         <script type="text/javascript">
 
         $(document).ready(function () {

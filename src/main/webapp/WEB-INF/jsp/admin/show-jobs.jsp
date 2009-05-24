@@ -49,6 +49,12 @@
 
 <script type="text/javascript">
 
+$(function() {
+    $('input.checkbox').click(function (e) {
+        $(e).parent().parent().css('background-color', 'red');
+    });
+});
+
 jQuery(document).ready(function () {
 
         jQuery('#deleteButton').click(function(event) {

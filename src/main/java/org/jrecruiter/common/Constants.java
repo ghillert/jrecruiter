@@ -60,8 +60,8 @@ public class Constants {
     public enum OfferedBy {
 
         UNDEFINED("-1", "Undefined"),
-        RECRUITER("Recruiter", "enum.offeredBy.recruiter.description"),
-        COMPANY  ("Company",   "enum.offeredBy.company.description");
+        RECRUITER("Recruiter", "class.enum.offeredBy.recruiter.description"),
+        COMPANY  ("Company",   "class.enum.offeredBy.company.description");
 
         String name;
         String descriptionKey;
