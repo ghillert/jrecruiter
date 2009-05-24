@@ -31,14 +31,14 @@ function checkDelete(userId){
 }
 
 function onInvokeAction(id) {
- 
+
     jQuery.jmesa.setExportToLimit(id, '');
 
     var parameterString = jQuery.jmesa.createParameterStringForLimit(id);
     var url;
 
     url = '<s:property value="%{#showUsersUrl}"/>';
-    
+
     jQuery.get(url + '?' + parameterString, function(data) {
         jQuery("#" + id + 'Div').html(data);
     });
@@ -69,18 +69,18 @@ jQuery(document).ready(function () {
         </p>
       </s:else>
       <div class="submit">
-          <s:submit action="show-users" method="cancel" value="%{getText('jobposting.button.cancel')}"/>
+          <s:submit action="show-users" method="cancel" value="%{getText('jsp._ALL.button.cancel')}"/>
           <s:if test="users != null && users.size > 0">
-              <s:submit id="deleteButton" value="%{getText('jobposting.button.delete')}" method="addNewLogger"/>
+              <s:submit id="deleteButton" value="%{getText('jsp._ALL.button.delete')}" method="addNewLogger"/>
           </s:if>
       </div>
   </s:form>
 
-	<div id="confirm" style="display:none">
-	    <h1 style="padding-left: 1em;">Confirm</h1>
-	    <p class="message"></p>
-	    <div class="buttons">
-	      <a href="#" class="button close"><span>&nbsp;</span>Yes</a>
-	      <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a>
-	    </div>
-	</div>
+    <div id="confirm" style="display:none">
+        <h1 style="padding-left: 1em;">Confirm</h1>
+        <p class="message"></p>
+        <div class="buttons">
+          <a href="#" class="button close"><span>&nbsp;</span>Yes</a>
+          <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a>
+        </div>
+    </div>
