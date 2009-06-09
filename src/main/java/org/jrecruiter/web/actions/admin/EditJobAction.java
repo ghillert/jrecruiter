@@ -19,6 +19,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
+import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
@@ -180,13 +181,13 @@ public class EditJobAction extends JobBaseAction {
 
     public void validateSave() {
 
-        if (Long.valueOf(-16).equals(this.model.getJob().getIndustry().getId())
+        if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getIndustry().getId())
                 && StringUtils.isEmpty(this.model.getJob().getIndustryOther())) {
 
             super.addFieldError("job.industryOther", "Please enter an industry.");
 
         }
-        if (Long.valueOf(-1).equals(this.model.getJob().getRegion().getId())
+        if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getRegion().getId())
                 && StringUtils.isEmpty(this.model.getJob().getRegionOther())) {
 
             super.addFieldError("job.regionOther", "Please enter a region.");

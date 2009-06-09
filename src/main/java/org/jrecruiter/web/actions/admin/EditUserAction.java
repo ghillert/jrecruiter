@@ -84,7 +84,7 @@ public class EditUserAction extends BaseAction {
 
         userService.updateUser(userFromDb);
 
-        addActionMessage(getText("user.edit.success"));
+        addActionMessage(getText("class.EditUserAcion.success"));
 
         User securityContextUser =
             (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

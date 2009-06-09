@@ -15,13 +15,13 @@
       <fieldset id="loginSection">
           <legend>Login</legend>
           <div class="required">
-            <label for="j_username"><spring:message code="class.user.email" />*</label>
+            <label for="j_username"><spring:message code="class.user.email" /></label>
             <s:textfield id="j_username" name="j_username" required="true" maxlength="25" tabindex="1"
                              onblur="javascript:this.className='';"
                              onfocus="javascript:this.className='selected';"/>
           </div>
           <div class="required">
-            <label for="j_password"><spring:message code="class.user.password" />*</label>
+            <label for="j_password"><spring:message code="class.user.password" /></label>
             <s:password id="j_password" name="j_password" required="true" maxlength="25" tabindex="2"
                              onblur="javascript:this.className='';"
                              onfocus="javascript:this.className='selected';"/>
@@ -49,7 +49,7 @@
 <script type="text/JavaScript" language="JavaScript">
 <!--
 $(function() {
-	$('#j_username').focus();
+    $('#j_username').focus();
 });
 //-->
 </script>

@@ -14,9 +14,9 @@
                       <s:param name="userId" value="%{#attr.user.id}"/>
                   </s:url>
                   <s:url id="editJobPostingUrl" action="edit-job"><s:param name="id" value="#attr.row.job.id"/></s:url>
-                  <a href="${editUserUrl}"><img alt="Edit this User." title="Edit this User." src="${ctx}/images/icons/crystal/edit.png" style="border-width: 0;"/></a>
+                  <a href="${editUserUrl}"><img alt="<spring:message code='jsp.admin.user-list-table.edit.link.title'/>" title="<spring:message code='jsp.admin.user-list-table.edit.link.title'/>" src="${ctx}/images/icons/crystal/edit.png" style="border-width: 0;"/></a>
               </jmesa:htmlColumn>
-            <jmesa:htmlColumn styleClass="userlist5" titleKey="userList.th.delete" sortable="false" property="1" filterable="false">
+            <jmesa:htmlColumn styleClass="userlist5" titleKey="jsp.admin.user-list-table.table.delete" sortable="false" property="1" filterable="false">
                 <input type="checkbox" name="userIds[${rowcount-1}]" value="${user.id}" class="checkbox"/>
             </jmesa:htmlColumn>
             <jmesa:htmlColumn styleClass="userlist2" property="username" sortable="true">

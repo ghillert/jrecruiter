@@ -25,7 +25,7 @@
         <img src="${chartJobsHitsUniqueUrl}" alt="Job statistics graph - Unique Hits"/>
     </div>
     <div class="submit">
-        <s:submit value="%{getText('jobposting.button.back')}" name="back"/>
+        <s:submit value="%{getText('jsp._ALL.button.back')}" name="back" method="cancel"/>
     </div>
   </s:form>
 

@@ -18,6 +18,8 @@ package org.jrecruiter.web.actions.admin;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Result;
+import org.jrecruiter.common.AcegiUtil;
+import org.jrecruiter.common.Constants.Roles;
 import org.jrecruiter.model.User;
 import org.jrecruiter.web.actions.BaseAction;
 import org.slf4j.Logger;
@@ -55,7 +57,7 @@ public class DeleteUserAction extends BaseAction {
 
                     User user = userService.getUser(userId);
 
-                    if (user.getId() == -1) {
+                    if (AcegiUtil.containsRole(user.getAuthorities(), Roles.ADMIN.name())) {
                         LOGGER.warn("User tried to delete admin user.");
                         super.addActionMessage("Cannot delete admin user.");
                     } else {

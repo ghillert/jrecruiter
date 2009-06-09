@@ -56,7 +56,8 @@
         </fieldset>
         <fieldset>
             <div class="submit">
-                <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"/><s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
+                <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"/>
+                <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
             </div>
         </fieldset>
         <p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>

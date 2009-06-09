@@ -23,22 +23,23 @@
             <div style="margin-left: 173px; width: 150px; border: 1px solid black;height: 5px; overflow: hidden;"><div id="passwordStrengthBar" style="width: 0px; background-color: green; height: 5px; overflow: "></div></div>
         </div>
         <div class="required">
-            <label for="password2"><spring:message code="class.user.password" />*</label>
+            <label for="password2"><spring:message code="class.user.password2" />*</label>
             <s:password  id="password2" name="password2" required="true" maxlength="25" tabindex="2"/>
         </div>
 
-        <div class="required infoBox">
-            <ol>
-               <li><spring:message code="jsp.signup.text.password.tip1" /></li>
-               <li><spring:message code="jsp.signup.text.password.tip2" /></li>
-               <li><spring:message code="jsp.signup.text.password.tip3" /></li>
-               <li><spring:message code="jsp.signup.text.password.tip4" /></li>
-               <li><spring:message code="jsp.signup.text.password.tip5" /></li>
-               <li><spring:message code="jsp.signup.text.password.tip6" /></li>
-               <li><spring:message code="jsp.signup.text.password.tip7" /></li>
-            </ol>
+        <div id="passwordTips" style="display: none;">
+            <div  class="required infoBox" style="border: none;">
+                <ol>
+                   <li><spring:message code="jsp.signup.text.password.tip1" /></li>
+                   <li><spring:message code="jsp.signup.text.password.tip2" /></li>
+                   <li><spring:message code="jsp.signup.text.password.tip3" /></li>
+                   <li><spring:message code="jsp.signup.text.password.tip4" /></li>
+                   <li><spring:message code="jsp.signup.text.password.tip5" /></li>
+                   <li><spring:message code="jsp.signup.text.password.tip6" /></li>
+                   <li><spring:message code="jsp.signup.text.password.tip7" /></li>
+                </ol>
+            </div>
         </div>
-
         <div class="required">
             <label for="firstName"><spring:message code="class.user.firstName" />*</label>
             <s:textfield id="firstName" name="user.firstName" required="true" maxlength="50" tabindex="3"/>
@@ -76,7 +77,8 @@
         </div>
         <fieldset>
           <div class="submit">
-          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"/><s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
+          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"/>
+          <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
           </div>
         </fieldset>
         <p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>
@@ -90,9 +92,32 @@
       jQuery(':input').bind('blur', function(event) { jQuery(event.target).removeClass('selected'); });
 
       jQuery('#password').bind('keyup', function(event) {
-      testPassword(document.getElementById('password').value); });
+          if ($('#password').val().length > 0) {
+                testPassword($('#password').val());
+          } else {
+                $('#passwordStrength').html('<spring:message code="jsp.signup.label.insert.password" />');
+          }
+      });
       jQuery('#email').focus();
     });
 
+    var passwordTips = $('#passwordTips').html();
+    var qtipParams = {
+            content: passwordTips,
+            show: 'mouseover',
+            hide: 'mouseout',
+            position: {
+                   corner: {
+                      target: 'rightMiddle',
+                      tooltip: 'leftMiddle'
+                   }
+             },
+            style: {
+                tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+            }
+    };
+
+    $('#password').qtip(qtipParams);
+    $('#password2').qtip(qtipParams);
 </script>
 
