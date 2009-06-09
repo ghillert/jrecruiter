@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.struts2.convention.annotation.Result;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -58,6 +59,7 @@ import org.jrecruiter.web.actions.BaseAction;
  * @version $Id$
  *
  */
+@Result(name="success", location="index", type="redirectAction")
 public class ShowStatisticsAction extends BaseAction {
 
     /** serialVersionUID. */
@@ -91,7 +93,7 @@ public class ShowStatisticsAction extends BaseAction {
             return "ajax";
         }
 
-        return SUCCESS;
+        return INPUT;
     }
 
     public final String chartJobsHits() throws Exception {
@@ -185,7 +187,7 @@ public class ShowStatisticsAction extends BaseAction {
     public final String chartJobCount() throws Exception {
 
             final Calendar calendarToday = CalendarUtils.getCalendarWithoutTime();
-            
+
             final Calendar calendar30    = CalendarUtils.getCalendarWithoutTime();
             calendar30.add(Calendar.MONTH, -6);
 
@@ -196,7 +198,7 @@ public class ShowStatisticsAction extends BaseAction {
             for(JobCountPerDay jobCountPerDay : jobCountPerDayList ) {
               hitsPerDayData.add( new Day(jobCountPerDay.getJobDate()),  jobCountPerDay.getTotalNumberOfJobs());
             }
-                        
+
             final XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
 
             this.chart = ChartFactory.createTimeSeriesChart("",
@@ -223,10 +225,10 @@ public class ShowStatisticsAction extends BaseAction {
             }
 
             DateAxis dateaxis = (DateAxis)xyplot.getDomainAxis();
-  
+
             dateaxis.setAutoRange(true);
             dateaxis.setAutoTickUnitSelection(true);
-            
+
             NumberAxis valueAxis = (NumberAxis)xyplot.getRangeAxis();
             valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
