@@ -9,7 +9,7 @@
     </p>
         <fieldset>
           <div class="required">
-              <label for="username"><spring:message code="class.user.email" />*</label>
+              <label for="username"><spring:message code="class.user.email" /></label>
               <s:textfield id="username" name="user.username" required="true" maxlength="25" tabindex="1"/>
           </div>
         </fieldset>
@@ -19,7 +19,6 @@
                 <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
             </div>
         </fieldset>
-        <p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>
 </s:form>
 
 <script type="text/javascript">
