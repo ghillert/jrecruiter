@@ -35,6 +35,7 @@ public class EditUserAction extends BaseAction {
     private User user;
     private String password;
     private String password2;
+    private boolean changePassword;
     private @Autowired StringDigester stringDigester;
 
     private Long userId;
@@ -43,6 +44,14 @@ public class EditUserAction extends BaseAction {
     private static final long serialVersionUID = -3422780336408883930L;
     private final static Logger LOGGER = LoggerFactory.getLogger(EditUserAction.class);
 
+    public void validateSave() {
+
+        if (changePassword) {
+            if (StringUtils.isBlank(this.password)) {
+                super.addFieldError("password", "Please enter a password.");
+            }
+        }
+    }
     /**
      * Save the user.
      * @return
@@ -80,7 +89,6 @@ public class EditUserAction extends BaseAction {
         userFromDb.setFirstName(this.user.getFirstName());
         userFromDb.setLastName(this.user.getLastName());
         userFromDb.setPhone(this.user.getPhone());
-        userFromDb.setUsername(this.user.getUsername());
 
         userService.updateUser(userFromDb);
 
@@ -145,6 +153,14 @@ public class EditUserAction extends BaseAction {
 
     public void setPassword2(String password2) {
         this.password2 = password2;
+    }
+
+    public boolean isChangePassword() {
+        return changePassword;
+    }
+
+    public void setChangePassword(boolean changePassword) {
+        this.changePassword = changePassword;
     }
 
 
