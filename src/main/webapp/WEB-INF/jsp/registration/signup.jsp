@@ -27,19 +27,6 @@
             <s:password  id="password2" name="password2" required="true" maxlength="25" tabindex="2"/>
         </div>
 
-        <div id="passwordTips" style="display: none;">
-            <div  class="required infoBox" style="border: none;">
-                <ol>
-                   <li><spring:message code="jsp.signup.text.password.tip1" /></li>
-                   <li><spring:message code="jsp.signup.text.password.tip2" /></li>
-                   <li><spring:message code="jsp.signup.text.password.tip3" /></li>
-                   <li><spring:message code="jsp.signup.text.password.tip4" /></li>
-                   <li><spring:message code="jsp.signup.text.password.tip5" /></li>
-                   <li><spring:message code="jsp.signup.text.password.tip6" /></li>
-                   <li><spring:message code="jsp.signup.text.password.tip7" /></li>
-                </ol>
-            </div>
-        </div>
         <div class="required">
             <label for="firstName"><spring:message code="class.user.firstName" />*</label>
             <s:textfield id="firstName" name="user.firstName" required="true" maxlength="50" tabindex="3"/>
@@ -82,42 +69,9 @@
           </div>
         </fieldset>
         <p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>
+
+        <jsp:include page="../includes/password-tips.jsp"/>
 </s:form>
 
-<script type="text/javascript">
 
-    jQuery(function() {
-
-      jQuery(':input').bind('focus', function(event) { jQuery(event.target).addClass('selected'); });
-      jQuery(':input').bind('blur', function(event) { jQuery(event.target).removeClass('selected'); });
-
-      jQuery('#password').bind('keyup', function(event) {
-          if ($('#password').val().length > 0) {
-                testPassword($('#password').val());
-          } else {
-                $('#passwordStrength').html('<spring:message code="jsp.signup.label.insert.password" />');
-          }
-      });
-      jQuery('#email').focus();
-    });
-
-    var passwordTips = $('#passwordTips').html();
-    var qtipParams = {
-            content: passwordTips,
-            show: 'mouseover',
-            hide: 'mouseout',
-            position: {
-                   corner: {
-                      target: 'rightMiddle',
-                      tooltip: 'leftMiddle'
-                   }
-             },
-            style: {
-                tip: 'leftMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
-            }
-    };
-
-    $('#password').qtip(qtipParams);
-    $('#password2').qtip(qtipParams);
-</script>
 
