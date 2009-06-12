@@ -47,8 +47,18 @@ public class EditUserAction extends BaseAction {
     public void validateSave() {
 
         if (changePassword) {
-            if (StringUtils.isBlank(this.password)) {
-                super.addFieldError("password", "Please enter a password.");
+
+            if (password != null && password != null) {
+                if (!password.trim().equals(password2.trim())) {
+                    addFieldError("password2", "The passwords do not match.");
+                }
+            } else {
+                if (StringUtils.isBlank(this.password)) {
+                    super.addFieldError("password", "Please enter a password.");
+                }
+                if (StringUtils.isBlank(this.password2)) {
+                    super.addFieldError("password", "Please re-type the password.");
+                }
             }
         }
     }
