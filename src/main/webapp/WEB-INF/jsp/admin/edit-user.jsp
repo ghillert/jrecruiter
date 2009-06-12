@@ -45,7 +45,7 @@
                 <span id="passwordStrength"><spring:message code="jsp.signup.label.insert.password" /></span>
             </div>
             <div class="required">
-                <div style="margin-left: 173px; width: 150px; border: 1px solid black;height: 5px; overflow: hidden;"><div id="passwordStrengthBar" style="width: 0px; background-color: green; height: 5px; overflow: "></div></div>
+                <div id="passwordStrengthBarContainer" style="margin-left: 173px; width: 150px; border: 1px solid black;height: 5px; overflow: hidden;"><div id="passwordStrengthBar" style="width: 0px; background-color: green; height: 5px; overflow: "></div></div>
             </div>
             <div class="required">
                 <label for="password2"><spring:message code="class.user.password2" />*</label>
@@ -70,6 +70,7 @@
     $('#changePassword').click(function() {
         if ($('#changePassword').is(':checked')) {
             $('#changePasswordDiv').fadeIn('slow');
+            $('#passwordStrengthBarContainer').width($('#password').width());
         } else {
             $('#changePasswordDiv').fadeOut('slow');
         }
