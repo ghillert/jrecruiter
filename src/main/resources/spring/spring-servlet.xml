@@ -49,10 +49,17 @@
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order" value="2"/>
+        <property name="mappings">
+        <value>
+        /messagebroker/*=_messageBroker
+        </value>
+        </property>
+    </bean>
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="order" value="1"/>
     </bean>
-
     <bean
         class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="order" value="0" />
@@ -63,13 +70,18 @@
         <property name="order" value="1" />
     </bean>
 
-<!--	<bean name="/**/*"-->
-<!--		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />-->
-
    <bean name="indeedView" class="org.jrecruiter.web.views.XmlView"/>
    <bean name="jobDetailPdfView" class="org.jrecruiter.web.views.JobDetailPdfView"/>
 
+    <bean id="messageBrokerConfigProcessor" class="org.jrecruiter.web.flex.CustomMessageBrokerConfigProcessor"/>
 
+    <flex:message-broker disable-default-mapping="true">
+        <flex:config-processor ref="messageBrokerConfigProcessor" />
+    </flex:message-broker>
+
+    <bean id="flexService" class="org.jrecruiter.service.impl.FlexServiceImpl" />
+
+    <flex:remote-service ref="flexService" />
 
 </beans>
 

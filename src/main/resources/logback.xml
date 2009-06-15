@@ -3,7 +3,7 @@
 <configuration>
   <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <append>false</append>
-    <File>${catalina.home}/logs/jrecruiter.log</File>
+    <File>${jrecruiter.home}/logs/jrecruiter.log</File>
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>%d %5p [ %F:%L ] - %m%n</pattern>
     </layout>
@@ -61,7 +61,7 @@
     <level value="INFO"/>
   </logger>
   <logger name="net.jawr">
-    <level value="DEBUG"/>
+    <level value="INFO"/>
   </logger>
   <logger name="com.opensymphony.module.sitemesh">
     <level value="INFO"/>
