@@ -1267,6 +1267,8 @@
 
     <properties>
 
+        <jrecruiter.home>/opt/jrecruiter</jrecruiter.home>
+
         <dbunit.dataTypeFactoryName>org.dbunit.dataset.datatype.DefaultDataTypeFactory</dbunit.dataTypeFactoryName>
         <dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
         <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>

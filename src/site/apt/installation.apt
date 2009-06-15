@@ -3,7 +3,7 @@
   ------
   Gunnar Hillert
   ------
-  February 19, 2008
+  June 7, 2009
 
 
 Requirements
@@ -38,7 +38,7 @@ Requirements
 Obtaining and building the sources
 
   Currently no readily deployable WAR is available. Thus, presently you need to
-  check out the source from CVS and build the project using Maven.
+  check out the source from Subversion and build the project using Maven 2.
 
   Please make sure that Maven 2.x is correctly installed and that the CVS
   executable is in your path. You can the directly check out the source files
