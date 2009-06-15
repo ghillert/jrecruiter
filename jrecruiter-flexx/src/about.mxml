@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-	
-	<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="300" horizontalAlign="center">
-		<mx:HBox width="100%" paddingLeft="5" paddingTop="5">
-			<mx:Text text="jRecruiter Flex is an Adobe Flex-based frontend for the jRecruiter job posting application. &#xd;&#xd;The application integrates with the Java EE backend (Spring, Hibernate &amp; Postgres) using BlazeDS and the Spring BlazeDS module. &#xd;&#xd;The source code is available at:" width="100%"/>
-			<mx:Image source="images/developers/gunnar_hillert.png"/>
-		</mx:HBox> 
-        <mx:LinkButton id="linkToJrecruiter" label="jRecruiter.org" click="navigateToURL(new URLRequest('http://www.jRecruiter.org'), '_blank')" /> 
-    </mx:VBox>
