@@ -5,14 +5,14 @@
 
     <parent>
         <groupId>org.jrecruiter</groupId>
-        <artifactId>jrecruiter-flex</artifactId>
+        <artifactId>jrecruiter</artifactId>
         <version>2.0</version>
     </parent>
 
-    <artifactId>spring-blazeds-101</artifactId>
+    <artifactId>jrecruiter-flex</artifactId>
     <packaging>swf</packaging>
 
-    <name>Spring BlazeDS Integration 101 Sample</name>
+    <name>${pom.artifactId}</name>
 
     <build>
         <finalName>main</finalName>
@@ -43,6 +43,13 @@
             <version>3.2.0.3958</version>
             <type>pom</type>
         </dependency>
+        <dependency>
+          <groupId>googlemaps</groupId>
+          <artifactId>googlemaps</artifactId>
+          <version>1.9a</version>
+          <type>swc</type>
+        </dependency>
+
         <!-- flexmojos Unit testing support -->
         <!--
             <dependency> <groupId>org.sonatype.flexmojos</groupId>
