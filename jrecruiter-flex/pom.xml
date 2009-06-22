@@ -25,8 +25,9 @@
                 <version>3.2.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <output>${basedir}/../jrecruiter-web/src/main/webapp/flex-jobs/${project.build.finalName}.swf</output>
+                    <output>${basedir}/../jrecruiter-web/src/main/webapp/flex-jobs/jobs.swf</output>
                     <services>${basedir}/../jrecruiter-web/src/main/webapp/WEB-INF/flex/services-config.xml</services>
+<debug>true</debug><accessible>true</accessible><as3>true</as3><showWarnings>true</showWarnings>
                     <contextRoot>/</contextRoot>
                     <locales>
                         <locale>en_US</locale>
