@@ -81,7 +81,7 @@
 
     <bean id="flexService" class="org.jrecruiter.service.impl.FlexServiceImpl" />
 
-    <flex:remote-service ref="flexService" />
+    <flex:remoting-destination ref="flexService" />
 
 </beans>
 

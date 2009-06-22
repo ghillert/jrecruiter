@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" applicationComplete="applicationCompleteHandler(event)" cornerRadius="10" layout="vertical" verticalAlign="top" xmlns:ns1="*">
-	
+
 	<mx:Style source="css/style.css"/>
 	<mx:Style>
 	</mx:Style>
@@ -14,25 +14,25 @@
     		import mx.events.CloseEvent;
     		import mx.controls.Alert;
     		import mx.rpc.events.ResultEvent;
-    		
+
     		import mx.controls.Label;
             import mx.containers.TitleWindow;
-			
+
             private function applicationCompleteHandler(event:Event):void {
-				
-				ro.getJobSummaries(); 
+
+				ro.getJobSummaries();
 				jobsPanel.visible=true;
-				
+
 			}
-			
+
 			var aboutWindow:TitleWindow;
-			
+
             private function showAbout():void {
 
                 var popUp:about;
-                
+
                 aboutWindow = new TitleWindow();
-                
+
                 aboutWindow.setStyle("showEffect", fade);
                 aboutWindow.setStyle("hideEffect", fade);
                 aboutWindow.title = "About jRecruiter";
@@ -49,15 +49,15 @@
             }
 
     		public function handleJobDetail(event:ResultEvent):void {
-			    			
+
 			    jobId.text           = new String(event.result.id);
 			    jobDate.text         = dateFormatter.format(event.result.updateDate);
 			    jobTitle.text        = new String(event.result.jobTitle);
 			    jobBusinessName.text = new String(event.result.businessName);
-			    
+
 			    jobDescription.text  = new String(event.result.description);
 			    jobRestrictions.text  = new String(event.result.jobRestrictions);
-			    
+
 			    if (event.result.usesMap) {
 			        this.map.setCenter(new LatLng(event.result.latitude, event.result.longitude), event.result.zoomLevel, MapType.NORMAL_MAP_TYPE);
 			        var latlng:LatLng = new LatLng(event.result.latitude, event.result.longitude);
@@ -67,7 +67,7 @@
 
                  }
 			}
-          
+
            private function formatDate(item:Object, column:DataGridColumn):String {
                 return dateFormatter.format(item.updateDate);
             }
@@ -80,17 +80,17 @@
     <mx:RemoteObject id="ro" destination="flexService" >
         <mx:method name="getJob" result="handleJobDetail(event)" makeObjectsBindable="true"/>
     </mx:RemoteObject>
-    
+
     <mx:HBox width="100%" styleName="header" cornerRadius="15" paddingTop="0" height="77" verticalAlign="middle">
         <mx:Image source="images/musa_header.jpg" scaleContent="true" id="headerImage" autoLoad="true"/>
-        <mx:Label width="100%" height="50" text="jRecruiter" styleName="header" fontSize="28" textAlign="center"/>
+        <mx:Label width="100%" height="50" text="jRecruiter FX beta" styleName="header" fontSize="28" textAlign="center"/>
     </mx:HBox>
     <mx:HBox width="100%" styleName="header" cornerRadius="15" paddingTop="0" horizontalAlign="left">
 	    <mx:Button label="Reload Jobs" click="ro.getJobSummaries()"/>
 	    <mx:Button label="About…" click="showAbout()"/>
     </mx:HBox>
 
-    <mx:Panel id="jobsPanel" width="100%" height="40%" layout="vertical" title="Jobs" showEffect="{fade}" hideEffect="{fade}" visible="true" cornerRadius="10">      
+    <mx:Panel id="jobsPanel" width="100%" height="40%" layout="vertical" title="Jobs" showEffect="{fade}" hideEffect="{fade}" visible="true" cornerRadius="10">
         <mx:DataGrid id="jobsGrid" dataProvider="{ro.getJobSummaries.lastResult}" width="100%" height="224" change="ro.getJob(jobsGrid.selectedItem.id);">
 	        <mx:columns>
 	            <mx:DataGridColumn dataField="jobTitle"    headerText="Job Title" />
@@ -136,7 +136,7 @@
 		        <mx:TextArea id="jobDescription"  text="" width="100%" height="100" backgroundColor="#D7D8FC" editable="false"/>
 		        <mx:TextArea id="jobRestrictions" text="" width="100%" height="100" backgroundColor="#D7D8FC" editable="false"/>
 		    </mx:Panel>
-			<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)" 
+			<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)"
 			  width="50%" height="100%" key="ABQIAAAAaRkHCsiKIvvB_UEon-SKORQ7EYV2ourIdp48QYZszNEA7gcaFhQRuKqKuYEC9ss4BL5bATDTf3IeLg"/>
 			<mx:Script>
 			    <![CDATA[
@@ -145,20 +145,20 @@
 			    	import com.google.maps.controls.MapTypeControl;
 			    	import com.google.maps.controls.PositionControl;
 			    	import com.google.maps.controls.ZoomControl;
-			   
+
 				    import com.google.maps.LatLng;
 				    import com.google.maps.Map;
 				    import com.google.maps.MapEvent;
 				    import com.google.maps.MapType;
-			
+
 			    private function onMapReady(event:Event):void {
-			      
+
 			      var geocoder:ClientGeocoder = new ClientGeocoder();
-                  
+
                   geocoder.addEventListener(GeocodingEvent.GEOCODING_SUCCESS, function(event:GeocodingEvent):void {
 				        var placemarks:Array = event.response.placemarks;
 				        if (placemarks.length > 0) {
-				        	
+
 				           map.addControl(new ZoomControl());
 	                       map.addControl(new PositionControl());
 	                       map.addControl(new MapTypeControl());
@@ -173,12 +173,12 @@
                           function(event:GeocodingEvent):void {
     		          Alert("Geocoding failed.");
 	       	        });
-	       	        
+
 	       	     geocoder.geocode("Atlanta, GA");
-	       	     
+
 			    }
 			    ]]>
 			</mx:Script>
 		</mx:HBox>
-		
+
 </mx:Application>

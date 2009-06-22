@@ -804,8 +804,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.flex</groupId>
-            <artifactId>org.springframework.flex</artifactId>
-            <version>1.0.0.M2</version>
+            <artifactId>spring-flex</artifactId>
+            <version>1.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>

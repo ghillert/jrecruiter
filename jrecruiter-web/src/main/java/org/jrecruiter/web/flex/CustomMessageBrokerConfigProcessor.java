@@ -1,6 +1,6 @@
 package org.jrecruiter.web.flex;
 
-import org.springframework.flex.messaging.config.MessageBrokerConfigProcessor;
+import org.springframework.flex.config.MessageBrokerConfigProcessor;
 
 import flex.messaging.MessageBroker;
 import flex.messaging.services.RemotingService;

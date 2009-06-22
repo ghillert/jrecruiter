@@ -56,7 +56,7 @@ public class AccountValidationAction extends BaseAction {
     }
 
     public void validate() {
-        if (this.key == null || this.key.trim().isEmpty()) {
+        if (this.key == null || this.key.trim().length() == 0) {
             super.addFieldError("key", super.getText("class.AccountValidationAction.field.required.key"));
         }
     }
