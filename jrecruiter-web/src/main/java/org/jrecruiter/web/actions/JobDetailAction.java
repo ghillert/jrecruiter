@@ -7,10 +7,10 @@ import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
+import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
-import org.jrecruiter.web.ApiKeysHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -47,7 +47,7 @@
 
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
-     <bean id="apiKeysHolder" class="org.jrecruiter.web.ApiKeysHolder">
+     <bean id="apiKeysHolder" class="org.jrecruiter.common.ApiKeysHolder">
        <property name="googleMapsKey" value="${key.google.maps}"/>
        <property name="reCaptchaKey"  value="${key.recaptcha.public}"/>
      </bean>

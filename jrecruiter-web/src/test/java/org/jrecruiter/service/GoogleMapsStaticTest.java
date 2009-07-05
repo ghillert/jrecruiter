@@ -23,9 +23,9 @@ import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
+import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.test.BaseTest;
-import org.jrecruiter.web.ApiKeysHolder;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
