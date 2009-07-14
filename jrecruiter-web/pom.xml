@@ -21,36 +21,6 @@
     implemented in Java and uses Struts 2, Spring and Hibernate.
   </description>
 
-    <prerequisites>
-        <maven>2.0.9</maven>
-    </prerequisites>
-
-    <!-- Administrative Settings -->
-
-    <distributionManagement>
-        <site>
-            <id>website</id>
-            <url>scp://74.207.227.71:9922/srv/data/www/jrecruiter</url>
-        </site>
-    </distributionManagement>
-    <ciManagement>
-        <system>Hudson</system>
-        <url>http://74.207.227.71:9080/hudson/job/jRecruiter/</url>
-    </ciManagement>
-
-    <developers>
-        <developer>
-            <id>ghillert</id>
-            <name>Gunnar Hillert</name>
-            <email>gunnar at hillert dot com</email>
-            <url>http://www.hillert.com</url>
-            <roles>
-                <role>Admin</role>
-            </roles>
-            <timezone>-5</timezone>
-        </developer>
-    </developers>
-
     <build>
 
         <finalName>${pom.artifactId}</finalName>
