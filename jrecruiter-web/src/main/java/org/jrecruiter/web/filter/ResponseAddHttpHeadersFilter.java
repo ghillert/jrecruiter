@@ -11,10 +11,15 @@ import java.util.TimeZone;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Allows for setting HTTP Header
@@ -28,42 +33,48 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ResponseAddHttpHeadersFilter implements Filter {
 
-    FilterConfig config;
+	/** Initialize Logging. */
+	private final static Logger LOGGER = LoggerFactory.getLogger(ResponseAddHttpHeadersFilter.class);
 
-    public void doFilter(ServletRequest req, ServletResponse res,
-            FilterChain chain) throws IOException, ServletException {
+	FilterConfig config;
 
-        final HttpServletResponse response = (HttpServletResponse) res;
-        // set the provided HTTP response parameters
+	public void doFilter(ServletRequest req, ServletResponse res,
+			FilterChain chain) throws IOException, ServletException {
 
-        final int secondsToCache = Integer.valueOf(config.getInitParameter("secondsToCache"));
+		final HttpServletResponse response = (HttpServletResponse) res;
+		final HttpServletRequest  request  = (HttpServletRequest) req;
+		// set the provided HTTP response parameters
 
-        setCacheExpireDate(response, secondsToCache);
-        // pass the request/response on
-        chain.doFilter(req, response);
-    }
+		LOGGER.debug("RequestURI = " + request.getRequestURI());
 
-    public void init(FilterConfig filterConfig) {
-        this.config = filterConfig;
-    }
+		final int secondsToCache = Integer.valueOf(config.getInitParameter("secondsToCache"));
 
-    public void destroy() {
-        this.config = null;
-    }
+		setCacheExpireDate(response, secondsToCache);
+		// pass the request/response on
+		chain.doFilter(req, response);
+	}
 
-     public static void setCacheExpireDate(final HttpServletResponse response,
-            final int seconds) {
-        if (response != null) {
-            final Calendar cal = new GregorianCalendar();
-            cal.roll(Calendar.SECOND, seconds);
-            response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
-            response.setHeader("Expires", htmlExpiresDateFormat().format(cal.getTime()));
-        }
-    }
+	public void init(FilterConfig filterConfig) {
+		this.config = filterConfig;
+	}
 
-    public static DateFormat htmlExpiresDateFormat() {
-        final DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
-        httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        return httpDateFormat;
-    }
+	public void destroy() {
+		this.config = null;
+	}
+
+	public static void setCacheExpireDate(final HttpServletResponse response,
+			final int seconds) {
+		if (response != null) {
+			final Calendar cal = new GregorianCalendar();
+			cal.add(Calendar.SECOND, seconds);
+			response.setHeader("Cache-Control", "PUBLIC, max-age=" + seconds + ", must-revalidate");
+			response.setHeader("Expires", htmlExpiresDateFormat().format(cal.getTime()));
+		}
+	}
+
+	public static DateFormat htmlExpiresDateFormat() {
+		final DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+		httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+		return httpDateFormat;
+	}
 }
