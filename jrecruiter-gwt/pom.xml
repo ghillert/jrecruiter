@@ -8,6 +8,7 @@
   <groupId>org.jrecruiter</groupId>
   <artifactId>jrecruiter-gwt</artifactId>
   <packaging>war</packaging>
+  <name>${pom.artifactId}</name>
   <version>1.0</version>
 
   <dependencies>
