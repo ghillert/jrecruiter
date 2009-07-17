@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants;
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private @Autowired NotificationService notificationService;
 
-    private @Autowired MessageSource messageSource;
+    private @Resource(name="server.messageSource") MessageSource messageSource;
 
     /**
      * User Dao.
