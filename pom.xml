@@ -8,9 +8,9 @@
 
     <modules>
         <module>jrecruiter-server</module>
+        <module>jrecruiter-gwt</module>
         <module>jrecruiter-flex</module>
         <module>jrecruiter-web</module>
-        <module>jrecruiter-gwt</module>
     </modules>
 
     <name>${pom.artifactId}</name>
@@ -968,7 +968,7 @@
 
     <properties>
 
-        <jrecruiter.home>/opt/jrecruiter</jrecruiter.home>
+        <jrecruiter.home>${user.home}/.jrecruiter</jrecruiter.home>
 
         <!-- Framework dependency versions -->
         <spring.version>3.0.0.M2</spring.version>
@@ -992,10 +992,10 @@
         <cargo.port>8081</cargo.port>
         <cargo.wait>false</cargo.wait>
 
-                <struts.devMode>true</struts.devMode>
-                <hibernate.show.sql>true</hibernate.show.sql>
-                <jawr.debug.on>true</jawr.debug.on>
-                <web.xml.DwrServlet.debug>true</web.xml.DwrServlet.debug>
+        <struts.devMode>true</struts.devMode>
+        <hibernate.show.sql>true</hibernate.show.sql>
+        <jawr.debug.on>true</jawr.debug.on>
+        <web.xml.DwrServlet.debug>true</web.xml.DwrServlet.debug>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
