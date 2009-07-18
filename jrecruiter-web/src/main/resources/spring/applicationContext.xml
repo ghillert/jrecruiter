@@ -11,7 +11,7 @@
 
     <bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction" />
 
-	<import resource="classpath:spring/applicationContext-jpa.xml"/>
-	<import resource="classpath:spring/applicationContext-resources.xml"/>
-	<import resource="classpath:spring/applicationContext-server.xml"/>
+	<import resource="classpath:org/jrecruiter/server/spring/applicationContext-jpa.xml"/>
+	<import resource="classpath:org/jrecruiter/server/spring/applicationContext-resources.xml"/>
+	<import resource="classpath:org/jrecruiter/server/spring/applicationContext-server.xml"/>
 </beans>
