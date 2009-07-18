@@ -15,10 +15,10 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  */
 @ContextConfiguration(
         locations={
-        		"classpath:/spring/applicationContext-server.xml",
-                "classpath:/spring/applicationContext-jpa.xml",
-                "classpath:/spring/test-applicationContext-mail.xml",
-                "classpath:/spring/applicationContext-resources.xml"
+        		"classpath:org/jrecruiter/server/spring/applicationContext-server.xml",
+                "classpath:org/jrecruiter/server/spring/applicationContext-jpa.xml",
+                "classpath:org/jrecruiter/server/spring/test-applicationContext-mail.xml",
+                "classpath:org/jrecruiter/server/spring/applicationContext-resources.xml"
                  })
 public abstract class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 

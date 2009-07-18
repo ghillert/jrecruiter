@@ -6,10 +6,9 @@
 
     <!-- For mail settings and future properties files -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="ignoreResourceNotFound" value="false"/>
         <property name="locations">
             <list>
-                <value>classpath:jdbc.properties</value>
+                <value>classpath:org/jrecruiter/server/jdbc.properties</value>
                 <value>file:${jrecruiter.home}/jrecruiter.properties</value>
             </list>
         </property>
