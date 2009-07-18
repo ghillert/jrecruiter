@@ -30,8 +30,7 @@
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
         <property name="basenames" >
             <list>
-                <value>classpath:messages</value>
-                <value>classpath:struts-messages</value>
+                <value>classpath:org/jrecruiter/server/messages</value>
             </list>
         </property>
         <property name="defaultEncoding" value="utf-8"/>
