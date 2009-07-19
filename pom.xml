@@ -8,9 +8,9 @@
 
     <modules>
         <module>jrecruiter-server</module>
-        <module>jrecruiter-gwt</module>
-        <module>jrecruiter-flex</module>
-        <module>jrecruiter-web</module>
+<!--        <module>jrecruiter-gwt</module>-->
+<!--        <module>jrecruiter-flex</module>-->
+<!--        <module>jrecruiter-web</module>-->
     </modules>
 
     <name>${pom.artifactId}</name>
@@ -899,60 +899,7 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <profiles>
-        <profile>
-            <id>integration-test</id>
-            <activation>
-                <property>
-                    <name>!maven.test.skip</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>0.3</version>
-                        <configuration>
-                            <wait>${cargo.wait}</wait>
-                            <container>
-                                <containerId>${cargo.container}</containerId>
-                                <!--home>${cargo.container.home}</home-->
-                                <zipUrlInstaller>
-                                    <url>${cargo.container.url}</url>
-                                    <installDir>${installDir}</installDir>
-                                </zipUrlInstaller>
-                            </container>
-                            <configuration>
-                                <home>${project.build.directory}/${cargo.container}/container</home>
-                                <properties>
-                                    <cargo.hostname>${cargo.host}</cargo.hostname>
-                                    <cargo.servlet.port>${cargo.port}</cargo.servlet.port>
-                                </properties>
-                            </configuration>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>start-container</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>stop-container</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
+<profiles>
         <!-- ================= Production Settings Profile ================= -->
         <!-- Use "-P prod" when you want to use the settings in this profile -->
         <!-- =============================================================== -->
@@ -983,14 +930,6 @@
         <spring.security.version>2.0.4</spring.security.version>
         <!-- WebTest dependency versions  -->
         <webtest.version>R_1600</webtest.version>
-
-        <!-- Cargo settings -->
-        <cargo.container>tomcat5x</cargo.container>
-        <cargo.container.home>${env.CATALINA_HOME}</cargo.container.home>
-        <cargo.container.url>http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.14/bin/apache-tomcat-6.0.14.zip</cargo.container.url>
-        <cargo.host>localhost</cargo.host>
-        <cargo.port>8081</cargo.port>
-        <cargo.wait>false</cargo.wait>
 
         <struts.devMode>true</struts.devMode>
         <hibernate.show.sql>true</hibernate.show.sql>
