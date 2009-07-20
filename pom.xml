@@ -9,8 +9,8 @@
     <modules>
         <module>jrecruiter-server</module>
 <!--        <module>jrecruiter-gwt</module>-->
-<!--        <module>jrecruiter-flex</module>-->
-<!--        <module>jrecruiter-web</module>-->
+        <module>jrecruiter-flex</module>
+        <module>jrecruiter-web</module>
     </modules>
 
     <name>${pom.artifactId}</name>
@@ -71,6 +71,22 @@
                 <artifactId>maven-reactor-plugin</artifactId>
                 <version>1.0</version>
             </plugin>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-pmd-plugin</artifactId>
+	        <version>2.3</version>
+	      </plugin>
+		<plugin>
+		   <groupId>org.codehaus.mojo</groupId>
+		   <artifactId>findbugs-maven-plugin</artifactId>
+		   <version>1.2</version>
+		   <configuration>
+		      <findbugsXmlOutput>true</findbugsXmlOutput>
+		      <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+		      <xmlOutput>true</xmlOutput>
+		   </configuration>
+		</plugin>
+
         </plugins>
     </build>
     <repositories>
