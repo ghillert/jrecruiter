@@ -8,7 +8,7 @@
 
     <modules>
         <module>jrecruiter-server</module>
-<!--        <module>jrecruiter-gwt</module>-->
+        <!--        <module>jrecruiter-gwt</module>-->
         <module>jrecruiter-flex</module>
         <module>jrecruiter-web</module>
     </modules>
