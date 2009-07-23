@@ -301,21 +301,24 @@ implements JobDao {
         @SuppressWarnings("unchecked")
         public void reindexSearch() {
 
-            FullTextEntityManager fullTextEntityManager = Search.createFullTextEntityManager(entityManager);
+            final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
             fullTextEntityManager.setFlushMode(FlushModeType.COMMIT);
 
-            List<Job> jobs = entityManager.createQuery("select job from Job as job").getResultList();
-            for (Job job : jobs) {
+            final List<Job> jobs = entityManager.createQuery("select job from Job as job").getResultList();
+
+            for (final Job job : jobs) {
                 fullTextEntityManager.index(job);
             }
 
-            List<Region> regions = entityManager.createQuery("select region from Region as region").getResultList();
-            for (Region region : regions) {
+            final List<Region> regions = entityManager.createQuery("select region from Region as region").getResultList();
+
+            for (final Region region : regions) {
                 fullTextEntityManager.index(region);
             }
 
-            List<Industry> industries = entityManager.createQuery("select industry from Industry as industry").getResultList();
-            for (Industry industry : industries) {
+            final List<Industry> industries = entityManager.createQuery("select industry from Industry as industry").getResultList();
+
+            for (final Industry industry : industries) {
                 fullTextEntityManager.index(industry);
             }
 
