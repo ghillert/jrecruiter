@@ -11,6 +11,18 @@
 
     <bean id="ajaxService" class="org.jrecruiter.web.ajax.DwrAction" />
 
+    <bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
+        <property name="basenames" >
+            <list>
+                <value>classpath:messages</value>
+                <value>classpath:struts-messages</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="cacheSeconds" value="0"/>
+    </bean>
+
 	<import resource="classpath:org/jrecruiter/server/spring/applicationContext-jpa.xml"/>
 	<import resource="classpath:org/jrecruiter/server/spring/applicationContext-resources.xml"/>
 	<import resource="classpath:org/jrecruiter/server/spring/applicationContext-server.xml"/>
