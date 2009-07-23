@@ -16,7 +16,6 @@
 package org.jrecruiter.service;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
@@ -26,6 +25,7 @@ import javax.imageio.ImageIO;
 import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,9 +50,11 @@ public class GoogleMapsStaticTest extends BaseTest {
     try {
 
         final URL url = GoogleMapsUtils.buildGoogleMapsStaticUrl(BigDecimal.TEN, BigDecimal.TEN, 10, this.apiKeysHolder.getGoogleMapsKey());
-        URLConnection conn = url.openConnection ();
+        final URLConnection conn = url.openConnection ();
 
-        BufferedImage img = ImageIO.read(conn.getInputStream());
+        final BufferedImage img = ImageIO.read(conn.getInputStream());
+
+        Assert.assertNotNull(img);
 
         } catch (Exception e) {
             e.printStackTrace();

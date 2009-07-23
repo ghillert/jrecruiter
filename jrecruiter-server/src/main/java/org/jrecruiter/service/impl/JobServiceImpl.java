@@ -44,8 +44,6 @@ import org.jrecruiter.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,12 +58,6 @@ public class JobServiceImpl implements JobService {
 
     /** Initialize Logging. */
     private final static Logger LOGGER = LoggerFactory.getLogger(JobServiceImpl.class);
-
-    /** Mailsender. */
-    private @Autowired MailSender mailSender;
-
-    /** Email message. */
-    private @Autowired SimpleMailMessage message;
 
     /** Job Dao. */
     private @Autowired JobDao jobDao;

@@ -24,7 +24,6 @@ import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
 import org.jasypt.digest.StringDigester;
-import org.jrecruiter.common.Constants;
 import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.dao.IndustryDao;
@@ -250,6 +249,7 @@ public class MigrationServiceImpl implements MigrationService {
             newJob.setBusinessZip(job.getBusinessZip());
             newJob.setDescription(job.getDescription());
             newJob.setIndustry(otherIndustry);
+            newJob.setRegion(otherRegion);
             newJob.setIndustryOther(job.getIndustryOther());
             newJob.setJobRestrictions(job.getJobRestrictions());
             newJob.setJobTitle(job.getJobTitle());
