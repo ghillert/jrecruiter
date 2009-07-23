@@ -13,7 +13,7 @@
     <artifactId>jrecruiter-web</artifactId>
     <packaging>war</packaging>
 
-    <name>${pom.artifactId}</name>
+    <name>jrecruiter</name>
 
     <url>http://www.jrecruiter.org</url>
     <description>
@@ -23,7 +23,7 @@
 
     <build>
 
-        <finalName>${pom.artifactId}</finalName>
+        <finalName>jrecruiter</finalName>
         <defaultGoal>install</defaultGoal>
 
         <plugins>
