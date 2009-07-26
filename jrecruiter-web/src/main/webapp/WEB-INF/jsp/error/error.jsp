@@ -1,7 +1,7 @@
 <%@ page language="java" isErrorPage="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 <c:set var="ctx" value="${pageContext['request'].contextPath}"/>
-
 
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -9,6 +9,8 @@
 
 <html>
   <head>
+    <title>Error</title>
+
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma"        content="no-cache" />
     <meta http-equiv="Expires"       content="0" />
@@ -18,26 +20,24 @@
     <meta name="keywords"    content="Jobs, java, Atlanta, j2ee, java ee, user group" />
     <meta name="description" content="Job Posting Service of the Atlanta Java User Group (AJUG)" />
 
-    <link href="<c:url value='/rss/jobs.rss'/>" rel="alternate" type="application/rss+xml" title="jRecruiter RSS Feed" />
+    <link rel="alternate"     href="<c:url value='/rss/jobs.rss'/>" type="application/rss+xml" title="jRecruiter RSS Feed" />
+    <link rel="icon"          href="<c:url value='/favicon.ico'/>"  type="image/x-icon" />
+    <link rel="shortcut icon" href="<c:url value='/favicon.ico'/>"  type="image/x-icon" />
 
-    <link rel="icon" href="<c:url value='/favicon.ico'/>"
-      type="image/x-icon" />
-    <link rel="shortcut icon" href="<c:url value='/favicon.ico'/>"
-      type="image/x-icon" />
+    <jwr:style src="/bundles/all.css" />
+    <jwr:style src="/bundles/all-IE.css" />
 
-    <title>Error</title>
+    <!-- Java Script Imports -->
+    <jwr:script src="/bundles/lib.js"/>
 
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/global.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/jobDetail.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/jobList.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/showStatistics.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/login.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/form.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/jmesa-pdf.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/displaytag.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/userList.css"></link>
-<link rel="stylesheet" type="text/css" media="screen" href="${ctx}/css/jmesa.css"></link>
+        <script type="text/javascript">
+        jQuery(init());
 
+        jQuery(function() {
+            jQuery(':input').bind('focus', function(event) { jQuery(event.target).addClass('selected'); });
+            jQuery(':input').bind('blur', function(event) { jQuery(event.target).removeClass('selected'); });
+        });
+    </script>
   </head>
   <body>
     <div class="container">
@@ -61,5 +61,12 @@
         title="Main website of the jRecruiter project"><span>j</span>Recruiter</a>
       </div>
     </div>
+
+            <script type="text/javascript">
+
+            $(document).ready(function () {
+            $('.outer-header').add_layer("url('${ctx}/images/icons/beta_2.0_badge.png') no-repeat 90% 50%");
+            });
+            </script>
   </body>
 </html>
