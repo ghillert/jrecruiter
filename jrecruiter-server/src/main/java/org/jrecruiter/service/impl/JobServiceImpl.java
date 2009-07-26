@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.service.impl;
 
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,6 @@ import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.Roles;
-import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.JobCountPerDayDao;
@@ -143,7 +143,7 @@ public class JobServiceImpl implements JobService {
 
     /** {@inheritDoc} */
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
-    public List<Job> getUsersJobsForStatistics(String username, Integer maxResult, StatsMode statsMode) {
+    public List<Job> getUsersJobsForStatistics(String username, Integer maxResult) {
 
         final User user = userDao.getUser(username);
 
@@ -157,7 +157,7 @@ public class JobServiceImpl implements JobService {
             administrator = true;
         }
 
-        return jobDao.getUsersJobsForStatistics(user.getId(), maxResult, statsMode, administrator);
+        return jobDao.getUsersJobsForStatistics(user.getId(), maxResult, administrator);
     }
 
     /** {@inheritDoc} */
@@ -177,7 +177,7 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
-    public void addJobAndSendToMailingList(final Job job, final String mailingListUrl) {
+    public void addJobAndSendToMailingList(final Job job) {
         this.addJob(job);
 
         final Map<String, Object> context = CollectionUtils.getHashMap();
@@ -191,6 +191,41 @@ public class JobServiceImpl implements JobService {
         context.put("businessEmail", job.getBusinessEmail());
 
         notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
+        final String tweetMessage = "New Job: " + job.getJobTitle() + " @ " + job.getBusinessName();
+
+        URL url = notificationService.shortenUrl("http://www.google.com/");
+        notificationService.sendTweetToTwitter(tweetMessage + "; " + url.toString());
+
+    }
+
+    /** {@inheritDoc} */
+    public void updateJob(final Job job) {
+
+        if (job.getStatistic() == null) {
+            Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
+            statistic.setJob(job);
+            job.setStatistic(statistic);
+        }
+
+        final Job savedJob = jobDao.save(job);
+
+        saveJobStatistics(savedJob);
+
+        final Map<String, Object> context = CollectionUtils.getHashMap();
+        context.put("jobId", job.getId());
+        context.put("jobTitle", job.getJobTitle());
+        context.put("businessLocation", job.getRegionOther());
+        context.put("businessName", job.getBusinessName());
+        context.put("description", job.getDescription());
+        context.put("jobRestrictions", job.getJobRestrictions());
+        context.put("updateDate", job.getUpdateDate());
+        context.put("businessEmail", job.getBusinessEmail());
+
+        notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
+        final String tweetMessage = "Job Update: " + job.getJobTitle() + " @ " + job.getBusinessName();
+
+        URL url = notificationService.shortenUrl("http://www.google.com/");
+        notificationService.sendTweetToTwitter(tweetMessage + "; " + url.toString());
 
     }
 
@@ -214,20 +249,6 @@ public class JobServiceImpl implements JobService {
                 jobCountPerDayDao.save(jobCountPerDay);
             }
         }
-    }
-
-    /** {@inheritDoc} */
-    public void updateJob(final Job job) {
-
-        if (job.getStatistic() == null) {
-            Statistic statistic = new Statistic(job.getId(), Long.valueOf(0), null, Long.valueOf(0));
-            statistic.setJob(job);
-            job.setStatistic(statistic);
-        }
-
-        final Job savedJob = jobDao.save(job);
-
-        saveJobStatistics(savedJob);
     }
 
     /** {@inheritDoc} */

@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
@@ -116,9 +115,10 @@ public interface JobService {
      * purposes.
      *
      * @param username
+     * @param maxResult
      * @return List of jobs.
      */
-    List < Job > getUsersJobsForStatistics(String username, Integer maxResult, Constants.StatsMode statsMode);
+    List < Job > getUsersJobsForStatistics(String username, Integer maxResult);
 
     /**
      * Method for saving a jRecruiter Setting to the persistence store..
@@ -189,5 +189,5 @@ public interface JobService {
 
     void updateJobCountPerDays(Calendar asOfDay);
 
-    void addJobAndSendToMailingList(Job job, String jobDetailUrl);
+    void addJobAndSendToMailingList(Job job);
 }

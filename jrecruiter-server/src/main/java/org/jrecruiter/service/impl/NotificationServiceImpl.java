@@ -17,12 +17,14 @@ package org.jrecruiter.service.impl;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -32,6 +34,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+
+import com.rosaloves.net.shorturl.bitly.Bitly;
+import com.rosaloves.net.shorturl.bitly.BitlyFactory;
+import com.rosaloves.net.shorturl.bitly.url.BitlyUrl;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -52,13 +61,17 @@ public class NotificationServiceImpl implements NotificationService {
 
     private @Autowired Configuration freemarkerConfiguration;
 
+    /**
+     * Holder object for access information to external web services such as Twitter.
+     */
+    private @Autowired ApiKeysHolder apiKeysHolder;
 
     /**
      *
      */
     public void sendEmail(final String email, final String subject, final Map context, final String templateName) {
 
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+        final MimeMessagePreparator preparator = new MimeMessagePreparator() {
             public void prepare(MimeMessage mimeMessage) throws MessagingException, IOException {
 
                 final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -92,6 +105,37 @@ public class NotificationServiceImpl implements NotificationService {
         };
 
         mailSender.send(preparator);
+    }
+
+    @Override
+    public void sendTweetToTwitter(final String tweet) {
+
+        final Twitter twitter = new Twitter(apiKeysHolder.getTwitterUsername(),
+                                            apiKeysHolder.getTwitterPassword());
+        try {
+            twitter.updateStatus(tweet);
+        } catch (TwitterException e) {
+            throw new IllegalStateException(e);
+        }
+
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.jrecruiter.service.NotificationService#shortenUrl(java.lang.String)
+     */
+    @Override
+    public URL shortenUrl(final String string) {
+
+        final Bitly bitly = BitlyFactory.newInstance(apiKeysHolder.getBitlyUsername(),
+                                               apiKeysHolder.getBitlyPassword());
+
+        try {
+            final BitlyUrl bUrl = bitly.shorten(string);
+            return bUrl.getShortUrl();
+        } catch (final IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
 }

@@ -31,10 +31,6 @@ public class Constants {
     /** Defines the roles of the system */
     public enum Roles { ADMIN, MANAGER }
 
-    /** Used for the statistic related charts - What type of chart is being
-     *  generated. */
-    public enum StatsMode { PAGE_HITS, UNIQUE_HITS }
-
     /** Defines the roles of the system */
     public enum CommongKeyIds {
 

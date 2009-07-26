@@ -53,7 +53,6 @@ public class StatisticDaoTest extends BaseTest {
 
         statistic.setJob(savedJob);
         statistic.setCounter(Long.valueOf(0));
-        statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
 
         return statistic;
