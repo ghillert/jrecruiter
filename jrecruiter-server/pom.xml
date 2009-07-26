@@ -12,6 +12,15 @@
   <packaging>jar</packaging>
   <description>Contains the core server components of jRecruiter</description>
 
+<repositories>
+
+        <repository>
+            <id>jrecruiter</id>
+            <name>jRecruiter Maven repository</name>
+            <url>http://www.hillert.com/maven/repository</url>
+        </repository>
+
+</repositories>
     <build>
 
         <finalName>${pom.artifactId}</finalName>
@@ -212,6 +221,11 @@
             <version>${jdbc.version}</version>
         </dependency>
        <dependency>
+            <groupId>com.rosaloves</groupId>
+            <artifactId>bitlyj</artifactId>
+            <version>1.0-SNAPSHOT</version>
+       </dependency>
+       <dependency>
            <groupId>net.homeip.yusuke</groupId>
            <artifactId>twitter4j</artifactId>
            <version>2.0.8</version>
@@ -222,11 +236,7 @@
                </exclusion>
            </exclusions>
        </dependency>
-       <dependency>
-           <groupId>com.rosaloves</groupId>
-           <artifactId>bitlyj</artifactId>
-           <version>1.0-SNAPSHOT</version>
-       </dependency>
+
     </dependencies>
     <profiles>
         <profile>
