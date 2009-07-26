@@ -12,7 +12,6 @@ import junit.framework.Assert;
 
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
-import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
@@ -58,7 +57,6 @@ public class JobDaoTest extends BaseTest {
         Statistic statistic = new Statistic();
         statistic.setJob(job);
         statistic.setCounter(Long.valueOf(0));
-        statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
 
         User user = this.getUser();
@@ -218,20 +216,13 @@ public class JobDaoTest extends BaseTest {
 
         statistic.setJob(job);
         statistic.setCounter(Long.valueOf(0));
-        statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
         job.setStatistic(statistic);
 
         jobDao.save(job);
         entityManager.flush();
 
-
-        List <Job> jobs = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.PAGE_HITS, false);
-
-        Assert.assertNotNull(jobs);
-        Assert.assertTrue(jobs.size()>0);
-
-        List <Job> jobs2 = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.UNIQUE_HITS, false);
+        List <Job> jobs2 = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, false);
 
         Assert.assertNotNull(jobs2);
         Assert.assertTrue(jobs2.size()>0);
@@ -250,19 +241,15 @@ public class JobDaoTest extends BaseTest {
 
         statistic.setJob(savedJob);
         statistic.setCounter(Long.valueOf(0));
-        statistic.setUniqueVisits(10L);
         statistic.setLastAccess(new Date());
 
         statisticDao.save(statistic);
 
-        List <Job> jobs = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.PAGE_HITS, true);
-        List <Job> jobs2 = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, StatsMode.UNIQUE_HITS, true);
+        List <Job> jobs = jobDao.getUsersJobsForStatistics(savedUser.getId(), 5, true);
 
         Assert.assertNotNull(jobs);
-        Assert.assertTrue(jobs2.size()>0);
-
-        Assert.assertNotNull(jobs2);
         Assert.assertTrue(jobs.size()>0);
+
     }
 
     @Test

@@ -33,8 +33,12 @@
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
      <bean id="apiKeysHolder" class="org.jrecruiter.common.ApiKeysHolder">
-       <property name="googleMapsKey" value="${key.google.maps}"/>
-       <property name="reCaptchaKey"  value="${key.recaptcha.public}"/>
+       <property name="googleMapsKey"    value="${key.google.maps}"/>
+       <property name="reCaptchaKey"     value="${key.recaptcha.public}"/>
+       <property name="twitterUsername"  value="${twitter.username}"/>
+       <property name="twitterPassword"  value="${twitter.password}"/>
+       <property name="bitlyUsername"    value="${bitly.username}"/>
+       <property name="bitlyPassword"    value="${bitly.password}"/>
      </bean>
 
      <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">

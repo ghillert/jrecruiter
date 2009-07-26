@@ -275,7 +275,6 @@ public class MigrationServiceImpl implements MigrationService {
             newStatistic.setJob(newJob);
             newStatistic.setCounter(job.getStatistic().getCounter());
             newStatistic.setLastAccess(job.getStatistic().getLastAccess());
-            newStatistic.setUniqueVisits(job.getStatistic().getUniqueVisits());
 
             newJob.setStatistic(newStatistic);
 
@@ -291,17 +290,15 @@ public class MigrationServiceImpl implements MigrationService {
 
     private Statistic getStatistic(Long oldJobId) {
 
-        String sql = "select counter, last_access, unique_visits " +
+        final String sql = "select counter, last_access, unique_visits " +
         "from statistics where statistics.job_id = ?";
 
         ParameterizedRowMapper<Statistic> mapper = new ParameterizedRowMapper<Statistic>() {
 
-            // notice the return type with respect to Java 5 covariant return types
             public Statistic mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Statistic statistic = new Statistic();
-                statistic.setCounter(rs.getLong("counter"));
+                statistic.setCounter(rs.getLong("unique_visits"));
                 statistic.setLastAccess(rs.getTimestamp("last_access"));
-                statistic.setUniqueVisits(rs.getLong("unique_visits"));
 
                 return statistic;
             }

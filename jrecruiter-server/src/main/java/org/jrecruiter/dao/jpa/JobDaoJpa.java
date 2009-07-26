@@ -33,7 +33,6 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.common.Constants.StatsMode;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
@@ -125,43 +124,25 @@ implements JobDao {
     @SuppressWarnings("unchecked")
     public List < Job > getUsersJobsForStatistics(final Long userId,
             final Integer maxResult,
-            final StatsMode statsMode,
             final Boolean administrator) {
 
         final List < Job > jobs;
 
             javax.persistence.Query query = null;
 
-            if (statsMode == StatsMode.PAGE_HITS) {
+            if (administrator) {
 
-                if (administrator) {
+                query = entityManager
+                .createQuery("select j from Job j left outer join fetch j.statistic as stats "
+                        + "where stats is not null order by stats.counter desc");
 
-                    query = entityManager
-                    .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                            + "where stats is not null order by stats.counter desc");
-
-                } else {
-
-                    query = entityManager
-                    .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                            + "where j.user.id=:userId and stats is not null "
-                            + "order by stats.counter desc");
-                    query.setParameter("userId", userId);
-                }
             } else {
 
-                if (administrator) {
-                    query = entityManager
-                    .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                            + "where stats is not null order by stats.uniqueVisits desc");
-                } else {
-
-                    query = entityManager
-                    .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                            + "where j.user.id=:userId and stats is not null "
-                            + "order by stats.uniqueVisits desc");
-                    query.setParameter("userId", userId);
-                }
+                query = entityManager
+                .createQuery("select j from Job j left outer join fetch j.statistic as stats "
+                        + "where j.user.id=:userId and stats is not null "
+                        + "order by stats.counter desc");
+                query.setParameter("userId", userId);
             }
 
             query.setMaxResults(maxResult);

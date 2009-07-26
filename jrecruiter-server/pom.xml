@@ -337,5 +337,7 @@
         <jdbc.url><![CDATA[jdbc:mysql://localhost/appfuse?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
         <jdbc.username>root</jdbc.username>
         <jdbc.password />
+
+        <hibernate.show_sql>true</hibernate.show_sql>
     </properties>
 </project>

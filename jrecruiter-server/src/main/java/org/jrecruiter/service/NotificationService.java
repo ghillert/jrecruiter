@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.service;
 
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -35,5 +36,14 @@ public interface NotificationService {
      * @param templatePrefix Freemarker template
      */
     void sendEmail(String email, String subject, Map context, String templatePrefix);
+
+    /**
+     * Sends a tweet to twitter using the global twitter
+     * account setup in the system.
+     *
+     * */
+    void sendTweetToTwitter(String tweet);
+
+    URL shortenUrl(String string);
 
 }

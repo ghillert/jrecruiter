@@ -19,9 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.jrecruiter.dao.GenericDao;
-
-import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
 
 /**
@@ -103,13 +100,11 @@ public interface JobDao extends GenericDao < Job, Long >{
      *
      * @param userId user id of user owning the job.
      * @param maxResult maximum number of statistics objects returned
-     * @param statsMode  what type of statistical information to be generated
      * @param administrator Is the user admin?
      * @return List of jobs.
      */
     List < Job > getUsersJobsForStatistics(Long userId,
                                            Integer maxResult,
-                                           Constants.StatsMode statsMode,
                                            Boolean administrator);
     /**
      * Re-index the Hibernate Search index
@@ -117,5 +112,5 @@ public interface JobDao extends GenericDao < Job, Long >{
     void reindexSearch();
 
     /** Get a summary list of jobs */
-	List<Job> getJobSummaries();
+    List<Job> getJobSummaries();
 }

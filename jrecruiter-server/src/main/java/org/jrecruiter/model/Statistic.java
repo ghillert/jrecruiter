@@ -50,7 +50,6 @@ public class Statistic implements Serializable {
     private Job job;
     private Long counter;
     private Date lastAccess;
-    private Long uniqueVisits;
 
     // Constructors
 
@@ -63,7 +62,6 @@ public class Statistic implements Serializable {
         this.id = id;
         this.counter = counter;
         this.lastAccess = lastAccess;
-        this.uniqueVisits = uniqueVisits;
     }
 
     @Id
@@ -108,32 +106,22 @@ public class Statistic implements Serializable {
         this.lastAccess = lastAccess;
     }
 
-    @Column(name="unique_visits", unique=false, nullable=false, insertable=true, updatable=true)
-    public Long getUniqueVisits() {
-        return this.uniqueVisits;
-    }
-
-    public void setUniqueVisits(Long uniqueVisits) {
-        this.uniqueVisits = uniqueVisits;
-    }
-
     @Override
     public String toString()
     {
         final String TAB = " | ";
-        
+
         final StringBuilder retValue = new StringBuilder();
-        
+
         retValue.append("Statistic ( ")
             .append(super.toString()).append(TAB)
             .append("id = ").append(this.getId()).append(TAB)
             .append("counter = ").append(this.getCounter()).append(TAB)
             .append("lastAccess = ").append(this.getLastAccess()).append(TAB)
-            .append("uniqueVisits = ").append(this.getUniqueVisits()).append(TAB)
             .append(" )");
-        
+
         return retValue.toString();
     }
-    
+
 }
 
