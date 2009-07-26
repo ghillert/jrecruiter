@@ -75,7 +75,6 @@ public class JobDetailAction extends BaseAction implements SessionAware {
                  statistics = new Statistic();
                  statistics.setJob(job);
                  statistics.setCounter(Long.valueOf(0));
-                 statistics.setUniqueVisits(Long.valueOf(0));
                  job.setStatistic(statistics);
              }
 
@@ -89,8 +88,8 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
 
                  } else {
-                     long counter = statistics.getUniqueVisits().longValue() + 1 ;
-                     statistics.setUniqueVisits(Long.valueOf(counter));
+                     long counter = statistics.getCounter().longValue() + 1 ;
+                     statistics.setCounter(Long.valueOf(counter));
                      viewedPostings.add(jobId);
                  }
 
@@ -98,25 +97,21 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
                  long counter;
 
-                 if (statistics.getUniqueVisits() != null)
+                 if (statistics.getCounter() != null)
                  {
-                     counter = statistics.getUniqueVisits().longValue() + 1 ;
+                     counter = statistics.getCounter().longValue() + 1 ;
                  } else {
                      counter = 1;
                  }
 
 
-                 statistics.setUniqueVisits(Long.valueOf(counter));
+                 statistics.setCounter(Long.valueOf(counter));
 
                  viewedPostings.add(jobId);
                  session.put("visited", viewedPostings);
 
              }
 
-             Long counter = statistics.getCounter().longValue();
-             counter ++;
-
-             statistics.setCounter(Long.valueOf(counter));
              statistics.setLastAccess(new Date());
              jobService.updateJobStatistic(statistics);
 

@@ -16,7 +16,7 @@
 </style>
 
 <div id="jobHeader">
-    <div style="float: right; width: 200px; text-align: right;">Statistics: ${job.statistic.counter} hits | ${job.statistic.uniqueVisits} unique hits</div>
+    <div style="float: right; width: 200px; text-align: right;">Statistics: ${job.statistic.counter} hit(s)</div>
     <ul>
         <s:url id="showJobsUrl"  action="show-jobs"                    includeParams="none"/>
         <c:url var="exportPdfUrl" value="/s/${job.id}/jobDetail.pdf"/>
