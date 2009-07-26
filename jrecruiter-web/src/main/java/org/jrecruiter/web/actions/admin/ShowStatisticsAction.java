@@ -47,7 +47,6 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.common.Constants;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.web.actions.BaseAction;
@@ -69,17 +68,7 @@ public class ShowStatisticsAction extends BaseAction {
 
     private List<Job> jobs = CollectionUtils.getArrayList();
 
-    private String mode;
-
     Boolean displayAjax = Boolean.FALSE;
-
-    public String getMode() {
-        return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
 
     /**
      * Default view for this controller.
@@ -96,25 +85,15 @@ public class ShowStatisticsAction extends BaseAction {
         return INPUT;
     }
 
+    /**
+     *
+     */
     public final String chartJobsHits() throws Exception {
 
         String chartTitle = null;
 
-        if (mode != null && mode.equals("unique")) {
-            mode = "unique";
-        }
-
-        if (mode != null && mode.equals("all")) {
-            mode = "all";
-        }
-
-            if (mode != null && mode.equals("unique")) {
-                jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10, Constants.StatsMode.UNIQUE_HITS);
-                chartTitle = "Job Statistics Top 10 - Unique Hits";
-            } else {
-                jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10, Constants.StatsMode.PAGE_HITS);
-                chartTitle = "Job Statistics Top 10 - Page Hits";
-            }
+        jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10);
+        chartTitle = "Job Statistics Top 10 - Hits";
 
             final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
@@ -122,19 +101,10 @@ public class ShowStatisticsAction extends BaseAction {
 
                 if (job.getStatistic() != null) {
 
-                    if (mode != null && mode.equals("unique")) {
-                        if (job.getStatistic().getUniqueVisits().longValue() >= 0) {
-                            dataset.addValue(job.getStatistic()
-                                    .getUniqueVisits(), job.getJobTitle() + "_" + job.getId(), "");
-                        }
-
-                    } else {
                         if (job.getStatistic().getCounter().longValue() >= 0) {
                             dataset.addValue(job.getStatistic().getCounter(),
                                     job.getJobTitle() + "_" + job.getId(), "");
                         }
-                    }
-
                 }
             }
 

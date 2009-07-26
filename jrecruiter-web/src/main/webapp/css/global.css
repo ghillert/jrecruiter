@@ -36,14 +36,15 @@ body {
 
 /* Header *********************************************************************/
 
+.container .outer-header {
+  background: #90B5E6 url(../images/musa_header.jpg) no-repeat left;
+}
 .container .header {
 
   text-align: center;
   padding: 15px 0 15px 0;
   width: 100%;
-
   margin: 0 auto 0 auto;
-  background: #90B5E6 url(../images/musa_header.jpg) no-repeat left;
   font-size: 25px;
 
 }
@@ -90,7 +91,9 @@ body {
 .container .header_menu  a.icon {
     background: url(../images/icons/feed-icon-14x14.png) no-repeat center;
 }
-
+.container .header_menu  a.twitter {
+    background: url(../images/icons/erenemre/twitter-03.png) no-repeat center;
+}
 .container .header_menu  a.icon span {
     position: absolute;
     left: -5000px;

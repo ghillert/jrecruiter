@@ -1,4 +1,4 @@
-﻿<%@include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
+<%@include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -6,6 +6,8 @@
 
 <html>
   <head>
+    <title><decorator:title default="Welcome to jRecruiter" /></title>
+
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma"        content="no-cache" />
     <meta http-equiv="Expires"       content="0" />
@@ -15,14 +17,10 @@
     <meta name="keywords"    content="Jobs, java, Atlanta, j2ee, java ee, user group" />
     <meta name="description" content="Job Posting Service of the Atlanta Java User Group (AJUG)" />
 
-    <link href="<c:url value='/rss/jobs.rss'/>" rel="alternate" type="application/rss+xml" title="jRecruiter RSS Feed" />
+    <link rel="alternate"     href="<c:url value='/rss/jobs.rss'/>" type="application/rss+xml" title="jRecruiter RSS Feed" />
+    <link rel="icon"          href="<c:url value='/favicon.ico'/>"  type="image/x-icon" />
+    <link rel="shortcut icon" href="<c:url value='/favicon.ico'/>"  type="image/x-icon" />
 
-    <link rel="icon" href="<c:url value='/favicon.ico'/>"
-      type="image/x-icon" />
-    <link rel="shortcut icon" href="<c:url value='/favicon.ico'/>"
-      type="image/x-icon" />
-
-    <title><decorator:title default="Welcome to jRecruiter" /></title>
     <jwr:style src="/bundles/all.css" />
     <jwr:style src="/bundles/all-IE.css" />
 
@@ -40,8 +38,8 @@
 
   </head>
   <body>
-    <div class="container">
-      <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
+    <div class="container"><div class="outer-header">
+      <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div></div>
       <div class="header_menu">
           <ul><li><a href="<c:url value='/'/>"><spring:message code="jsp.decorators.default.menu.home"/></a></li>
             <li>
@@ -50,7 +48,8 @@
                 <a href="<c:url value='/admin/index.html'/>"><spring:message code="jsp.decorators.default.menu.admin"/></a></li>
             <li>
                 <a href="#" id="contact"><spring:message code="jsp.decorators.default.menu.about"/></a></li>
-            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>" class="icon" title="<spring:message code="jsp.decorators.default.menu.rss.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.rss"/></span></a></li>
+            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>"                     class="icon"        title="<spring:message code="jsp.decorators.default.menu.rss.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.rss"/></span></a></li>
+            <li class="icon"><a href="<c:url value='http://www.twitter.com/ajug_jobs/'/>" class="icon twitter" title="<spring:message code="jsp.decorators.default.menu.twitter.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.twitter"/></span></a></li>
             <li>             <a href="<c:url value='/s/indeed.xml'/>"              title="<spring:message code="jsp.decorators.default.menu.xml.title"/>"><spring:message code="jsp.decorators.default.menu.xml"/></a></li>
             <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
                               <c:if test="${pageContext.request.secure}">
@@ -87,6 +86,9 @@
         <script type="text/javascript">
 
         $(document).ready(function () {
+
+            $('.outer-header').add_layer("url('${ctx}/images/icons/beta_2.0_badge.png') no-repeat 90% 50%");
+
             $('#contact').click(function (e) {
                 e.preventDefault();
                 $('#baseModal').modal({
