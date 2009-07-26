@@ -73,7 +73,11 @@
         </plugins>
     </build>
     <repositories>
-
+        <repository>
+            <id>jrecruiter</id>
+            <name>jRecruiter Maven repository</name>
+            <url>http://www.hillert.com/maven/repository</url>
+        </repository>
         <repository>
             <id>java.net</id>
             <name>Java.net - contains e.g. mail.jar and activation.jar</name>
@@ -91,12 +95,7 @@
             <url>http://repository.jboss.org/maven2</url>
             <layout>default</layout>
         </repository>
-        <repository>
-            <id>Version99</id>
-            <name>Version 99 Does Not Exist Maven repository</name>
-            <layout>default</layout>
-            <url>http://no-commons-logging.zapto.org/mvn2</url>
-        </repository>
+
         <repository>
             <id>SpringSource Enterprise Bundle Repositorys</id>
             <url>http://repository.springsource.com/maven/bundles/milestone</url>
@@ -121,11 +120,6 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>jrecruiter</id>
-            <name>jRecruiter Maven repository</name>
-            <url>http://www.hillert.com/maven/repository</url>
         </repository>
     </repositories>
 
@@ -805,32 +799,31 @@
             <artifactId>antlr</artifactId>
             <version>3.0.1</version>
         </dependency>
-<dependency>
-    <groupId>aopalliance</groupId>
-    <artifactId>aopalliance</artifactId>
-    <version>1.0</version>
-</dependency>
-<dependency>
-    <groupId>asm</groupId>
-    <artifactId>asm</artifactId>
-    <version>2.2.3</version>
-</dependency>
-<dependency>
-<groupId>asm</groupId>
-<artifactId>asm-commons</artifactId>
-    <version>2.2.3</version>
-</dependency>
-<dependency>
-    <groupId>emma</groupId>
-    <artifactId>emma</artifactId>
-    <version>2.0.5312</version>
-</dependency>
-<dependency>
-    <groupId>com.thoughtworks.xstream</groupId>
-    <artifactId>xstream</artifactId>
-    <version>1.3.1</version>
-</dependency>
-
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <dependency>
+        <groupId>asm</groupId>
+        <artifactId>asm-commons</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>emma</groupId>
+            <artifactId>emma</artifactId>
+            <version>2.0.5312</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.3.1</version>
+        </dependency>
     </dependencies>
 
     <reporting>
@@ -910,7 +903,7 @@
                 <web.xml.DwrServlet.debug>false</web.xml.DwrServlet.debug>
             </properties>
         </profile>
-	</profiles>
+    </profiles>
 
     <properties>
 
@@ -931,7 +924,6 @@
         <webtest.version>R_1600</webtest.version>
 
         <struts.devMode>true</struts.devMode>
-        <hibernate.show.sql>true</hibernate.show.sql>
         <jawr.debug.on>true</jawr.debug.on>
         <web.xml.DwrServlet.debug>true</web.xml.DwrServlet.debug>
 
