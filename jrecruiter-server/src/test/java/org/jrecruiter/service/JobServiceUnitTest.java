@@ -16,9 +16,11 @@
 package org.jrecruiter.service;
 
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -58,23 +60,23 @@ public class JobServiceUnitTest extends TestCase {
 
         final JobDao jobDao = EasyMock.createMock(JobDao.class);
         final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
-        
+
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
-        
+
         jobDao.remove(1L);
 
         JobCountPerDay jobCountPerDay = new JobCountPerDay();
-        
+
         EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
-        
+
         EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
-        
+
         EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
 
         EasyMock.replay(jobDao);
         EasyMock.replay(jobCountPerDayDao);
-        
+
         final Job job = new Job();
         job.setId(1L);
 
@@ -346,18 +348,18 @@ public class JobServiceUnitTest extends TestCase {
 
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
         final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
-        
-        
+
+
         EasyMock.expect(jobDao.save(job)).andReturn(job);
-        
+
         JobCountPerDay jobCountPerDay = new JobCountPerDay();
-        
+
         EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
-        
+
         EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
-        
+
         EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
-        
+
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
 
@@ -394,22 +396,29 @@ public class JobServiceUnitTest extends TestCase {
 
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
         final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
-        
+        final NotificationService notificationService = EasyMock.createStrictMock(NotificationService.class);
+
         EasyMock.expect(jobDao.save(job)).andReturn(job);
-        
+
         JobCountPerDay jobCountPerDay = new JobCountPerDay();
-        
+
         EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
-        
+
         EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
-        
+
         EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
-        
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
+
+
+        notificationService.sendEmail((String)EasyMock.anyObject(), (String)EasyMock.anyObject(), (Map<String, Object>)EasyMock.anyObject(), (String)EasyMock.anyObject());
+        EasyMock.expect(notificationService.shortenUrl((String)EasyMock.anyObject())).andReturn((new URL("http://www.google.com")));
+        notificationService.sendTweetToTwitter((String)EasyMock.anyObject());
 
         EasyMock.replay(jobDao);
         EasyMock.replay(jobCountPerDayDao);
+        EasyMock.replay(notificationService);
+
+        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+        ReflectionTestUtils.setField(jobService, "notificationService", notificationService, NotificationService.class);
 
         jobService.updateJob(job);
 
