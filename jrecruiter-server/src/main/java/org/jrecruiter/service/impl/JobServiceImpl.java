@@ -222,10 +222,12 @@ public class JobServiceImpl implements JobService {
         context.put("businessEmail", job.getBusinessEmail());
 
         notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
-        final String tweetMessage = "Job Update: " + job.getJobTitle() + " @ " + job.getBusinessName();
+        String tweetMessage = "Job Update: " + job.getJobTitle() + " @ " + job.getBusinessName();
 
         URL url = notificationService.shortenUrl("http://www.google.com/");
-        notificationService.sendTweetToTwitter(tweetMessage + "; " + url.toString());
+
+        tweetMessage = tweetMessage + ": " + url.toString();
+        notificationService.sendTweetToTwitter(tweetMessage);
 
     }
 
