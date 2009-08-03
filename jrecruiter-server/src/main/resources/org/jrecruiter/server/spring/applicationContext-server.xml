@@ -41,6 +41,10 @@
        <property name="bitlyPassword"    value="${bitly.password}"/>
      </bean>
 
+     <bean id="serverSettings" class="org.jrecruiter.model.ServerSettings">
+       <property name="serverAddress"    value="${server.address}"/>
+     </bean>
+
      <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
        <property name="templateLoaderPath"><value>classpath:freemarker/</value></property>
      </bean>
