@@ -1,6 +1,5 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<script type="text/javascript" src="<c:url value='/js/passwordmeter.js'/>"></script>
 <h2><spring:message code="jsp.signup.title" /></h2>
 <p class="info"><spring:message code="jsp.signup.text.introduction" /></p>
 
