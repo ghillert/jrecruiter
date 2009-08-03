@@ -39,6 +39,11 @@ public class GetPasswordAction extends BaseAction {
             return INPUT;
         }
 
+        if (!this.user.isEnabled()) {
+            super.addActionError(super.getText("class.get-password.user.account.not.enabled"));
+            return INPUT;
+        }
+
         userService.resetPassword(this.user);
 
         super.addActionMessage(super.getText("class.get-password.success", new String[] {user.getEmail()}));
