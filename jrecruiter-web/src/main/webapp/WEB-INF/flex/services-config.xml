@@ -2,9 +2,7 @@
 <services-config>
 
     <services>
-        <service-include file-path="remoting-config.xml" />
         <service-include file-path="proxy-config.xml" />
-        <service-include file-path="messaging-config.xml" />
 
         <default-channels>
            <channel ref="my-amf"/>
@@ -12,42 +10,28 @@
 
     </services>
 
+
+
     <channels>
+
         <channel-definition id="my-amf" class="mx.messaging.channels.AMFChannel">
-            <endpoint url="http://localhost:8080/jrecruiter/flex/messagebroker/amf" class="flex.messaging.endpoints.AMFEndpoint"/>
+            <endpoint url="http://{server.name}:{server.port}/{context.root}/flex/messagebroker/amf" class="flex.messaging.endpoints.AMFEndpoint"/>
+        </channel-definition>
+
+        <channel-definition id="my-secure-amf" class="mx.messaging.channels.SecureAMFChannel">
+            <endpoint url="https://{server.name}:{server.port}/{context.root}/messagebroker/amfsecure" class="flex.messaging.endpoints.SecureAMFEndpoint"/>
+            <properties>
+                <add-no-cache-headers>false</add-no-cache-headers>
+            </properties>
         </channel-definition>
 
         <channel-definition id="my-polling-amf" class="mx.messaging.channels.AMFChannel">
-            <endpoint url="http://localhost:8080/jrecruiter/flex/messagebroker/amfpolling" class="flex.messaging.endpoints.AMFEndpoint"/>
+            <endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/amfpolling" class="flex.messaging.endpoints.AMFEndpoint"/>
             <properties>
                 <polling-enabled>true</polling-enabled>
                 <polling-interval-seconds>4</polling-interval-seconds>
             </properties>
         </channel-definition>
-    </channels>
-
-    <logging>
-        <target class="flex.messaging.log.ConsoleTarget" level="Error">
-            <properties>
-                <prefix>[BlazeDS] </prefix>
-                <includeDate>false</includeDate>
-                <includeTime>false</includeTime>
-                <includeLevel>false</includeLevel>
-                <includeCategory>false</includeCategory>
-            </properties>
-            <filters>
-                <pattern>Endpoint.*</pattern>
-                <pattern>Service.*</pattern>
-                <pattern>Configuration</pattern>
-            </filters>
-        </target>
-    </logging>
-
-    <system>
-        <redeploy>
-            <enabled>false</enabled>
-        </redeploy>
-    </system>
-
+     </channels>
 </services-config>
 
