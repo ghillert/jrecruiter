@@ -10,11 +10,22 @@
   <security:global-method-security secured-annotations="enabled"/>
 
   <security:http auto-config="true" access-decision-manager-ref="accessDecisionManager" >
-    <security:intercept-url pattern="/admin/*.html**" access="MANAGER,ADMIN"                  requires-channel="https"/>
-    <security:intercept-url pattern="/login.html**"   access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="https" />
-    <security:intercept-url pattern="/contact.html**" access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
-    <security:intercept-url pattern="/*.html**"       access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any"/>
-    <security:intercept-url pattern="/**"             access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
+
+    <security:intercept-url pattern="/admin/show-users.html**"                   access="ADMIN"                requires-channel="https"/>
+    <security:intercept-url pattern="/admin/delete-user.html**"                  access="ADMIN"                requires-channel="https"/>
+    <security:intercept-url pattern="/admin/add-user.html**"                     access="ADMIN"                requires-channel="https"/>
+
+    <security:intercept-url pattern="/admin/edit-settings.html**" access="ADMIN"                requires-channel="https"/>
+    <security:intercept-url pattern="/admin/search-index.html**"  access="ADMIN"                requires-channel="https"/>
+    <security:intercept-url pattern="/admin/setup-demo.html**"    access="ADMIN"                requires-channel="https"/>
+    <security:intercept-url pattern="/admin/logging.html**"       access="ADMIN"                requires-channel="https"/>
+    <security:intercept-url pattern="/admin/*.html**"                            access="MANAGER,ADMIN"        requires-channel="https"/>
+
+    <security:intercept-url pattern="/login.html**"         access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="https" />
+    <security:intercept-url pattern="/flex-jobs/jobs.htm**" access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="http" />
+    <security:intercept-url pattern="/contact.html**"       access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
+    <security:intercept-url pattern="/*.html**"             access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any"/>
+    <security:intercept-url pattern="/**"                   access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
 
     <security:form-login login-page="/login.html" default-target-url="/admin/index.html"
                          authentication-failure-url="/login.html?status=error"/>
@@ -41,7 +52,9 @@
   <bean id="authenticatedVoter" class="org.springframework.security.vote.AuthenticatedVoter">
   </bean>
 
-  <bean id="securityEventListener" class="org.jrecruiter.spring.SecurityEventListener"/>
+  <bean id="securityEventListener" class="org.jrecruiter.spring.SecurityEventListener">
+    <property name="userService" ref="userService"/>
+  </bean>
 
 
 </beans>
