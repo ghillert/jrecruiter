@@ -20,7 +20,7 @@
       </li>
       <li>
         <s:url namespace="/" action="show-jobs" id="showJobsUrl"/>
-        <a  id="showJobsFlexButton" href="${ctx}/flex-jobs/jobs.htm" class="button"><span class="showJobsFlex">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
+        <a  id="showJobsFlexButton" href="${ctx}/flex-jobs/jobs.jsp" class="button"><span class="showJobsFlex">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
       </li>
       <li>
         <s:url namespace="/admin" action="index" id="adminMainUrl"/>
