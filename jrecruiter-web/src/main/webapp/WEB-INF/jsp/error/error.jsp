@@ -40,11 +40,13 @@
     </script>
   </head>
   <body>
-    <div class="container">
-      <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div>
+    <div class="container"><div class="outer-header">
+      <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div></div>
       <div class="header_menu">
-          <ul><li><a href="<c:url value='/'/>">Home</a></li>
-            </ul>
+          <ul><li><a href="<c:url value='/'/>">HOME</a></li>
+            <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
+            <c:if test="${pageContext.request.secure}">Site is SSL secured</c:if></li>
+          </ul>
       </div>
       <div class="content" style="overflow: auto;">
 
