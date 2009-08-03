@@ -99,7 +99,7 @@ public class MigrationServiceImpl implements MigrationService {
     }
 
     @Override
-    @Transactional
+    @Transactional()
     public void migrateUserData(final Boolean digestPasswords) {
         String sql = "select first_name, last_name, user_name, user_passwd, " +
         "phone, fax, email, register_date, expire_date, update_date, company from users where users.user_name <> 'admin'";

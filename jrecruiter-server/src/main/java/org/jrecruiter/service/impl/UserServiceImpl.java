@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setRegistrationDate(registerDate);
         user.setUpdateDate(registerDate);
         user.setEnabled(Boolean.FALSE);
-        user.setVerificationKey(generateUuid());
+        user.setVerificationKey(this.generateUuid());
         user.setUsername(user.getEmail());
         User duplicateUser = userDao.getUser(user.getUsername());
 
@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         final Map<String, Object> context = CollectionUtils.getHashMap();
         context.put("user", savedUser);
-        context.put("registrationCode", this.generateUuid());
+        context.put("registrationCode", savedUser.getVerificationKey());
         context.put("accountValidationUrl", accountValidationUrl);
 
         notificationService.sendEmail(savedUser.getEmail(), messageSource.getMessage("class.UserServiceImpl.addUser.account.validation.subject", null, LocaleContextHolder.getLocale()), context, "account-validation");

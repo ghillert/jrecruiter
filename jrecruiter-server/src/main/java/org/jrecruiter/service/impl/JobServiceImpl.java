@@ -15,6 +15,8 @@
 */
 package org.jrecruiter.service.impl;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +38,7 @@ import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
+import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.statistics.JobCountPerDay;
@@ -81,6 +84,8 @@ public class JobServiceImpl implements JobService {
     private @Autowired ConfigurationDao configurationDao;
 
     private @Autowired NotificationService  notificationService;
+
+    private @Autowired ServerSettings serverSettings;
 
     //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -193,9 +198,25 @@ public class JobServiceImpl implements JobService {
         notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
         final String tweetMessage = "New Job: " + job.getJobTitle() + " @ " + job.getBusinessName();
 
-        URL url = notificationService.shortenUrl("http://www.google.com/");
-        notificationService.sendTweetToTwitter(tweetMessage + "; " + url.toString());
+        final URL url = createShortenedJobDetailUrl(job);
+        notificationService.sendTweetToTwitter(tweetMessage + ": " + url.toString());
 
+    }
+
+    private URL createShortenedJobDetailUrl(final Job job) {
+        final String jobUrl = this.serverSettings.getServerAddress() + "/job-detail.html?jobId=" + job.getId();
+
+        final URI tweetUri;
+
+        try {
+            tweetUri = new URI(jobUrl);
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Cannot creat URI for " + jobUrl);
+        }
+
+        URL jobDetailUrl = notificationService.shortenUrl(tweetUri.toString());
+
+        return jobDetailUrl;
     }
 
     /** {@inheritDoc} */
@@ -224,7 +245,7 @@ public class JobServiceImpl implements JobService {
         notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
         String tweetMessage = "Job Update: " + job.getJobTitle() + " @ " + job.getBusinessName();
 
-        URL url = notificationService.shortenUrl("http://www.google.com/");
+        final URL url = createShortenedJobDetailUrl(job);
 
         tweetMessage = tweetMessage + ": " + url.toString();
         notificationService.sendTweetToTwitter(tweetMessage);
@@ -389,6 +410,6 @@ public class JobServiceImpl implements JobService {
             jobCountPerDayDao.save(new JobCountPerDay(today.getTime(), 0L, 0L, totalNumberOfJobs));
         }
 
-
     }
+
 }
