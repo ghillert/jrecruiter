@@ -51,11 +51,8 @@ public class EditSettingsAction extends BaseAction implements Preparable, ModelD
 
     public String execute() {
         form.setMailingListSubject( ((Configuration)jobService.getJRecruiterSetting("mail.jobposting.subject")).getMessageText());
-        form.setMailingListTemplate(((Configuration)jobService.getJRecruiterSetting("mail.jobposting.body")).getMessageText());
         form.setMailingListEmail(   ((Configuration)jobService.getJRecruiterSetting("mail.jobposting.email")).getMessageText());
         form.setMailFrom(           ((Configuration)jobService.getJRecruiterSetting("mail.from")).getMessageText());
-        form.setPasswordSubject(    ((Configuration)jobService.getJRecruiterSetting("mail.password.subject")).getMessageText());
-        form.setPasswordTemplate(   ((Configuration)jobService.getJRecruiterSetting("mail.password.body")).getMessageText());
         return INPUT;
     }
 
@@ -73,12 +70,6 @@ public class EditSettingsAction extends BaseAction implements Preparable, ModelD
         jobService.saveJRecruiterSetting(configuration);
 
         configuration = new Configuration();
-        configuration.setMessageKey("mail.jobposting.body");
-        configuration.setMessageText(form.getMailingListTemplate());
-        configuration.setLastModified(GregorianCalendar.getInstance().getTime());
-        jobService.saveJRecruiterSetting(configuration);
-
-        configuration = new Configuration();
         configuration.setMessageKey("mail.jobposting.email");
         configuration.setMessageText(form.getMailingListEmail());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
@@ -87,18 +78,6 @@ public class EditSettingsAction extends BaseAction implements Preparable, ModelD
         configuration = new Configuration();
         configuration.setMessageKey("mail.from");
         configuration.setMessageText(form.getMailFrom());
-        configuration.setLastModified(GregorianCalendar.getInstance().getTime());
-        jobService.saveJRecruiterSetting(configuration);
-
-        configuration = new Configuration();
-        configuration.setMessageKey("mail.password.subject");
-        configuration.setMessageText(form.getPasswordSubject());
-        configuration.setLastModified(GregorianCalendar.getInstance().getTime());
-        jobService.saveJRecruiterSetting(configuration);
-
-        configuration = new Configuration();
-        configuration.setMessageKey("mail.password.body");
-        configuration.setMessageText(form.getPasswordTemplate());
         configuration.setLastModified(GregorianCalendar.getInstance().getTime());
         jobService.saveJRecruiterSetting(configuration);
 

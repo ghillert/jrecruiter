@@ -13,7 +13,7 @@
                     list="industries" headerKey="-1" headerValue="%{getText('jsp._ALL.marked.fields.please.select')}"
                     listValue="name" listKey="id"/>
     </div>
-    <div class="optional" id="industryOtherDiv" style="display: <s:property value="%{job.industry.id == '-16' ? 'block' : 'none'}"/>">
+    <div class="optional" id="industryOtherDiv" style="display: <s:property value="%{model.job.industry.id == 1 ? 'block' : 'none'}"/>">
        <label for="industryOther">Other</label>
         <s:textfield name="model.job.industryOther" id="job.industryOther" size="40" tabindex="4"/>
     </div>

@@ -109,9 +109,8 @@ public class AddJobAction extends JobBaseAction implements Preparable, ModelDriv
         this.model.getJob().setUpdateDate(new Date());
 
         jobService.addJobAndSendToMailingList(this.model.getJob());
-              //  request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/registration/account-validation.html");
 
-        super.addActionMessage(getText("job.add.success"));
+        super.addActionMessage(getText("class.AddJobAction.job_add_success"));
 
         return SUCCESS;
     }
