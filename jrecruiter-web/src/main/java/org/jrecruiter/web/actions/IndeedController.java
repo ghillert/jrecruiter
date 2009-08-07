@@ -1,5 +1,6 @@
 package org.jrecruiter.web.actions;
 
+import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndeedController {
 
     private @Autowired JobService jobService;
+    private @Autowired ServerSettings serverSettings;
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
@@ -27,8 +29,11 @@ public class IndeedController {
 
     @RequestMapping("/indeed.xml")
     public String execute(ModelMap model) {
-    	model.addAttribute("jobs", jobService.getJobs());
-    	return "indeedView";
+
+        model.addAttribute("jobs", jobService.getJobs());
+        model.addAttribute("serverAddress", serverSettings.getServerAddress());
+
+        return "indeedView";
     }
 
 }

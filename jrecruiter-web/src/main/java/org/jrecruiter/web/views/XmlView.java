@@ -3,29 +3,29 @@
  */
 package org.jrecruiter.web.views;
 
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
 
-import org.jdom.CDATA;
-import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.model.Job;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.View;
 
 /**
+ * Provides an XML document containing jobs, suitable for Indeed.com integration.
+ *
  * @author Gunnar Hillert
  * @version $Id$
  */
 public class XmlView implements View {
 
-    /** XML Document **/
-    private org.jdom.Document document;
+    public static final Logger LOGGER = LoggerFactory.getLogger(XmlView.class);
 
     /* (non-Javadoc)
      * @see org.springframework.web.servlet.View#getContentType()
@@ -43,93 +43,115 @@ public class XmlView implements View {
                        final HttpServletRequest request,
                        final HttpServletResponse response) throws Exception {
 
-        this.document = new org.jdom.Document(new Element("source"));
+        response.setContentType(this.getContentType());
 
-        final Element rootElement = this.document.getRootElement();
-        final Element publisherElement = new Element("publisher");
-        publisherElement.setText("jRecruiter - AJUG Job Postings");
+        XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+        XMLStreamWriter writer = outputFactory.createXMLStreamWriter(response.getOutputStream(), "UTF-8");
 
-        final Element publisherUrlElement = new Element("publisherUrl");
-        publisherUrlElement.setText("http://www.ajug.org/jobs/");
+        writer.writeStartDocument("UTF-8", "1.0");
 
-        final Element lastBuildDateElement = new Element("lastBuildDate");
+        writer.writeStartElement("source");
+        writer.writeStartElement("publisher");
+        writer.writeCData("jRecruiter - AJUG Job Postings");
+        writer.writeEndElement();
 
-        lastBuildDateElement.setText(CalendarUtils.getXmlFormatedDate());
+        writer.writeStartElement("publisherUrl");
+        writer.writeCData("http://www.ajug.org/jobs/");
+        writer.writeEndElement();
 
-        rootElement.addContent(publisherElement);
-        rootElement.addContent(publisherUrlElement);
-        rootElement.addContent(lastBuildDateElement);
+        writer.writeStartElement("lastBuildDate");
+        writer.writeCharacters(CalendarUtils.getXmlFormatedDate());
+        writer.writeEndElement();
 
         final List<Job> jobs = (List<Job>) model.get("jobs");
+        final String serverAddress = (String) model.get("serverAddress");
+
+        int i = 0;
 
         for (final Job job : jobs) {
 
-            final Element jobElement = new Element("job");
+            writer.writeStartElement("job");
 
-            final Element jobTitleElement           = new Element("title");
-            final Element jobDateElement            = new Element("date");
-            final Element jobReferenceNumberElement = new Element("referenceNumber");
-            final Element jobUrlElement             = new Element("url");
-            final Element jobCompanyElement         = new Element("company");
-            final Element jobCity                   = new Element("city");
-            final Element jobState                  = new Element("state");
-            final Element jobCountry                = new Element("country");
-            final Element jobPostalCode             = new Element("postalCode");
-            final Element jobDescription            = new Element("description");
-            final Element jobSalary                 = new Element("salary");
-            final Element jobEducation              = new Element("education");
-            final Element jobType                   = new Element("jobtype");
-            final Element jobCategory               = new Element("category");
-            final Element jobExperience             = new Element("experience");
+            writer.writeStartElement("jobTitle");
+            writer.writeCData(job.getJobTitle());
+            writer.writeEndElement();
 
-            jobTitleElement.addContent(new CDATA(job.getJobTitle()));
-            jobDateElement.addContent(CalendarUtils.getXmlFormatedDate(job.getUpdateDate()));
-            jobReferenceNumberElement.addContent(String.valueOf(job.getId()));
-            jobUrlElement.addContent(new CDATA(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() +"/job-detail.html?jobId=" + job.getId()));
-            jobCompanyElement.addContent(new CDATA(job.getBusinessName()));
-            jobCity.addContent(new CDATA(job.getBusinessCity()));
-            jobState.addContent(new CDATA(job.getBusinessCity()));
-            jobCountry.addContent(new CDATA("US")); //FIXME no hard coding
-            jobPostalCode.addContent(new CDATA(job.getBusinessZip()));
-            jobDescription.addContent(new CDATA(job.getDescription()));
-            jobSalary.addContent(new CDATA(String.valueOf(job.getSalary())));
-            jobEducation.addContent(new CDATA("")); //FIXME job education currently not implemented
-            jobType.addContent(new CDATA("")); //FIXME job type currently not implemented
-            jobCategory.addContent(new CDATA(job.getIndustry().getName())); //FIXME Nullpointer
-            jobExperience.addContent(new CDATA("")); //FIXME job experience currently not implemented
+            writer.writeStartElement("date");
+            writer.writeCData(CalendarUtils.getXmlFormatedDate(job.getUpdateDate()));
+            writer.writeEndElement();
 
-            jobElement.addContent(jobTitleElement);
-            jobElement.addContent(jobDateElement);
-            jobElement.addContent(jobReferenceNumberElement);
-            jobElement.addContent(jobUrlElement);
-            jobElement.addContent(jobCompanyElement);
-            jobElement.addContent(jobCity);
-            jobElement.addContent(jobState);
-            jobElement.addContent(jobCountry);
-            jobElement.addContent(jobPostalCode);
-            jobElement.addContent(jobDescription);
-            jobElement.addContent(jobSalary);
-            jobElement.addContent(jobEducation);
-            jobElement.addContent(jobType);
-            jobElement.addContent(jobCategory);
-            jobElement.addContent(jobExperience);
+            writer.writeStartElement("referenceNumber");
+            writer.writeCData(String.valueOf(job.getId()));
+            writer.writeEndElement();
 
-            rootElement.addContent(jobElement);
+            writer.writeStartElement("url");
+
+            final String jobUrl = serverAddress + "/job-detail.html?jobId=" + job.getId();
+
+            writer.writeCData(jobUrl);
+            writer.writeEndElement();
+
+            writer.writeStartElement("company");
+            writer.writeCData(job.getBusinessName());
+            writer.writeEndElement();
+
+            writer.writeStartElement("city");
+            writer.writeCData(job.getBusinessCity());
+            writer.writeEndElement();
+
+            writer.writeStartElement("state");
+            writer.writeCData(job.getBusinessState());
+            writer.writeEndElement();
+
+            writer.writeStartElement("country");
+            writer.writeCData("US");
+            writer.writeEndElement();
+
+            writer.writeStartElement("postalCode");
+            writer.writeCData(job.getBusinessZip());
+            writer.writeEndElement();
+
+            writer.writeStartElement("description");
+            writer.writeCData(job.getDescription());
+            writer.writeEndElement();
+
+            writer.writeStartElement("education");
+            writer.writeCData("");
+            writer.writeEndElement();
+
+            writer.writeStartElement("salary");
+            writer.writeCData(String.valueOf(job.getSalary()));
+            writer.writeEndElement();
+
+            writer.writeStartElement("jobtype");
+            writer.writeCData("");
+            writer.writeEndElement();
+
+            writer.writeStartElement("category");
+            writer.writeCData(job.getIndustry().getName());
+            writer.writeEndElement();
+
+            writer.writeStartElement("experience");
+            writer.writeCData("");
+            writer.writeEndElement();
+
+            writer.writeEndElement();
+
+            if (job.getId().equals(Long.valueOf(3520))) {
+                LOGGER.info("1");
+            }
+
+            if (i % 300 == 0) {
+                writer.flush();
+            }
+
+            i++;
 
         }
 
-        final XMLOutputter outputter = new XMLOutputter();
-        outputter.setFormat(Format.getPrettyFormat());
-
-        final String xmlAsString = outputter.outputString(document);
-
-        response.setContentType(this.getContentType());
-        response.setContentLength(xmlAsString.length());
-
-        final PrintWriter out = new PrintWriter(response.getOutputStream());
-        out.print(xmlAsString);
-        out.flush();
-        out.close();
+        writer.writeEndDocument();
+        writer.flush();
+        writer.close();
 
     }
 
