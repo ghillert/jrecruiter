@@ -188,13 +188,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /** {@inheritDoc} */
-    public void resetPassword(User user) {
+    public void resetPassword(final User user) {
 
         String flags = "-N 1 -M 100 -B -n -c -y -s 10 -o ";
         flags = BlankRemover.itrim(flags);
-        String[] ar = flags.split(" ");
-        PwGenerator generator = new PwGenerator();
-        List <String> passwords = generator.process(ar);
+        final String[] ar = flags.split(" ");
+        final PwGenerator generator = new PwGenerator();
+        final List <String> passwords = generator.process(ar);
 
         String password = null;
 

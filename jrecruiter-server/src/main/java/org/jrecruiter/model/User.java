@@ -66,7 +66,7 @@ public class User implements Serializable, UserDetails{
     private Date registrationDate;
     private Date updateDate;
     private Date lastLoginDate;
-    
+
     private Set<Job> jobs = new HashSet<Job>(0);
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
@@ -290,20 +290,23 @@ public class User implements Serializable, UserDetails{
     }
 
     /**
-	 * @return the lastLoginDate
-	 */
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
+     * @return the lastLoginDate
+     */
+    @Column(unique=false, nullable=true, insertable=true,
+            updatable=true, length=8)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getLastLoginDate() {
+        return lastLoginDate;
+    }
 
-	/**
-	 * @param lastLoginDate the lastLoginDate to set
-	 */
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
+    /**
+     * @param lastLoginDate the lastLoginDate to set
+     */
+    public void setLastLoginDate(Date lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+    }
 
-	/* (non-Javadoc)
+    /* (non-Javadoc)
      * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
      */
     @Transient
