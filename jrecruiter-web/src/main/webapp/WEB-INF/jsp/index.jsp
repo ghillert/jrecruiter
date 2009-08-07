@@ -19,17 +19,20 @@
         <a  id="showJobsButton" href="${showJobsUrl}" class="button"><span class="showJobs">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
       </li>
       <li>
-        <s:url namespace="/" action="show-jobs" id="showJobsUrl"/>
-        <a  id="showJobsFlexButton" href="${ctx}/flex-jobs/jobs.jsp" class="button"><span class="showJobsFlex">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
+        <s:url namespace="/fx" action="flex-jobs" id="showFlexJobsUrl"/>
+        <a  id="showJobsFlexButton" href="${showFlexJobsUrl}" class="button"><span class="showJobsFlex">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
       </li>
       <li>
         <s:url namespace="/admin" action="index" id="adminMainUrl"/>
         <a id="manageAccountButton" href="${adminMainUrl}" class="button"><span class="manageAccount">&nbsp;</span><spring:message code="jsp.index.manageJobsAccount" /></a>
       </li>
-      <li>
-        <s:url namespace="/registration" action="signup" id="signupUrl"/>
-        <a id="addUserButton" href="${signupUrl}" class="button"><span class="addUser">&nbsp;</span><spring:message code="jsp.index.createNewUser" /></a>
-      </li>
+      <security:authorize ifNotGranted="MANAGER, ADMIN">
+          <li>
+            <s:url namespace="/registration" action="signup" id="signupUrl"/>
+            <a id="addUserButton" href="${signupUrl}" class="button"><span class="addUser">&nbsp;</span><spring:message code="jsp.index.createNewUser" /></a>
+          </li>
+      </security:authorize>
+
     </ul>
     <div style="margin-left: 0; margin-right: auto;">
         <img src="${jobCountUrl}" alt="Job statistics graph - Number of Jobs" style="width: 300px; height: 150px;"/>

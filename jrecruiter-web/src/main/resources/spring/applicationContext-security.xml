@@ -22,7 +22,7 @@
     <security:intercept-url pattern="/admin/*.html**"                            access="MANAGER,ADMIN"        requires-channel="https"/>
 
     <security:intercept-url pattern="/login.html**"         access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="https" />
-    <security:intercept-url pattern="/flex-jobs/jobs.htm**" access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="http" />
+    <security:intercept-url pattern="/fx/**"              access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="http" />
     <security:intercept-url pattern="/contact.html**"       access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
     <security:intercept-url pattern="/*.html**"             access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any"/>
     <security:intercept-url pattern="/**"                   access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
