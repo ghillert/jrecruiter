@@ -1,4 +1,4 @@
-<decorators defaultdir="/decorators">
+<decorators defaultdir="/WEB-INF/jsp/decorators">
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
     </decorator>
@@ -10,6 +10,6 @@
         <pattern>/admin/logging-ajax-logger-table*</pattern>
         <pattern>/contact.html*</pattern>
         <pattern>/dwr/*</pattern>
-        <pattern>/flex-jobs/*</pattern>
+        <pattern>/fx/*</pattern>
     </excludes>
 </decorators>
