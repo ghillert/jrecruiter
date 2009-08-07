@@ -38,6 +38,7 @@ import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Role;
+import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
@@ -397,6 +398,7 @@ public class JobServiceUnitTest extends TestCase {
         final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
         final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
         final NotificationService notificationService = EasyMock.createStrictMock(NotificationService.class);
+        final ServerSettings serverSettings = org.easymock.classextension.EasyMock.createStrictMock(ServerSettings.class);
 
         EasyMock.expect(jobDao.save(job)).andReturn(job);
 
@@ -408,6 +410,7 @@ public class JobServiceUnitTest extends TestCase {
 
         EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
 
+        org.easymock.classextension.EasyMock.expect(serverSettings.getServerAddress()).andReturn("test");
 
         notificationService.sendEmail((String)EasyMock.anyObject(), (String)EasyMock.anyObject(), (Map<String, Object>)EasyMock.anyObject(), (String)EasyMock.anyObject());
         EasyMock.expect(notificationService.shortenUrl((String)EasyMock.anyObject())).andReturn((new URL("http://www.google.com")));
@@ -416,9 +419,12 @@ public class JobServiceUnitTest extends TestCase {
         EasyMock.replay(jobDao);
         EasyMock.replay(jobCountPerDayDao);
         EasyMock.replay(notificationService);
+        org.easymock.classextension.EasyMock.replay(serverSettings);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         ReflectionTestUtils.setField(jobService, "notificationService", notificationService, NotificationService.class);
+        ReflectionTestUtils.setField(jobService, "serverSettings", serverSettings, ServerSettings.class);
+
 
         jobService.updateJob(job);
 
