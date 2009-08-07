@@ -95,6 +95,8 @@ public class EditUserAction extends BaseAction {
 
         userFromDb.setCompany(this.user.getCompany());
         userFromDb.setEmail(this.user.getEmail());
+        userFromDb.setUsername(this.user.getEmail());
+
         userFromDb.setFax(this.user.getFax());
         userFromDb.setFirstName(this.user.getFirstName());
         userFromDb.setLastName(this.user.getLastName());

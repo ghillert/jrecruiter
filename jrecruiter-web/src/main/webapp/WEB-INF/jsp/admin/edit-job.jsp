@@ -13,7 +13,6 @@
     <legend><spring:message code="jsp.admin.edit-job.fieldset.legend.statistics"/></legend>
     <ul>
         <li><label><spring:message code="jsp.admin.edit-job.fieldset.label.page.visits"/>:</label><s:property value="%{job.statistic.counter}" default="N/A"/></li>
-        <li><label><spring:message code="jsp.admin.edit-job.fieldset.label.unique.visits"/>:</label><s:property value="%{job.statistic.uniqueVisits}" default="N/A"/></li>
         <li><label><spring:message code="jsp.admin.edit-job.fieldset.label.last.access"/>:</label><fmt:formatDate value="${job.statistic.lastAccess}" type="date" pattern="${datePattern}"/></li>
     </ul>
 </fieldset>
@@ -29,7 +28,8 @@
 
     <fieldset>
       <div class="submit">
-          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save" tabindex="23" /><s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel" tabindex="24"/>
+          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"   tabindex="23" />
+          <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel" tabindex="24"/>
       </div>
     </fieldset>
     <spring:message code="jsp._ALL.marked.fields.are.required"/>
