@@ -24,10 +24,10 @@ Job Restrictions:
 ${jobRestrictions}
 
 
-This job was posted on: ${updateDate}
+This job was posted on: ${updateDate?datetime?string.short}
 
 
-For more information, please visit: http://www.ajug.org/ajugjobs/showJobDetail.do?id=${jobId}
+For more information, please visit: ${serverAddress}/job-detail.html?jobId=${jobId}
 
 
 

@@ -10,9 +10,9 @@
                 <tr><td align="right"><b>Email:</b></td>                 <td>${businessEmail}</td></tr>
                 <tr><td align="right"><b>Job Description:</b></td>       <td>${description}</td></tr>
                 <tr><td align="right"><b>Job Restrictions:</b></td>      <td>${jobRestrictions}</td></tr>
-                <tr><td align="right"><b>This job was posted on:</b></td><td>${updateDate}</td></tr>
+                <tr><td align="right"><b>This job was posted on:</b></td><td>${updateDate?datetime?string.short}</td></tr>
             </table>
-            <p>For more information, please visit: <a href="">http://www.ajug.org/ajugjobs/showJobDetail.do?id=${jobId}</a></p>
+            <p>For more information, please visit: <a href="${serverAddress}/job-detail.html?jobId=${jobId}">${serverAddress}/job-detail.html?jobId=${jobId}</a></p>
         </td>
     </tr>
 </table>
