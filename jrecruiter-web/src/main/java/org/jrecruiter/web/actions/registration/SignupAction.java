@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.ApiKeysHolder;
+import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
@@ -43,6 +44,7 @@ public class SignupAction extends BaseAction {
     private StringDigester stringDigester;
 
     private @Autowired ReCaptcha reCaptcha;
+    private @Autowired ServerSettings serverSettings;
 
     private ApiKeysHolder apiKeysHolder;
 
@@ -86,9 +88,7 @@ public class SignupAction extends BaseAction {
         }
 
         try {
-           HttpServletRequest request = ServletActionContext.getRequest();
-           userService.addUser(user, request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/registration/account-validation.html");
-
+           userService.addUser(user, serverSettings.getServerAddress() + "/registration/account-validation.html");
         } catch (DuplicateUserException e) {
 
             LOGGER.warn(e.getMessage());
@@ -171,5 +171,12 @@ public class SignupAction extends BaseAction {
     public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
         this.apiKeysHolder = apiKeysHolder;
     }
+
+	/**
+	 * @param serverSettings the serverSettings to set
+	 */
+	public void setServerSettings(ServerSettings serverSettings) {
+		this.serverSettings = serverSettings;
+	}
 
 }
