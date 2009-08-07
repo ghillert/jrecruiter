@@ -183,22 +183,25 @@ public class JobServiceImpl implements JobService {
 
     /** {@inheritDoc} */
     public void addJobAndSendToMailingList(final Job job) {
-        this.addJob(job);
+        final Job savedJob = this.addJob(job);
 
         final Map<String, Object> context = CollectionUtils.getHashMap();
-        context.put("jobId", job.getId());
-        context.put("jobTitle", job.getJobTitle());
-        context.put("businessLocation", job.getRegionOther());
-        context.put("businessName", job.getBusinessName());
-        context.put("description", job.getDescription());
-        context.put("jobRestrictions", job.getJobRestrictions());
-        context.put("updateDate", job.getUpdateDate());
-        context.put("businessEmail", job.getBusinessEmail());
+        context.put("jobId", savedJob.getId());
+        context.put("jobTitle", savedJob.getJobTitle());
+        context.put("businessLocation", savedJob.getRegionOther());
+        context.put("businessName", savedJob.getBusinessName());
+        context.put("description", savedJob.getDescription());
+        context.put("jobRestrictions", savedJob.getJobRestrictions());
+        context.put("updateDate", savedJob.getUpdateDate());
+        context.put("businessEmail", savedJob.getBusinessEmail());
+        context.put("serverAddress", serverSettings.getServerAddress());
 
-        notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
-        final String tweetMessage = "New Job: " + job.getJobTitle() + " @ " + job.getBusinessName();
+        notificationService.sendEmail(((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(),
+                                      ((Configuration)this.getJRecruiterSetting("mail.jobposting.subject")).getMessageText(),
+                                      context, "add-job");
+        final String tweetMessage = "New Job: " + savedJob.getJobTitle() + " @ " + savedJob.getBusinessName();
 
-        final URL url = createShortenedJobDetailUrl(job);
+        final URL url = createShortenedJobDetailUrl(savedJob);
         notificationService.sendTweetToTwitter(tweetMessage + ": " + url.toString());
 
     }

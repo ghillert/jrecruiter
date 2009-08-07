@@ -76,7 +76,7 @@ public class NotificationServiceImpl implements NotificationService {
             public void prepare(MimeMessage mimeMessage) throws MessagingException, IOException {
 
                 final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-                message.setFrom("jobs@jrecruiter.org");
+                message.setFrom("no_reply@jrecruiter.org");
                 message.setTo(email);
                 message.setSubject(subject);
 
