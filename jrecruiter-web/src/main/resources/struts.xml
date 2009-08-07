@@ -89,7 +89,7 @@
         <action name="viewJobChart" class="org.jrecruiter.web.actions.admin.ShowStatisticsAction"
                 method="chartJobsHits">
               <result name="success" type="chart">
-                <param name="width">400</param>
+                <param name="width">600</param>
                 <param name="height">300</param>
               </result>
         </action>

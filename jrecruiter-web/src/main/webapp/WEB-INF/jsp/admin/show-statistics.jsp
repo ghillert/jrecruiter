@@ -14,8 +14,8 @@
     <s:url id="chartJobsHitsAllUrl" namespace="/chart" action="viewJobChart">
     </s:url>
 
-    <div class="center">
-        <img src="${chartJobsHitsAllUrl}" alt="Job statistics graph - Hits"/>
+    <div class="center" style="width: 600px;">
+        <img src="${chartJobsHitsAllUrl}" alt="Job statistics graph - Hits" title="Job statistics graph - Hits"/>
     </div>
     <div class="submit">
         <s:submit value="%{getText('jsp._ALL.button.back')}" name="back" method="cancel"/>
