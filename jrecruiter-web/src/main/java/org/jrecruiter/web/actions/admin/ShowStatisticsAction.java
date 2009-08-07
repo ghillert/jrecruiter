@@ -159,7 +159,7 @@ public class ShowStatisticsAction extends BaseAction {
             final Calendar calendarToday = CalendarUtils.getCalendarWithoutTime();
 
             final Calendar calendar30    = CalendarUtils.getCalendarWithoutTime();
-            calendar30.add(Calendar.MONTH, -6);
+            calendar30.add(Calendar.MONTH, -36);
 
             final List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
 
