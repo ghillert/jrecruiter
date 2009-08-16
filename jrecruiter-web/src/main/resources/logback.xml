@@ -52,16 +52,16 @@
     <level value="INFO"/>
   </logger>
     <logger name="org.springframework.web">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.apache.struts">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.apache.commons.validator">
     <level value="WARN"/>
   </logger>
   <logger name="org.hibernate.cache">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.hibernate.type">
     <level value="INFO"/>
@@ -70,13 +70,13 @@
     <level value="WARN"/>
   </logger>
   <logger name="org.hibernate.SQL">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.hibernate">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.hibernate.tool.hbm2ddl">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="net.jawr">
     <level value="INFO"/>
@@ -102,7 +102,7 @@
 
 
   <root>
-    <level value="INFO"/>
+    <level value="WARN"/>
     <appender-ref ref="LOGFILE"/>
     <appender-ref ref="CONSOLE"/>
   </root>
