@@ -27,10 +27,10 @@
           <s:url action="edit-job"              id="editJobUrl">
             <s:param name="show-jobs" value="true"/>
           </s:url>
-          <s:url action="logout" id="logoutUrl"/>
-          <s:url action="search-index" id="searchIndexUrl"/>
+          <s:url action="logout"                id="logoutUrl" namespace="/"/>
+          <s:url action="search-index"          id="searchIndexUrl"/>
           <s:url action="setup-demo"            id="setupDemoUrl"/>
-          <s:url action="logging" id="loggingUrl"/>
+          <s:url action="logging"               id="loggingUrl"/>
       <fieldset class="manageJobPostings">
           <legend><spring:message code="jsp.admin.index.legend.manage.jobs"/></legend>
                 <ul>
