@@ -15,7 +15,6 @@
  */
 package org.jrecruiter.dao.jpa;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -261,18 +260,6 @@ implements JobDao {
 
             Session session = (Session)entityManager.getDelegate();
             Query query = session.createQuery("select count(*) from Job");
-            numberOfJobs = (Long) query.uniqueResult();
-
-            return numberOfJobs;
-        }
-
-        public Long getJobCount(Date day) {
-            Long numberOfJobs = null;
-
-            Session session = (Session)entityManager.getDelegate();
-            Query query = session.createQuery("select count(*) from Job job where job.registrationDate < :day");
-            query.setDate("day", day);
-
             numberOfJobs = (Long) query.uniqueResult();
 
             return numberOfJobs;

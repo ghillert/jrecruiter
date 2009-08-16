@@ -38,7 +38,7 @@ public class LogoutAction extends BaseAction {
             LOGGER.warn("User not logged in.");
         }
 
-        context.setAuthentication(null);
+       // context.setAuthentication(null);
 
         super.addActionMessage("You logged out successfully.");
         return SUCCESS;

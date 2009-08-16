@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.common.ApiKeysHolder;
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
@@ -78,7 +79,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
                  job.setStatistic(statistics);
              }
 
-             Set<Long> viewedPostings = new HashSet<Long>();
+             Set<Long> viewedPostings = CollectionUtils.getHashSet();
 
              if (session.get("visited") != null){
 

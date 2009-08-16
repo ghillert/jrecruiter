@@ -1,7 +1,5 @@
 package org.jrecruiter.web.actions.registration;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
@@ -44,7 +42,6 @@ public class SignupAction extends BaseAction {
     private StringDigester stringDigester;
 
     private @Autowired ReCaptcha reCaptcha;
-    private @Autowired ServerSettings serverSettings;
 
     private ApiKeysHolder apiKeysHolder;
 
@@ -88,7 +85,7 @@ public class SignupAction extends BaseAction {
         }
 
         try {
-           userService.addUser(user, serverSettings.getServerAddress() + "/registration/account-validation.html");
+           userService.addUser(user, Boolean.TRUE);
         } catch (DuplicateUserException e) {
 
             LOGGER.warn(e.getMessage());
@@ -171,12 +168,5 @@ public class SignupAction extends BaseAction {
     public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
         this.apiKeysHolder = apiKeysHolder;
     }
-
-	/**
-	 * @param serverSettings the serverSettings to set
-	 */
-	public void setServerSettings(ServerSettings serverSettings) {
-		this.serverSettings = serverSettings;
-	}
 
 }
