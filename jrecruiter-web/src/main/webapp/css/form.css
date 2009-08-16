@@ -35,17 +35,11 @@ form div.submit {
 }
 
 form fieldset {
-    margin: 1em 5em 1em 5em;
-    padding: 1em 1em 1em 1em;
-    border: 1px solid #aaaaaa;
+    margin: 2em 5em 1em 5em;
     background:url(../images/test/fieldset_back.png) top left no-repeat;
 }
-form fieldset {
-    top:  1em;
-    left: 0.7em;
-}
 form fieldset legend {
-    margin-left: 1em;
+
 }
 
 form div.required {

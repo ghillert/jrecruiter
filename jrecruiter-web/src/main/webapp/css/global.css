@@ -1,7 +1,18 @@
 
 img { border-width: 0; }
-fieldset { border: 1px solid #AAAAAA; margin-bottom: 1em;}
 
+fieldset {
+    top:  1em;
+    left: 0em;
+    border: 1px solid #AAAAAA;
+    padding: 2em 1em 1em 1em;
+    margin-bottom: 1em;
+}
+fieldset legend {
+    margin-left: 1em;
+    font: bold 16px verdana, arial, helvetica, sans-serif;
+    color: #00528E;
+}
 a:active {  color: #6666EE; text-decoration: none; }
 a:visited {  color: #6666EE; text-decoration: none}
 a:link { color: #6666EE; text-decoration: none;}
@@ -111,6 +122,7 @@ body {
   background-color: #F5F5FF;
   border: 1px solid #00508a;
   padding: 1em;
+  min-height: 300px;
 }
 
 .container .content h1 {
