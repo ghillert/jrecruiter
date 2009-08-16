@@ -28,9 +28,9 @@
     <security:intercept-url pattern="/**"                   access="IS_AUTHENTICATED_ANONYMOUSLY"   requires-channel="any" />
 
     <security:form-login login-page="/login.html" default-target-url="/admin/index.html"
-                         authentication-failure-url="/login.html?status=error"/>
-    <security:logout />
-    <security:concurrent-session-control max-sessions="1" exception-if-maximum-exceeded="true" />
+                         authentication-failure-url="/login.html?status=error" />
+    <security:logout logout-url="/logout.html" invalidate-session="true" logout-success-url="/show.jobs.html"/>
+    <security:concurrent-session-control max-sessions="1" exception-if-maximum-exceeded="false" />
   </security:http>
 
   <security:authentication-provider user-service-ref='userService' >
