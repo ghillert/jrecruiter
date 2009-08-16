@@ -5,11 +5,13 @@ package org.jrecruiter.web.views;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.text.DateFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.util.JobDetailPageEvents;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
@@ -59,7 +61,7 @@ public class JobDetailPdfView extends AbstractPdfView {
         super.setContentType("application/pdf");
 
         document.addCreationDate();
-        document.addAuthor("www.jRecruiter.org");
+        document.addAuthor("www.jRecruiter.org (Gunnar Hillert)");
         document.addTitle("jRecruiter Job Posting Detail");
 
         if (job == null) {
@@ -84,34 +86,61 @@ public class JobDetailPdfView extends AbstractPdfView {
 
             table.setWidths(new float[]{25, 75});
 
-            addPdfRow(table, "Job Title", job.getJobTitle());
-            addPdfRow(table, "Business Name", job.getBusinessName());
-            addPdfRow(table, "Email", job.getBusinessEmail());
-            addPdfRow(table, "Address 1", job.getBusinessAddress1());
-            addPdfRow(table, "Address 2", job.getBusinessAddress2());
-            addPdfRow(table, "City", job.getBusinessCity());
-            addPdfRow(table, "Business Name", job.getBusinessName());
-            addPdfRow(table, "Phone", job.getBusinessPhone());
-            addPdfRow(table, "State", job.getBusinessState());
-            addPdfRow(table, "Zip", job.getBusinessZip());
-            addPdfRow(table, "Job Id", String.valueOf(job.getId()));
-            addPdfRow(table, "Industry", job.getIndustry().getName());
-            addPdfRow(table, "Industry Other", job.getIndustryOther());
+            addPdfRow(table, "Job Id:", String.valueOf(job.getId()));
+
+            final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());
+
+            addPdfRow(table, "Updated:", String.valueOf(dateFormat.format(job.getUpdateDate())));
+
+            if (StringUtils.isNotBlank(job.getJobTitle())) {
+                addPdfRow(table, "Job Title:", job.getJobTitle());
+            }
+            if (StringUtils.isNotBlank(job.getBusinessName())) {
+                addPdfRow(table, "Business Name:", job.getBusinessName());
+            }
 
             if (job.getOfferedBy() != null) {
-                addPdfRow(table, "Offered By", job.getOfferedBy().getName());
-            }
-            if (job.getRegion() != null) {
-                addPdfRow(table, "Region", job.getRegion().getName());
+                addPdfRow(table, "Job Offered By:", job.getOfferedBy().getName());
             }
 
-            addPdfRow(table, "Region Other", job.getRegionOther());
-            addPdfRow(table, "Date", String.valueOf(job.getUpdateDate()));
-            addPdfRow(table, "Website", job.getWebsite());
+            if (StringUtils.isNotBlank(job.getRegionForDisplay())) {
+                addPdfRow(table, "Job Location:", job.getRegionForDisplay());
+            }
+
+            if (StringUtils.isNotBlank(job.getIndustryForDisplay())) {
+                addPdfRow(table, "Industry:", job.getIndustryForDisplay());
+            }
+
+            if (job.getSalary() != null) {
+                addPdfRow(table, "Salary:", job.getSalary().toPlainString());
+            }
+
+            if (StringUtils.isNotBlank(job.getBusinessPhone())) {
+                addPdfRow(table, "Phone:", job.getBusinessPhone());
+            }
+            if (StringUtils.isNotBlank(job.getBusinessEmail())) {
+                addPdfRow(table, "Email:", job.getBusinessEmail());
+            }
+
+            if (StringUtils.isNotBlank(job.getBusinessAddress1())) {
+                addPdfRow(table, "Address 1:", job.getBusinessAddress1());
+            }
+            if (StringUtils.isNotBlank(job.getBusinessAddress2())) {
+                addPdfRow(table, "Address 2:", job.getBusinessAddress2());
+            }
+            if (StringUtils.isNotBlank(job.getBusinessCity())) {
+                addPdfRow(table, "City:", job.getBusinessCity());
+            }
+
+            if (StringUtils.isNotBlank(job.getBusinessState())) {
+                addPdfRow(table, "State:", job.getBusinessState());
+            }
+            if (StringUtils.isNotBlank(job.getBusinessZip())) {
+                addPdfRow(table, "Zip:", job.getBusinessZip());
+            }
+
+            addPdfRow(table, "Website:", job.getWebsite());
             document.add(table);
-
-            final Paragraph header = new Paragraph(new Phrase(job.getJobTitle()));
-            document.add(header);
 
             //~~~~~Render Map Location if available~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -140,11 +169,12 @@ public class JobDetailPdfView extends AbstractPdfView {
 
             //~~~~~Render Job Restrictions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            this.addPdfHeader(pdfWriter, document, "Job Restrictions");
+            if (StringUtils.isNotBlank(job.getJobRestrictions())) {
+                this.addPdfHeader(pdfWriter, document, "Job Restrictions");
 
-            Paragraph jobRestrictions = new Paragraph(job.getJobRestrictions());
-            document.add(jobRestrictions);
-
+                Paragraph jobRestrictions = new Paragraph(job.getJobRestrictions());
+                document.add(jobRestrictions);
+            }
         }
 
     }
