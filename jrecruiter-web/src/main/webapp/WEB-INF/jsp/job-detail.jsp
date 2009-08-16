@@ -3,16 +3,11 @@
 <% pageContext.setAttribute("lf", "\n"); %>
 
 <style media="print">
-<!--
-    #header { display: none; }
-    #header_menu { display: none; }
-    #jobHeader { display: none; }
-    #footer { display: none; }
--->
-</style>
-<style>
-
-
+    <!--
+    .header_menu,
+    .outer-header,
+    .footer { display: none; }
+    -->
 </style>
 
 <div id="jobHeader">
@@ -37,6 +32,14 @@
         </s:if>
         <fieldset id="jobDetail">
             <legend><spring:message code="jsp.job-detail.label.summary"/></legend>
+            <div class="optional">
+                <label>Job Id:</label>
+                <s:property value="%{job.id}" escape="true"/>
+            </div>
+            <div class="optional">
+                <label><spring:message code="jsp._ALL.job.field.jobUpdateDate"/>:</label>
+                <s:property value="%{job.updateDate}" escape="true"/>
+            </div>
             <div class="optional strong">
                 <label><spring:message code="jsp._ALL.job.field.jobTitle"/>:</label>
                 <s:property value="%{job.jobTitle}" escape="true"/>
@@ -45,20 +48,22 @@
                 <label><spring:message code="jsp._ALL.job.field.businessName"/>:</label>
                     ${job.businessName}
             </div>
-            <div class="optional">
-                <label><spring:message code="jsp._ALL.job.field.offered.by"/>:</label>
-                <s:property value="%{getText(job.offeredBy.descriptionKey)}" default="N/A"/>
-            </div>
-            <s:if test="job.region.name != null">
+            <s:if test="job.offeredBy != null">
                 <div class="optional">
-                    <label><spring:message code="jsp._ALL.job.field.location"/>:</label>
-                        ${job.region.name}
+                    <label><spring:message code="jsp._ALL.job.field.offered.by"/>:</label>
+                    <s:property value="%{getText(job.offeredBy.descriptionKey)}" default="N/A"/>
                 </div>
             </s:if>
-            <s:if test="job.industry.name != null">
+            <s:if test="job.regionForDisplay != null && job.regionForDisplay.length() > 0">
+                <div class="optional">
+                    <label><spring:message code="jsp._ALL.job.field.location"/>:</label>
+                        ${job.regionForDisplay}
+                </div>
+            </s:if>
+            <s:if test="job.industryForDisplay != null && job.industryForDisplay.length() > 0">
                 <div class="optional">
                   <label><spring:message code="jsp._ALL.job.field.industry"/>:</label>
-                      ${job.industry.name}
+                      ${job.industryForDisplay}
                 </div>
             </s:if>
             <s:if test="job.salary != null">
@@ -66,51 +71,45 @@
                     ${job.salary}
                 </div>
             </s:if>
-            <s:if test="job.businessPhone != null">
+            <s:if test="job.businessPhone != null && job.businessPhone.length() > 0">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.phone"/>:</label>
                     ${job.businessPhone}
                 </div>
             </s:if>
-            <s:if test="job.businessEmail != null">
+            <s:if test="job.businessEmail != null && job.businessEmail.length() > 0">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.email"/>:</label>
                     <a href="mailto:${job.businessEmail}">${job.businessEmail}</a>
                 </div>
             </s:if>
-            <s:if test="job.businessName != null">
-                <div class="optional">
-                    <label><spring:message code="jsp._ALL.job.field.businessName"/>:</label>
-                      ${job.businessName}
-                </div>
-            </s:if>
-            <s:if test="job.businessAddress1 != null">
+            <s:if test="job.businessAddress1 != null && job.businessAddress1.length() > 0">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.address"/>:</label>
                     ${job.businessAddress1}
                 </div>
             </s:if>
-            <s:if test="job.businessAddress2 != null">
+            <s:if test="job.businessAddress2 != null  && job.businessAddress2.length() > 0">
                 <div class="optional">
                      <label>&nbsp;</label>${job.businessAddress2}
                 </div>
             </s:if>
-            <s:if test="job.city != null">
+            <s:if test="job.city != null && job.city.length() > 0">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.city"/>:</label>${job.businessCity}
                 </div>
             </s:if>
-            <s:if test="job.businessState != null">
+            <s:if test="job.businessState != null && job.businessState.length() > 0">
               <div class="optional">
                  <label><spring:message code="jsp._ALL.job.field.state"/>:</label><s:property value="%{job.businessState}"/>
               </div>
             </s:if>
-            <s:if test="job.businessZip != null">
+            <s:if test="job.businessZip != null && job.businessZip.length() > 0">
               <div class="optional">
                   <label><spring:message code="jsp._ALL.job.field.zip"/>:</label><s:property value="%{job.businessZip}"/>
               </div>
             </s:if>
-            <s:if test="job.website != null">
+            <s:if test="job.website != null && job.website.length() > 0">
                 <div class="optional">
                    <label><spring:message code="jsp._ALL.job.field.website"/>:</label>
                     <c:if test="${not fn:contains(job.website, 'http')}">
@@ -135,7 +134,7 @@
                         </c:otherwise>
                     </c:choose>
         </fieldset>
-        <s:if test="job.jobRestrictions != null">
+        <s:if test="job.jobRestrictions != null && job.jobRestrictions.length() > 0">
           <fieldset id="jobDetailRestriction">
               <legend><spring:message code="jsp._ALL.job.field.jobRestrictions"/></legend>
                 <c:set var="restr"><c:out value="${job.jobRestrictions}" escapeXml="true"/></c:set>

@@ -14,7 +14,7 @@
   <form  name="j_spring_security_check" id="j_acegi_security_check" method="POST" action="j_spring_security_check">
       <fieldset id="loginSection">
           <legend>Login</legend>
-          <div class="required">
+          <div class="required" style="margin-top: 2em;">
             <label for="j_username"><spring:message code="class.user.email" /></label>
             <s:textfield id="j_username" name="j_username" required="true" maxlength="25" tabindex="1"
                              onblur="javascript:this.className='';"
