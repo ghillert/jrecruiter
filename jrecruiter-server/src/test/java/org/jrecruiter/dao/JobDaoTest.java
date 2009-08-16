@@ -269,50 +269,6 @@ public class JobDaoTest extends BaseTest {
     }
 
     @Test
-    public void testGetJobCountForDay() {
-        Calendar cal1 = Calendar.getInstance();
-        cal1.clear();
-        cal1.set(1500, 05, 20);
-
-        Calendar cal2 = Calendar.getInstance();
-        cal2.clear();
-        cal2.set(1500, 04, 20);
-
-        Calendar cal3 = Calendar.getInstance();
-        cal3.clear();
-        cal3.set(1500, 03, 20);
-
-        final User user = this.getUser();
-
-        User savedUser = userDao.save(user);
-
-        final Job job1 = this.getJob();
-        job1.setUser(savedUser);
-        job1.setRegistrationDate(cal1.getTime());
-        jobDao.save(job1);
-
-        final Job job2 = this.getJob();
-        job2.setUser(savedUser);
-        job2.setRegistrationDate(cal2.getTime());
-        jobDao.save(job2);
-
-        final Job job3 = this.getJob();
-        job3.setUser(savedUser);
-        job3.setRegistrationDate(cal3.getTime());
-        jobDao.save(job3);
-
-        entityManager.flush();
-
-        Calendar queryDate = Calendar.getInstance();
-        queryDate.clear();
-        queryDate.set(1500, 4, 25);
-        Long totalNumberOfJobs = jobDao.getJobCount(queryDate.getTime());
-
-        Assert.assertNotNull(totalNumberOfJobs);
-        Assert.assertTrue(totalNumberOfJobs.intValue() == 2);
-    }
-
-    @Test
     public void testGetJobCountPerDayAndPeriod() {
         Calendar cal1 = Calendar.getInstance();
         cal1.clear();

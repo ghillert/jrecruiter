@@ -15,7 +15,6 @@
 */
 package org.jrecruiter.dao;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -78,13 +77,6 @@ public interface JobDao extends GenericDao < Job, Long >{
      * @return Total number of jobs
      */
     Long getJobsCount();
-
-    /**
-     *
-     * @param day
-     * @return
-     */
-    Long getJobCount(Date day);
 
     /**
      * Method for getting users jobs for statistical purposes.

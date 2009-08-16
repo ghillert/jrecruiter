@@ -50,10 +50,10 @@ public interface UserService {
      * is thrown.
      *
      * @param user The user to add
-     * @param accountValidationUrl Url that handles account validation
+     * @param validationRequired Must this user be verified?
      * @throws DuplicateUserException
      */
-    User addUser(User user, String accountValidationUrl) throws DuplicateUserException;
+    User addUser(User user, Boolean verificationRequired) throws DuplicateUserException;
 
     /**
      * Load a user by the provided username

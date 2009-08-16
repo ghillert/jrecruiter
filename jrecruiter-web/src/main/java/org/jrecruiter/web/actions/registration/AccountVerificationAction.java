@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @Result(name="success", location="index", type="redirectAction")
-public class AccountValidationAction extends BaseAction {
+public class AccountVerificationAction extends BaseAction {
 
     private @Autowired UserService userService;
 

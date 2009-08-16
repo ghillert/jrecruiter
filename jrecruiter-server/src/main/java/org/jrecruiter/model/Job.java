@@ -33,6 +33,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DateBridge;
@@ -43,6 +44,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
+import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 
@@ -677,6 +679,48 @@ public class Job implements Serializable {
             .append(" )");
 
         return retValue.toString();
+    }
+
+
+    //~~~~~Helper Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    @Transient
+    public String getRegionForDisplay() {
+
+        if (this.region == null) {
+            return null;
+        } else if (CommongKeyIds.OTHER.getId().equals(this.region.getId())) {
+
+            if (this.regionOther != null) {
+                return this.regionOther;
+            } else {
+                return null;
+            }
+
+        } else {
+            return this.region.getName();
+        }
+
+
+    }
+
+    @Transient
+    public String getIndustryForDisplay() {
+
+        if (this.industry == null) {
+            return null;
+        } else if (CommongKeyIds.OTHER.getId().equals(this.industry.getId())) {
+
+            if (this.industryOther != null) {
+                return this.industryOther;
+            } else {
+                return null;
+            }
+
+        } else {
+            return this.industry.getName();
+        }
+
     }
 
 }

@@ -207,7 +207,7 @@ public class JobServiceImpl implements JobService {
     }
 
     private URL createShortenedJobDetailUrl(final Job job) {
-        final String jobUrl = this.serverSettings.getServerAddress() + "/job-detail.html?jobId=" + job.getId();
+        final String jobUrl = this.serverSettings.getServerAddress() + ServerSettings.ServerActions.JOB_DETAIL + "?jobId=" + job.getId();
 
         final URI tweetUri;
 
@@ -369,12 +369,6 @@ public class JobServiceImpl implements JobService {
 
         final List<JobCountPerDay> jobCountPerDays = jobCountPerDayDao.getJobCountPerDayAndPeriod(fromDate, toDate);
         return jobCountPerDays;
-    }
-
-    /** {@inheritDoc} */
-    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
-    public Long jobCount(final Date day) {
-        return jobDao.getJobCount(day);
     }
 
     /** {@inheritDoc} */

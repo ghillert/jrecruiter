@@ -31,8 +31,10 @@ import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Role;
+import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
+import org.jrecruiter.model.ServerSettings.ServerActions;
 import org.jrecruiter.service.NotificationService;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
@@ -71,6 +73,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private @Autowired NotificationService notificationService;
 
+    private @Autowired ServerSettings serverSettings;
+
     private @Resource(name="server.messageSource") MessageSource messageSource;
 
     /**
@@ -94,6 +98,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /** {@inheritDoc} */
     public User addUser(User user) throws DuplicateUserException{
+        final User savedUser = this.addUser(user, Boolean.FALSE);
+        return savedUser;
+    }
+
+    /** {@inheritDoc} */
+    public User addUser(User user, Boolean verificationRequired) throws DuplicateUserException{
+
+        if (user == null) {
+            throw new IllegalArgumentException("User must not be null.");
+        }
+        if (verificationRequired == null) {
+            throw new IllegalArgumentException("verificationRequired must not be null.");
+        }
 
         if (user == null) {
             throw new IllegalArgumentException("User must not be null.");
@@ -127,31 +144,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         userToRoles.add(utr);
 
-        User savedUser = this.saveUser(user);
+        final User savedUser = this.saveUser(user);
 
-        return savedUser;
-
-    }
-
-    /** {@inheritDoc} */
-    public User addUser(User user, String accountValidationUrl) throws DuplicateUserException{
-
-        if (user == null) {
-            throw new IllegalArgumentException("User must not be null.");
+        if (verificationRequired) {
+            final Map<String, Object> context = CollectionUtils.getHashMap();
+            context.put("user", savedUser);
+            context.put("registrationCode", savedUser.getVerificationKey());
+            context.put("accountValidationUrl", serverSettings.getServerAddress() + ServerActions.ACCOUNT_VERIFICATION);
+            notificationService.sendEmail(savedUser.getEmail(), messageSource.getMessage("class.UserServiceImpl.addUser.account.validation.subject", null, LocaleContextHolder.getLocale()), context, "account-validation");
         }
-        if (accountValidationUrl == null) {
-            throw new IllegalArgumentException("accountValidationUrl must not be null.");
-        }
-
-        final User savedUser = this.addUser(user);
-
-        final Map<String, Object> context = CollectionUtils.getHashMap();
-        context.put("user", savedUser);
-        context.put("registrationCode", savedUser.getVerificationKey());
-        context.put("accountValidationUrl", accountValidationUrl);
-
-        notificationService.sendEmail(savedUser.getEmail(), messageSource.getMessage("class.UserServiceImpl.addUser.account.validation.subject", null, LocaleContextHolder.getLocale()), context, "account-validation");
-
         return savedUser;
 
 
