@@ -137,9 +137,8 @@ body {
 
 .container .errorMessages,
 .container .successMessages  {
-  display: block;
   border-collapse: collapse;
-  margin: 1em 5em 2em 5em;
+  margin: 1em 0 2em 0;
   background-color: #FFFFFF;
 }
 
@@ -149,10 +148,15 @@ body {
   min-height: 40px;
 }
 
+.container .errorMessages ul,
+.container .successMessages ul {
+  margin: 10px 0 10px 0;
+}
+
 .container .errorMessages li,
 .container .successMessages li {
-  margin-left: 5em;
-  margin-right: 5em;
+  margin-left: 7em;
+  margin-right: 7em;
 }
 
 /* Error Messages */

@@ -10,7 +10,7 @@
     var defaultMapZoomLevel = 10;
 
 function init() {
-    DWRUtil.useLoadingMessage();
+   // DWRUtil.useLoadingMessage();
 }
 
 function usesMapChange() {

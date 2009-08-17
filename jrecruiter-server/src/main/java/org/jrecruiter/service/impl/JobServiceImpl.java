@@ -235,17 +235,6 @@ public class JobServiceImpl implements JobService {
 
         saveJobStatistics(savedJob);
 
-        final Map<String, Object> context = CollectionUtils.getHashMap();
-        context.put("jobId", job.getId());
-        context.put("jobTitle", job.getJobTitle());
-        context.put("businessLocation", job.getRegionOther());
-        context.put("businessName", job.getBusinessName());
-        context.put("description", job.getDescription());
-        context.put("jobRestrictions", job.getJobRestrictions());
-        context.put("updateDate", job.getUpdateDate());
-        context.put("businessEmail", job.getBusinessEmail());
-
-        notificationService.sendEmail("gunnar@hillert.com", "[ajug-jobs] " + job.getJobTitle(), context, "add-job");
         String tweetMessage = "Job Update: " + job.getJobTitle() + " @ " + job.getBusinessName();
 
         final URL url = createShortenedJobDetailUrl(job);

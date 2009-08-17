@@ -65,7 +65,7 @@ public class EditJobAction extends JobBaseAction {
          }
 
          jobService.deleteJobForId(this.model.getJob().getId()); //FIXME SECURITY
-         super.addActionMessage(getText("job.delete.success"));
+         super.addActionMessage(getText("class.ShowJobsAction.job_delete_success_one"));
          return SUCCESS;
     }
 
@@ -173,7 +173,7 @@ public class EditJobAction extends JobBaseAction {
         jobFromDB.setUpdateDate(new Date());
         jobService.updateJob(jobFromDB);
 
-        super.addActionMessage(getText("job.edit.success", ""));
+        super.addActionMessage(getText("class.EditJobAction.job_edit_success", ""));
 
         return SUCCESS;
 

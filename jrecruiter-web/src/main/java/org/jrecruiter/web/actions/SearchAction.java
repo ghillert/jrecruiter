@@ -7,6 +7,13 @@ import org.jrecruiter.model.Job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
+
 /**
  * List all the jobs.
  *
@@ -39,9 +46,18 @@ public class SearchAction extends BaseAction  {
         this.jobs = jobs;
     }
 
+
     /**
      *
      */
+    @Validations(
+            requiredStrings = {
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "keyword", trim=true, message = "Please enter a search term."),
+                     },
+            stringLengthFields = {
+                        @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "250", fieldName = "keyword",  message = "The search term must be shorter than ${maxLength} characters."),
+                    }
+            )
     public String search() {
 
         LOGGER.debug("entering 'onSubmit' method...");

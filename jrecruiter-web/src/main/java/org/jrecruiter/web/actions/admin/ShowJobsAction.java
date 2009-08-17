@@ -88,9 +88,9 @@ public class ShowJobsAction extends BaseAction implements Preparable {
              }
 
              if (validJobIds == 1) {
-                 super.addActionMessage(getText("job.delete.success.one", new String[]{String.valueOf(validJobIds)}));
+                 super.addActionMessage(getText("class.ShowJobsAction.job_delete_success_one", new String[]{String.valueOf(validJobIds)}));
              } else {
-                 super.addActionMessage(getText("job.delete.success.multiple", new String[]{String.valueOf(validJobIds)}));
+                 super.addActionMessage(getText("class.ShowJobsAction.job_delete_success_multiple", new String[]{String.valueOf(validJobIds)}));
              }
 
          } else {

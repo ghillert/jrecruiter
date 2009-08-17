@@ -127,6 +127,7 @@ public class Job implements Serializable {
     private Date registrationDate;
 
     /** Date the job posting was updated. */
+    @org.hibernate.annotations.Index(name="updateDateIndex")
     private Date updateDate;
 
     /** Status of job posting. */
