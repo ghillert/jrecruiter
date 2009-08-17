@@ -7,7 +7,7 @@
 <p><a href="http://www.jrecruiter.org/">http://www.jrecruiter.org/</a></p>
 
 <fieldset>
- <legend>jRecruiter is powered by the following technologies:</legend>
+ <legend>jRecruiter is powered by:</legend>
  <ul>
     <li><a href="http://struts.apache.org/2.x/">Struts 2</a></li>
     <li><a href="http://www.springframework.org/">Spring 3.0</a></li>

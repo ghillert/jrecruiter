@@ -18,6 +18,15 @@
       </td>
     </tr>
   </table>
+
+  <script type="text/javascript">
+
+  $(function() {
+      $('table.errorMessages').width($('.content').width());
+  });
+
+  </script>
+
 </s:if>
 
 <s:if test="hasActionMessages()">
@@ -32,5 +41,13 @@
       </td>
     </tr>
   </table>
+
+ <script type="text/javascript">
+
+  $(function() {
+      $('table.successMessages').width($('.content').width());
+  });
+
+  </script>
 </s:if>
 

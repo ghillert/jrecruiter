@@ -66,7 +66,7 @@
       </div>
       <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"
-        title="Main website of the jRecruiter project"><span>j</span>Recruiter (Build: <spring:message code="jrecruiter.build.number"/>)</a>
+        title="Main website of the jRecruiter project"><span>j</span>Recruiter <spring:message code="jrecruiter.build.version"/> (Revision: <spring:message code="jrecruiter.build.number"/>)</a>
       </div>
     </div>
 

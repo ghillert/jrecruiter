@@ -11,6 +11,7 @@
       </tr>
     </table>
   </c:if>
+
   <form  name="j_spring_security_check" id="j_acegi_security_check" method="POST" action="j_spring_security_check">
       <fieldset id="loginSection">
           <legend>Login</legend>
@@ -50,6 +51,8 @@
 <!--
 $(function() {
     $('#j_username').focus();
+    $('table.errorMessages').width($('.content').width());
+
 });
 //-->
 </script>
