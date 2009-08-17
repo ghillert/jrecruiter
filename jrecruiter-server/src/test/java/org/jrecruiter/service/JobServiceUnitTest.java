@@ -412,8 +412,8 @@ public class JobServiceUnitTest extends TestCase {
 
         org.easymock.classextension.EasyMock.expect(serverSettings.getServerAddress()).andReturn("test");
 
-        notificationService.sendEmail((String)EasyMock.anyObject(), (String)EasyMock.anyObject(), (Map<String, Object>)EasyMock.anyObject(), (String)EasyMock.anyObject());
         EasyMock.expect(notificationService.shortenUrl((String)EasyMock.anyObject())).andReturn((new URL("http://www.google.com")));
+
         notificationService.sendTweetToTwitter((String)EasyMock.anyObject());
 
         EasyMock.replay(jobDao);
