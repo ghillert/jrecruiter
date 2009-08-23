@@ -18,27 +18,26 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  * @author Gunnar Hillert
  * @version $Id$
  */
-@ContextConfiguration(locations = { "classpath:org/jrecruiter/migration/applicationContextV1_jdbc.xml",
-							        "classpath:spring/applicationContext.xml",
-							        "classpath:spring/applicationContext-mail.xml",
-							        "classpath:spring/applicationContext-resources.xml",
-							        "classpath:spring/applicationContext-security.xml",
-							        "classpath:spring/applicationContext-jpa.xml"
-							       })
+@ContextConfiguration(locations = { "classpath:applicationContextV1_jdbc.xml",
+                                    "classpath:/org/jrecruiter/server/spring/applicationContext-server.xml",
+                                    "classpath:/org/jrecruiter/server/spring/applicationContext-resources.xml",
+                                    "classpath:/org/jrecruiter/server/spring/applicationContext-jpa.xml",
+                                    "classpath:/org/jrecruiter/server/spring/test-applicationContext-mail.xml"
+                                   })
 public abstract class MigrationV1toV2Base extends AbstractTransactionalJUnit4SpringContextTests {
 
     protected SimpleJdbcTemplate jdbcTemplateV1;
     protected @Autowired MigrationService migrationService;
-    
+
     protected @PersistenceContext(unitName="base") EntityManager entityManager;
-    
+
     @Autowired
     public void setDataSourceV1(@Qualifier("dataSourceV1") final DataSource dataSourceV1) {
         this.jdbcTemplateV1 = new SimpleJdbcTemplate(dataSourceV1);
     }
-    
-	@Autowired
-	public void setDataSource(@Qualifier("dataSource") final DataSource dataSource) {
-		this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
-	}
+
+    @Autowired
+    public void setDataSource(@Qualifier("dataSource") final DataSource dataSource) {
+        this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+    }
 }

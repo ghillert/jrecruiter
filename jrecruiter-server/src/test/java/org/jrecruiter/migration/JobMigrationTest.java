@@ -20,7 +20,7 @@ public class JobMigrationTest extends MigrationV1toV2Base {
     @Rollback(false)
     public void migrateJobs() {
 
-        migrationService.migrateUserData(Boolean.FALSE);
+        migrationService.migrateUserData(Boolean.TRUE);
         super.entityManager.flush();
         migrationService.migrateJobData();
 

@@ -208,4 +208,11 @@ public interface JobService {
      * @param statistics
      */
     void updateJobStatistic(Statistic statistics);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    Job getJobForUniversalId(String id);
 }

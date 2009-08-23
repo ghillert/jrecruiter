@@ -207,7 +207,7 @@ public class JobServiceImpl implements JobService {
     }
 
     private URL createShortenedJobDetailUrl(final Job job) {
-        final String jobUrl = this.serverSettings.getServerAddress() + ServerSettings.ServerActions.JOB_DETAIL + "?jobId=" + job.getId();
+        final String jobUrl = this.serverSettings.getServerAddress() + ServerSettings.ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
 
         final URI tweetUri;
 
@@ -217,7 +217,7 @@ public class JobServiceImpl implements JobService {
             throw new IllegalStateException("Cannot creat URI for " + jobUrl);
         }
 
-        URL jobDetailUrl = notificationService.shortenUrl(tweetUri.toString());
+        final URL jobDetailUrl = notificationService.shortenUrl(tweetUri.toString());
 
         return jobDetailUrl;
     }
@@ -270,6 +270,14 @@ public class JobServiceImpl implements JobService {
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Job getJobForId(final Long jobId) {
         return jobDao.get(jobId);
+    }
+
+    /* (non-Javadoc)
+     * @see org.jrecruiter.service.JobService#getJobForUniversalId(java.lang.Long)
+     */
+    @Override
+    public Job getJobForUniversalId(final String universalId) {
+        return jobDao.getForUniversalId(universalId);
     }
 
     /** {@inheritDoc} */

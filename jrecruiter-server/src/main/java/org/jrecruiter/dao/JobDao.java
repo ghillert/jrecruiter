@@ -105,4 +105,11 @@ public interface JobDao extends GenericDao < Job, Long >{
 
     /** Get a summary list of jobs */
     List<Job> getJobSummaries();
+
+    /**
+     *
+     * @param universalId
+     * @return
+     */
+    Job getForUniversalId(String universalId);
 }

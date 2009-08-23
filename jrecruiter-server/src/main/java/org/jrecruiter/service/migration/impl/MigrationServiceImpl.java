@@ -18,23 +18,28 @@ package org.jrecruiter.service.migration.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
 import org.jasypt.digest.StringDigester;
+import org.jrecruiter.common.Constants;
 import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.RegionDao;
+import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
+import org.jrecruiter.model.Role;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.migration.MigrationService;
 import org.slf4j.Logger;
@@ -62,6 +67,7 @@ public class MigrationServiceImpl implements MigrationService {
     private @Autowired JobDao         jobDao;
     private @Autowired IndustryDao    industryDao;
     private @Autowired RegionDao      regionDao;
+    private @Autowired RoleDao        roleDao;
     private @Autowired JobService     jobService;
 
     protected @PersistenceContext(unitName="base") EntityManager entityManager;
@@ -122,7 +128,7 @@ public class MigrationServiceImpl implements MigrationService {
                 user.setRegistrationDate(rs.getTimestamp("register_date"));
                 user.setUpdateDate(rs.getTimestamp("update_date"));
                 user.setCompany(rs.getString("company"));
-
+                user.setEnabled(true);
                 return user;
             }
         };
@@ -139,11 +145,26 @@ public class MigrationServiceImpl implements MigrationService {
 
         }
 
+        final Role managerRole = roleDao.getRole(Constants.Roles.MANAGER.name());
+
+        if (managerRole == null) {
+            throw new IllegalStateException("Role was not found but is required.");
+        }
+
         int counter = 0;
         for (User user : users) {
             LOGGER.info("[" +  ++counter  +"/" + users.size() + "] User: " + user + "...saving.");
           //  if ( counter % 20 == 0 ) { //20, same as the JDBC batch size
                 //flush a batch of inserts and release memory:
+
+                Set<UserToRole> userToRoles = user.getUserToRoles();
+
+                UserToRole utr = new UserToRole();
+                utr.setRole(managerRole);
+                utr.setUser(user);
+
+                userToRoles.add(utr);
+
                 userDao.save(user);
                 entityManager.flush();
             //    entityManager.clear();
@@ -200,6 +221,10 @@ public class MigrationServiceImpl implements MigrationService {
                 job.setUpdateDate(rs.getDate("update_date"));
                 job.setStatus(JobStatus.ACTIVE);
                 job.setUsesMap(Boolean.FALSE);
+
+                //Let's populated the universal id
+
+                job.setUniversalId(rs.getString("job_id"));
 
                 final User user = userDao.getUser(rs.getString("user_name"));
                 LOGGER.info("Fetching user: " + rs.getString("user_name") + ".");

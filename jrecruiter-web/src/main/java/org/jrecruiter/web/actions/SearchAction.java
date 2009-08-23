@@ -38,6 +38,13 @@ public class SearchAction extends BaseAction  {
         this.keyword = keyword;
     }
 
+    /**
+     * @return the keyword
+     */
+    public String getKeyword() {
+        return keyword;
+    }
+
     public List<Job> getJobs() {
         return jobs;
     }
@@ -52,10 +59,10 @@ public class SearchAction extends BaseAction  {
      */
     @Validations(
             requiredStrings = {
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "keyword", trim=true, message = "Please enter a search term."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "keyword", trim=true, message = "Please enter a search term.")
                      },
             stringLengthFields = {
-                        @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "250", fieldName = "keyword",  message = "The search term must be shorter than ${maxLength} characters."),
+                        @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "250", fieldName = "keyword",  message = "The search term must be shorter than ${maxLength} characters.")
                     }
             )
     public String search() {

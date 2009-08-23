@@ -302,6 +302,19 @@ implements JobDao {
             return jobs;
         }
 
+        /* (non-Javadoc)
+         * @see org.jrecruiter.dao.JobDao#getForUniversalId(java.lang.Long)
+         */
+        @Override
+        public Job getForUniversalId(final String universalId) {
+            final Job  job = (Job) entityManager
+                .createQuery("select j from Job j where j.universalId = :universalId")
+                .setParameter("universalId", universalId)
+                .getSingleResult();
+            return job;
+        }
+
+
     }
 
 
