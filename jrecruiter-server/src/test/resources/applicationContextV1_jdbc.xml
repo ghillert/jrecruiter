@@ -15,9 +15,9 @@
 
     <bean id="dataSourceV1" name="dataSourceV1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:15432/ajugjobs"/>
-        <property name="username" value="ajugjobs"/>
-        <property name="password" value="RoadEesh4"/>
+        <property name="url" value="${migration.jdbc.url}"/>
+        <property name="username" value="${migration.jdbc.username}"/>
+        <property name="password" value="${migration.jdbc.password}"/>
         <property name="maxActive" value="30"/>
         <property name="maxIdle" value="10"/>
         <property name="maxWait" value="1000"/>

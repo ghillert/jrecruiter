@@ -34,6 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DateBridge;
@@ -55,7 +56,7 @@ import org.jrecruiter.common.Constants.OfferedBy;
 * @version $Id$
 */
 @Entity
-@Table(uniqueConstraints = {  })
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"universalId"})})
 @Indexed
 @Analyzer(impl = org.apache.lucene.analysis.standard.StandardAnalyzer.class)
 public class Job implements Serializable {
@@ -67,6 +68,13 @@ public class Job implements Serializable {
 
     /** Job posting id. */
     private Long id;
+
+    /** Uniquely identifies the data object. This key will be unique across migrations and is used
+     * mainly in places where external services may need to access job posting information. The
+     * stored information is typically a UUID but does not have to be (migrating older data sets for
+     * example)
+     */
+    private String universalId;
 
     /** Industry. */
     private Industry industry;
@@ -127,7 +135,6 @@ public class Job implements Serializable {
     private Date registrationDate;
 
     /** Date the job posting was updated. */
-    @org.hibernate.annotations.Index(name="updateDateIndex")
     private Date updateDate;
 
     /** Status of job posting. */
@@ -332,6 +339,7 @@ public class Job implements Serializable {
      */
     @Column(name="job_title", unique=false, nullable=false, insertable=true, updatable=true, length=50)
     @Field(index=Index.TOKENIZED, store=Store.YES)
+    @org.hibernate.annotations.Index(name="jobTitleIndex")
     public String getJobTitle() {
         return jobTitle;
     }
@@ -560,6 +568,7 @@ public class Job implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     @DateBridge(resolution = Resolution.DAY)
+    @org.hibernate.annotations.Index(name="updateDateIndex")
     public Date getUpdateDate() {
         return updateDate;
     }
@@ -664,24 +673,19 @@ public class Job implements Serializable {
         this.statistic = statistic;
     }
 
-    @Override
-    public String toString()
-    {
-        final String TAB = " | ";
-
-        final StringBuilder retValue = new StringBuilder();
-
-        retValue.append("Job ( ")
-            .append(super.toString()).append(TAB)
-            .append("id = ").append(this.getId()).append(TAB)
-            .append("registrationDate = ").append(this.getRegistrationDate()).append(TAB)
-            .append("updateDate = ").append(this.getUpdateDate()).append(TAB)
-            .append("jobTitle = ").append(this.getJobTitle()).append(TAB)
-            .append(" )");
-
-        return retValue.toString();
+    /**
+     * @return the universalId
+     */
+    public String getUniversalId() {
+        return universalId;
     }
 
+    /**
+     * @param universalId the universalId to set
+     */
+    public void setUniversalId(String universalId) {
+        this.universalId = universalId;
+    }
 
     //~~~~~Helper Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -701,8 +705,24 @@ public class Job implements Serializable {
         } else {
             return this.region.getName();
         }
+    }
 
+    @Transient
+    public String getRegionForDisplayFormatted() {
 
+        if (this.region == null) {
+            return null;
+        } else if (CommongKeyIds.OTHER.getId().equals(this.region.getId())) {
+
+            if (this.regionOther != null) {
+                return "Other (" + this.regionOther + ")";
+            } else {
+                return null;
+            }
+
+        } else {
+            return this.region.getName();
+        }
     }
 
     @Transient
@@ -722,6 +742,166 @@ public class Job implements Serializable {
             return this.industry.getName();
         }
 
+    }
+
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    @Override
+    public String toString()
+    {
+        final String TAB = " | ";
+
+        final StringBuilder retValue = new StringBuilder();
+
+        retValue.append("Job ( ")
+            .append(super.toString()).append(TAB)
+            .append("id = ").append(this.getId()).append(TAB)
+            .append("registrationDate = ").append(this.getRegistrationDate()).append(TAB)
+            .append("updateDate = ").append(this.getUpdateDate()).append(TAB)
+            .append("jobTitle = ").append(this.getJobTitle()).append(TAB)
+            .append(" )");
+
+        return retValue.toString();
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime
+                * result
+                + ((businessAddress1 == null) ? 0 : businessAddress1.hashCode());
+        result = prime
+                * result
+                + ((businessAddress2 == null) ? 0 : businessAddress2.hashCode());
+        result = prime * result
+                + ((businessCity == null) ? 0 : businessCity.hashCode());
+        result = prime * result
+                + ((businessEmail == null) ? 0 : businessEmail.hashCode());
+        result = prime * result
+                + ((businessName == null) ? 0 : businessName.hashCode());
+        result = prime * result
+                + ((businessPhone == null) ? 0 : businessPhone.hashCode());
+        result = prime * result
+                + ((businessState == null) ? 0 : businessState.hashCode());
+        result = prime * result
+                + ((businessZip == null) ? 0 : businessZip.hashCode());
+        result = prime * result
+                + ((jobTitle == null) ? 0 : jobTitle.hashCode());
+        result = prime * result
+                + ((latitude == null) ? 0 : latitude.hashCode());
+        result = prime * result
+                + ((longitude == null) ? 0 : longitude.hashCode());
+        result = prime
+                * result
+                + ((registrationDate == null) ? 0 : registrationDate.hashCode());
+        result = prime * result
+                + ((universalId == null) ? 0 : universalId.hashCode());
+        result = prime * result
+                + ((updateDate == null) ? 0 : updateDate.hashCode());
+        result = prime * result + ((website == null) ? 0 : website.hashCode());
+        result = prime * result
+                + ((zoomLevel == null) ? 0 : zoomLevel.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Job))
+            return false;
+        Job other = (Job) obj;
+        if (businessAddress1 == null) {
+            if (other.businessAddress1 != null)
+                return false;
+        } else if (!businessAddress1.equals(other.businessAddress1))
+            return false;
+        if (businessAddress2 == null) {
+            if (other.businessAddress2 != null)
+                return false;
+        } else if (!businessAddress2.equals(other.businessAddress2))
+            return false;
+        if (businessCity == null) {
+            if (other.businessCity != null)
+                return false;
+        } else if (!businessCity.equals(other.businessCity))
+            return false;
+        if (businessEmail == null) {
+            if (other.businessEmail != null)
+                return false;
+        } else if (!businessEmail.equals(other.businessEmail))
+            return false;
+        if (businessName == null) {
+            if (other.businessName != null)
+                return false;
+        } else if (!businessName.equals(other.businessName))
+            return false;
+        if (businessPhone == null) {
+            if (other.businessPhone != null)
+                return false;
+        } else if (!businessPhone.equals(other.businessPhone))
+            return false;
+        if (businessState == null) {
+            if (other.businessState != null)
+                return false;
+        } else if (!businessState.equals(other.businessState))
+            return false;
+        if (businessZip == null) {
+            if (other.businessZip != null)
+                return false;
+        } else if (!businessZip.equals(other.businessZip))
+            return false;
+        if (jobTitle == null) {
+            if (other.jobTitle != null)
+                return false;
+        } else if (!jobTitle.equals(other.jobTitle))
+            return false;
+        if (latitude == null) {
+            if (other.latitude != null)
+                return false;
+        } else if (!latitude.equals(other.latitude))
+            return false;
+        if (longitude == null) {
+            if (other.longitude != null)
+                return false;
+        } else if (!longitude.equals(other.longitude))
+            return false;
+        if (registrationDate == null) {
+            if (other.registrationDate != null)
+                return false;
+        } else if (!registrationDate.equals(other.registrationDate))
+            return false;
+        if (universalId == null) {
+            if (other.universalId != null)
+                return false;
+        } else if (!universalId.equals(other.universalId))
+            return false;
+        if (updateDate == null) {
+            if (other.updateDate != null)
+                return false;
+        } else if (!updateDate.equals(other.updateDate))
+            return false;
+        if (website == null) {
+            if (other.website != null)
+                return false;
+        } else if (!website.equals(other.website))
+            return false;
+        if (zoomLevel == null) {
+            if (other.zoomLevel != null)
+                return false;
+        } else if (!zoomLevel.equals(other.zoomLevel))
+            return false;
+        return true;
     }
 
 }

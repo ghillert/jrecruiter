@@ -25,7 +25,7 @@
                 </jmesa:htmlColumn>
                 <jmesa:htmlColumn property="jobTitle"     titleKey="jsp.show.jobs.table.job.title" />
                 <jmesa:htmlColumn property="businessName" titleKey="jsp.show.jobs.table.business.name"/>
-                <jmesa:htmlColumn property="region.name"  titleKey="jsp.show.jobs.table.job.location" filterable="false" sortable="false"/>
+                <jmesa:htmlColumn property="regionForDisplayFormatted"  titleKey="jsp.show.jobs.table.job.location" filterable="false" sortable="false"/>
                 <jmesa:htmlColumn property="updateDate"   titleKey="jsp.show.jobs.table.date"         pattern="${datePattern}" cellEditor="org.jmesa.view.editor.DateCellEditor" filterable="false"/>
         </jmesa:htmlRow>
         </jmesa:htmlTable>

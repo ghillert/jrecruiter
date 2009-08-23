@@ -2,7 +2,7 @@
 
 <configuration>
   <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <append>false</append>
+    <append>true</append>
     <File>${jrecruiter.home}/logs/jrecruiter.log</File>
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>%d %5p [%t][%-55logger{55}] - %m%n</pattern>
@@ -17,8 +17,8 @@
   </appender>
 
   <appender name="LOGFILE-SECURITY" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <append>false</append>
-    <File>${jrecruiter.home}/logs/jrecruiter-security.log</File>
+    <append>true</append>
+    <File>${JRECRUITER_HOME}/logs/jrecruiter-security.log</File>
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>%d %5p [%t][%-55logger{55}] - %m%n</pattern>
     </layout>
@@ -42,14 +42,16 @@
     <Subject>jRecruiter - Error Log</Subject>
     <To>errors@jrecruiter.org</To>
     <SMTPHost>localhost</SMTPHost>
-    <Threshold>ERROR</Threshold>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>%d %5p [%t][%-55logger{55}] - %m%n</pattern>
     </layout>
   </appender>
 
   <logger name="org.springframework.security">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
     <logger name="org.springframework.web">
     <level value="WARN"/>
@@ -79,10 +81,10 @@
     <level value="WARN"/>
   </logger>
   <logger name="net.jawr">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="com.opensymphony.module.sitemesh">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.jrecruiter">
     <level value="INFO"/>
@@ -93,7 +95,9 @@
   <logger name="org.apache.struts2.util.TextProviderHelper">
     <level value="ERROR"/>
   </logger>
-
+  <logger name="ch.qos.logback">
+    <level value="DEBUG"/>
+  </logger>
   <logger name="org.jrecruiter.spring.SecurityEventListener">
     <level value="INFO"/>
     <appender-ref ref="LOGFILE-SECURITY"/>

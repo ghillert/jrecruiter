@@ -906,9 +906,6 @@
     </profiles>
 
     <properties>
-
-        <jrecruiter.home>${user.home}/.jrecruiter</jrecruiter.home>
-
         <!-- Framework dependency versions -->
         <spring.version>3.0.0.M2</spring.version>
 

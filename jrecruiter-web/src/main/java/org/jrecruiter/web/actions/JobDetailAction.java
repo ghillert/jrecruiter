@@ -28,7 +28,11 @@ public class JobDetailAction extends BaseAction implements SessionAware {
     /** serialVersionUID. */
     private static final long serialVersionUID = 369806210598096582L;
 
+    /** The primary id of the job posting */
     private Long jobId;
+
+    /** The unique id (UUID) of the job posting */
+    private String id;
 
     private Job job;
 
@@ -54,16 +58,19 @@ public class JobDetailAction extends BaseAction implements SessionAware {
     @SuppressWarnings("unchecked")
     public String execute() throws Exception {
 
-        if (this.jobId == null) {
+        if (this.jobId == null && this.id == null) {
             super.addActionError("Please provide a valid job id.");
             return "showJobs";
         }
 
-        this.job = jobService.getJobForId(jobId);
-
+        if (this.id != null) {
+            this.job = jobService.getJobForUniversalId(this.id);
+        } else {
+            this.job = jobService.getJobForId(jobId);
+        }
         if (this.job==null){
 
-            String errorMessage = "Requested jobposting with id " + jobId + " was not found.";
+            String errorMessage = "Requested jobposting with id " + (this.id == null ? this.jobId : this.id) + " was not found.";
             LOGGER.warn(errorMessage);
             super.addActionMessage("The requested job posting does not exist.");
             return "showJobs";
@@ -144,5 +151,21 @@ public class JobDetailAction extends BaseAction implements SessionAware {
     public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
         this.apiKeysHolder = apiKeysHolder;
     }
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
 
 }

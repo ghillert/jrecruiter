@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalStateException("Role was not found but is required.");
         }
 
-        Set<UserToRole> userToRoles = user.getUserToRoles();
+        final Set<UserToRole> userToRoles = user.getUserToRoles();
 
         UserToRole utr = new UserToRole();
         utr.setRole(role);

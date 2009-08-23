@@ -9,10 +9,10 @@
     <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/appfuse"/>-->
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName"        value="${jdbc.driverClassName}"/>
-        <property name="url"                    value="${jdbc.url}"/>
-        <property name="username"               value="${jdbc.username}"/>
-        <property name="password"               value="${jdbc.password}"/>
+        <property name="driverClassName"        value="${database.driverClassName}"/>
+        <property name="url"                    value="${database.url}"/>
+        <property name="username"               value="${database.username}"/>
+        <property name="password"               value="${database.password}"/>
         <property name="maxActive"              value="100"/>
         <property name="maxIdle"                value="30" />
         <property name="maxWait"                value="1000"/>
@@ -33,8 +33,8 @@
         <property name="persistenceUnitName" value="base"/>
         <property name="jpaProperties">
         <props>
-            <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-            <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+            <prop key="hibernate.dialect">${database.hibernate.dialect}</prop>
+            <prop key="hibernate.query.substitutions">true '1', false '0'</prop>
             <prop key="hibernate.cache.use_second_level_cache">true</prop>
             <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
             <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
