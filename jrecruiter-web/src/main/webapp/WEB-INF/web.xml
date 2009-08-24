@@ -114,6 +114,7 @@
     <filter-mapping>
         <filter-name>struts</filter-name>
         <url-pattern>*.html</url-pattern>
+        <url-pattern>/rss/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>responseAddHttpHeadersFilter</filter-name>
