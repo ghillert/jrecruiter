@@ -64,7 +64,12 @@ public class JobDetailPdfView extends AbstractPdfView {
         document.addAuthor("www.jRecruiter.org (Gunnar Hillert)");
         document.addTitle("jRecruiter Job Posting Detail");
 
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+        response.setHeader("Pragma", "public");
+
         if (job == null) {
+
             response.setHeader("Content-disposition",
                     "attachment; filename=" +
                     "No_Job.pdf");
@@ -73,7 +78,7 @@ public class JobDetailPdfView extends AbstractPdfView {
         } else {
 
             response.setHeader("Content-disposition",
-                    "attachment; filename=" + "JobDetail_" + job.getId());
+                    "attachment; filename=" + "JobDetail_" + job.getId() + ".pdf");
 
        //~~~~Render Job Summary~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -112,7 +117,7 @@ public class JobDetailPdfView extends AbstractPdfView {
             }
 
             if (job.getSalary() != null) {
-                addPdfRow(table, "Salary:", job.getSalary().toPlainString());
+                addPdfRow(table, "Salary:", job.getSalary());
             }
 
             if (StringUtils.isNotBlank(job.getBusinessPhone())) {
