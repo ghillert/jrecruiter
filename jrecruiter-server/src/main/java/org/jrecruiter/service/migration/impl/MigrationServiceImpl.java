@@ -203,7 +203,7 @@ public class MigrationServiceImpl implements MigrationService {
                 job.setBusinessCity(rs.getString("business_location"));
 
                 job.setJobTitle(rs.getString("job_title"));
-                job.setSalary(rs.getBigDecimal("salary"));
+                job.setSalary(rs.getString("salary"));
 
                 job.setDescription(rs.getString("description"));
                 job.setWebsite(rs.getString("web_site"));
@@ -279,7 +279,7 @@ public class MigrationServiceImpl implements MigrationService {
             newJob.setJobRestrictions(job.getJobRestrictions());
             newJob.setJobTitle(job.getJobTitle());
             newJob.setSalary(job.getSalary());
-
+            newJob.setUniversalId(job.getUniversalId());
 
             newJob.setStatus(JobStatus.ACTIVE);
 

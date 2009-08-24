@@ -83,7 +83,7 @@ public class DemoServiceImpl implements DemoService {
 
             job.setRegistrationDate(cal.getTime());
             job.setUpdateDate(cal.getTime());
-            job.setSalary(BigDecimal.valueOf(100000.50));
+            job.setSalary("100000.50");
             job.setStatus(JobStatus.ACTIVE);
 
             job.setUser(user);

@@ -197,7 +197,7 @@ public class JobServiceImpl implements JobService {
         context.put("serverAddress", serverSettings.getServerAddress());
 
         notificationService.sendEmail(((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(),
-                                      ((Configuration)this.getJRecruiterSetting("mail.jobposting.subject")).getMessageText(),
+                                      savedJob.getJobTitle(),
                                       context, "add-job");
         final String tweetMessage = "New Job: " + savedJob.getJobTitle() + " @ " + savedJob.getBusinessName();
 

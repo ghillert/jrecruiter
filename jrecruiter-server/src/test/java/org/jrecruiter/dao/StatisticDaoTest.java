@@ -79,7 +79,7 @@ public class StatisticDaoTest extends BaseTest {
         job.setLongitude(BigDecimal.ZERO);
         job.setOfferedBy(OfferedBy.RECRUITER);
         job.setRegistrationDate(new Date());
-        job.setSalary(new BigDecimal(10000));
+        job.setSalary("10000");
         job.setStatus(JobStatus.ACTIVE);
         job.setUpdateDate(new Date());
         job.setWebsite("www.google.com");
