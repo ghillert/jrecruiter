@@ -62,7 +62,7 @@ public class DwrActionT {
         userService.addUser(user);
         job.setUser(user);
         jobService.addJob(job);
-        
+
     //	assertNotNull(ret);
     }
 
@@ -87,7 +87,7 @@ public class DwrActionT {
         job.setLongitude(BigDecimal.ZERO);
         job.setOfferedBy(OfferedBy.RECRUITER);
         job.setRegistrationDate(new Date());
-        job.setSalary(new BigDecimal(10000));
+        job.setSalary("10000");
         job.setStatus(JobStatus.ACTIVE);
         job.setUpdateDate(new Date());
         job.setWebsite("www.google.com");
