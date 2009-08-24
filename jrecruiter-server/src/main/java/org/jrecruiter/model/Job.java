@@ -96,7 +96,7 @@ public class Job implements Serializable {
     private String jobTitle;
 
     /** Salary. */
-    private BigDecimal salary = BigDecimal.ZERO;
+    private String salary;
 
     /** Description of the job posting. */
     private String description;
@@ -144,10 +144,10 @@ public class Job implements Serializable {
     private OfferedBy offeredBy;
 
     /** Used to map the Location of the job. */
-    private BigDecimal longitude = BigDecimal.ZERO;
+    private BigDecimal longitude = null;
 
     /** Used to map the Location of the job.*/
-    private BigDecimal latitude = BigDecimal.ZERO;
+    private BigDecimal latitude = null;
 
     /** Used to specify the zoom level when showing the location of the job
      *  on a map. */
@@ -205,7 +205,7 @@ public class Job implements Serializable {
     }
     /** full constructor */
     public Job(Long id, Industry industry, User user, String businessName,
-               String businessLocation, String jobTitle, BigDecimal salary,
+               String businessLocation, String jobTitle, String salary,
                String description, String website, String businessAddress1,
                String businessAddress2, String businessCity,
                String businessState, String businessZip, String businessPhone,
@@ -356,14 +356,14 @@ public class Job implements Serializable {
      */
     @Column(name="salary", unique=false, nullable=true, insertable=true, updatable=true)
     @Field(index = Index.UN_TOKENIZED, store = Store.YES)
-    public BigDecimal getSalary() {
+    public String getSalary() {
         return salary;
     }
 
     /**
      * @param salary the salary to set
      */
-    public void setSalary(BigDecimal salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
