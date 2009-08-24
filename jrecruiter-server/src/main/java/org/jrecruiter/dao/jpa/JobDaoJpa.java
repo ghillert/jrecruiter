@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.persistence.FlushModeType;
+import javax.persistence.NoResultException;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
@@ -36,6 +37,7 @@ import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
+import org.jrecruiter.model.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -307,10 +309,18 @@ implements JobDao {
          */
         @Override
         public Job getForUniversalId(final String universalId) {
-            final Job  job = (Job) entityManager
+
+            Job job;
+
+            try {
+                job = (Job) entityManager
                 .createQuery("select j from Job j where j.universalId = :universalId")
                 .setParameter("universalId", universalId)
                 .getSingleResult();
+            } catch(NoResultException e) {
+                job = null;
+            }
+
             return job;
         }
 
