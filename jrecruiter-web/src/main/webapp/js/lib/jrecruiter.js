@@ -17,11 +17,14 @@ function usesMapChange() {
     var usesMapValue = jQuery('#usesMap').val();
 
     if (usesMapValue == 'true') {
-        document.getElementById('usesMapDiv').style.display = 'block';
-        document.getElementById('longitude').value=defaultMapLongitude;
-        document.getElementById('latitude').value=defaultMapLatitude;
-        document.getElementById('zoomLevel').value=defaultMapZoomLevel;
 
+        document.getElementById('usesMapDiv').style.display = 'block';
+
+        if ($('latitude').val() == '' && $('longitude').val()) {
+            document.getElementById('longitude').value=defaultMapLongitude;
+            document.getElementById('latitude').value=defaultMapLatitude;
+            document.getElementById('zoomLevel').value=defaultMapZoomLevel;
+        }
 
         longitude = jQuery('#longitude').val();
         latitude  = jQuery('#latitude').val();
