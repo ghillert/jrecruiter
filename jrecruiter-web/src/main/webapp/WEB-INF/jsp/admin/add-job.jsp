@@ -19,7 +19,6 @@
     <spring:message code="jsp._ALL.marked.fields.are.required" />
 </s:form>
 
-
 <!-- Google Maps -->
  <script
    src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=${apiKeysHolder.googleMapsKey}"

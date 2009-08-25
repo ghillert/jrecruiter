@@ -150,17 +150,18 @@
           </fieldset>
         </s:if>
 
-        <!-- Google Maps -->
-        <script
-          src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='${apiKeysHolder.googleMapsKey}'"
-          type="text/javascript"></script>
-        <script type="text/javascript">
-<!--
+        <s:if test="job.usesMap">
+            <!-- Google Maps -->
+            <script
+              src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='${apiKeysHolder.googleMapsKey}'"
+              type="text/javascript"></script>
+            <script type="text/javascript">
+            <!--
+                jQuery(function() {
+                    showJob('map_canvas',  ${job.latitude}, ${job.longitude}, ${job.zoomLevel});
+                });
 
-    jQuery(function() {
-        showJob('map_canvas',  ${job.latitude}, ${job.longitude}, ${job.zoomLevel});
-    });
-
-    jQuery(document).unload(function() {GUnload();});
-//-->
-</script>
+                jQuery(document).unload(function() {GUnload();});
+            //-->
+            </script>
+        </s:if>
