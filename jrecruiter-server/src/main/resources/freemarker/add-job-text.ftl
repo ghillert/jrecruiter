@@ -27,7 +27,7 @@ ${jobRestrictions}
 This job was posted on: ${updateDate?datetime?string.short}
 
 
-For more information, please visit: ${serverAddress}/job-detail.html?jobId=${jobId}
+For more information, please visit: ${serverAddress}/job-detail.html?jobId=${jobId?c}
 
 
 
