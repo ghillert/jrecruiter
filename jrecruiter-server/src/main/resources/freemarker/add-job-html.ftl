@@ -12,7 +12,7 @@
                 <tr><td align="right"><b>Job Restrictions:</b></td>      <td>${jobRestrictions}</td></tr>
                 <tr><td align="right"><b>This job was posted on:</b></td><td>${updateDate?datetime?string.short}</td></tr>
             </table>
-            <p>For more information, please visit: <a href="${serverAddress}/job-detail.html?jobId=${jobId}">${serverAddress}/job-detail.html?jobId=${jobId}</a></p>
+            <p>For more information, please visit: <a href="${serverAddress}/job-detail.html?jobId=${jobId?c}">${serverAddress}/job-detail.html?jobId=${jobId?c}</a></p>
         </td>
     </tr>
 </table>
