@@ -198,6 +198,9 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.ftl</exclude>
+                </excludes>
             </resource>
         </resources>
 
@@ -238,9 +241,9 @@
        </dependency>
 
        <dependency>
-       	<groupId>xalan</groupId>
-       	<artifactId>xalan</artifactId>
-       	<version>2.7.1</version>
+           <groupId>xalan</groupId>
+           <artifactId>xalan</artifactId>
+           <version>2.7.1</version>
        </dependency>
     </dependencies>
     <profiles>
