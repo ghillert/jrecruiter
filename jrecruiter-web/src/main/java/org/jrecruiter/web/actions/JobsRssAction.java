@@ -5,8 +5,14 @@ package org.jrecruiter.web.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.ServerSettings;
+import org.jrecruiter.model.util.FilteringUtils.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.CollectionFactory;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -25,6 +31,8 @@ public class JobsRssAction extends BaseAction {
     private static final long serialVersionUID = -4901833648423551648L;
 
     private SyndFeed rssFeed = new SyndFeedImpl();
+
+    private ServerSettings serverSettings;
 
     /**
      * @return the rssFeed
@@ -50,23 +58,36 @@ public class JobsRssAction extends BaseAction {
         SyndEntry entry;
         SyndContent description;
 
-        List <Job> jobs = jobService.getJobs(20, 1, null, null);
+        final Map<String, String>sortOrders = CollectionUtils.getHashMap();
+        sortOrders.put("updateDate", "DESC"); //FIXME
+        List <Job> jobs = jobService.getJobs(20, 1, sortOrders, null);
 
         for (Job job : jobs) {
             entry = new SyndEntryImpl();
             entry.setTitle(job.getJobTitle());
-            //entry.setLink("http://wiki.java.net/bin/view/Javawsxml/Rome01");
             entry.setPublishedDate(job.getUpdateDate());
             description = new SyndContentImpl();
             description.setType("text/plain");
             description.setValue(job.getDescription());
             entry.setDescription(description);
             entries.add(entry);
-            entry.setLink("blubba");
+
+            final String jobUrl = this.serverSettings.getServerAddress() + ServerSettings.ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
+
+            entry.setLink(jobUrl);
         }
 
         rssFeed.setEntries(entries);
 
         return SUCCESS;
     }
+
+    /**
+     * @param serverSettings the serverSettings to set
+     */
+    public void setServerSettings(ServerSettings serverSettings) {
+        this.serverSettings = serverSettings;
+    }
+
+
 }
