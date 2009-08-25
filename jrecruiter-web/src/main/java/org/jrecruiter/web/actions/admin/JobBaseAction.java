@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
@@ -41,6 +42,9 @@ public abstract class JobBaseAction extends BaseAction implements Preparable, Mo
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 5109535527147122330L;
+
+
+    private ApiKeysHolder apiKeysHolder;
 
     protected JobForm model = new JobForm();
 
@@ -113,6 +117,20 @@ public abstract class JobBaseAction extends BaseAction implements Preparable, Mo
 
     public void setYesNoList(Map<Boolean, String> yesNoList) {
         this.yesNoList = yesNoList;
+    }
+
+    /**
+     * @return the apiKeysHolder
+     */
+    public ApiKeysHolder getApiKeysHolder() {
+        return apiKeysHolder;
+    }
+
+    /**
+     * @param apiKeysHolder the apiKeysHolder to set
+     */
+    public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
+        this.apiKeysHolder = apiKeysHolder;
     }
 
 }
