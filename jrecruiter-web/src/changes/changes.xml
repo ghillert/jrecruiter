@@ -7,7 +7,7 @@
       <author email="gunnar at hillert dot com">Gunnar Hillert</author>
    </properties>
    <body>
-      <release version="2.0" date="May 2009" description="New Major Feature Release">
+      <release version="2.0" date="2009-08-23" description="New Major Feature Release">
            <action dev="Gunnar Hillert" type="add">
                (Almost) No more Struts XML-configuration files. Uses the
                Struts 2.1 Convention plugin for annotation based
@@ -15,16 +15,19 @@
            </action>
            <action dev="Gunnar Hillert" type="add">
                Many Spring Beans dependencies are now configured  using annotations
-               (Spring 2.5.x)
+               (Spring 3.0)
            </action>
            <action dev="Gunnar Hillert" type="add">
                Sophisticated data-grid support using jMesa
            </action>
            <action dev="Gunnar Hillert" type="add">
+               Google Maps integration (web (Javascript), Pdf (Image) and Flex (Flash))
+           </action>
+           <action dev="Gunnar Hillert" type="add">
                Hibernate Search support
            </action>
            <action dev="Gunnar Hillert" type="add">
-               RSS support
+               RSS feed for the latest 20 jobs
            </action>
            <action dev="Gunnar Hillert" type="add">
                Social bookmarks on the job posting list
@@ -36,7 +39,44 @@
                Using jasypt for password digesting
            </action>
            <action dev="Gunnar Hillert" type="add">
+               Administrative pages are SSL encrypted
+           </action>
+           <action dev="Gunnar Hillert" type="add">
                Improved charting (jFreeCharts)
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Using CAPTCHA for the registration page
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Implemented email account verification
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Now job postings and updates are send to Twitter (http://twitter.com/ajug_jobs/)
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               PDF Export of Job Posting Details
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Switched from username-based logins to an email-based system (usernames are still supported on the
+               backend (e.g. administrative logins)
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Some performance improvements --> CSS and JavaScript files are now merged, minified and GZipped using JAWR)
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               XML web services for providing job posting data to Indeed.com (Still need to do the actual integration but the XML feed is there)
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Using jQuery for most Javascript needs
+           </action>
+           <action dev="Gunnar Hillert" type="update">
+               Maven project consists of multiple modules now (web, server, flex)
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               I18N: Added partial support for German
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Extra bonus: Added a simple Adobe Flex front-end using Spring BlazeDS for server integration
            </action>
       </release>
       <release version="1.2.1" date="2006-07-08" description="Minor fixes and features">
