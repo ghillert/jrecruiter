@@ -133,4 +133,32 @@ public class Constants {
         }
     }
 
+    /**
+     * Defines if a job was posted by a company (direct-hire) or
+     * by a recruiter.
+     */
+    public enum ServerActions {
+
+        ACCOUNT_VERIFICATION("/registration/account-verification.html"),
+        JOB_DETAIL("/job-detail.html");
+
+        private String path;
+
+        /**
+         * Constructor.
+         *
+         * @param path
+         */
+        ServerActions(final String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return this.path;
+        }
+
+    }
+
+
 }
+

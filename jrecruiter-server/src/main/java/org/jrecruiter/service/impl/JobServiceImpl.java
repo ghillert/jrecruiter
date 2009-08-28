@@ -27,6 +27,7 @@ import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.Roles;
+import org.jrecruiter.common.Constants.ServerActions;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.JobCountPerDayDao;
@@ -207,7 +208,7 @@ public class JobServiceImpl implements JobService {
     }
 
     private URL createShortenedJobDetailUrl(final Job job) {
-        final String jobUrl = this.serverSettings.getServerAddress() + ServerSettings.ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
+        final String jobUrl = this.serverSettings.getServerAddress() + ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
 
         final URI tweetUri;
 

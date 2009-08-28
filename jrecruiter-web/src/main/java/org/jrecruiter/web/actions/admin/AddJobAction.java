@@ -17,10 +17,7 @@ package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.common.Constants.CommongKeyIds;
