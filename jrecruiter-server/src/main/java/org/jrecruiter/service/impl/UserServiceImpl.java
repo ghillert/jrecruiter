@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants;
+import org.jrecruiter.common.Constants.ServerActions;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
@@ -34,7 +35,6 @@ import org.jrecruiter.model.Role;
 import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
-import org.jrecruiter.model.ServerSettings.ServerActions;
 import org.jrecruiter.service.NotificationService;
 import org.jrecruiter.service.UserService;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             final Map<String, Object> context = CollectionUtils.getHashMap();
             context.put("user", savedUser);
             context.put("registrationCode", savedUser.getVerificationKey());
-            context.put("accountValidationUrl", serverSettings.getServerAddress() + ServerActions.ACCOUNT_VERIFICATION);
+            context.put("accountValidationUrl", serverSettings.getServerAddress() + ServerActions.ACCOUNT_VERIFICATION.getPath());
             notificationService.sendEmail(savedUser.getEmail(), messageSource.getMessage("class.UserServiceImpl.addUser.account.validation.subject", null, LocaleContextHolder.getLocale()), context, "account-validation");
         }
         return savedUser;

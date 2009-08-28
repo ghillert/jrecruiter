@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.jrecruiter.common.CollectionUtils;
+import org.jrecruiter.common.Constants.ServerActions;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.ServerSettings;
-import org.jrecruiter.model.util.FilteringUtils.SortOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.CollectionFactory;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -72,7 +70,7 @@ public class JobsRssAction extends BaseAction {
             entry.setDescription(description);
             entries.add(entry);
 
-            final String jobUrl = this.serverSettings.getServerAddress() + ServerSettings.ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
+            final String jobUrl = this.serverSettings.getServerAddress() + ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
 
             entry.setLink(jobUrl);
         }
