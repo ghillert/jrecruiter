@@ -40,16 +40,16 @@ public class AccountVerificationAction extends BaseAction {
         final User userFromDb = userService.getUserByVerificationKey(this.key);
 
         if (userFromDb == null) {
-            super.addFieldError("key", super.getText("class.AccountValidationAction.field.required.key"));
+            super.addFieldError("key", super.getText("class.AccountVerificationAction.field.required.key"));
             return INPUT;
         }
 
         if (userFromDb.isEnabled()) {
-            super.addActionMessage(super.getText("class.AccountValidationAction.already.enabled"));
+            super.addActionMessage(super.getText("class.AccountVerificationAction.already.enabled"));
         } else {
             userFromDb.setEnabled(Boolean.TRUE);
             userService.updateUser(userFromDb);
-            super.addActionMessage(super.getText("class.AccountValidationAction.success"));
+            super.addActionMessage(super.getText("class.AccountVerificationAction.success"));
         }
 
         return SUCCESS;
@@ -57,7 +57,7 @@ public class AccountVerificationAction extends BaseAction {
 
     public void validate() {
         if (this.key == null || this.key.trim().length() == 0) {
-            super.addFieldError("key", super.getText("class.AccountValidationAction.field.required.key"));
+            super.addFieldError("key", super.getText("class.AccountVerificationAction.field.required.key"));
         }
     }
 
