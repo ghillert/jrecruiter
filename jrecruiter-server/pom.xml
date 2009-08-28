@@ -198,9 +198,19 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
                 <excludes>
                     <exclude>**/*.ftl</exclude>
                 </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.ftl</include>
+                </includes>
             </resource>
         </resources>
 
