@@ -12,6 +12,10 @@ public class GoogleMapsUtils {
     public static final Integer defaultWidth       = Integer.valueOf(400);
     public static final Integer defaultHeight      = Integer.valueOf(300);
 
+    public static final BigDecimal defaultMapLatitude  = BigDecimal.valueOf(33.74);
+    public static final BigDecimal defaultMapLongitude = BigDecimal.valueOf(-84.38);
+    public static final Integer    defaultMapZoomLevel = Integer.valueOf(10);
+
     public enum GoogleMapsUrlParameterNames {
 
         CENTER("center"),
