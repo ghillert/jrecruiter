@@ -20,10 +20,12 @@ import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.web.JobForm;
 import org.slf4j.Logger;
@@ -63,6 +65,14 @@ public class AddJobAction extends JobBaseAction implements Preparable, ModelDriv
     @Override
     @SkipValidation
     public String execute() {
+
+        if (this.model.getJob() == null) {
+            this.model.setJob(new Job());
+            this.model.getJob().setZoomLevel(GoogleMapsUtils.defaultMapZoomLevel);
+            this.model.getJob().setLatitude(GoogleMapsUtils.defaultMapLatitude);
+            this.model.getJob().setLongitude(GoogleMapsUtils.defaultMapLongitude);
+        }
+
         return INPUT;
     }
 

@@ -19,6 +19,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
+import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
@@ -85,6 +86,12 @@ public class EditJobAction extends JobBaseAction {
             this.model.setJob(jobFromDb);
         } else {
             throw new IllegalStateException("No job found for id " + this.id);
+        }
+
+        if (!this.model.getJob().getUsesMap()) {
+            this.model.getJob().setZoomLevel(GoogleMapsUtils.defaultMapZoomLevel);
+            this.model.getJob().setLatitude(GoogleMapsUtils.defaultMapLatitude);
+            this.model.getJob().setLongitude(GoogleMapsUtils.defaultMapLongitude);
         }
 
         return INPUT;
