@@ -20,7 +20,7 @@
           <jmesa:htmlTable>
                 <jmesa:htmlRow>
                         <jmesa:htmlColumn  property="usesMap" title="&nbsp;" filterable="false">
-                            <s:url id="jobDetailUrl" action="job-detail" includeParams="false">
+                            <s:url id="jobDetailUrl" action="job-detail" includeParams="none">
                               <s:param name="jobId" value="%{#attr.job.id}"/>
                             </s:url>
                             <a title="Job Detail - ${job.jobTitle}" href="${jobDetailUrl}">
