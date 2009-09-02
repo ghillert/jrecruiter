@@ -10,7 +10,7 @@
       <jmesa:htmlTable>
         <jmesa:htmlRow >
                 <jmesa:htmlColumn property="details" title="&nbsp;" filterable="false">
-                    <s:url id="jobDetailUrl" action="edit-job" includeParams="false">
+                    <s:url id="jobDetailUrl" action="edit-job" includeParams="none">
                       <s:param name="id" value="%{#attr.job.id}"/>
                     </s:url>
                     <s:url id="editJobPostingUrl" action="edit-job"><s:param name="id" value="#attr.row.job.id"/></s:url>
