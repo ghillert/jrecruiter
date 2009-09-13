@@ -11,7 +11,7 @@
   <version>2.0</version>
   <packaging>jar</packaging>
   <description>Contains the core server components of jRecruiter</description>
-
+    
 <repositories>
 
         <repository>
@@ -21,6 +21,13 @@
         </repository>
 
 </repositories>
+    
+    <scm>
+        <connection>scm:svn:http://jrecruiter.googlecode.com/svn/trunk/jrecruiter/jrecruiter-server</connection>
+        <developerConnection>scm:svn:https://jrecruiter.googlecode.com/svn/trunk/jrecruiter/jrecruiter-server</developerConnection>
+        <url>http://jrecruiter.svn.sourceforge.net/viewcvs.cgi/jrecruiter/trunk/jrecruiter/jrecruiter-server</url>
+    </scm>
+    
     <build>
 
         <finalName>${pom.artifactId}</finalName>
