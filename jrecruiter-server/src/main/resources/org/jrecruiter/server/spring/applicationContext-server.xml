@@ -13,7 +13,9 @@
     <context:annotation-config />
     <context:component-scan base-package="org.jrecruiter.dao.jpa" />
     <context:component-scan base-package="org.jrecruiter.service.impl" />
-
+    
+    <aop:aspectj-autoproxy />
+    
     <bean id="server.messageSource"
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
         <property name="basenames" >
@@ -28,7 +30,7 @@
     <bean
         class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <aop:aspectj-autoproxy />
+    
 
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
