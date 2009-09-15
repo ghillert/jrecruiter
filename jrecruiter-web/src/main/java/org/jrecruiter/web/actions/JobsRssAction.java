@@ -11,6 +11,7 @@ import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.ServerActions;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.ServerSettings;
+import org.springframework.core.CollectionFactory;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -52,19 +53,19 @@ public class JobsRssAction extends BaseAction {
         rssFeed.setLink("http://www.ajug.org/jobs");
         rssFeed.setDescription("RSS feed of the Atlanta Java User Group's job posting service.");
 
-        List <SyndEntry>entries = new ArrayList<SyndEntry>();
-        SyndEntry entry;
-        SyndContent description;
-
+        final List <SyndEntry>entries = CollectionUtils.getArrayList();
+        
         final Map<String, String>sortOrders = CollectionUtils.getHashMap();
         sortOrders.put("updateDate", "DESC"); //FIXME
         List <Job> jobs = jobService.getJobs(20, 1, sortOrders, null);
 
         for (Job job : jobs) {
-            entry = new SyndEntryImpl();
+        	
+            final SyndEntry entry = new SyndEntryImpl();
             entry.setTitle(job.getJobTitle());
             entry.setPublishedDate(job.getUpdateDate());
-            description = new SyndContentImpl();
+            
+            final SyndContent description = new SyndContentImpl();
             description.setType("text/plain");
             description.setValue(job.getDescription());
             entry.setDescription(description);
