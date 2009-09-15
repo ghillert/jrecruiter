@@ -21,12 +21,7 @@
         </repository>
 
 </repositories>
-    
-    <scm>
-        <connection>scm:svn:http://jrecruiter.googlecode.com/svn/trunk/jrecruiter/jrecruiter-server</connection>
-        <developerConnection>scm:svn:https://jrecruiter.googlecode.com/svn/trunk/jrecruiter/jrecruiter-server</developerConnection>
-        <url>http://jrecruiter.svn.sourceforge.net/viewcvs.cgi/jrecruiter/trunk/jrecruiter/jrecruiter-server</url>
-    </scm>
+   
     
     <build>
 
@@ -130,14 +125,7 @@
                             <goal>operation</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <!-- Runs before integration tests and jetty:run-war -->
-                        <id>test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>operation</goal>
-                        </goals>
-                    </execution>
+
                 </executions>
                 <dependencies>
                     <dependency>
@@ -179,26 +167,7 @@
                 <inherited>true</inherited>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.0-beta-3</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                  <doCheck>false</doCheck>
-                  <doUpdate>false</doUpdate>
-                  <providerImplementations>
-                    <svn>javasvn</svn>
-                  </providerImplementations>
-                </configuration>
-            </plugin>
+
         </plugins>
 
         <resources>
@@ -377,17 +346,14 @@
     </profiles>
 
     <properties>
-        <dbunit.dataTypeFactoryName>org.dbunit.dataset.datatype.DefaultDataTypeFactory</dbunit.dataTypeFactoryName>
-        <dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
-        <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
-        <jdbc.groupId>mysql</jdbc.groupId>
-        <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>5.1.6</jdbc.version>
-        <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-        <jdbc.url><![CDATA[jdbc:mysql://localhost/appfuse?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
-        <jdbc.username>root</jdbc.username>
-        <jdbc.password />
-
-        <hibernate.show_sql>true</hibernate.show_sql>
+                <dbunit.operation.type>INSERT</dbunit.operation.type>
+                <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+                <jdbc.groupId>postgresql</jdbc.groupId>
+                <jdbc.artifactId>postgresql</jdbc.artifactId>
+                <jdbc.version>8.1-407.jdbc3</jdbc.version>
+                <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
+                <jdbc.url><![CDATA[jdbc:postgresql://localhost:15432/jrecruiter]]></jdbc.url>
+                <jdbc.username>jrecruiter</jdbc.username>
+                <jdbc.password>jrecruiter</jdbc.password>
     </properties>
 </project>
