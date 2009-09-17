@@ -6,15 +6,17 @@ jRecruiter - A job posting service
 
   This project provides a light-weight Java EE based job posting solution.
 
-
-=====================
-  <<News>>
-
-  Finally got Hudson up and running:
-
-  {{http://74.207.227.71:9080/hudson/job/jRecruiter/}}
-
-=====================
+*---------------+-------------------------------------------------------+
+|  Maven Project Site       |	{{http://www.jrecruiter.org/}}
+*---------------+-------------------------------------------------------+
+|  Google Code              |	{{http://code.google.com/p/jrecruiter/}}
+*---------------+-------------------------------------------------------+
+|  Hudson (CI)              |	{{http://74.207.227.71:9080/hudson/job/jRecruiter/}}
+*---------------+-------------------------------------------------------+
+|  Source Code (SVN)        |	{{http://code.google.com/p/jrecruiter/source/checkout}}
+*---------------+-------------------------------------------------------+
+|  Live Production Site     |	{{http://code.google.com/p/jrecruiter/source/checkout}}
+*---------------+-------------------------------------------------------+
 
   jRecruiter uses
   the following frameworks and libraries:
@@ -55,15 +57,5 @@ jRecruiter - A job posting service
   * HSQL (Testing)
   
   * H2 (Testing)
-
-[]
-
-  The project website is located at:
-
-  {{http://sourceforge.net/projects/jrecruiter}}
-
-  This site can be accessed through:
-
-  {{http://jrecruiter.sourceforge.net}}
 
 []

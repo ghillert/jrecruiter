@@ -22,7 +22,6 @@
         </links>
         <menu name="Menu">
             <item name="Overview" href="index.html" />
-            <item name="Installation" href="installation.html" />
         </menu>
         <menu ref="reports"/>
 
