@@ -7,7 +7,6 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.ApiKeysHolder;
-import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
@@ -24,6 +23,8 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 /**
+ * Responsible for registering potential job posters
+ * 
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
@@ -64,13 +65,14 @@ public class SignupAction extends BaseAction {
                     { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a valid email address.")},
             stringLengthFields =
                     {
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.username",  message = "The user name must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.firstName", message = "The first name must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.lastName",  message = "The last name must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.company",   message = "The company name must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "user.email",     message = "The email address must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25", fieldName = "user.phone",     message = "The phone number must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25", fieldName = "user.fax",       message = "The fax number must be shorter than ${maxLength} characters.")
+            		@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "120", fieldName = "password",       message = "The password must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.username",  message = "The user name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.firstName", message = "The first name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.lastName",  message = "The last name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.company",   message = "The company name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.email",     message = "The email address must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25",  fieldName = "user.phone",     message = "The phone number must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25",  fieldName = "user.fax",       message = "The fax number must be shorter than ${maxLength} characters.")
                     }
             )
     public String save() {
