@@ -1,7 +1,6 @@
 package org.jrecruiter.web.actions;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
