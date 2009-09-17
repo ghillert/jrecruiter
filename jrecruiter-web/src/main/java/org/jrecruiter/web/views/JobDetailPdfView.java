@@ -116,7 +116,7 @@ public class JobDetailPdfView extends AbstractPdfView {
                 addPdfRow(table, "Industry:", job.getIndustryForDisplay());
             }
 
-            if (job.getSalary() != null) {
+            if (StringUtils.isNotBlank(job.getSalary())) {
                 addPdfRow(table, "Salary:", job.getSalary());
             }
 

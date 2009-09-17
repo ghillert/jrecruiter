@@ -66,7 +66,7 @@
                       ${job.industryForDisplay}
                 </div>
             </s:if>
-            <s:if test="job.salary != null">
+            <s:if test="job.salary != null && job.salary.length() > 0">
                 <div class="optional"><label><spring:message code="jsp._ALL.job.field.salary"/>:</label>
                     ${job.salary}
                 </div>
