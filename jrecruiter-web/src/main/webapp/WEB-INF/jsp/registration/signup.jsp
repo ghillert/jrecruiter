@@ -8,11 +8,11 @@
     <fieldset>
         <div class="required">
             <label for="email"><spring:message code="class.user.email" />*</label>
-            <s:textfield id="email" name="user.email" required="true" maxlength="25" tabindex="1"/>
+            <s:textfield id="email" name="user.email" required="true" maxlength="50" tabindex="1"/>
         </div>
         <div class="required">
             <label for="password"><spring:message code="class.user.password" />*</label>
-            <s:password  id="password" name="password" required="true" maxlength="25" tabindex="2"/>
+            <s:password  id="password" name="password" required="true" maxlength="120" tabindex="2"/>
         </div>
         <div class="optional">
             <label><spring:message code="jsp.signup.label.password.strength" /></label>
@@ -23,7 +23,7 @@
         </div>
         <div class="required">
             <label for="password2"><spring:message code="class.user.password2" />*</label>
-            <s:password  id="password2" name="password2" required="true" maxlength="25" tabindex="2"/>
+            <s:password  id="password2" name="password2" required="true" maxlength="120" tabindex="2"/>
         </div>
 
         <div class="required">
