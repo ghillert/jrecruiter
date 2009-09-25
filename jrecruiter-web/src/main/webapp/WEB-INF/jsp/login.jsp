@@ -17,13 +17,13 @@
           <legend>Login</legend>
           <div class="required" style="margin-top: 2em;">
             <label for="j_username"><spring:message code="class.user.email" /></label>
-            <s:textfield id="j_username" name="j_username" required="true" maxlength="25" tabindex="1"
+            <s:textfield id="j_username" name="j_username" required="true" maxlength="50" tabindex="1"
                              onblur="javascript:this.className='';"
                              onfocus="javascript:this.className='selected';"/>
           </div>
           <div class="required">
             <label for="j_password"><spring:message code="class.user.password" /></label>
-            <s:password id="j_password" name="j_password" required="true" maxlength="25" tabindex="2"
+            <s:password id="j_password" name="j_password" required="true" maxlength="120" tabindex="2"
                              onblur="javascript:this.className='';"
                              onfocus="javascript:this.className='selected';"/>
           </div>
