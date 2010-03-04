@@ -51,6 +51,7 @@
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="validation">
+                    <param name="validateAnnotatedMethodOnly">true</param>
                     <param name="excludeMethods">input,back,cancel,execute,delete,edit,list</param>
                 </interceptor-ref>
                 <interceptor-ref name="workflow">
@@ -96,8 +97,8 @@
         <action name="viewJobCountChart" class="org.jrecruiter.web.actions.admin.ShowStatisticsAction"
                 method="chartJobCount">
               <result name="success" type="customChart">
-                <param name="width">300</param>
-                <param name="height">150</param>
+                <param name="width">550</param>
+                <param name="height">200</param>
               </result>
         </action>
     </package>

@@ -15,11 +15,15 @@
 */
 package org.jrecruiter.service.impl;
 
+import java.util.Calendar;
 import java.util.List;
 
+import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.dao.JobDao;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.FlexService;
+import org.jrecruiter.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,6 +40,8 @@ public class FlexServiceImpl implements FlexService {
     /** Job Dao. */
     private @Autowired JobDao jobDao;
 
+    private @Autowired JobService jobService;
+
     //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /** {@inheritDoc} */
@@ -47,5 +53,15 @@ public class FlexServiceImpl implements FlexService {
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Job getJob(Long jobId) {
         return jobDao.get(jobId);
+    }
+
+    public List<JobCountPerDay> getJobCountPerDayAndPeriod() {
+
+        final Calendar calendarToday = CalendarUtils.getCalendarWithoutTime();
+
+        final Calendar calendar30    = CalendarUtils.getCalendarWithoutTime();
+        calendar30.add(Calendar.MONTH, -36);
+
+        return jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
     }
 }

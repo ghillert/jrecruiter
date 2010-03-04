@@ -6,9 +6,9 @@ import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
 import org.springframework.context.MessageSource;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.opensymphony.xwork2.ActionSupport;
 

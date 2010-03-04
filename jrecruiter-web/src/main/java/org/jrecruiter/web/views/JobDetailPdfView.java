@@ -123,6 +123,9 @@ public class JobDetailPdfView extends AbstractPdfView {
             if (StringUtils.isNotBlank(job.getBusinessPhone())) {
                 addPdfRow(table, "Phone:", job.getBusinessPhone());
             }
+            if (StringUtils.isNotBlank(job.getBusinessPhoneExtension())) {
+                addPdfRow(table, "Phone Extension:", job.getBusinessPhoneExtension());
+            }
             if (StringUtils.isNotBlank(job.getBusinessEmail())) {
                 addPdfRow(table, "Email:", job.getBusinessEmail());
             }

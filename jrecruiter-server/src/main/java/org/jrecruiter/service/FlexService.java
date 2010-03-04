@@ -26,7 +26,7 @@ import org.jrecruiter.model.Job;
  * @version $Id:JobService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public interface FlexService {
- 
+
     /**
      * Method for returning all available job postings.
      *

@@ -25,7 +25,7 @@ import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *

@@ -1,33 +1,24 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
-      <groupId>org.jrecruiter</groupId>
-      <artifactId>jrecruiter</artifactId>
-      <version>2.0</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jrecruiter</groupId>
-  <artifactId>jrecruiter-server</artifactId>
-  <name>${pom.artifactId}</name>
-  <version>2.0</version>
-  <packaging>jar</packaging>
-  <description>Contains the core server components of jRecruiter</description>
-    
-<repositories>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-        <repository>
-            <id>jrecruiter</id>
-            <name>jRecruiter Maven repository</name>
-            <url>http://www.hillert.com/maven/repository</url>
-        </repository>
+    <parent>
+        <groupId>org.jrecruiter</groupId>
+        <artifactId>jrecruiter</artifactId>
+        <version>2.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-</repositories>
-   
-    
+    <artifactId>jrecruiter-server</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>
+        Contains the core components of jRecruiter
+    </description>
+
     <build>
-
-        <finalName>${pom.artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
         <defaultGoal>install</defaultGoal>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -37,6 +28,7 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <version>2.4</version>
@@ -160,14 +152,6 @@
               </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>emma-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <inherited>true</inherited>
-            </plugin>
-
-
         </plugins>
 
         <resources>
@@ -225,12 +209,72 @@
                </exclusion>
            </exclusions>
        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.3.2.GA</version>
+                     <exclusions>
+                <exclusion>
+              <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                </exclusion>
+            </exclusions>
+
+        </dependency>
+
+
+
+                <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>3.0.0.RC2</version>
+                     <exclusions>
+                <exclusion>
+                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+ <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>3.3.2.GA</version>
+        </dependency>
+        <dependency>
+<groupId>org.hibernate</groupId>
+  <artifactId>ejb3-persistence</artifactId>
+  <version>1.0.2.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.4.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search</artifactId>
+            <version>3.1.0.GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.4.0.GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jlibs</groupId>
+            <artifactId>jlibs-core</artifactId>
+            <version>r479</version>
+        </dependency>
 
        <dependency>
            <groupId>xalan</groupId>
            <artifactId>xalan</artifactId>
            <version>2.7.1</version>
        </dependency>
+
     </dependencies>
     <profiles>
         <profile>

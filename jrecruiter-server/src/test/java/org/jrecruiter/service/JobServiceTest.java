@@ -22,8 +22,8 @@ import junit.framework.Assert;
 
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +54,11 @@ public class JobServiceTest extends BaseTest {
         jobService.deleteJobForId(job2.getId());
 
         Assert.assertNull(jobService.getJobForId(savedJob.getId()));
+    }
+
+    @Test
+    public void testRemoveOldJobs() {
+        jobService.removeOldJobs(90);
     }
 
     public void getJobForIdTest(){}

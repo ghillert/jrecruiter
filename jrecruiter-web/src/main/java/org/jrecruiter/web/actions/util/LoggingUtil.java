@@ -17,184 +17,184 @@ import ch.qos.logback.core.FileAppender;
 
 /**
  * Contains utility methods to interact with the logback during runtime.
- * 
+ *
  * @author Gunnar Hillert
  * @version $Id$
  *
  */
 public class LoggingUtil {
 
-	/**
-	 * re-defines the logback logging levels as a Java enumeration. This is quite
-	 * helpful if you need to render the various log-levels as select-box. I wish
-	 * logback @see {@link ch.qos.logback.classic.Level} would not use static variables
-	 * but use enums instead. 
-	 * 
-	 * @author Gunnar Hillert
-	 */
-	public enum LogLevels {
+    /**
+     * re-defines the logback logging levels as a Java enumeration. This is quite
+     * helpful if you need to render the various log-levels as select-box. I wish
+     * logback @see {@link ch.qos.logback.classic.Level} would not use static variables
+     * but use enums instead.
+     *
+     * @author Gunnar Hillert
+     */
+    public enum LogLevels {
 
-		OFF(Integer.MAX_VALUE, "Off"),
-		ERROR_INT(40000, "Error"),
-		WARN_INT(30000, "Warn"),
-		INFO_INT(20000, "Info"),
-		DEBUG_INT(10000, "Debug"),
-		TRACE(5000, "Trace"),
-		ALL(Integer.MIN_VALUE, "All");
+        OFF(Integer.MAX_VALUE, "Off"),
+        ERROR_INT(40000, "Error"),
+        WARN_INT(30000, "Warn"),
+        INFO_INT(20000, "Info"),
+        DEBUG_INT(10000, "Debug"),
+        TRACE(5000, "Trace"),
+        ALL(Integer.MIN_VALUE, "All");
 
-		private int logLevel;	
-		private String logLevelName;
+        private int logLevel;
+        private String logLevelName;
 
-		LogLevels(final int logLevel, final String logLevelName) {
-			this.logLevel = logLevel;
-			this.logLevelName = logLevelName; 
-		}
+        LogLevels(final int logLevel, final String logLevelName) {
+            this.logLevel = logLevel;
+            this.logLevelName = logLevelName;
+        }
 
-		public int getLogLevel() {
-			return this.logLevel;
-		}
+        public int getLogLevel() {
+            return this.logLevel;
+        }
 
-		public String getLogLevelName() {
-			return this.logLevelName;
-		}
+        public String getLogLevelName() {
+            return this.logLevelName;
+        }
 
-		public static LogLevels getLogLevelFromId(final int logLevelAsInt) {
+        public static LogLevels getLogLevelFromId(final int logLevelAsInt) {
 
-			for (LogLevels logLevel : LogLevels.values()) {
+            for (LogLevels logLevel : LogLevels.values()) {
 
-				if (logLevelAsInt == logLevel.logLevel) {
-					return logLevel;
-				}
-			}
+                if (logLevelAsInt == logLevel.logLevel) {
+                    return logLevel;
+                }
+            }
 
-			throw new IllegalStateException("Loglevel " + logLevelAsInt + " does not exist.");
+            throw new IllegalStateException("Loglevel " + logLevelAsInt + " does not exist.");
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Retrieve all configured logback loggers. 
-	 * 
-	 * @param showAll If set return ALL loggers, not only the configured ones.
-	 * @return List of Loggers
-	 */
-	public static List<ch.qos.logback.classic.Logger> getLoggers(final boolean showAll) {
+    /**
+     * Retrieve all configured logback loggers.
+     *
+     * @param showAll If set return ALL loggers, not only the configured ones.
+     * @return List of Loggers
+     */
+    public static List<ch.qos.logback.classic.Logger> getLoggers(final boolean showAll) {
 
-		final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-		final List<ch.qos.logback.classic.Logger> loggers = CollectionUtils.getArrayList();
+        final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        final List<ch.qos.logback.classic.Logger> loggers = CollectionUtils.getArrayList();
 
-		for (ch.qos.logback.classic.Logger log : lc.getLoggerList()) {
-			if(showAll == false) {
-				if(log.getLevel() != null || LoggingUtil.hasAppenders(log)) {
-					loggers.add(log);
-				}
-			} else {
-				loggers.add(log);
-			}
-		}
+        for (ch.qos.logback.classic.Logger log : lc.getLoggerList()) {
+            if(showAll == false) {
+                if(log.getLevel() != null || LoggingUtil.hasAppenders(log)) {
+                    loggers.add(log);
+                }
+            } else {
+                loggers.add(log);
+            }
+        }
 
-		return loggers;
-	}
+        return loggers;
+    }
 
-	/**
-	 * Get a single logger. 
-	 * 
-	 * @return Logger
-	 */
-	public static ch.qos.logback.classic.Logger getLogger(final String loggerName) {
+    /**
+     * Get a single logger.
+     *
+     * @return Logger
+     */
+    public static ch.qos.logback.classic.Logger getLogger(final String loggerName) {
 
-		final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-		return lc.getLogger(loggerName);
-		
-	}
-	
-	/** 
-	 * Test whether the provided logger has appenders. 
-	 * 
-	 * @param logger The logger to test
-	 * @return true if the logger has appenders.
-	 */
-	public static boolean hasAppenders(ch.qos.logback.classic.Logger logger) {
-		Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
-		return it.hasNext();
-	}
+        return lc.getLogger(loggerName);
 
-	/**
-	 * Get the logfile information for the roor logger.
-	 * 
-	 * @return List of LogFileInfo obejcts
-	 */
-	public static List<LogFileInfo> getLogFileInfos() {
-		
-		final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+    }
 
-		final List<LogFileInfo> logFileInfos = CollectionUtils.getArrayList();
+    /**
+     * Test whether the provided logger has appenders.
+     *
+     * @param logger The logger to test
+     * @return true if the logger has appenders.
+     */
+    public static boolean hasAppenders(ch.qos.logback.classic.Logger logger) {
+        Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
+        return it.hasNext();
+    }
 
-		final Logger logger = lc.getLogger(Logger.ROOT_LOGGER_NAME);
+    /**
+     * Get the logfile information for the roor logger.
+     *
+     * @return List of LogFileInfo obejcts
+     */
+    public static List<LogFileInfo> getLogFileInfos() {
 
-		final Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
+        final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-		while (it.hasNext()) {
+        final List<LogFileInfo> logFileInfos = CollectionUtils.getArrayList();
 
-			final Appender<LoggingEvent> appender = it.next();
+        final Logger logger = lc.getLogger(Logger.ROOT_LOGGER_NAME);
 
-			if (appender instanceof FileAppender) {
+        final Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
 
-				final FileAppender<LoggingEvent> fileAppender = (FileAppender<LoggingEvent>) appender;
+        while (it.hasNext()) {
 
-				final File logFile = new File(fileAppender.getFile());
-				final LogFileInfo logFileInfo = new LogFileInfo();
+            final Appender<LoggingEvent> appender = it.next();
 
-				logFileInfo.setFileName(logFile.getName());
-				logFileInfo.setFileLastChanged(new Date(logFile.lastModified()));
-				logFileInfo.setFileSize(logFile.length());
-				logFileInfos.add(logFileInfo);
-			}
+            if (appender instanceof FileAppender) {
 
-		}
+                final FileAppender<LoggingEvent> fileAppender = (FileAppender<LoggingEvent>) appender;
 
-		return logFileInfos;
-	}
+                final File logFile = new File(fileAppender.getFile());
+                final LogFileInfo logFileInfo = new LogFileInfo();
 
-	/**
-	 * Get the log file.
-	 * 
-	 * @param logFileName The name of the log file 
-	 * @return The actual file
-	 */
-	public static File getLogFile(final String logFileName) {
+                logFileInfo.setFileName(logFile.getName());
+                logFileInfo.setFileLastChanged(new Date(logFile.lastModified()));
+                logFileInfo.setFileSize(logFile.length());
+                logFileInfos.add(logFileInfo);
+            }
 
-		if (logFileName == null) {
-			throw new IllegalArgumentException("logFileName cannot be null.");
-		}
+        }
 
-		final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        return logFileInfos;
+    }
 
-		final Logger logger = lc.getLogger(Logger.ROOT_LOGGER_NAME);
+    /**
+     * Get the log file.
+     *
+     * @param logFileName The name of the log file
+     * @return The actual file
+     */
+    public static File getLogFile(final String logFileName) {
 
-		final Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
+        if (logFileName == null) {
+            throw new IllegalArgumentException("logFileName cannot be null.");
+        }
 
-		while (it.hasNext()) {
+        final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-			final Appender<LoggingEvent> appender = it.next();
+        final Logger logger = lc.getLogger(Logger.ROOT_LOGGER_NAME);
 
-			if (appender instanceof FileAppender) {
+        final Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
 
-				final FileAppender<LoggingEvent> fileAppender = (FileAppender<LoggingEvent>) appender;
+        while (it.hasNext()) {
 
-				final File logFile = new File(fileAppender.getFile());
+            final Appender<LoggingEvent> appender = it.next();
 
-				if (logFile.getName().equalsIgnoreCase(logFileName)) {
-					return logFile;
-				}
+            if (appender instanceof FileAppender) {
 
-			}
+                final FileAppender<LoggingEvent> fileAppender = (FileAppender<LoggingEvent>) appender;
 
-		}
+                final File logFile = new File(fileAppender.getFile());
 
-		return null;
-	}
+                if (logFile.getName().equalsIgnoreCase(logFileName)) {
+                    return logFile;
+                }
+
+            }
+
+        }
+
+        return null;
+    }
 
 }

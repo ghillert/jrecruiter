@@ -1,6 +1,6 @@
 A new job has been added:
 
-Job ID:               ${jobId}
+Job ID:               ${jobId?c}
 
 Job Title:            ${jobTitle}
 

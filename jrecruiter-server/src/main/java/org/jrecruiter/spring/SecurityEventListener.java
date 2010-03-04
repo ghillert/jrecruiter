@@ -8,10 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.security.event.authentication.AbstractAuthenticationEvent;
-import org.springframework.security.event.authentication.AbstractAuthenticationFailureEvent;
-import org.springframework.security.event.authentication.AuthenticationSuccessEvent;
-import org.springframework.security.event.authentication.InteractiveAuthenticationSuccessEvent;
+import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
+import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 
 public class SecurityEventListener implements
                                     ApplicationListener < AbstractAuthenticationEvent > {

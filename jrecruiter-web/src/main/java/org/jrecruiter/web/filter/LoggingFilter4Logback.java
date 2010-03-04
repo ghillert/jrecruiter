@@ -11,12 +11,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jrecruiter.common.AcegiUtil;
-import org.jrecruiter.web.actions.IndeedController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Servlet Filter implementation class LoggingFilter4Logback
@@ -58,7 +56,7 @@ public class LoggingFilter4Logback implements Filter {
             chain.doFilter(request, errorAwareResponse);
 
             if (HttpServletResponse.SC_NOT_FOUND == errorAwareResponse.getErrorCode()) {
-                 LOGGER.error("Page Not Found.");
+                 LOGGER.error("Page '" + request.getServletPath() + "' was not found.");
             }
 
 

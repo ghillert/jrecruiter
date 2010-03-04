@@ -25,8 +25,8 @@ import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.web.JobForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +97,11 @@ public class AddJobAction extends JobBaseAction implements Preparable, ModelDriv
             urls =
                     { @UrlValidator(type = ValidatorType.SIMPLE,              fieldName = "model.job.website",            message = "You must enter a valid url.")},
             stringLengthFields =
-                    {@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "model.job.jobTitle", message = "The job title must be shorter than ${maxLength} characters.")}
+                    {
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "model.job.jobTitle",               message = "The job title must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhone",          message = "The phone number must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhoneExtension", message = "The phone number extension must be shorter than ${maxLength} characters.")
+                    }
             )
 
     public String save() {

@@ -2,6 +2,18 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>jRecruiter 2.0</display-name>
   <description>jRecruiter is a job posting service.</description>
+
+  <listener>
+      <listener-class>org.jrecruiter.web.contextlistener.StartupContextListener</listener-class>
+  </listener>
+  
+  <listener>
+      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+  </listener>
+
   <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
     <param-value>messages</param-value>
@@ -10,6 +22,8 @@
     <param-name>jmesaMessagesLocation</param-name>
     <param-value>messages</param-value>
   </context-param>
+
+  
   <filter>
     <filter-name>UrlRewriteFilter</filter-name>
     <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
@@ -127,13 +141,6 @@
     <url-pattern>*.jpg</url-pattern>
     <url-pattern>*.js</url-pattern>
   </filter-mapping>
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <listener>
-    <listener-class>
-            org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
-  </listener>
   <servlet>
     <servlet-name>sitemesh-freemarker</servlet-name>
     <servlet-class>
@@ -199,6 +206,7 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>dwr-invoker</servlet-name>
     <url-pattern>/dwr/*</url-pattern>

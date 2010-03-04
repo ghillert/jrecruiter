@@ -28,12 +28,12 @@ import org.springframework.stereotype.Repository;
 @Repository("userToRoleDao")
 public final class UserToRoleDaoJpa extends GenericDaoJpa< UserToRole, Long> implements UserToRoleDao {
 
-	/**
+    /**
      * Constructor.
      *
      */
     private UserToRoleDaoJpa() {
-    	super(UserToRole.class);
+        super(UserToRole.class);
     }
 
 }

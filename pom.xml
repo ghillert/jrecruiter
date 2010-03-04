@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jrecruiter</groupId>
   <artifactId>jrecruiter</artifactId>
@@ -14,10 +14,12 @@
 
     <name>${pom.artifactId}</name>
 
-    <description>jRecruiter is a show-case application for a variety of interesting Java related technologies. It is actively used by the Atlanta Java Users Group (AJUG) for their job posting service.
+    <description>
+        jRecruiter is a show-case application for a variety of interesting Java
+        related technologies. It is actively used by the Atlanta Java Users
+        Group (AJUG) for their job posting service. You can find the Maven
+        Project site at: http://www.jrecruiter.org/</description>
 
-You can find the Maven Project site at: http://www.jrecruiter.org/</description>
-    
     <prerequisites>
         <maven>2.0.9</maven>
     </prerequisites>
@@ -83,25 +85,25 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
                     <configuration>
           <connectionType>connection</connectionType>
         </configuration>
-            
+
         </plugin>
             <plugin>
-		        <groupId>org.codehaus.mojo</groupId>
-		        <artifactId>buildnumber-maven-plugin</artifactId>
-		        <version>1.0-beta-3</version>
-		        <executions>
-		          <execution>
-		            <phase>validate</phase>
-		            <goals>
-		              <goal>create</goal>
-		            </goals>
-		          </execution>
-		        </executions>
-		        <configuration>
-		          <doCheck>false</doCheck>
-		          <doUpdate>false</doUpdate>
-		        </configuration>
-		      </plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.0-beta-3</version>
+                <executions>
+                  <execution>
+                    <phase>validate</phase>
+                    <goals>
+                      <goal>create</goal>
+                    </goals>
+                  </execution>
+                </executions>
+                <configuration>
+                  <doCheck>false</doCheck>
+                  <doUpdate>false</doUpdate>
+                </configuration>
+              </plugin>
         </plugins>
     </build>
     <repositories>
@@ -111,15 +113,10 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
             <url>http://www.hillert.com/maven/repository</url>
         </repository>
         <repository>
-            <id>java.net</id>
-            <name>Java.net - contains e.g. mail.jar and activation.jar</name>
-            <url>https://maven-repository.dev.java.net/nonav/repository</url>
-        </repository>
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout>
+          <id>maven2-repository.dev.java.net</id>
+          <name>Java.net Repository for Maven</name>
+          <url>http://download.java.net/maven/2/</url>
+          <layout>default</layout>
         </repository>
         <repository>
             <id>repository.jboss.org</id>
@@ -127,10 +124,14 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
             <url>http://repository.jboss.org/maven2</url>
             <layout>default</layout>
         </repository>
-
+         <repository>
+          <id>springsource maven repo</id>
+          <url>http://maven.springframework.org/milestone</url>
+         </repository>
         <repository>
-            <id>SpringSource Enterprise Bundle Repositories</id>
-            <url>http://repository.springsource.com/maven/bundles/milestone</url>
+            <id>scala-tools.org</id>
+            <name>Scala-tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
         </repository>
         <repository>
             <id>flex-mojos-repository</id>
@@ -192,6 +193,12 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>scala-tools.org</id>
+            <name>Scala-tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </pluginRepository>
+
     </pluginRepositories>
 
     <!-- Begin of dependencies -->
@@ -220,17 +227,20 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.2.6.ga</version>
-                     <exclusions>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.3.2.GA</version>
+            <exclusions>
                 <exclusion>
               <groupId>cglib</groupId>
-  <artifactId>cglib</artifactId>
+                <artifactId>cglib</artifactId>
                 </exclusion>
             </exclusions>
-
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>ejb3-persistence</artifactId>
+            <version>1.0.2.GA</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
@@ -241,13 +251,16 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
             <artifactId>hibernate-search</artifactId>
             <version>3.1.0.GA</version>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.4.0.GA</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.0.2.GA</version>
+        </dependency>
 
         <!-- Password Generator -->
 
@@ -262,67 +275,13 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
             <version>1.1</version>
         </dependency>
 
-        <!-- Struts2 -->
-
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-spring-plugin</artifactId>
-            <version>2.1.6</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-test</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>s2rome</groupId>
-            <artifactId>s2rome</artifactId>
-            <version>0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>rome</groupId>
-            <artifactId>rome</artifactId>
-            <version>0.9</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-convention-plugin</artifactId>
-            <version>2.1.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-jfreechart-plugin</artifactId>
-            <version>2.1.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-javatemplates-plugin</artifactId>
-            <version>2.1.6</version>
-        </dependency>
-
         <!-- Others -->
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.8.0.Beta1</version>
+        </dependency>
 
         <!-- Logging -->
         <dependency>
@@ -440,7 +399,7 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
-            <version>1.5</version>
+            <version>1.6-dev</version>
         </dependency>
 
         <!--
@@ -449,31 +408,19 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>${jsp.version}</version>
+            <version>2.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>${servlet.version}</version>
+            <version>2.5</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jmock</groupId>
-            <artifactId>jmock</artifactId>
-            <version>${jmock.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                  <groupId>junit</groupId>
-                  <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <version>4.5</version>
             <scope>test</scope>
         </dependency>
 
@@ -481,8 +428,8 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.core</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-core</artifactId>
+            <version>3.0.0.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -492,23 +439,8 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.web</artifactId>
-            <version>${spring.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                    <groupId>org.apache.commons</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>com.springsource.org.aopalliance</artifactId>
-                    <groupId>org.aopalliance</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.transaction</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-tx</artifactId>
+            <version>3.0.0.RELEASE</version>
                <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -522,8 +454,8 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.orm</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-orm</artifactId>
+            <version>3.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -533,8 +465,8 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.jdbc</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-jdbc</artifactId>
+            <version>3.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -544,8 +476,8 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.web.servlet</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -555,23 +487,8 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.context</artifactId>
-            <version>${spring.version}</version>
-                     <exclusions>
-                <exclusion>
-                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
-                    <groupId>org.apache.commons</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>com.springsource.org.aopalliance</artifactId>
-                    <groupId>org.aopalliance</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.context.support</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-webmvc</artifactId>
+            <version>3.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -581,23 +498,46 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.aop</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-context</artifactId>
+            <version>3.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
                     <groupId>org.apache.commons</groupId>
                 </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>3.0.0.RELEASE</version>
+                     <exclusions>
                 <exclusion>
-                    <artifactId>com.springsource.org.aopalliance</artifactId>
-                    <groupId>org.aopalliance</groupId>
+                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+                    <groupId>org.apache.commons</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.expression</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-aop</artifactId>
+            <version>3.0.0.RELEASE</version>
+                     <exclusions>
+                <exclusion>
+                    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+ <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>3.0.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>3.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -611,8 +551,8 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.test</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-test</artifactId>
+            <version>3.0.0.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -658,67 +598,65 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
                     <artifactId>org.springframework.context.support</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
+           <dependency>
+             <groupId>antlr</groupId>
+             <artifactId>antlr</artifactId>
+             <version>2.7.7</version>
+           </dependency>
+           <dependency>
+             <groupId>org.antlr</groupId>
+             <artifactId>antlr</artifactId>
+             <version>3.0.1</version>
+           </dependency>
+           <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.5</version>
+           </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core-tiger</artifactId>
-            <version>${spring.security.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-support</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-aop</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-jdbc</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-dao</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.0.0.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>3.0.0.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>3.0.0.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-            <version>${spring.security.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-acl</artifactId>
-                </exclusion>
-
-            </exclusions>
+            <version>3.0.0.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-openid</artifactId>
+            <version>3.0.0.RELEASE</version>
+        </dependency>
+
+        <!-- Other -->
 
         <dependency>
             <groupId>org.subethamail</groupId>
             <artifactId>subethasmtp-wiser</artifactId>
-            <version>${wiser.version}</version>
+            <version>1.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -810,16 +748,6 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
         </dependency>
 
         <dependency>
-            <groupId>antlr</groupId>
-            <artifactId>antlr</artifactId>
-            <version>2.7.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>
             <version>1.0</version>
@@ -843,6 +771,16 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
             <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.15</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 
@@ -872,25 +810,6 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.2</version>
             </plugin>
-<!--            <plugin> <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>cobertura-maven-plugin</artifactId>-->
-<!--                <version>2.1</version>-->
-<!--            <configuration>-->
-<!--                <check>-->
-<!--                    <branchRate>85</branchRate>-->
-<!--                    <lineRate>85</lineRate>-->
-<!--                    <haltOnFailure>true</haltOnFailure>-->
-<!--                </check>-->
-<!--            </configuration>-->
-<!---->
-<!--            </plugin>-->
-
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>emma-maven-plugin</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <inherited>true</inherited>
-        </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -949,21 +868,15 @@ You can find the Maven Project site at: http://www.jrecruiter.org/</description>
     </profiles>
 
     <properties>
-        <!-- Framework dependency versions -->
-        <spring.version>3.0.0.M2</spring.version>
 
-        <!-- Testing dependency versions -->
-        <jmock.version>1.1.0</jmock.version>
+        <!-- Testing dependency versions --><!--
         <jsp.version>2.0</jsp.version>
-        <junit.version>4.5</junit.version>
         <servlet.version>2.5</servlet.version>
         <wiser.version>1.2</wiser.version>
         <commons.lang.version>2.3</commons.lang.version>
         <spring.security.version>2.0.4</spring.security.version>
-        <!-- WebTest dependency versions  -->
-        <webtest.version>R_1600</webtest.version>
 
-        <struts.devMode>true</struts.devMode>
+        --><struts.devMode>true</struts.devMode>
         <jawr.debug.on>true</jawr.debug.on>
         <web.xml.DwrServlet.debug>true</web.xml.DwrServlet.debug>
 

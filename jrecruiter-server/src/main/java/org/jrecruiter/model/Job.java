@@ -36,6 +36,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
@@ -122,6 +123,9 @@ public class Job implements Serializable {
     /** Business Phone. */
     private String businessPhone;
 
+    /** Business Phone Extension. */
+    private String businessPhoneExtension;
+
     /** Business Email. */
     private String businessEmail;
 
@@ -161,7 +165,8 @@ public class Job implements Serializable {
      */
     private Boolean usesMap;
 
-    // Constructors
+    //~~~~~Constructors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     /** default constructor */
     public Job() {
     }
@@ -280,6 +285,7 @@ public class Job implements Serializable {
     @ManyToOne(cascade={}, fetch=FetchType.LAZY)
     @JoinColumn(name="regions_id", unique=false, nullable=true, insertable=true, updatable=true)
     @IndexedEmbedded
+    @BatchSize(size=15)
     public Region getRegion() {
         return region;
     }
@@ -497,6 +503,22 @@ public class Job implements Serializable {
     }
 
     /**
+     * @return the businessPhone
+     */
+    @Column(name="business_phone_extension", unique=false, nullable=true, insertable=true, updatable=true, length=15)
+    @Field(index = Index.UN_TOKENIZED, store = Store.YES)
+    public String getBusinessPhoneExtension() {
+        return businessPhoneExtension;
+    }
+
+    /**
+     * @param businessPhone the businessPhone to set
+     */
+    public void setBusinessPhoneExtension(String businessPhoneExtension) {
+        this.businessPhoneExtension = businessPhoneExtension;
+    }
+
+    /**
      * @return the businessEmail
      */
     @Column(name="business_email", unique=false, nullable=true, insertable=true, updatable=true, length=50)
@@ -687,7 +709,9 @@ public class Job implements Serializable {
         this.universalId = universalId;
     }
 
+
     //~~~~~Helper Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
     @Transient
     public String getRegionForDisplay() {

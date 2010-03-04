@@ -1,7 +1,10 @@
 package org.jrecruiter.web.actions;
 
 import org.apache.struts2.convention.annotation.Result;
+import org.jrecruiter.common.Constants.UserAuthenticationType;
 import org.jrecruiter.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -16,6 +19,8 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 @Result(name="success", location="login", type="redirectAction")
 public class GetPasswordAction extends BaseAction {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetPasswordAction.class);
+
     private User user;
 
     /** serialVersionUID. */
@@ -27,26 +32,35 @@ public class GetPasswordAction extends BaseAction {
 
     @Validations(
             requiredStrings = {
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username", trim=true, key = "class.get-password.password.required")
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username", trim=true, key = "class.get-password.password_reset_not_possible")
                      }
             )
     public String process() {
 
-        this.user = userService.getUser(this.user.getUsername());
+        final User userFromDb = userService.getUser(this.user.getUsername());
 
-        if (this.user == null) {
-            super.addActionError(super.getText("class.get-password.user.not.found"));
+        if (userFromDb == null) {
+            LOGGER.warn("Reset password attempt for non-existing user '" + this.user.getUsername() + "'");
+            super.addActionError(super.getText("class.get-password.password_reset_not_possible"));
             return INPUT;
         }
 
-        if (!this.user.isEnabled()) {
-            super.addActionError(super.getText("class.get-password.user.account.not.enabled"));
+        if (!userFromDb.isEnabled()) {
+            LOGGER.warn("Reset password attempt for disabled user '" +  userFromDb.getUsername() + "' (Id: " + userFromDb.getId() + ")");
+            super.addActionError(super.getText("class.get-password.password_reset_not_possible"));
             return INPUT;
         }
 
-        userService.resetPassword(this.user);
+        if (!UserAuthenticationType.USERNAME_PASSWORD.equals(userFromDb.getUserAuthenticationType())) {
+            LOGGER.warn("Reset password not supported for UserAuthenticationType: '" + userFromDb.getUserAuthenticationType().name() + "';"
+                      + "User: '" +  userFromDb.getUsername() + "' (Id: " + userFromDb.getId() + ")");
+            super.addActionError(super.getText("class.get-password.password_reset_not_possible"));
+            return INPUT;
+        }
 
-        super.addActionMessage(super.getText("class.get-password.success", new String[] {user.getEmail()}));
+        userService.resetPassword(userFromDb);
+
+        super.addActionMessage(super.getText("class.get-password.success", new String[] {userFromDb.getEmail()}));
         return SUCCESS;
     }
 

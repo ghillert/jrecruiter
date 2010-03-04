@@ -23,9 +23,9 @@ import java.util.Random;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.service.DemoService;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
@@ -62,6 +62,7 @@ public class DemoServiceImpl implements DemoService {
             job.setBusinessEmail(loremIpsum.getWords(1) + "@" + loremIpsum.getWords(1) + ".com");
             job.setBusinessName(loremIpsum.getWords(2));
             job.setBusinessPhone("111-111-1111");
+            job.setBusinessPhoneExtension("111-111-1111");
             job.setBusinessState(loremIpsum.getWords(1));
             job.setBusinessZip(loremIpsum.getWords(1));
             job.setDescription(loremIpsum.getParagraphs(2));

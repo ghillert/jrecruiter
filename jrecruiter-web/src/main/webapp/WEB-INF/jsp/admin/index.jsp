@@ -51,6 +51,8 @@
           <fieldset class="jRecruiterAdmin">
               <legend><spring:message code="jsp.admin.index.legend.administration"/></legend>
               <ul>
+                  <c:url value="/s/admin/systemInformation" var="systemInformationUrl"/>
+                  <li><a href="#" id="systemInformationLink"><spring:message code="jsp.admin.index.label.system_information"/></a></li>
                   <li><a href="${userListUrl}" ><spring:message code="jsp.admin.index.label.edit.user"/></a></li>
                   <li><a href="${addUserUrl}" ><spring:message code="jsp.admin.index.label.add.user"/></a></li>
                   <li><a href="${editSettingsUrl}" ><spring:message code="jsp.admin.index.label.edit.settings"/></a></li>
@@ -62,3 +64,21 @@
       </security:authorize>
     </div>
 
+<div id="systemInformationBox" style="display: none;"></div>
+
+<script type="text/javascript">
+<!--
+
+$(function() {
+	
+	$("#systemInformationLink").click(function() {
+
+		$("#systemInformationBox").dialog({ width: 700, height: 600, title: '<spring:message code="jsp.admin.index.label.system_information"/>' });
+		$("#systemInformationBox").dialog('open').load('${systemInformationUrl}');
+		});
+
+});
+
+//-->
+</script>
+    

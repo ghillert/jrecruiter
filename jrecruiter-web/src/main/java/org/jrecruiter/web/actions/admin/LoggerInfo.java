@@ -29,49 +29,49 @@ import org.jrecruiter.web.actions.util.LoggingUtil.LogLevels;
 public class LoggerInfo implements Serializable {
 
     /** serialVersionUID. */
-	private static final long serialVersionUID = 5542917607467653570L;
-	
-	private String    loggerName;
+    private static final long serialVersionUID = 5542917607467653570L;
+
+    private String    loggerName;
     private LogLevels logLevel;
     private LogLevels newLogLevel;
-    
+
     //~~~~~Constructors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
+
     /**
-	 * 
-	 */
-	public LoggerInfo() {
-		super();
-	}
-	/**
-	 * @param loggerName
-	 * @param logLevel
-	 */
-	public LoggerInfo(String loggerName, int logLevelAsInt) {
-		super();
-		this.loggerName = loggerName;
-		this.logLevel = LogLevels.getLogLevelFromId(logLevelAsInt);
-	}
-    
-	//~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
-	public String getLoggerName() {
-		return loggerName;
-	}
-	public void setLoggerName(String loggerName) {
-		this.loggerName = loggerName;
-	}
-	public LogLevels getLogLevel() {
-		return logLevel;
-	}
-	public void setLogLevel(LogLevels logLevel) {
-		this.logLevel = logLevel;
-	}
-	public LogLevels getNewLogLevel() {
-		return newLogLevel;
-	}
-	public void setNewLogLevel(LogLevels newLogLevel) {
-		this.newLogLevel = newLogLevel;
-	}
-	
+     *
+     */
+    public LoggerInfo() {
+        super();
+    }
+    /**
+     * @param loggerName
+     * @param logLevel
+     */
+    public LoggerInfo(String loggerName, int logLevelAsInt) {
+        super();
+        this.loggerName = loggerName;
+        this.logLevel = LogLevels.getLogLevelFromId(logLevelAsInt);
+    }
+
+    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public String getLoggerName() {
+        return loggerName;
+    }
+    public void setLoggerName(String loggerName) {
+        this.loggerName = loggerName;
+    }
+    public LogLevels getLogLevel() {
+        return logLevel;
+    }
+    public void setLogLevel(LogLevels logLevel) {
+        this.logLevel = logLevel;
+    }
+    public LogLevels getNewLogLevel() {
+        return newLogLevel;
+    }
+    public void setNewLogLevel(LogLevels newLogLevel) {
+        this.newLogLevel = newLogLevel;
+    }
+
 }

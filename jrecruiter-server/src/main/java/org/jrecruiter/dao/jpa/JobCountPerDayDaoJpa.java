@@ -43,14 +43,14 @@ implements JobCountPerDayDao {
     }
 
     /** {@inheritDoc} */
-	public JobCountPerDay getByDate(Date day) {
+    public JobCountPerDay getByDate(Date day) {
         Session session = (Session)entityManager.getDelegate();
         Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
                 + " where jcpd.jobDate = :jobDate ");
         query.setDate("jobDate", day);
 
         return (JobCountPerDay)query.uniqueResult();
-	}
+    }
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
@@ -70,7 +70,7 @@ implements JobCountPerDayDao {
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
-	public List<JobCountPerDay> getLatestTwoJobCounts() {
+    public List<JobCountPerDay> getLatestTwoJobCounts() {
         Session session = (Session)entityManager.getDelegate();
         Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
                 + " order by jobDate desc");
@@ -79,7 +79,7 @@ implements JobCountPerDayDao {
         final List<JobCountPerDay> jobCountPerDayList = query.list();
 
         return jobCountPerDayList;
-	}
+    }
 
 }
 

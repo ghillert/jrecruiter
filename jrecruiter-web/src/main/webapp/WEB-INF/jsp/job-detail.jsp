@@ -77,6 +77,12 @@
                     ${job.businessPhone}
                 </div>
             </s:if>
+            <s:if test="job.businessPhoneExtension != null && job.businessPhoneExtension.length() > 0">
+                <div class="optional">
+                    <label><spring:message code="jsp._ALL.job.field.phone_extension"/>:</label>
+                    ${job.businessPhoneExtension}
+                </div>
+            </s:if>
             <s:if test="job.businessEmail != null && job.businessEmail.length() > 0">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.email"/>:</label>

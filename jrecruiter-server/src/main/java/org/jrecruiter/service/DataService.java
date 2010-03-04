@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 
 /**
  * Provides methods that call external data services such as Google's.
- *  
+ *
  * @author Gunnar Hillert
  * @version $Id$
  */

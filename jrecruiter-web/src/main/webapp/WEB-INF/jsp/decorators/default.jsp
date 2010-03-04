@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
+<%@include file="/WEB-INF/jsp/includes/taglibs-spring.jsp"%>
 
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -71,53 +71,40 @@
     </div>
 
        <div id="baseModal" style="display:none">
-
-        <h1 style="padding-left: 1em;">About...</h1>
         <div class="contents" style="background-color: white; margin: 1em;">
                 Loading...
         </div>
-        <div class="buttons">
-          <div class="modalClose"><a href="#" class="button close"><span>&nbsp;</span>Close</a></div>
-        </div>
       </div>
 
-        <s:url id="contactUrl" action="contact" namespace="/"/>
-
+        <c:url value="/contact.html" var="contactUrl"/>
+        
         <script type="text/javascript">
 
         $(document).ready(function () {
 
             $('.outer-header').add_layer("url('${ctx}/images/icons/beta_2.0_badge.png') no-repeat 90% 50%");
 
-            $('#contact').click(function (e) {
-                e.preventDefault();
-                $('#baseModal').modal({
-                    onShow: function (dialog) {
-                        $("#baseModal .contents").load("${contactUrl}");
-                    },
-                    onOpen: function (dialog) {
+            $("#contact").click(function() {
 
-                        dialog.overlay.fadeIn(200, function () {
-                        dialog.container.fadeIn(200, function () {
-                        dialog.data.fadeIn(200, function () {
-
-                                });
-                            });
-                        });
-
-                    },
-                    onClose: function (dialog) {
-
-                        dialog.data.fadeOut(200, function () {
-                        dialog.container.fadeOut(200, function () {
-                        dialog.overlay.fadeOut(200, function () {
-                        $.modal.close();
-                             });
-                            });
-                        });
+                $("#baseModal").dialog({
+                    title: 'About...',
+                    bgiframe: true,
+                    width: 400,
+                    height: 500,
+                    show: 'blind',
+                    hide: 'blind',
+                    modal: true,
+                    buttons: {
+                        Ok: function() {
+                            $(this).dialog('close');
+                        }
                     }
                 });
-            });
+
+                $("#baseModal").dialog('open').load('${contactUrl}', '#baseModal .contents');
+
+            });       
+        
 
             $('fieldset').mouseover(function() {
                     $(this).css("border-color", "#E07125");

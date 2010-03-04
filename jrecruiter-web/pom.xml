@@ -2,24 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.jrecruiter</groupId>
         <artifactId>jrecruiter</artifactId>
         <version>2.0</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jrecruiter-web</artifactId>
     <packaging>war</packaging>
-
-    <name>jrecruiter-web</name>
-
-    <url>http://www.jrecruiter.org</url>
+    <name>${project.artifactId}</name>
     <description>
-    jRecruiter is a Java EE based job posting solution. It is
-    implemented in Java and uses Struts 2, Spring and Hibernate.
-  </description>
+      jRecruiter is a Java EE based job posting solution. It is
+      implemented in Java and uses Struts 2, Spring and Hibernate.
+    </description>
 
     <build>
 
@@ -117,13 +113,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>emma-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <inherited>true</inherited>
-            </plugin>
-
-            <plugin>
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>buildnumber-maven-plugin</artifactId>
 		        <version>1.0-beta-3</version>
@@ -172,6 +161,65 @@
             	<artifactId>urlrewritefilter</artifactId>
             	<version>3.1.0</version>
             </dependency>
+        <!-- Struts2 -->
+
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-spring-plugin</artifactId>
+            <version>2.1.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-test</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>s2rome</groupId>
+            <artifactId>s2rome</artifactId>
+            <version>0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>rome</groupId>
+            <artifactId>rome</artifactId>
+            <version>0.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-convention-plugin</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-jfreechart-plugin</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-javatemplates-plugin</artifactId>
+            <version>2.1.6</version>
+        </dependency>
     </dependencies>
 
         <profiles>
