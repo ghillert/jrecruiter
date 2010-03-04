@@ -35,7 +35,7 @@
 
     </ul>
     <div style="margin-left: 0; margin-right: auto;">
-        <img src="${jobCountUrl}" alt="Job statistics graph - Number of Jobs" style="width: 300px; height: 150px;"/>
+        <img src="${jobCountUrl}" alt="Job statistics graph - Number of Jobs" style="width: 550px; height: 200px;"/>
     </div>
 
   </div>

@@ -1,15 +1,14 @@
 package org.jrecruiter.common;
 
 import java.util.Arrays;
+import java.util.Collection;
 
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.Authentication;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-
-public final class AcegiUtil
-{
+public final class AcegiUtil {
 
     private AcegiUtil() {
         // private utility class constructor
@@ -19,7 +18,7 @@ public final class AcegiUtil
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public static boolean containsRole(final GrantedAuthority[] grantedAuthorities, final String role) {
+    public static boolean containsRole(final Collection<GrantedAuthority> grantedAuthorities, final String role) {
         for (final GrantedAuthority grantedAuthority : grantedAuthorities)
             if (grantedAuthority.getAuthority().equals(role))
                 return true;
@@ -44,7 +43,7 @@ public final class AcegiUtil
             throw new AccessDeniedException("User is not authenticated");
         }
 
-        final GrantedAuthority[] authorities = authentication.getAuthorities();
+        final Collection<GrantedAuthority> authorities = authentication.getAuthorities();
 
         for (final String role : roles) {
             if (containsRole(authorities, role)) {
@@ -62,7 +61,7 @@ public final class AcegiUtil
             throw new AccessDeniedException("User is not authenticated");
         }
 
-        final GrantedAuthority[] authorities = authentication.getAuthorities();
+        final Collection<GrantedAuthority> authorities = authentication.getAuthorities();
 
         for (final String role : roles) {
             if (!containsRole(authorities, role)) {

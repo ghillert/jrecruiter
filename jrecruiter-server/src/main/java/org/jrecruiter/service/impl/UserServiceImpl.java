@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants;
+import org.jrecruiter.common.PasswordGenerator;
 import org.jrecruiter.common.Constants.ServerActions;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
@@ -44,9 +45,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,13 +117,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalArgumentException("User must not be null.");
         }
 
-        Date registerDate = new Date();
+        final Date registerDate = new Date();
         user.setRegistrationDate(registerDate);
         user.setUpdateDate(registerDate);
         user.setEnabled(Boolean.FALSE);
         user.setVerificationKey(this.generateUuid());
-        user.setUsername(user.getEmail());
-        User duplicateUser = userDao.getUser(user.getUsername());
+
+        if (user.getUsername() == null) {
+            user.setUsername(user.getEmail());
+        }
+
+        final User duplicateUser = userDao.getUser(user.getUsername());
 
         if (duplicateUser!= null) {
             throw new DuplicateUserException("User " + duplicateUser.getUsername()
@@ -191,17 +196,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     /** {@inheritDoc} */
     public void resetPassword(final User user) {
 
-        String flags = "-N 1 -M 100 -B -n -c -y -s 10 -o ";
-        flags = BlankRemover.itrim(flags);
-        final String[] ar = flags.split(" ");
-        final PwGenerator generator = new PwGenerator();
-        final List <String> passwords = generator.process(ar);
-
-        String password = null;
-
-        for (Iterator<String> iterator = passwords.iterator(); iterator.hasNext();) {
-            password = iterator.next();
-        }
+        final String password = PasswordGenerator.generatePassword();
 
         user.setPassword(this.stringDigester.digest(password));
 

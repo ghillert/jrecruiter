@@ -18,10 +18,10 @@ package org.jrecruiter.service.migration;
 
 /**
  * This helper service contains methods that should be helpful for migrating jRecruiter
- * data from older Database schemas to newer version. Therefore, this is probably 
+ * data from older Database schemas to newer version. Therefore, this is probably
  * not functionality used during production. If user have the need to migrate from
  * there special database environments, this should be the place to look for.
- *  
+ *
  * @author Gunnar Hillert
  * @version $Id$
  */
@@ -29,7 +29,7 @@ public interface MigrationService {
 
     /**
      * Method for migrating user data.
-     * 
+     *
      * @param digestPasswords Shall passwords be 'digested'?
      */
     void migrateUserData(Boolean digestPasswords);
@@ -38,20 +38,20 @@ public interface MigrationService {
      * Migrate Job Data
      */
     void migrateJobData();
-    
+
     /**
      * Method for migrating settings.
      */
     void migrateSettings();
-    
+
     /**
      * Method for migrating regions.
      */
     void migrateRegions();
-    
+
     /**
      * Method for migrating industries.
      */
     void migrateIndustries();
-    
+
 }

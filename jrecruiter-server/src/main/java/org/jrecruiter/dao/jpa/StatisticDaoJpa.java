@@ -27,14 +27,14 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("statisticDao")
 public final class StatisticDaoJpa extends GenericDaoJpa< Statistic, Long>
-								   implements StatisticDao {
+                                   implements StatisticDao {
 
     /**
      * Constructor.
      *
      */
     private StatisticDaoJpa() {
-    	super(Statistic.class);
+        super(Statistic.class);
     }
 
 }

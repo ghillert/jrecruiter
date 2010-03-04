@@ -37,7 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.http.HttpClient;
 
 import com.rosaloves.net.shorturl.bitly.Bitly;
 import com.rosaloves.net.shorturl.bitly.BitlyFactory;

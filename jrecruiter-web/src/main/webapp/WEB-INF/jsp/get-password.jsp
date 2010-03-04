@@ -10,7 +10,7 @@
         <fieldset>
           <div class="required">
               <label for="username"><spring:message code="class.user.email" /></label>
-              <s:textfield id="username" name="user.username" required="true" maxlength="25" tabindex="1"/>
+              <s:textfield id="username" name="user.username" required="true" maxlength="50" tabindex="1"/>
           </div>
         </fieldset>
         <fieldset>

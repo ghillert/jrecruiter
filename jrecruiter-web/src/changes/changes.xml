@@ -7,6 +7,32 @@
       <author email="gunnar at hillert dot com">Gunnar Hillert</author>
    </properties>
    <body>
+      <release version="2.1.0" date="TBD" description="New Major Feature Release">
+           <action dev="Gunnar Hillert" type="add">
+               OpenID Integration
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Upgrade to SpringSecurity 3
+           </action> 
+           <action dev="Gunnar Hillert" type="add">
+               I18N basic Spanish support
+           </action>           
+      </release>
+      <release version="2.0.1" date="2009-08-23" description="Minor Feature Release">
+           <action dev="Gunnar Hillert" type="add">
+               Accept environment variable (JRECRUITER_HOME) in order to point to home directory
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Better logging
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Jobs can have a phone number extension
+           </action>
+           <action dev="Gunnar Hillert" type="fix">
+                Improve phone number validation
+                http://code.google.com/p/jrecruiter/issues/detail?id=6
+           </action>           
+      </release>
       <release version="2.0" date="2009-08-23" description="New Major Feature Release">
            <action dev="Gunnar Hillert" type="add">
                (Almost) No more Struts XML-configuration files. Uses the

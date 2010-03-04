@@ -2,8 +2,6 @@ package org.jrecruiter.web.actions;
 
 import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.service.JobService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,8 +22,6 @@ public class IndeedController {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(IndeedController.class);
 
     @RequestMapping("/indeed.xml")
     public String execute(ModelMap model) {

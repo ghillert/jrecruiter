@@ -38,13 +38,20 @@
         class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <property name="order" value="0"/>
     </bean>
+	<bean id="viewResolver"
+	      class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	    <property name="prefix" value="/WEB-INF/jsp/"/>
+	    <property name="suffix" value=".jsp"/>
+	    <property name="order" value="1"/>
+	</bean>
     <bean id="freeMarkerViewResolver"
         class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="exposeSpringMacroHelpers" value="true" />
         <property name="requestContextAttribute" value="rc" />
         <property name="prefix" value="" />
         <property name="suffix" value=".ftl" />
-        <property name="order" value="1"/>
+        <property name="order" value="2"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
@@ -75,7 +82,7 @@
 
     <bean id="messageBrokerConfigProcessor" class="org.jrecruiter.web.flex.CustomMessageBrokerConfigProcessor"/>
 
-    <flex:message-broker disable-default-mapping="true">
+    <flex:message-broker disable-default-mapping="true" id="_messageBroker">
         <flex:config-processor ref="messageBrokerConfigProcessor" />
     </flex:message-broker>
 

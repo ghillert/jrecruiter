@@ -37,7 +37,7 @@ public interface DemoService {
     void createDemoJobs(User user, Integer numberOfJobsToCreate);
 
     /**
-     * Creates a single default user. If the user does not exist, yet, a new 
+     * Creates a single default user. If the user does not exist, yet, a new
      * user is created, otherwise the default user is returned.
      *
      */

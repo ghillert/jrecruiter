@@ -27,8 +27,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("configurationDao")
 public final class ConfigurationDaoJpa
-						extends GenericDaoJpa< Configuration, String>
-						implements ConfigurationDao {
+                        extends GenericDaoJpa< Configuration, String>
+                        implements ConfigurationDao {
 
     /**
      * Constructor.

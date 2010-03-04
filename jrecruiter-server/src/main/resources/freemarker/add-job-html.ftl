@@ -3,7 +3,7 @@
         <td align="center" valign="top">
             <h2>A new job posting:</h2>
             <table>
-                <tr><td align="right"><b>Job ID:</b></td>                <td>${jobId}</td></tr>
+                <tr><td align="right"><b>Job ID:</b></td>                <td>${jobId?c}</td></tr>
                 <tr><td align="right"><b>Job Title:</b></td>             <td>${jobTitle}</td></tr>
                 <tr><td align="right"><b>Location:</b></td>              <td>${businessLocation}</td></tr>
                 <tr><td align="right"><b>Business Name:</b></td>         <td>${businessName}</td></tr>

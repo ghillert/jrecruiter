@@ -3,28 +3,45 @@
 <h2><spring:message code="jsp.signup.title" /></h2>
 <p class="info"><spring:message code="jsp.signup.text.introduction" /></p>
 
-    <s:form id="addUserForm" action="signup">
+<s:if test="user.userAuthenticationType.name() == 'OPEN_ID'">
+        We noticed that you have a valid OpenID account but you're not registered
+        with jRecruiter, yet. If you would like to register your account with
+        jRecruiter, please complete the form below.
+
+        <s:set name="signUpAction" value="%{'saveForOpenId'}"/>
+</s:if>
+<s:else>
+    <s:set name="signUpAction" value="%{'save'}"/>
+    If you like to register using an <img src="<c:url value='/images/icons/openid.gif'/>" />OpenID account, <a href="<c:url value='/login.html#openid-registration'/>">please login first here</a>.
+</s:else>
+
+<s:property value="%{signUpAction}"/>
+
+    <s:form id="addUserForm">
+    <s:hidden name="user.userAuthenticationType"/>
 
     <fieldset>
         <div class="required">
             <label for="email"><spring:message code="class.user.email" />*</label>
             <s:textfield id="email" name="user.email" required="true" maxlength="50" tabindex="1"/>
         </div>
-        <div class="required">
-            <label for="password"><spring:message code="class.user.password" />*</label>
-            <s:password  id="password" name="password" required="true" maxlength="120" tabindex="2"/>
-        </div>
-        <div class="optional">
-            <label><spring:message code="jsp.signup.label.password.strength" /></label>
-            <span id="passwordStrength"><spring:message code="jsp.signup.label.insert.password" /></span>
-        </div>
-        <div class="required">
-            <div style="margin-left: 173px; width: 150px; border: 1px solid black;height: 5px; overflow: hidden;"><div id="passwordStrengthBar" style="width: 0px; background-color: green; height: 5px; overflow: "></div></div>
-        </div>
-        <div class="required">
-            <label for="password2"><spring:message code="class.user.password2" />*</label>
-            <s:password  id="password2" name="password2" required="true" maxlength="120" tabindex="2"/>
-        </div>
+        <s:if test="user.userAuthenticationType.name() != 'OPEN_ID'">
+                <div class="required">
+                    <label for="password"><spring:message code="class.user.password" />*</label>
+                    <s:password  id="password" name="password" required="true" maxlength="120" tabindex="2"/>
+                </div>
+                <div class="optional">
+                    <label><spring:message code="jsp.signup.label.password.strength" /></label>
+                    <span id="passwordStrength"><spring:message code="jsp.signup.label.insert.password" /></span>
+                </div>
+                <div class="required">
+                    <div style="margin-left: 173px; width: 150px; border: 1px solid black;height: 5px; overflow: hidden;"><div id="passwordStrengthBar" style="width: 0px; background-color: green; height: 5px; overflow: "></div></div>
+                </div>
+                <div class="required">
+                    <label for="password2"><spring:message code="class.user.password2" />*</label>
+                    <s:password  id="password2" name="password2" required="true" maxlength="120" tabindex="2"/>
+                </div>
+        </s:if>
 
         <div class="required">
             <label for="firstName"><spring:message code="class.user.firstName" />*</label>
@@ -63,13 +80,15 @@
         </div>
         <fieldset>
           <div class="submit">
-          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"/>
+          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="saveForOpenId"/>
           <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
           </div>
         </fieldset>
         <p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>
 
-        <jsp:include page="../includes/password-tips.jsp"/>
+        <s:if test="user.userAuthenticationType.name() != 'OPEN_ID'">
+            <jsp:include page="../includes/password-tips.jsp"/>
+        </s:if>
 </s:form>
 
 

@@ -15,17 +15,19 @@
  */
 package org.jrecruiter.dao.jpa;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -35,9 +37,9 @@ import org.hibernate.search.jpa.Search;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
-import org.jrecruiter.model.User;
+import org.jrecruiter.model.Job;
+import org.junit.experimental.theories.DataPoint;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -57,6 +59,8 @@ implements JobDao {
     private JobDaoJpa() {
         super(Job.class);
     }
+
+
 
     /**
      * Method for returning list of all jobs.
@@ -224,8 +228,8 @@ implements JobDao {
             Session session = (Session)entityManager.getDelegate();
             final Criteria criteria = session.createCriteria(Job.class);
 
-            criteria.setFetchMode("statistics", FetchMode.JOIN);
-            criteria.setFetchMode("region", FetchMode.JOIN);
+            //criteria.setFetchMode("statistics", FetchMode.JOIN);
+            //criteria.setFetchMode("region", FetchMode.JOIN);
 
             for (Entry<String, String> entry : sortOrders.entrySet()) {
                 if (entry.getValue().equalsIgnoreCase("DESC")) {
@@ -322,6 +326,22 @@ implements JobDao {
             }
 
             return job;
+        }
+
+
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public List<Job> getJobsByUpdateDate(@NotNull @Past final Calendar updateDate) {
+
+            final List<Job> jobs;
+
+            jobs = entityManager
+                .createQuery("select j from Job j where j.updateDate >= :updateDate")
+                .setParameter("updateDate", updateDate.getTime())
+                .getResultList();
+
+            return jobs;
         }
 
 

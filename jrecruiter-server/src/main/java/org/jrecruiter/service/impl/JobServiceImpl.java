@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
 import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
@@ -37,12 +39,12 @@ import org.jrecruiter.dao.StatisticDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.statistics.JobCountPerDay;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.NotificationService;
 import org.slf4j.Logger;
@@ -404,6 +406,18 @@ public class JobServiceImpl implements JobService {
             final Long totalNumberOfJobs = this.getJobsCount();
             jobCountPerDayDao.save(new JobCountPerDay(today.getTime(), 0L, 0L, totalNumberOfJobs));
         }
+
+    }
+
+    @Override
+    public void removeOldJobs(@NotNull Integer days) {
+
+        final Calendar cal = CalendarUtils.getCalendarWithoutTime();
+        cal.add(Calendar.DAY_OF_YEAR, days.intValue() * -1);
+
+        final List<Job> jobs = jobDao.getJobsByUpdateDate(cal);
+
+        LOGGER.info("Found " + jobs.size() + " jobs that are eligible for removal.");
 
     }
 

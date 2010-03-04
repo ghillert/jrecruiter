@@ -30,8 +30,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.springframework.security.GrantedAuthority;
-
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * Represents a User Role.
@@ -161,7 +160,6 @@ public class Role implements Serializable, GrantedAuthority {
         return true;
     }
 
-    @Override
     public int compareTo(Object o) {
 
         if (o == null) {

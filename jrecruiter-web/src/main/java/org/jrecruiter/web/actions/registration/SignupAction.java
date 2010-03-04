@@ -1,12 +1,19 @@
 package org.jrecruiter.web.actions.registration;
 
+import java.util.Map;
+
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.ApiKeysHolder;
+import org.jrecruiter.common.CollectionUtils;
+import org.jrecruiter.common.PasswordGenerator;
+import org.jrecruiter.common.Constants.UserAuthenticationType;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.web.actions.BaseAction;
@@ -24,14 +31,16 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 /**
  * Responsible for registering potential job posters
- * 
+ *
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 @Conversion
 @Result(name="success", location="index", type="redirectAction")
-public class SignupAction extends BaseAction {
+public class SignupAction extends BaseAction implements SessionAware {
 
+
+    private Map<String, Object> session = CollectionUtils.getHashMap();
 
     private User user;
     private String password;
@@ -40,11 +49,10 @@ public class SignupAction extends BaseAction {
     private String recaptcha_challenge_field;
     private String recaptcha_response_field;
 
-    private StringDigester stringDigester;
-
     private @Autowired ReCaptcha reCaptcha;
+    private @Autowired StringDigester stringDigester;
 
-    private ApiKeysHolder apiKeysHolder;
+    private transient ApiKeysHolder apiKeysHolder;
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
@@ -53,7 +61,7 @@ public class SignupAction extends BaseAction {
 
     @Validations(
             requiredStrings = {
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "password",       trim=true, message = "You must enter a password."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "password",       trim=true, message = "You must enter a passwordsssss."),
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", trim=true, message = "You must enter a first name."),
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName",  trim=true, message = "You must enter a last name."),
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.company",   trim=true, message = "You must enter a company.")
@@ -65,7 +73,7 @@ public class SignupAction extends BaseAction {
                     { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a valid email address.")},
             stringLengthFields =
                     {
-            		@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "120", fieldName = "password",       message = "The password must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "120", fieldName = "password",       message = "The password must be shorter than ${maxLength} characters."),
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.username",  message = "The user name must be shorter than ${maxLength} characters."),
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.firstName", message = "The first name must be shorter than ${maxLength} characters."),
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.lastName",  message = "The last name must be shorter than ${maxLength} characters."),
@@ -77,7 +85,62 @@ public class SignupAction extends BaseAction {
             )
     public String save() {
 
+        final ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
+
+        if (!reCaptchaResponse.isValid()) {
+            addActionError(super.getText("class.SignupAction.error.not.a.good.captcha"));
+            return INPUT;
+        }
+
         this.user.setPassword(this.stringDigester.digest(this.password));
+        user.setUserAuthenticationType(UserAuthenticationType.USERNAME_PASSWORD);
+
+        try {
+           userService.addUser(user, Boolean.TRUE);
+        } catch (DuplicateUserException e) {
+
+            LOGGER.warn(e.getMessage());
+              addFieldError("username", getText("class._ALL.error.duplicateEmail"));
+              return INPUT;
+        }
+
+        addActionMessage(getText("class.SignupAction.success"));
+        return SUCCESS;
+
+    }
+
+    @Validations(
+            requiredStrings = {
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.firstName", trim=true, message = "You must enter a first name."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.lastName",  trim=true, message = "You must enter a last name."),
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.company",   trim=true, message = "You must enter a companymmmm.")
+                     },
+             requiredFields = {
+                     @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "user.email",  message = "You must enter an email address.")
+                  },
+            emails =
+                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "user.email", message = "You must enter a valid email address.")},
+            stringLengthFields =
+                    {
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.username",  message = "The user name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.firstName", message = "The first name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.lastName",  message = "The last name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.company",   message = "The company name must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50",  fieldName = "user.email",     message = "The email address must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25",  fieldName = "user.phone",     message = "The phone number must be shorter than ${maxLength} characters."),
+                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25",  fieldName = "user.fax",       message = "The fax number must be shorter than ${maxLength} characters.")
+                    }
+            )
+    public String saveForOpenId() {
+
+        if (session.get("OpenIdUserObject") == null) {
+            addActionError(getText("class.SignupAction.error.no_openid_token_found"));
+        }
+
+        final User openIdUser = (User) session.get("OpenIdUserObject");
+
+        openIdUser.setUsername(openIdUser.getUsername());
+        user.setUserAuthenticationType(UserAuthenticationType.OPEN_ID);
 
         final ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
 
@@ -86,6 +149,7 @@ public class SignupAction extends BaseAction {
             return INPUT;
         }
 
+        user.setPassword(stringDigester.digest(PasswordGenerator.generatePassword()));
         try {
            userService.addUser(user, Boolean.TRUE);
         } catch (DuplicateUserException e) {
@@ -102,19 +166,33 @@ public class SignupAction extends BaseAction {
     /**
      *
      */
-    public void validate() {
+    public void validateSave() {
 
-        if (password != null && password != null) {
-
+        if (password != null && password2 != null) {
             if (!password.trim().equals(password2.trim())) {
                 addFieldError("password2", "The passwords do not match.");
             }
-
         }
 
     }
 
+    @SkipValidation
     public String execute() {
+
+        if (session.get("OpenIdUserObject") != null) {
+
+            final User openIdUser = (User) session.get("OpenIdUserObject");
+            this.user = new User();
+            this.user.setEmail(openIdUser.getEmail());
+            this.user.setFirstName(openIdUser.getFirstName());
+            this.user.setLastName(openIdUser.getLastName());
+            this.user.setUserAuthenticationType(UserAuthenticationType.OPEN_ID);
+
+        } else {
+            this.user = new User();
+            this.user.setUserAuthenticationType(UserAuthenticationType.USERNAME_PASSWORD);
+        }
+
         return INPUT;
     }
 
@@ -169,6 +247,11 @@ public class SignupAction extends BaseAction {
 
     public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
         this.apiKeysHolder = apiKeysHolder;
+    }
+
+    @Override
+    public void setSession(Map<String, Object> session) {
+        this.session = session;
     }
 
 }

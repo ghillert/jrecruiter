@@ -33,7 +33,7 @@
 
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.classic.PatternLayout">
-      <pattern>%d %5p [%t][%X{sessionId}][%X{username}][%-55logger{55}] %m [%X{requestUrl}]%n</pattern>
+      <pattern>%d %5p | %t | %X{sessionId} | %X{username} | %-55logger{55} | %m | %X{requestUrl}%n</pattern>
     </layout>
   </appender>
 

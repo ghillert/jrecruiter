@@ -21,6 +21,7 @@ import junit.framework.TestCase;
 
 import org.jrecruiter.common.CollectionUtils;
 
+
 /**
  * Validate object creation of the job type object
  *
@@ -37,6 +38,8 @@ public class JobTypeTest extends TestCase {
         assertNotNull(jobType.getJobs());
         assertNull(jobType.getName());
         assertTrue(jobType.getJobs().size() == 0);
+
+
 
     }
 

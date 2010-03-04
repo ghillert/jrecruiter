@@ -44,6 +44,8 @@ public class JobCountPerDay {
     @Column(unique=false, nullable=false, insertable=true, updatable=true, precision=0, scale=10)
     private Long totalNumberOfJobs   = Long.valueOf(0);
 
+    private Boolean automaticallyCleaned   = Boolean.FALSE;
+
     //~~~~~Constructor~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
@@ -87,6 +89,10 @@ public class JobCountPerDay {
         return this.jobDate;
     }
 
+    public long getJobDateInMillis() {
+        return this.jobDate.getTime();
+    }
+
     public Long getNumberOfJobsPosted() {
         return numberOfJobsPosted;
     }
@@ -121,6 +127,14 @@ public class JobCountPerDay {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getAutomaticallyCleaned() {
+        return automaticallyCleaned;
+    }
+
+    public void setAutomaticallyCleaned(Boolean automaticallyCleaned) {
+        this.automaticallyCleaned = automaticallyCleaned;
     }
 
 }

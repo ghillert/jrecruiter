@@ -50,14 +50,7 @@
       </div>
 
       <div class="content" style="overflow: auto;">
-
         The page you were looking for does not exist.
-
-      <%
-       org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger("Application");
-       LOGGER.error("Somebody tried to retrieve a non-existing page!");
-      %>
-
       </div>
       <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"

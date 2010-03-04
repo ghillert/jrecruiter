@@ -31,7 +31,9 @@ import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -42,13 +44,14 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.statistics.JobCountPerDay;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.web.actions.BaseAction;
 
 /**
@@ -164,20 +167,42 @@ public class ShowStatisticsAction extends BaseAction {
             final List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
 
             final TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );
-
-            for(JobCountPerDay jobCountPerDay : jobCountPerDayList ) {
-              hitsPerDayData.add( new Day(jobCountPerDay.getJobDate()),  jobCountPerDay.getTotalNumberOfJobs());
-            }
-
             final XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
-
             this.chart = ChartFactory.createTimeSeriesChart("",
                     super.getText("class.ShowStatisticsAcion.chart.job.count.caption"), "", hitsPerDayDataset, false, true, false);
 
 
+            final XYPlot xyplot = (XYPlot)this.chart.getPlot();
+
+            for(JobCountPerDay jobCountPerDay : jobCountPerDayList ) {
+
+              final Day day =  new Day(jobCountPerDay.getJobDate());
+
+              if (jobCountPerDay.getAutomaticallyCleaned()) {
+
+                  final Marker originalEnd = new ValueMarker(day.getFirstMillisecond());
+                  originalEnd.setPaint(new Color(0, 80, 138, 150));
+                  float[] dashPattern = { 6, 2 };
+
+                  originalEnd.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT,
+                          BasicStroke.JOIN_MITER, 10,
+                          dashPattern, 0));
+                  originalEnd.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+                  originalEnd.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
+                  originalEnd.setLabel("Cleanup");
+                  originalEnd.setAlpha(0.1F);
+                  xyplot.addDomainMarker(originalEnd);
+              }
+
+              hitsPerDayData.add(day, jobCountPerDay.getTotalNumberOfJobs());
+            }
+
+
+
+
             chart.setBackgroundPaint(new Color(255,255,255,0));
 
-            XYPlot xyplot = (XYPlot)this.chart.getPlot();
+
             xyplot.setDomainGridlinePaint(Color.LIGHT_GRAY);
             xyplot.setBackgroundPaint(new Color(255,255,255,0));
 

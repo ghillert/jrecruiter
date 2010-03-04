@@ -11,5 +11,6 @@
         <pattern>/contact.html*</pattern>
         <pattern>/dwr/*</pattern>
         <pattern>/fx/*</pattern>
+        <pattern>/s/admin/systemInformation</pattern>
     </excludes>
 </decorators>

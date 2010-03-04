@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

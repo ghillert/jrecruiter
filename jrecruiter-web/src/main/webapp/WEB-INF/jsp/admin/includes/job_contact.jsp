@@ -16,4 +16,8 @@
                <label for="businessPhone"><spring:message code="jsp._ALL.job.field.phone" /></label>
                <s:textfield name="model.job.businessPhone" id="businessPhone" size="11" tabindex="8"/>
            </div>
+           <div class="optional">
+               <label for="businessPhoneExtension"><spring:message code="jsp._ALL.job.field.phone_extension" /></label>
+               <s:textfield name="model.job.businessPhoneExtension" id="businessPhoneExtension" size="11" tabindex="9"/>
+           </div>
     </fieldset>

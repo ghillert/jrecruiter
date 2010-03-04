@@ -15,6 +15,7 @@
 */
 package org.jrecruiter.dao;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -112,4 +113,11 @@ public interface JobDao extends GenericDao < Job, Long >{
      * @return
      */
     Job getForUniversalId(String universalId);
+
+    /**
+     *
+     * @param cal
+     * @return
+     */
+    List<Job> getJobsByUpdateDate(Calendar cal);
 }

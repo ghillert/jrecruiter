@@ -16,6 +16,7 @@
 package org.jrecruiter.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,8 +34,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.userdetails.UserDetails;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.jrecruiter.common.Constants.UserAuthenticationType;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * This class represents a user.
@@ -46,7 +50,7 @@ import org.springframework.security.userdetails.UserDetails;
 @Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "email" } ),
         @UniqueConstraint( columnNames = { "username" } ) }
 )
-public class User implements Serializable, UserDetails{
+public class User implements Serializable, UserDetails {
 
     /**
      * serialVersionUID.
@@ -72,8 +76,9 @@ public class User implements Serializable, UserDetails{
 
     private Boolean enabled  = Boolean.FALSE;
 
-    @Column(unique=true, length=36)
     private String  verificationKey;
+
+    private UserAuthenticationType userAuthenticationType = UserAuthenticationType.USERNAME_PASSWORD;
 
     // Constructors
 
@@ -240,7 +245,22 @@ public class User implements Serializable, UserDetails{
         this.userToRoles = userToRoles;
     }
 
-    //~~~~~~~~ Implemented from Acegi Seurity ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    @Column(name= "USER_AUTHENTICATION_TYPE", nullable = false)
+    @Type(
+        type = "org.jrecruiter.common.GenericEnumUserType",
+        parameters = {
+                @Parameter(name  = "enumClass", value = "org.jrecruiter.common.Constants$UserAuthenticationType")}
+    )
+    public UserAuthenticationType getUserAuthenticationType() {
+        return userAuthenticationType;
+    }
+
+    public void setUserAuthenticationType(
+            UserAuthenticationType userAuthenticationType) {
+        this.userAuthenticationType = userAuthenticationType;
+    }
+
+    //~~~~~~~~ Implemented from Spring Security ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     /**
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonExpired()
      * @return Returns the accountNonExpired.
@@ -281,6 +301,7 @@ public class User implements Serializable, UserDetails{
         this.enabled = enabled;
     }
 
+    @Column(unique=true, length=36)
     public String getVerificationKey() {
         return verificationKey;
     }
@@ -310,20 +331,17 @@ public class User implements Serializable, UserDetails{
      * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
      */
     @Transient
-    public GrantedAuthority[] getAuthorities() {
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
 
-        if (this.userToRoles != null) {
+        final Set <GrantedAuthority> roles = new HashSet<GrantedAuthority>();
 
-            final Set <GrantedAuthority> roles = new HashSet<GrantedAuthority>();
-
-            for (UserToRole userToRole : this.userToRoles) {
-                roles.add(userToRole.getRole());
-            }
-
-            return (GrantedAuthority[]) roles.toArray(new GrantedAuthority[0]);
-        } else {
-            return new GrantedAuthority[0];
+        for (UserToRole userToRole : this.userToRoles) {
+            roles.add(userToRole.getRole());
         }
+
+        return roles;
+
     }
 
     @Override

@@ -12,9 +12,9 @@ import junit.framework.Assert;
 
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.slf4j.Logger;

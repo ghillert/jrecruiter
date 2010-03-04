@@ -120,17 +120,61 @@ public class Constants {
             return name;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
         public String getDescriptionKey() {
             return descriptionKey;
         }
 
-        public void setDescriptionKey(String descriptionKey) {
-            this.descriptionKey = descriptionKey;
+    }
+
+
+    /**
+     * Denotes whether the job posting is active or disabled
+     * (not shown in the search results)
+     */
+    public enum UserAuthenticationType {
+
+        USERNAME_PASSWORD(1L,  "userAuthenticationType.label.username_password"),
+        OPEN_ID(          2L,  "userAuthenticationType.label.open_id");
+
+        Long   id;
+        String labelKey;
+
+        /**
+         * Constructor.
+         *
+         * @param name The name for display purposes.
+         * @param descriptionKey Provides description from the resource bundle.
+         */
+        UserAuthenticationType(
+                final Long   id,
+                final String labelKey) {
+            this.id = id;
+            this.labelKey = labelKey;
         }
+
+        public Long getId() {
+            return id;
+        }
+
+        public String getLabelKey() {
+            return labelKey;
+        }
+
+        public static UserAuthenticationType fromId(final Long id) {
+
+            if (id == null) {
+                throw new IllegalArgumentException("Id must not be null.");
+            }
+
+            for (UserAuthenticationType e : UserAuthenticationType.values()) {
+                if (e.id.equals(id)) {
+                    return e;
+                }
+            }
+
+            return null;
+        }
+
     }
 
     /**
