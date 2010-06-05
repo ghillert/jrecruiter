@@ -12,7 +12,7 @@
     <artifactId>jrecruiter-flex</artifactId>
     <packaging>swf</packaging>
 
-    <name>${pom.artifactId}</name>
+    <name>${project.artifactId}</name>
 
     <build>
         <finalName>main</finalName>
@@ -25,7 +25,7 @@
                 <version>3.4.2</version>
                 <extensions>true</extensions>
                 <configuration>
-		            <sourceFile>jobs.mxml</sourceFile>                
+                    <sourceFile>jobs.mxml</sourceFile>
                     <output>${basedir}/../jrecruiter-web/src/main/webapp/fx/jobs.swf</output>
                     <!--<services>${basedir}/../jrecruiter-web/src/main/webapp/WEB-INF/flex/services-config.xml</services>
                     --><debug>true</debug><accessible>true</accessible><as3>true</as3><showWarnings>true</showWarnings>

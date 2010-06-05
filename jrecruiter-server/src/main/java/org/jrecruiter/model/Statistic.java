@@ -25,6 +25,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Parameter;
 
@@ -35,8 +38,8 @@ import org.hibernate.annotations.Parameter;
  * @version $Id$
  */
 @Entity
-@Table(uniqueConstraints = {  }
-)
+@Table(uniqueConstraints = {  })
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Statistic implements Serializable {
 
     /**
@@ -47,7 +50,10 @@ public class Statistic implements Serializable {
     // Fields
 
     private Long  id;
+
+    @XmlTransient
     private Job job;
+
     private Long counter;
     private Date lastAccess;
 

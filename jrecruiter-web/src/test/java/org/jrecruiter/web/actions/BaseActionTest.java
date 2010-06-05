@@ -21,8 +21,8 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.apache.struts2.ServletActionContext;
-import org.easymock.EasyMock;
 import org.jrecruiter.service.JobService;
+import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -37,9 +37,9 @@ public class BaseActionTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-    	ActionContext ac = new ActionContext(new HashMap<String, Object>());
-    	ActionContext.setContext(ac);
-    	ActionContext.getContext().setSession(new HashMap<String, Object>());
+        ActionContext ac = new ActionContext(new HashMap<String, Object>());
+        ActionContext.setContext(ac);
+        ActionContext.getContext().setSession(new HashMap<String, Object>());
 
         // populate the request so getRequest().getSession() doesn't fail in BaseAction.java
         ServletActionContext.setRequest(new MockHttpServletRequest());
@@ -57,9 +57,7 @@ public class BaseActionTest extends TestCase {
 
         LogoutAction logoutAction = new LogoutAction();
 
-        JobService jobService = EasyMock.createMock(JobService.class);
-
-        EasyMock.replay(jobService);
+        JobService jobService = Mockito.mock(JobService.class);
 
         String ret = logoutAction.execute();
 

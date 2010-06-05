@@ -3,13 +3,13 @@
   <p><spring:message code="jsp.index.introduction.text.top" /></p>
 
   <s:form action="search">
-    <div class="required" style="border: 1px solid #aaaaCC; width: 100%; padding-top: 1em; margin-left: 0; text-align: center; background-color: #FAFAFA">
+    <div class="required" style="border: 1px solid #aaaaCC; padding-top: 1em; margin-left: 0; text-align: center; background-color: #FAFAFA; width: 700px;">
        <label for="keyword"><spring:message code="jsp.index.search.term"/></label>
        <s:textfield name="keyword" id="keyword" size="30" tabindex="1" cssClass="searchBox"/>
        <s:submit value="%{getText('jsp.index.search.button')}" method="search" cssClass="button" cssStyle="margin-left: 1em; border-style: solid; border-width: 1px;"/>
        <br style="clear: both;"/>
     </div>
-</s:form>
+  </s:form>
 
   <div id="startPageMenuContainer">
     <s:url id="jobCountUrl" namespace="/chart" action="viewJobCountChart"/>

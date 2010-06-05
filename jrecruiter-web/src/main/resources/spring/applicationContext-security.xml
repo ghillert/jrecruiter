@@ -34,20 +34,20 @@
     <security:session-management>
        <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="false"/>
     </security:session-management>
-    
+
     <security:custom-filter ref="openIDFilter"                   position="OPENID_FILTER" />
-    
+
   </security:http>
 
 <!-- Custom stuff for openid -->
 
-	<bean id="openIDFilter" class="org.jrecruiter.web.security.RegistrationAwareOpenIDAuthenticationFilter">
-	  <property name="authenticationManager" ref="authenticationManager"/>
-	  <property name="consumer" ref="attributeAwareOpenIDConsumer"/>
-	  <property name="authenticationSuccessHandler"        ref="openIDFilterSuccess"/>
-	  <property name="authenticationFailureHandler"        ref="openIDFilterFailure"/>
-	  <property name="registrationTargetUrlRequestHandler" ref="openIDFilterRedirectToRegistration"/>
-	</bean>
+    <bean id="openIDFilter" class="org.jrecruiter.web.security.RegistrationAwareOpenIDAuthenticationFilter">
+      <property name="authenticationManager" ref="authenticationManager"/>
+      <property name="consumer" ref="attributeAwareOpenIDConsumer"/>
+      <property name="authenticationSuccessHandler"        ref="openIDFilterSuccess"/>
+      <property name="authenticationFailureHandler"        ref="openIDFilterFailure"/>
+      <property name="registrationTargetUrlRequestHandler" ref="openIDFilterRedirectToRegistration"/>
+    </bean>
 
     <bean id="openIDFilterRedirectToRegistration" class="org.jrecruiter.web.security.RegistrationTargetUrlRequestHandler">
       <property name="defaultTargetUrl" value="/registration/signup.html"/>
@@ -92,5 +92,5 @@
   <bean id="securityEventListener" class="org.jrecruiter.spring.SecurityEventListener">
     <property name="userService" ref="userService"/>
   </bean>
-  
+
 </beans>

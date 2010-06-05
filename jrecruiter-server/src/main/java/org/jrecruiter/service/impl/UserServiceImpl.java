@@ -16,7 +16,6 @@
 package org.jrecruiter.service.impl;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,9 +50,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import de.rrze.idmone.utils.jpwgen.BlankRemover;
-import de.rrze.idmone.utils.jpwgen.PwGenerator;
 
 /**
  * Provides user specific services.

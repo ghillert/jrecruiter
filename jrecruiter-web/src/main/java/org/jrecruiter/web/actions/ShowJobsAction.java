@@ -63,7 +63,7 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
     public String execute() throws Exception {
 
         final TableFacade tableFacade = TableFacadeFactory.createTableFacade("jobsTable", request);
-
+        tableFacade.setStateAttr("restore");
         limit                     = tableFacade.getLimit();
         final FilterSet filterSet = limit.getFilterSet();
         final SortSet sortSet     = limit.getSortSet();

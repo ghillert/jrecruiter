@@ -23,7 +23,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.easymock.EasyMock;
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
@@ -43,6 +42,7 @@ import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.service.impl.JobServiceImpl;
+import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
 
@@ -58,8 +58,8 @@ public class JobServiceUnitTest extends TestCase {
 
         JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = EasyMock.createMock(JobDao.class);
-        final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
+        final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
@@ -68,14 +68,11 @@ public class JobServiceUnitTest extends TestCase {
 
         JobCountPerDay jobCountPerDay = new JobCountPerDay();
 
-        EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
+        Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
 
-        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
+        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
-        EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
-
-        EasyMock.replay(jobDao);
-        EasyMock.replay(jobCountPerDayDao);
+        Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
 
         final Job job = new Job();
         job.setId(1L);
@@ -93,11 +90,10 @@ public class JobServiceUnitTest extends TestCase {
         }
 
         JobServiceImpl jobService = new JobServiceImpl();
-        JobDao jobDao = EasyMock.createMock(JobDao.class);
+        JobDao jobDao = Mockito.mock(JobDao.class);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        EasyMock.expect(jobDao.getAllJobs()).andReturn(jobs);
-        EasyMock.replay(jobDao);
+        Mockito.when(jobDao.getAllJobs()).thenReturn(jobs);
 
         List<Job> jobsFromDb = jobService.getJobs();
 
@@ -115,11 +111,10 @@ public class JobServiceUnitTest extends TestCase {
         }
 
         JobServiceImpl jobService = new JobServiceImpl();
-        JobDao jobDao = EasyMock.createMock(JobDao.class);
+        JobDao jobDao = Mockito.mock(JobDao.class);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        EasyMock.expect(jobDao.getAllJobs()).andReturn(jobs);
-        EasyMock.replay(jobDao);
+        Mockito.when(jobDao.getAllJobs()).thenReturn(jobs);
 
         List<Job> jobsFromDb = jobService.getJobs();
 
@@ -137,11 +132,10 @@ public class JobServiceUnitTest extends TestCase {
         }
 
         JobServiceImpl jobService = new JobServiceImpl();
-        RegionDao regionDao = EasyMock.createMock(RegionDao.class);
+        RegionDao regionDao = Mockito.mock(RegionDao.class);
 
         ReflectionTestUtils.setField(jobService, "regionDao", regionDao, RegionDao.class);
-        EasyMock.expect(regionDao.getAllRegionsOrdered()).andReturn(regions);
-        EasyMock.replay(regionDao);
+        Mockito.when(regionDao.getAllRegionsOrdered()).thenReturn(regions);
 
         List<Region> regionsromDb = jobService.getRegions();
 
@@ -159,11 +153,10 @@ public class JobServiceUnitTest extends TestCase {
         }
 
         final JobServiceImpl jobService = new JobServiceImpl();
-        final JobDao jobDao = EasyMock.createMock(JobDao.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        EasyMock.expect(jobDao.getJobs(5, 1, null, null)).andReturn(jobs);
-        EasyMock.replay(jobDao);
+        Mockito.when(jobDao.getJobs(5, 1, null, null)).thenReturn(jobs);
 
         final List<Job> jobsFromDb = jobService.getJobs(5, 1, null, null);
 
@@ -175,11 +168,10 @@ public class JobServiceUnitTest extends TestCase {
     public void testGetJobsCountTest() throws Exception {
         final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = EasyMock.createMock(JobDao.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
-        EasyMock.replay(jobDao);
+        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
         final Long jobsCounted = jobService.getJobsCount();
 
@@ -197,12 +189,10 @@ public class JobServiceUnitTest extends TestCase {
             settings.add(configuration);
         }
 
-        final ConfigurationDao configurationDao = EasyMock.createStrictMock(ConfigurationDao.class);
-        EasyMock.expect(configurationDao.getAll()).andReturn(settings);
+        final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
+        Mockito.when(configurationDao.getAll()).thenReturn(settings);
 
         ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
-
-        EasyMock.replay(configurationDao);
 
         List<Configuration>settings2 = jobService.getJRecruiterSettings();
 
@@ -216,12 +206,10 @@ public class JobServiceUnitTest extends TestCase {
 
         Configuration configuration = new Configuration();
 
-        final ConfigurationDao configurationDao = EasyMock.createStrictMock(ConfigurationDao.class);
-        EasyMock.expect(configurationDao.get("key")).andReturn(configuration);
+        final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
+        Mockito.when(configurationDao.get("key")).thenReturn(configuration);
 
         ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
-
-        EasyMock.replay(configurationDao);
 
         Configuration configuration2 = jobService.getJRecruiterSetting("key");
 
@@ -232,9 +220,8 @@ public class JobServiceUnitTest extends TestCase {
         final JobServiceImpl jobService = new JobServiceImpl();
         Configuration configuration = new Configuration();
 
-        final ConfigurationDao configurationDao = EasyMock.createStrictMock(ConfigurationDao.class);
-        EasyMock.expect(configurationDao.save(configuration)).andReturn(configuration);
-        EasyMock.replay(configurationDao);
+        final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
+        Mockito.when(configurationDao.save(configuration)).thenReturn(configuration);
 
         ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
@@ -248,15 +235,14 @@ public class JobServiceUnitTest extends TestCase {
 
         final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = EasyMock.createMock(JobDao.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        final UserDao userDao = EasyMock.createMock(UserDao.class);
+        final UserDao userDao = Mockito.mock(UserDao.class);
         ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
-        EasyMock.expect(userDao.getUser("demo44")).andReturn(user);
-        EasyMock.replay(userDao);
+        Mockito.when(userDao.getUser("demo44")).thenReturn(user);
 
         final List<Job>adminJobs = new ArrayList<Job>();
 
@@ -265,8 +251,7 @@ public class JobServiceUnitTest extends TestCase {
             adminJobs.add(job);
         }
 
-        EasyMock.expect(jobDao.getAllJobs()).andReturn(adminJobs);
-        EasyMock.replay(jobDao);
+        Mockito.when(jobDao.getAllJobs()).thenReturn(adminJobs);
 
         final List<Job>jobsFromService = jobService.getUsersJobs("demo44");
 
@@ -281,14 +266,13 @@ public class JobServiceUnitTest extends TestCase {
 
         final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = EasyMock.createMock(JobDao.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        final UserDao userDao = EasyMock.createMock(UserDao.class);
+        final UserDao userDao = Mockito.mock(UserDao.class);
         ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
-        EasyMock.expect(userDao.getUser("demo44")).andReturn(user);
-        EasyMock.replay(userDao);
+        Mockito.when(userDao.getUser("demo44")).thenReturn(user);
 
         final List<Job>userJobs = new ArrayList<Job>();
 
@@ -297,8 +281,7 @@ public class JobServiceUnitTest extends TestCase {
             userJobs.add(job);
         }
 
-        EasyMock.expect(jobDao.getAllUserJobs("demo44")).andReturn(userJobs);
-        EasyMock.replay(jobDao);
+        Mockito.when(jobDao.getAllUserJobs("demo44")).thenReturn(userJobs);
 
         final List<Job>jobsFromService = jobService.getUsersJobs("demo44");
 
@@ -313,14 +296,13 @@ public class JobServiceUnitTest extends TestCase {
 
         final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = EasyMock.createMock(JobDao.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        final UserDao userDao = EasyMock.createMock(UserDao.class);
+        final UserDao userDao = Mockito.mock(UserDao.class);
         ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
-        EasyMock.expect(userDao.getUser("demo44")).andReturn(user);
-        EasyMock.replay(userDao);
+        Mockito.when(userDao.getUser("demo44")).thenReturn(user);
 
         final List<Job>jobs = new ArrayList<Job>();
 
@@ -329,8 +311,7 @@ public class JobServiceUnitTest extends TestCase {
             jobs.add(job);
         }
 
-        EasyMock.expect(jobDao.getAllUserJobsForStatistics(user.getId())).andReturn(jobs);
-        EasyMock.replay(jobDao);
+        Mockito.when(jobDao.getAllUserJobsForStatistics(user.getId())).thenReturn(jobs);
 
         final List<Job>jobs2 = jobService.getUsersJobsForStatistics("demo44");
 
@@ -346,25 +327,22 @@ public class JobServiceUnitTest extends TestCase {
 
         Job job = this.getJob(1L);
 
-        final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
-        final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
+        final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
 
 
-        EasyMock.expect(jobDao.save(job)).andReturn(job);
+        Mockito.when(jobDao.save(job)).thenReturn(job);
 
         JobCountPerDay jobCountPerDay = new JobCountPerDay();
 
-        EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
+        Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
 
-        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
+        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
-        EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
+        Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
-
-        EasyMock.replay(jobDao);
-        EasyMock.replay(jobCountPerDayDao);
 
         jobService.addJob(job);
 
@@ -376,13 +354,13 @@ public class JobServiceUnitTest extends TestCase {
 //
 //        Job job = this.getJob(1L);
 //
-//        final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
-//        EasyMock.expect(jobDao.save(job)).andReturn(job);
+//        final JobDao jobDao = Mockito.mock(JobDao.class);
+//        Mockito.when(jobDao.save(job)).thenReturn(job);
 //        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 //
 //
 //
-//        EasyMock.replay(jobDao);
+//        Mockito.replay(jobDao);
 //
 //        jobService.addJob(job);
 //
@@ -394,31 +372,26 @@ public class JobServiceUnitTest extends TestCase {
 
         final Job job = this.getJob(1L);
 
-        final JobDao jobDao = EasyMock.createStrictMock(JobDao.class);
-        final JobCountPerDayDao jobCountPerDayDao = EasyMock.createStrictMock(JobCountPerDayDao.class);
-        final NotificationService notificationService = EasyMock.createStrictMock(NotificationService.class);
-        final ServerSettings serverSettings = org.easymock.classextension.EasyMock.createStrictMock(ServerSettings.class);
+        final JobDao jobDao = Mockito.mock(JobDao.class);
+        final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
+        final NotificationService notificationService = Mockito.mock(NotificationService.class);
+        final ServerSettings serverSettings = Mockito.mock(ServerSettings.class);
 
-        EasyMock.expect(jobDao.save(job)).andReturn(job);
+        Mockito.when(jobDao.save(job)).thenReturn(job);
 
         JobCountPerDay jobCountPerDay = new JobCountPerDay();
 
-        EasyMock.expect(jobCountPerDayDao.getByDate((Date)EasyMock.anyObject())).andReturn(jobCountPerDay);
+        Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
 
-        EasyMock.expect(jobDao.getJobsCount()).andReturn(10L);
+        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
-        EasyMock.expect(jobCountPerDayDao.save(jobCountPerDay)).andReturn(jobCountPerDay);
+        Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
 
-        org.easymock.classextension.EasyMock.expect(serverSettings.getServerAddress()).andReturn("test");
+        Mockito.when(serverSettings.getServerAddress()).thenReturn("test");
 
-        EasyMock.expect(notificationService.shortenUrl((String)EasyMock.anyObject())).andReturn((new URL("http://www.google.com")));
+        Mockito.when(notificationService.shortenUrl((String)Mockito.anyObject())).thenReturn((new URL("http://www.google.com")));
 
-        notificationService.sendTweetToTwitter((String)EasyMock.anyObject());
-
-        EasyMock.replay(jobDao);
-        EasyMock.replay(jobCountPerDayDao);
-        EasyMock.replay(notificationService);
-        org.easymock.classextension.EasyMock.replay(serverSettings);
+        notificationService.sendTweetToTwitter((String)Mockito.anyObject());
 
         ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
         ReflectionTestUtils.setField(jobService, "notificationService", notificationService, NotificationService.class);
@@ -436,11 +409,9 @@ public class JobServiceUnitTest extends TestCase {
         statistic.setJob(this.getJob(1L));
         statistic.setId(1L);
 
-        final StatisticDao statisticDao = EasyMock.createStrictMock(StatisticDao.class);
-        EasyMock.expect(statisticDao.save(statistic)).andReturn(statistic);
+        final StatisticDao statisticDao = Mockito.mock(StatisticDao.class);
+        Mockito.when(statisticDao.save(statistic)).thenReturn(statistic);
         ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
-
-        EasyMock.replay(statisticDao);
 
         jobService.updateJobStatistic(statistic);
     }
@@ -451,12 +422,10 @@ public class JobServiceUnitTest extends TestCase {
         final Statistic statistic = new Statistic();
         statistic.setJob(this.getJob(1L));
 
-        final StatisticDao statisticDao = EasyMock.createStrictMock(StatisticDao.class);
-        EasyMock.expect(statisticDao.save(statistic)).andReturn(statistic);
+        final StatisticDao statisticDao = Mockito.mock(StatisticDao.class);
+        Mockito.when(statisticDao.save(statistic)).thenReturn(statistic);
 
         ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
-
-        EasyMock.replay(statisticDao);
 
         jobService.updateJobStatistic(statistic);
     }

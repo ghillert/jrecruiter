@@ -33,6 +33,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -46,6 +49,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author  Gunnar Hillert
  * @version $Id$
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "email" } ),
         @UniqueConstraint( columnNames = { "username" } ) }
@@ -71,7 +75,9 @@ public class User implements Serializable, UserDetails {
     private Date updateDate;
     private Date lastLoginDate;
 
+    @XmlTransient
     private Set<Job> jobs = new HashSet<Job>(0);
+
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
     private Boolean enabled  = Boolean.FALSE;

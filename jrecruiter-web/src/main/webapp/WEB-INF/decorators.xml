@@ -12,5 +12,6 @@
         <pattern>/dwr/*</pattern>
         <pattern>/fx/*</pattern>
         <pattern>/s/admin/systemInformation</pattern>
+        <pattern>/s/admin/restore*</pattern>
     </excludes>
 </decorators>

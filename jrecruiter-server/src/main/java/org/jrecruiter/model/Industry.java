@@ -24,6 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
@@ -54,6 +55,8 @@ public class Industry  implements java.io.Serializable {
     /** Primary id of the industry */
     private Long id;
     private String name;
+
+    @XmlTransient
     private Set<Job> jobs = new HashSet<Job>(0);
 
     // Constructors
@@ -85,7 +88,7 @@ public class Industry  implements java.io.Serializable {
         this.id = id;
     }
 
-    @Column(unique=false, nullable=false, insertable=true, updatable=true)
+    @Column(unique=true, nullable=false, insertable=true, updatable=true)
         @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getName() {
         return this.name;
@@ -106,8 +109,13 @@ public class Industry  implements java.io.Serializable {
         this.jobs = jobs;
     }
 
-
-
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Industry [id=" + id + ", name=" + name + "]";
+    }
 
 }
 

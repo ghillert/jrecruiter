@@ -26,6 +26,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.Analyzer;
@@ -58,6 +59,8 @@ public class Region  implements java.io.Serializable {
     /** Primary id of the industry */
     private Long id;
     private String name;
+
+    @XmlTransient
     private Set<Job> jobs = CollectionUtils.getHashSet();
 
     // Constructors

@@ -16,12 +16,12 @@
   <script type="text/javascript">
 
   function onInvokeAction(id) {
-	  jQuery.jmesa.setExportToLimit(id, '');
+      jQuery.jmesa.setExportToLimit(id, '');
 
       var parameterString = jQuery.jmesa.createParameterStringForLimit(id);
 
-      jQuery.get('<s:property value="%{#tableUrlAjax}"/>?ajax=true&' + parameterString, function(data) {
-    	  jQuery("#" + id + 'Div').html(data);
+      jQuery.get('<s:property value="%{#tableUrlAjax}"/>?ajax=true&restore=true&' + parameterString, function(data) {
+          jQuery("#" + id + 'Div').html(data);
       });
   }
   </script>

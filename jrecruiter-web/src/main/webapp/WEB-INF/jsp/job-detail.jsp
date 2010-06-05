@@ -13,8 +13,8 @@
 <div id="jobHeader">
     <div style="float: right; width: 200px; text-align: right;">Statistics: ${job.statistic.counter} hit(s)</div>
     <ul>
-        <s:url id="showJobsUrl"  action="show-jobs"                    includeParams="none"/>
-        <c:url var="exportPdfUrl" value="/s/${job.id}/jobDetail.pdf"/>
+        <s:url var="showJobsUrl"  value="/show-jobs.html?restore=true" />
+        <c:url var="exportPdfUrl" value="/s/${job.id}/jobDetail.pdf"   />
 
         <li    ><a class="back" href="${showJobsUrl}">Back</a></li>
         <li    ><a class="print" href="#" onclick="window.print();return false;">Print</a></li>

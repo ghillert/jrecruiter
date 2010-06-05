@@ -12,7 +12,7 @@
         <module>jrecruiter-web</module>
     </modules>
 
-    <name>${pom.artifactId}</name>
+    <name>${project.artifactId}</name>
 
     <description>
         jRecruiter is a show-case application for a variety of interesting Java
@@ -77,20 +77,18 @@
                 <artifactId>maven-reactor-plugin</artifactId>
                 <version>1.0</version>
             </plugin>
-
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-scm-plugin</artifactId>
-            <version>1.2</version>
-                    <configuration>
-          <connectionType>connection</connectionType>
-        </configuration>
-
-        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.2</version>
+                <configuration>
+                    <connectionType>connection</connectionType>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.0-beta-3</version>
+                <version>1.0-beta-4</version>
                 <executions>
                   <execution>
                     <phase>validate</phase>
@@ -154,6 +152,11 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+          <id>maven2-repository.smartsprites</id>
+          <name>Smartsprites Maven Repository</name>
+          <url>http://download.csssprites.org/maven2/</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -207,9 +210,8 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
+            <version>1.4</version>
         </dependency>
-
 
         <dependency>
             <groupId>commons-lang</groupId>
@@ -228,7 +230,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.3.2.GA</version>
+            <version>3.5.1-Final</version>
             <exclusions>
                 <exclusion>
               <groupId>cglib</groupId>
@@ -238,23 +240,33 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>ejb3-persistence</artifactId>
-            <version>1.0.2.GA</version>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.1-Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.4.0.GA</version>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>3.5.1-Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search</artifactId>
-            <version>3.1.0.GA</version>
+            <version>3.2.0.CR1</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
+            <version>3.5.1-Final</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>asm</artifactId>
+                    <groupId>asm</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>cglib</artifactId>
+                    <groupId>cglib</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -296,18 +308,13 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.5.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.8</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.8</version>
         </dependency>
 
         <!--  -->
@@ -341,7 +348,7 @@
         <dependency>
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.13</version>
             <exclusions>
                 <exclusion>
                     <artifactId>gnujaxp</artifactId>
@@ -368,24 +375,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>2.3</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymockclassextension</artifactId>
-            <version>2.2</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>net.java.inflector</groupId>
             <artifactId>inflector</artifactId>
             <version>0.7.0</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -417,10 +409,20 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Testing -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.8.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -429,18 +431,22 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
                     <groupId>org.apache.commons</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-asm</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -455,7 +461,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -466,7 +472,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -477,7 +483,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -488,7 +494,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -499,7 +505,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -510,7 +516,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -521,7 +527,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -529,15 +535,20 @@
                 </exclusion>
             </exclusions>
         </dependency>
- <dependency>
+         <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aspects</artifactId>
+                    <version>3.0.2.RELEASE</version>
+                </dependency>
+         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <artifactId>spring-oxm</artifactId>
+            <version>3.0.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -552,7 +563,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -563,7 +574,7 @@
         <dependency>
             <groupId>org.springframework.flex</groupId>
             <artifactId>spring-flex</artifactId>
-            <version>1.0.0.RELEASE</version>
+            <version>1.0.2.RELEASE</version>
                      <exclusions>
                 <exclusion>
                     <artifactId>com.springsource.org.apache.commons.logging</artifactId>
@@ -624,31 +635,31 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-openid</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <version>3.0.2.RELEASE</version>
         </dependency>
 
         <!-- Other -->
@@ -670,7 +681,7 @@
         <dependency>
             <groupId>net.jawr</groupId>
             <artifactId>jawr</artifactId>
-            <version>2.7</version>
+            <version>3.2.1</version>
 
             <exclusions>
                 <exclusion>
@@ -683,6 +694,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+                <groupId>org.carrot2</groupId>
+                <artifactId>smartsprites</artifactId>
+                <version>0.2.6</version>
+        </dependency>
 
         <dependency>
             <groupId>com.lowagie</groupId>
@@ -693,7 +709,7 @@
         <dependency>
             <groupId>org.jmesa</groupId>
             <artifactId>jmesa</artifactId>
-            <version>2.4.2</version>
+            <version>2.4.6</version>
         </dependency>
 
         <dependency>
@@ -752,6 +768,7 @@
             <artifactId>aopalliance</artifactId>
             <version>1.0</version>
         </dependency>
+
         <dependency>
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
@@ -787,73 +804,26 @@
     <reporting>
         <plugins>
             <plugin>
-              <groupId>org.codehaus.sonar-plugins</groupId>
-              <artifactId>maven-report</artifactId>
-              <version>0.1</version>
-            </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-changes-plugin</artifactId>
-            <version>2.1</version>
-            <reportSets>
-              <reportSet>
-                <reports>
-                  <report>changes-report</report>
-                </reports>
-              </reportSet>
-            </reportSets>
-          </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.2</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                  <aggregate>true</aggregate>
-                </configuration>
+                <groupId>org.codehaus.sonar-plugins</groupId>
+                <artifactId>maven-report</artifactId>
+                <version>0.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
+                <artifactId>maven-changes-plugin</artifactId>
                 <version>2.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <linkXref>true</linkXref>
-                    <targetJdk>1.5</targetJdk>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.4.3</version>
-                <configuration>
-                    <childDelegation>true</childDelegation>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jdepend-maven-plugin</artifactId>
-                <version>2.0-beta-2</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.2</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
-<profiles>
+
+    <profiles>
         <!-- ================= Production Settings Profile ================= -->
         <!-- Use "-P prod" when you want to use the settings in this profile -->
         <!-- =============================================================== -->

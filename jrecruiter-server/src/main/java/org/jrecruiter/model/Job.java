@@ -35,6 +35,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.Analyzer;
@@ -54,8 +56,9 @@ import org.jrecruiter.common.Constants.OfferedBy;
 * This class represents a job posting.
 *
 * @author Gunnar Hillert
-* @version $Id$
+* @version $Id: Job.java 561 2010-03-04 15:12:02Z ghillert $
 */
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"universalId"})})
 @Indexed

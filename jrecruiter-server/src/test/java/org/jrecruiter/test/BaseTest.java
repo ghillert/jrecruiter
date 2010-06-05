@@ -15,7 +15,8 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  */
 @ContextConfiguration(
         locations={
-        		"classpath:org/jrecruiter/server/spring/applicationContext-server.xml",
+                "classpath:org/jrecruiter/server/spring/applicationContext-server.xml",
+                "classpath:org/jrecruiter/server/spring/DemoContextConfiguration.xml",
                 "classpath:org/jrecruiter/server/spring/applicationContext-jpa.xml",
                 "classpath:org/jrecruiter/server/spring/test-applicationContext-mail.xml",
                 "classpath:org/jrecruiter/server/spring/applicationContext-resources.xml"

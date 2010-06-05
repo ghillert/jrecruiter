@@ -13,10 +13,22 @@
            </action>
            <action dev="Gunnar Hillert" type="add">
                Upgrade to SpringSecurity 3
-           </action> 
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Upgrade to Hibernate 3.5/JPA 2.0
+           </action>
            <action dev="Gunnar Hillert" type="add">
                I18N basic Spanish support
-           </action>           
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Demo Mode feature
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Data import/export using JAXB
+           </action>
+           <action dev="Gunnar Hillert" type="add">
+               Seed data/test data population now done through import/export feature
+           </action>
       </release>
       <release version="2.0.1" date="2009-08-23" description="Minor Feature Release">
            <action dev="Gunnar Hillert" type="add">
@@ -31,7 +43,7 @@
            <action dev="Gunnar Hillert" type="fix">
                 Improve phone number validation
                 http://code.google.com/p/jrecruiter/issues/detail?id=6
-           </action>           
+           </action>
       </release>
       <release version="2.0" date="2009-08-23" description="New Major Feature Release">
            <action dev="Gunnar Hillert" type="add">
