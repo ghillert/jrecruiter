@@ -20,7 +20,7 @@
 <script type="text/javascript">
 
 function checkDelete(userId){
-
+alert(333);
   if (confirm("<s:text name='jsp.userlist.delete.confirm'/>")) {
     return true;
   }
@@ -46,18 +46,38 @@ function onInvokeAction(id) {
 
 jQuery(document).ready(function () {
 
+    jQuery("#confirmDeletion").dialog({
+        title: 'Confirming Deletion',
+        autoOpen: false,
+        bgiframe: true,
+        width: 400,
+        height: 150,
+        show: 'blind',
+        hide: 'blind',
+        modal: true
+    });
+
     jQuery('#deleteButton').click(function(event) {
-            event.preventDefault();
-            confirm("Are you sure that you want to delete " + jQuery("#usersTableDiv input:checked").length + " user(s)?", function () {
-                $('#userListForm').submit();
-            });
-            return false;
-     });
+        event.preventDefault();
+        $('#confirmDeletion .message').html("Are you sure that you want to delete " + jQuery("#usersTableDiv input:checked").length + " user(s)?");
+        $("#confirmDeletion").dialog("open");
+        return false;
+    });
+
+    $("#yesButton").click(function() {
+        $('#userListForm').submit();
+    });
+
+    $("#noButton").click(function() {
+        $("#confirmDeletion").dialog("close");
+    });
+
 });
 
 </script>
 
   <s:form id="userListForm" action="delete-user" >
+      <s:hidden name="restore"  value="true" />
       <s:if test="users != null && users.size > 0">
         <div id="usersTableDiv" style="margin-bottom: 1em;">
             <%@include file="/WEB-INF/jsp/admin/user-list-table.jsp"%>
@@ -76,11 +96,10 @@ jQuery(document).ready(function () {
       </div>
   </s:form>
 
-    <div id="confirm" style="display:none">
-        <h1 style="padding-left: 1em;">Confirm</h1>
+    <div id="confirmDeletion" style="display:none">
         <p class="message"></p>
-        <div class="buttons">
-          <a href="#" class="button close"><span>&nbsp;</span>Yes</a>
-          <a href="#" class="modalClose button cancel"><span>&nbsp;</span>No</a>
+        <div class="buttons" style="width: 130px; margin-left: auto; margin-right: auto;">
+          <a href="#" id="yesButton" class="button close" style="float: left; margin-right: 5px;"><span>&nbsp;</span>Yes</a>
+          <a href="#" id="noButton" class="button cancel" style="margin-left: 75px;"><span>&nbsp;</span>No</a>
         </div>
     </div>

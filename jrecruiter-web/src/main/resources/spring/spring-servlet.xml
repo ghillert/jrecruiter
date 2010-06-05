@@ -38,13 +38,13 @@
         class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <property name="order" value="0"/>
     </bean>
-	<bean id="viewResolver"
-	      class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-	    <property name="prefix" value="/WEB-INF/jsp/"/>
-	    <property name="suffix" value=".jsp"/>
-	    <property name="order" value="1"/>
-	</bean>
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="1"/>
+    </bean>
     <bean id="freeMarkerViewResolver"
         class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="exposeSpringMacroHelpers" value="true" />
@@ -89,6 +89,14 @@
     <bean id="flexService" class="org.jrecruiter.service.impl.FlexServiceImpl" />
 
     <flex:remoting-destination ref="flexService" />
+
+
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize"><value>8194304</value> </property>
+    </bean>
 
 </beans>
 

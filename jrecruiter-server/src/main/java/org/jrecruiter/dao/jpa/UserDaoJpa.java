@@ -25,6 +25,7 @@ import javax.persistence.Query;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.jrecruiter.common.CollectionUtils;
@@ -177,7 +178,7 @@ implements UserDao {
         }
 
         for (Entry<String, String> entry : userFilters.entrySet()) {
-                criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue()));
+                criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue(), MatchMode.ANYWHERE));
         }
 
         criteria.setFirstResult((pageNumber - 1) * pageSize);

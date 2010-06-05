@@ -1,3 +1,5 @@
+/** sprite: mysprite; sprite-image: url('../img/mysprite.png'); sprite-layout: vertical */
+
 img {
     border-width: 0;
 }
@@ -64,7 +66,17 @@ body {
 
 /* Header *********************************************************************/
 .container .outer-header {
-    background: #90B5E6 url(../images/musa_header.jpg) no-repeat left;
+
+    /* Do rounding (native in Safari, Firefox and Chrome) */
+        -webkit-border-top-left-radius:  6px;
+        -webkit-border-top-right-radius: 6px;
+        -moz-border-radius-topright: 6px;
+        -moz-border-radius-topleft: 6px;
+
+
+        background-repeat: no-repeat;
+        background-color: #90B5E6;
+        background-image: url(../images/musa_header.jpg); /** sprite-ref: mysprite; */
 }
 
 .container .header {
@@ -86,30 +98,51 @@ body {
 }
 
 .container .header_menu {
-    width: 100%;
-    border-top: 1px solid #FF3C00;
+
     background: #0076CC;
-    padding: 0;
+    clear:both;
+    float:left;
+    height:33px;
+    overflow:hidden;
+    padding:0 !important;
+    width:100%;
+    z-index:1200000;
+    border-top: 1px solid #FF3C00;
 }
 
 .container .header_menu ul {
-    padding: 0;
-    margin: 0;
+    background:url(../images/header_menu_background.png);
+    height:32px;
+    margin:1px 5px 0 0;
+    padding-left:8px;
     color: White;
     float: left;
     width: 100%;
-    background: url(../images/header_menu_background.png);
 }
 
 .container .header_menu ul li {
-    display: inline;
+    list-style:none outside none;
+    float:left;
+    margin:0;
+    padding:0;
+
 }
 
 .container .header_menu  a {
-    padding: 0.2em 1em;
-    text-decoration: none;
-    float: left;
-    border-right: 1px solid #fff;
+    background-color: transparent;
+    border-left:1px solid #A5C476;
+    margin-left:0px;
+    padding-left:32px;
+    padding-right:16px;
+    line-height: 32px;
+    position: relative;
+    display:block;
+    float:left;
+}
+
+.container .header_menu a span {
+    line-height: 23px;
+    font-size: 12px;
 }
 
 .container .header_menu  a:active {
@@ -132,17 +165,50 @@ body {
     text-decoration: none;
 }
 
-.container .header_menu  a.icon {
-    background: url(../images/icons/feed-icon-14x14.png) no-repeat center;
+
+.container .header_menu  a.icon-home {
+    background-repeat: no-repeat;
+    background-position: 8px 8px;
+    background-image: url(../images/icons/crystal/gohome.png); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
 }
 
-.container .header_menu  a.twitter {
-    background: url(../images/icons/erenemre/twitter-03.png) no-repeat
-        center;
+.container .header_menu  a.icon-search {
+    background-repeat: no-repeat;
+    background-position: 8px 8px;
+    background-image:url(../images/icons/crystal/viewmag.png); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
+}
+
+.container .header_menu  a.icon-contact {
+    background-repeat: no-repeat;
+    background-position: 8px 8px;
+    background-image:url(../images/icons/crystal/mail_generic.png); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
+}
+
+.container .header_menu  a.icon-admin {
+    background-repeat: no-repeat;
+    background-position: 8px 8px;
+    background-image:url(../images/icons/crystal/configure.png); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
+}
+
+.container .header_menu  a.icon-rss {
+    background-repeat: no-repeat;
+    background-position: 8px 8px;
+    background-image: url(../images/icons/feed-icon-14x14.png); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
+}
+
+.container .header_menu  a.icon-twitter {
+    background-repeat: no-repeat;
+    background-position: 8px 8px;
+    background-image: url(../images/icons/erenemre/twitter-03.png); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
+}
+
+.container .header_menu  a.icon-xml {
+    background-repeat: no-repeat;
+    background-position: 8px 10px;
+    background-image: url(../images/icons/xml.gif); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
 }
 
 .container .header_menu  a.icon span {
-    position: absolute;
     left: -5000px;
     width: 4000px;
 }
@@ -217,6 +283,12 @@ body {
     margin: 0px auto auto auto;
     background: url(../images/header_menu_background.png);
     padding-bottom: 3px;
+
+    /* Do rounding (native in Safari, Firefox and Chrome) */
+    -webkit-border-bottom-left-radius:  6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
 }
 
 a.footerLogo {
@@ -342,7 +414,7 @@ small {
 }
 
 .menuList a {
-    width: 160px;
+    width: 170px;
 }
 
 /* Generic Hyperlink Button */
@@ -373,19 +445,23 @@ a.button:hover {
 }
 
 .button span.showJobs {
-    background-image: url(../images/icons/crystal/viewmag.png);
+    background-repeat: no-repeat;
+    background-image: url(../images/icons/crystal/viewmag.png); /** sprite-ref: mysprite; */
 }
 
 .button span.showJobsFlex {
-    background-image: url(../images/icons/flex-16x16.png);
+    background-repeat: no-repeat;
+    background-image: url(../images/icons/flex-16x16.png); /** sprite-ref: mysprite; */
 }
 
 .button span.manageAccount {
-    background-image: url(../images/icons/crystal/configure.png);
+    background-repeat: no-repeat;
+    background-image: url(../images/icons/crystal/configure.png); /** sprite-ref: mysprite; */
 }
 
 .button span.addUser {
-    background-image: url(../images/icons/crystal/add_user.png);
+    background-repeat: no-repeat;
+    background-image: url(../images/icons/crystal/add_user.png); /** sprite-ref: mysprite; */
 }
 
 a.close {
@@ -395,7 +471,8 @@ a.close {
 }
 
 a.close span {
-    background-image: url(../images/icons/crystal/button_ok.png);
+    background-position: 2px 50%;
+    background-image: url(../images/icons/crystal/button_ok.png); /** sprite-ref: mysprite; */
 }
 
 a.cancel {
@@ -405,14 +482,15 @@ a.cancel {
 }
 
 a.cancel span {
-    background-image: url(../images/icons/crystal/cancel.png);
+    background-repeat: no-repeat;
+    background-image: url(../images/icons/crystal/cancel.png); /** sprite-ref: mysprite; */
 }
 
 /* Form Buttons */
 input.searchBox {
-    background-image: url(../images/icons/crystal/viewmag.png);
     background-repeat: no-repeat;
     background-position: 2px 50%;
+    background-image: url(../images/icons/crystal/viewmag.png); /** sprite-ref: mysprite; */
     padding-left: 20px !important;
 }
 
@@ -425,6 +503,8 @@ input.searchBox {
 }
 
 .openIdLogo {
-    background: url(../images/icons/openid-logo-small.png) no-repeat 100% 0%;
+    background-repeat: no-repeat;
+    background-position: 100% 0px;
+    background-image: url(../images/icons/openid-logo-small.png); /** sprite-ref: mysprite; */
     padding: 1px;
 }

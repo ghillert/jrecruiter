@@ -29,6 +29,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -38,6 +41,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @author Gunnar Hillert
  * @version @version $Id$
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "name" } ) }
 )
@@ -57,12 +61,18 @@ public class Role implements Serializable, GrantedAuthority {
 
     /** Description. */
     private String description;
+
+    @XmlTransient
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
     // Constructors
 
     /** default constructor */
     public Role() {
+    }
+
+    public Role(final String name) {
+        this.name = name;
     }
 
     /** minimal constructor */

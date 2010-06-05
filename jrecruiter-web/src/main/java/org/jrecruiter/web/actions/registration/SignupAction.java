@@ -139,7 +139,7 @@ public class SignupAction extends BaseAction implements SessionAware {
 
         final User openIdUser = (User) session.get("OpenIdUserObject");
 
-        openIdUser.setUsername(openIdUser.getUsername());
+        user.setUsername(openIdUser.getUsername());
         user.setUserAuthenticationType(UserAuthenticationType.OPEN_ID);
 
         final ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);

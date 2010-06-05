@@ -56,6 +56,9 @@
     <logger name="org.springframework.web">
     <level value="WARN"/>
   </logger>
+    <logger name="org.springframework">
+    <level value="INFO"/>
+  </logger>
   <logger name="org.apache.struts">
     <level value="WARN"/>
   </logger>
@@ -88,6 +91,9 @@
   </logger>
   <logger name="org.jrecruiter">
     <level value="INFO"/>
+  </logger>
+  <logger name="org.jmesa">
+    <level value="DEBUG"/>
   </logger>
   <logger name="com.opensymphony.xwork2.ognl.OgnlValueStack">
     <level value="ERROR"/>

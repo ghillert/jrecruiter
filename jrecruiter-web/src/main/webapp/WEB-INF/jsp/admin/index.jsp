@@ -59,6 +59,10 @@
                   <li><a href="${searchIndexUrl}" ><spring:message code="jsp.admin.index.label.reindex.search.index"/></a></li>
                   <li><a href="${setupDemoUrl}" ><spring:message code="jsp.admin.index.label.setup.demo.jobs"/></a></li>
                   <li><a href="${loggingUrl}" ><spring:message code="jsp.admin.index.label.logging.settings"/></a></li>
+                  <c:url value="/s/admin/backup.xml" var="backupUrl"/>
+                  <li><a href="${backupUrl}"><spring:message code="jsp.admin.index.label.backup_xml"/></a></li>
+                  <c:url value="/s/admin/restore" var="restoreUrl"/>
+                  <li><a href="${restoreUrl}"><spring:message code="jsp.admin.index.label.restore"/></a></li>
               </ul>
           </fieldset>
       </security:authorize>
@@ -70,15 +74,15 @@
 <!--
 
 $(function() {
-	
-	$("#systemInformationLink").click(function() {
 
-		$("#systemInformationBox").dialog({ width: 700, height: 600, title: '<spring:message code="jsp.admin.index.label.system_information"/>' });
-		$("#systemInformationBox").dialog('open').load('${systemInformationUrl}');
-		});
+    $("#systemInformationLink").click(function() {
+
+        $("#systemInformationBox").dialog({ width: 700, height: 600, title: '<spring:message code="jsp.admin.index.label.system_information"/>' });
+        $("#systemInformationBox").dialog('open').load('${systemInformationUrl}');
+        });
 
 });
 
 //-->
 </script>
-    
+

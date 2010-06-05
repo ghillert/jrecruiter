@@ -15,7 +15,10 @@
 */
 package org.jrecruiter.service;
 
+import java.io.InputStream;
+
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.export.Backup;
 
 
 /**
@@ -42,4 +45,23 @@ public interface DemoService {
      *
      */
     User createDemoUser();
+
+    /**
+     * Restore a set of backed-up master data.
+     */
+    void restore(Backup backup);
+
+    /**
+     * Restore a set of backed-up master data.
+     */
+    void restore(InputStream inputStream);
+
+    /** Create the database using Hibernate's SchemaExport functionality */
+    void createDatabase();
+
+    /** Update the database using Hibernate's SchemaUpdate functionality */
+    void updateDatabase();
+
+    /** */
+    void loadAndRestoreSeedData();
 }

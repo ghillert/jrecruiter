@@ -18,8 +18,8 @@ package org.jrecruiter.web.actions;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.easymock.EasyMock;
 import org.jrecruiter.service.JobService;
+import org.mockito.Mockito;
 
 /**
  * Test the Struts 2 Logout Action
@@ -33,9 +33,7 @@ public class LogoutActionTest extends TestCase {
 
         LogoutAction logoutAction = new LogoutAction();
 
-        JobService jobService = EasyMock.createMock(JobService.class);
-
-        EasyMock.replay(jobService);
+        JobService jobService = Mockito.mock(JobService.class);
 
         String ret = logoutAction.execute();
 

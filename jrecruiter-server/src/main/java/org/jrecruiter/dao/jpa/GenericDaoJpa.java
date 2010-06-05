@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.ReplicationMode;
+import org.hibernate.Session;
 import org.jrecruiter.dao.GenericDao;
 
 /**
@@ -36,6 +38,7 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
+    @Override
     public List<T> getAll() {
         return this.entityManager.createQuery(
                 "select obj from " + this.persistentClass.getName() + " obj")
@@ -43,23 +46,33 @@ public class GenericDaoJpa<T, PK extends Serializable> implements GenericDao<T, 
     }
 
     /** {@inheritDoc} */
+    @Override
     public T get(PK id) {
         T entity = this.entityManager.find(this.persistentClass, id);
         return entity;
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean exists(PK id) {
         T entity = this.entityManager.find(this.persistentClass, id);
         return entity != null;
     }
 
     /** {@inheritDoc} */
+    @Override
     public T save(T object) {
         return this.entityManager.merge(object);
     }
 
     /** {@inheritDoc} */
+    @Override
+    public void replicate(T object) {
+        this.entityManager.unwrap(Session.class).replicate(object, ReplicationMode.EXCEPTION);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void remove(PK id) {
         this.entityManager.remove(this.get(id));
     }

@@ -93,24 +93,28 @@ public class JobServiceImpl implements JobService {
     //~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getJobs() {
         return jobDao.getAllJobs();
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getJobs(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> jobFilters) {
         return jobDao.getJobs(pageSize, pageNumber, sortOrders, jobFilters);
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Long getJobsCount() {
         return jobDao.getJobsCount();
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getUsersJobs(final String username) {
 
@@ -133,6 +137,7 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getUsersJobsForStatistics(final String username) {
 
@@ -150,6 +155,7 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> getUsersJobsForStatistics(String username, Integer maxResult) {
 
@@ -169,6 +175,7 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     public Job addJob(final Job job) {
 
         if (job.getStatistic() == null) {
@@ -185,6 +192,7 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addJobAndSendToMailingList(final Job job) {
         final Job savedJob = this.addJob(job);
 
@@ -226,6 +234,7 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void updateJob(final Job job) {
 
         if (job.getStatistic() == null) {
@@ -270,6 +279,7 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Job getJobForId(final Long jobId) {
         return jobDao.get(jobId);
@@ -284,83 +294,92 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Job> searchByKeyword(final String keyword) {
         return jobDao.searchByKeyword(keyword);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void deleteJobForId(final Long jobId) {
         jobDao.remove(jobId);
 
-          JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(new Date());
+        JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(new Date());
 
         if (jobCountPerDay == null) {
             jobCountPerDay = new JobCountPerDay();
             jobCountPerDay.setJobDate(new Date());
-            jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(1));
-            jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(0));
-            jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() - 1 );
-            jobCountPerDayDao.save(jobCountPerDay);
-        } else {
-            jobCountPerDay.setNumberOfJobsPosted(jobCountPerDay.getNumberOfJobsPosted() -1);
-            jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount() -1 );
-            jobCountPerDayDao.save(jobCountPerDay);
         }
+
+        jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(1));
+        jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(0));
+        jobCountPerDay.setTotalNumberOfJobs(jobDao.getJobsCount());
+        jobCountPerDayDao.save(jobCountPerDay);
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Configuration> getJRecruiterSettings() {
         return configurationDao.getAll();
     }
 
     /** {@inheritDoc} */
+    @Override
     public Configuration getJRecruiterSetting(final String key) {
         return configurationDao.get(key);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void saveJRecruiterSetting(final Configuration configuration) {
         configurationDao.save(configuration);
 
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Industry> getIndustries() {
         return this.industryDao.getAllIndustriesOrdered();
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<Region> getRegions() {
         return this.regionDao.getAllRegionsOrdered();
     }
 
     /** {@inheritDoc} */
+    @Override
     public void updateJobStatistic(Statistic statistics) {
             this.statisticDao.save(statistics);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void reindexSearch() {
         jobDao.reindexSearch();
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Industry getIndustry(Long industryId) {
         return industryDao.get(industryId);
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public Region getRegion(Long regionId) {
         return regionDao.get(regionId);
     }
 
     /** {@inheritDoc} */
+    @Override
     @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     public List<JobCountPerDay> getJobCountPerDayAndPeriod(final Date fromDate, final Date toDate) {
 
@@ -372,11 +391,13 @@ public class JobServiceImpl implements JobService {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void updateJobCountPerDays() {
         this.updateJobCountPerDays(CalendarUtils.getCalendarWithoutTime());
     }
 
     /** {@inheritDoc} */
+    @Override
     public void updateJobCountPerDays(final Calendar asOfDay) {
 
         final Calendar today = CalendarUtils.getCalendarWithoutTime();
@@ -409,8 +430,9 @@ public class JobServiceImpl implements JobService {
 
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void removeOldJobs(@NotNull Integer days) {
+    public void removeOldJobs(final @NotNull Integer days) {
 
         final Calendar cal = CalendarUtils.getCalendarWithoutTime();
         cal.add(Calendar.DAY_OF_YEAR, days.intValue() * -1);
@@ -418,6 +440,30 @@ public class JobServiceImpl implements JobService {
         final List<Job> jobs = jobDao.getJobsByUpdateDate(cal);
 
         LOGGER.info("Found " + jobs.size() + " jobs that are eligible for removal.");
+
+        if (!jobs.isEmpty()) {
+
+            final long jobsCount = jobDao.getJobsCount();
+
+            for (final Job job : jobs) {
+                jobDao.remove(job.getId());
+            }
+
+            JobCountPerDay jobCountPerDay = jobCountPerDayDao.getByDate(new Date());
+
+            if (jobCountPerDay == null) {
+                jobCountPerDay = new JobCountPerDay();
+                jobCountPerDay.setJobDate(new Date());
+
+            }
+
+            jobCountPerDay.setNumberOfJobsDeleted(Long.valueOf(jobs.size()));
+            jobCountPerDay.setNumberOfJobsPosted(Long.valueOf(0));
+            jobCountPerDay.setTotalNumberOfJobs(jobsCount - jobs.size() );
+            jobCountPerDay.setAutomaticallyCleaned(Boolean.TRUE);
+            jobCountPerDayDao.save(jobCountPerDay);
+
+        }
 
     }
 

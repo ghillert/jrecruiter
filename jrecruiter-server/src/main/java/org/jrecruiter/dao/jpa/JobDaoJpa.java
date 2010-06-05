@@ -39,7 +39,6 @@ import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Job;
-import org.junit.experimental.theories.DataPoint;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -337,7 +336,7 @@ implements JobDao {
             final List<Job> jobs;
 
             jobs = entityManager
-                .createQuery("select j from Job j where j.updateDate >= :updateDate")
+                .createQuery("select j from Job j where j.updateDate <= :updateDate")
                 .setParameter("updateDate", updateDate.getTime())
                 .getResultList();
 

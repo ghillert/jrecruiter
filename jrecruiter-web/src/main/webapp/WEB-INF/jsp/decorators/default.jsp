@@ -41,21 +41,16 @@
     <div class="container"><div class="outer-header">
       <div class="header"><span class="ajug">AJUG</span> <span class="separator">|</span> Jobs</div></div>
       <div class="header_menu">
-          <ul><li><a href="<c:url value='/'/>"><spring:message code="jsp.decorators.default.menu.home"/></a></li>
-            <li>
-                <a href="<c:url value='/search.html'/>"><spring:message code="jsp.decorators.default.menu.search.jobs"/></a></li>
-            <li>
-                <a href="<c:url value='/admin/index.html'/>"><spring:message code="jsp.decorators.default.menu.admin"/></a></li>
-            <li>
-                <a href="#" id="contact"><spring:message code="jsp.decorators.default.menu.about"/></a></li>
-            <li class="icon"><a href="<c:url value='/rss/jobs.rss'/>"                     class="icon"        title="<spring:message code="jsp.decorators.default.menu.rss.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.rss"/></span></a></li>
-            <li class="icon"><a href="<c:url value='http://www.twitter.com/ajug_jobs/'/>" class="icon twitter" title="<spring:message code="jsp.decorators.default.menu.twitter.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.twitter"/></span></a></li>
-            <li>             <a href="<c:url value='/s/indeed.xml'/>"              title="<spring:message code="jsp.decorators.default.menu.xml.title"/>"><spring:message code="jsp.decorators.default.menu.xml"/></a></li>
-            <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
-                              <c:if test="${pageContext.request.secure}">
-          Site is SSL secured
-      </c:if></li>
-            </ul>
+          <ul><li class="icon"><a class="icon-home"    href="<c:url value='/'/>"                                                                                                                 >&nbsp;<span><spring:message  code="jsp.decorators.default.menu.home"/></span></a></li>
+              <li class="icon"><a class="icon-search"  href="<c:url value='/search.html'/>"                                                                                                      >&nbsp;<span><spring:message  code="jsp.decorators.default.menu.search.jobs"/></span></a></li>
+              <li class="icon"><a class="icon-admin"   href="<c:url value='/admin/index.html'/>"                                                                                                 >&nbsp;<span><spring:message  code="jsp.decorators.default.menu.admin"/></span></a></li>
+              <li class="icon"><a class="icon-contact" href="#"  id="contact"                                                                                                                    >&nbsp;<span><spring:message  code="jsp.decorators.default.menu.about"/></span></a></li>
+              <li class="icon"><a class="icon-rss"     href="<c:url value='/rss/jobs.rss'/>"                      title="<spring:message code="jsp.decorators.default.menu.rss.title"/>"    >&nbsp;<span><spring:message code="jsp.decorators.default.menu.rss"/></span></a></li>
+              <li class="icon"><a class="icon-twitter" href="<c:url value='http://www.twitter.com/ajug_jobs/'/>"  title="<spring:message code="jsp.decorators.default.menu.twitter.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.twitter"/></span></a></li>
+              <li class="icon"><a class="icon-xml"     href="<c:url value='/s/indeed.xml'/>"                      title="<spring:message code="jsp.decorators.default.menu.xml.title"/>"    >&nbsp;<span>&nbsp;</span></a></li>
+              <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
+                              <c:if test="${pageContext.request.secure}">Site is SSL secured</c:if></li>
+          </ul>
 
       </div>
       <div class="content"><security:authorize ifAnyGranted="MANAGER, ADMIN">
@@ -66,7 +61,7 @@
       </div>
       <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"
-        title="Main website of the jRecruiter project"><span>j</span>Recruiter <spring:message code="jrecruiter.build.version"/> (Revision: <spring:message code="jrecruiter.build.number"/>)</a>
+        title="Main website of the jRecruiter project"><span>j</span>Recruiter <spring:message code="jrecruiter.build.version"/>.<spring:message code="jrecruiter.build.number"/></a>
       </div>
     </div>
 
@@ -77,7 +72,7 @@
       </div>
 
         <c:url value="/contact.html" var="contactUrl"/>
-        
+
         <script type="text/javascript">
 
         $(document).ready(function () {
@@ -103,8 +98,8 @@
 
                 $("#baseModal").dialog('open').load('${contactUrl}', '#baseModal .contents');
 
-            });       
-        
+            });
+
 
             $('fieldset').mouseover(function() {
                     $(this).css("border-color", "#E07125");

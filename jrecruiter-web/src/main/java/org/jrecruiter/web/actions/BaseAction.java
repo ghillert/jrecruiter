@@ -5,6 +5,7 @@ import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
+import org.jrecruiter.spring.ApplicationConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -28,6 +29,7 @@ public abstract class BaseAction extends ActionSupport {
      */
     protected UserService userService;
     protected MessageSource messageSource;
+    protected ApplicationConfiguration applicationConfiguration;
 
     private String backTo;
 
@@ -105,6 +107,14 @@ public abstract class BaseAction extends ActionSupport {
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
+
+    /**
+     * @param applicationConfiguration the applicationConfiguration to set
+     */
+//    public void setApplicationConfiguration(
+//            ApplicationConfiguration applicationConfiguration) {
+//        this.applicationConfiguration = applicationConfiguration;
+//    }
 
 
 }

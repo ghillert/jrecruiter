@@ -31,7 +31,9 @@ public class UserToRoleDaoTest extends BaseTest {
         Role savedRole = roleDao.save(role);
         entityManager.flush();
 
-        User user = userDao.get(1L);
+        final User user = userDao.getUserByUsernameOrEmail("admin");
+
+        Assert.assertNotNull(user);
 
         UserToRole userToRole = new UserToRole(null, savedRole, user);
 

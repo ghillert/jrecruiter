@@ -189,7 +189,7 @@ public class ShowStatisticsAction extends BaseAction {
                           dashPattern, 0));
                   originalEnd.setLabelAnchor(RectangleAnchor.TOP_LEFT);
                   originalEnd.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
-                  originalEnd.setLabel("Cleanup");
+                  originalEnd.setLabel("C");
                   originalEnd.setAlpha(0.1F);
                   xyplot.addDomainMarker(originalEnd);
               }

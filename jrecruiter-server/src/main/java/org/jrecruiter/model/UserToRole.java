@@ -23,6 +23,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  * This class represents a UserToRole (Many-To-Many 'Link Object' between
@@ -31,6 +33,7 @@ import javax.persistence.UniqueConstraint;
  * @author  Gunnar Hillert
  * @version $Id$
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "users_id", "roles_id" } ) }
 )
@@ -46,6 +49,7 @@ public class UserToRole  implements java.io.Serializable {
 
      private Long id;
      private Role role;
+
      private User user;
 
      // Constructors

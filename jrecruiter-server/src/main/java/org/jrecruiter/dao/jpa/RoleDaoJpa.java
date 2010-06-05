@@ -15,6 +15,8 @@
  */
 package org.jrecruiter.dao.jpa;
 
+import javax.persistence.NoResultException;
+
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.Role;
 import org.springframework.stereotype.Repository;
@@ -49,7 +51,13 @@ implements RoleDao {
                 + "where r.name = :role");
         query.setParameter("role", roleName);
 
-        role = (Role) query.getSingleResult();
+        try {
+            role = (Role) query.getSingleResult();
+        } catch(NoResultException e) {
+            throw new IllegalStateException(
+                    String.format("Role '%s' does not exist. Roles should always " +
+                            "be there. Is the seed data populated?", roleName));
+        }
 
         return role;
     }

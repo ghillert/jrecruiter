@@ -64,6 +64,7 @@
     <column>fax</column>
     <column>password</column>
     <column>enabled</column>
+    <column>user_authentication_type</column>
         <row>
             <value>1</value>
             <value>admin</value>
@@ -76,6 +77,7 @@
             <value></value>
             <value>aswCoBHvJHtCSyJWRHvch0e4sKflhzkRsP8bUsf1FPTjEkFi3nlQbgtbRx95GluwVr82Ol6WHaLiW/eeoJzXvwjZjEYPgrVYuZmm3Xn0Rek=</value>
             <value>true</value>
+            <value>1</value>
         </row>
     </table>
 
