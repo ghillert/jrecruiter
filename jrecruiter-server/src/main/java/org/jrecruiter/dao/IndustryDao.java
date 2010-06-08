@@ -17,8 +17,6 @@ package org.jrecruiter.dao;
 
 import java.util.List;
 
-import org.jrecruiter.dao.GenericDao;
-
 import org.jrecruiter.model.Industry;
 
 /**

@@ -5,7 +5,6 @@ import java.io.OutputStream;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.JobCountPerDayDao;
@@ -23,6 +22,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,8 +55,15 @@ public class BackupController {
 
     private static final long serialVersionUID = -3422780336408883930L;
 
+    /**
+     * Provide a complete set of master data as XML document.
+     *
+     * @param model
+     * @param out
+     * @throws JAXBException
+     */
     @RequestMapping("/admin/backup.xml")
-    public void backup(ModelMap model, OutputStream out) throws JAXBException {
+    public void backup(final ModelMap model, final OutputStream out) throws JAXBException {
 
         Backup backup = new Backup();
         backup.setJobCountPerDay(jobCountPerDayDao.getAll());
@@ -70,22 +77,39 @@ public class BackupController {
 
     }
 
+    /**
+     * Render the restore screen, where the user can upload a data file
+     * to restore master data.
+     *
+     * @return
+     * @throws JAXBException
+     * @throws IOException
+     */
     @RequestMapping(value="/admin/restore", method = RequestMethod.GET)
     public String restore() throws JAXBException, IOException {
-
         return "admin/restore";
-
     }
 
+    /**
+     * Perform the master data restore operation (the user has provided a
+     * file and posted the file to the server).
+     *
+     *
+     * @param file The file to restore
+     * @param result Validation issues
+     * @return The view to return to.
+     * @throws JAXBException
+     * @throws IOException
+     */
     @Transactional
     @RequestMapping(value="/admin/restore", method = RequestMethod.POST)
-    public String restore(@RequestParam("file") MultipartFile file) throws JAXBException, IOException {
+    public String restore(final @RequestParam("file") MultipartFile file,
+    		              final BindingResult result) throws JAXBException, IOException {
 
         if (!file.isEmpty()) {
             demoService.restore(file.getInputStream());
-
         } else {
-
+            result.reject("class.backupcontroller.validation.file.empty");
         }
 
         return "redirect:../../admin/index.html";

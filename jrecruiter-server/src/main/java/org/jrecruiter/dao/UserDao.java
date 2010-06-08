@@ -18,8 +18,6 @@ package org.jrecruiter.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.jrecruiter.dao.GenericDao;
-
 import org.jrecruiter.model.User;
 
 /**

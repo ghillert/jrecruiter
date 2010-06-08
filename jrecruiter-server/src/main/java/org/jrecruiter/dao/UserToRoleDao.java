@@ -15,8 +15,6 @@
 */
 package org.jrecruiter.dao;
 
-import org.jrecruiter.dao.GenericDao;
-
 import org.jrecruiter.model.UserToRole;
 
 /**

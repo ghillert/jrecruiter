@@ -109,10 +109,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalArgumentException("verificationRequired must not be null.");
         }
 
-        if (user == null) {
-            throw new IllegalArgumentException("User must not be null.");
-        }
-
         final Date registerDate = new Date();
         user.setRegistrationDate(registerDate);
         user.setUpdateDate(registerDate);

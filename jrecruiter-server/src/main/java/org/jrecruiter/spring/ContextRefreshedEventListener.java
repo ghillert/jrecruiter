@@ -1,21 +1,12 @@
 package org.jrecruiter.spring;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.jasypt.digest.StringDigester;
-import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.common.Constants.Roles;
-import org.jrecruiter.common.Constants.UserAuthenticationType;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.SchemaMigrationDao;
 import org.jrecruiter.dao.UserDao;
-import org.jrecruiter.model.Role;
 import org.jrecruiter.model.SchemaMigration;
-import org.jrecruiter.model.User;
-import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.service.DemoService;
 import org.jrecruiter.service.JobService;
 import org.slf4j.Logger;

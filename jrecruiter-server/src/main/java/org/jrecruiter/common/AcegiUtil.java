@@ -20,8 +20,9 @@ public final class AcegiUtil {
 
     public static boolean containsRole(final Collection<GrantedAuthority> grantedAuthorities, final String role) {
         for (final GrantedAuthority grantedAuthority : grantedAuthorities)
-            if (grantedAuthority.getAuthority().equals(role))
+            if (grantedAuthority.getAuthority().equals(role)) {
                 return true;
+            }
         return false;
     }
 

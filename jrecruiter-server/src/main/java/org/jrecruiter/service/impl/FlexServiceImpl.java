@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.dao.JobDao;
-import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.service.FlexService;
 import org.jrecruiter.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;

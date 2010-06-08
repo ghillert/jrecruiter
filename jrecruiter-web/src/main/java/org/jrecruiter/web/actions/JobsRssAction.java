@@ -8,8 +8,8 @@ import java.util.Map;
 
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.ServerActions;
-import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.ServerSettings;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;

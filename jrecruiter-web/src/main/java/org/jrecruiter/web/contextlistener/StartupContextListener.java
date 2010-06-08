@@ -11,8 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.jrecruiter.common.Apphome;
 import org.jrecruiter.common.Constants;
 import org.jrecruiter.common.SystemInformationUtils;
-import org.jrecruiter.common.SystemPropertyInformation;
-import org.jrecruiter.common.Constants.AppHomeSource;
 import org.jrecruiter.common.Constants.SpringContextMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

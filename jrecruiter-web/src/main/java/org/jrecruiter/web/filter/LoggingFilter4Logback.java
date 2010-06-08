@@ -18,6 +18,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Servlet Filter implementation class LoggingFilter4Logback
+ *
+ * @author Gunnar Hillert
+ * @version $Id$
+ *
  */
 public class LoggingFilter4Logback implements Filter {
 
@@ -30,11 +34,22 @@ public class LoggingFilter4Logback implements Filter {
             final ServletResponse res,
             final FilterChain chain) throws IOException, ServletException {
 
-        final HttpServletResponse response = (HttpServletResponse) res;
-        final HttpServletRequest  request  = (HttpServletRequest) req;
+    	final HttpServletResponse response;
+    	final HttpServletRequest  request;
 
-        ErrorAwareHttpServletResponseWrapper errorAwareResponse = new ErrorAwareHttpServletResponseWrapper(response);
+    	if (res instanceof HttpServletResponse) {
+    		response = (HttpServletResponse) res;
+    	} else {
+    		throw new IllegalStateException("Cannot cast ServletResponse to HttpServletResponse.");
+    	}
 
+    	if (res instanceof HttpServletRequest) {
+    		request  = (HttpServletRequest) req;
+    	} else {
+    		throw new IllegalStateException("Cannot cast ServletRequest to HttpServletRequest.");
+    	}
+
+        final ErrorAwareHttpServletResponseWrapper errorAwareResponse = new ErrorAwareHttpServletResponseWrapper(response);
 
         final String username;
 

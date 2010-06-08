@@ -47,8 +47,9 @@ public class GenericEnumUserType implements UserType, ParameterizedType {
 
         type = (NullableType) TypeFactory.basic(identifierType.getName());
 
-        if (type == null)
+        if (type == null) {
             throw new HibernateException("Unsupported identifier type " + identifierType.getName());
+        }
 
         sqlTypes = new int[] { type.sqlType() };
 
