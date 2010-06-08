@@ -17,13 +17,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.mail.javamail.MimeMailMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.subethamail.smtp.TooMuchDataException;
 import org.subethamail.smtp.helper.SimpleMessageListener;
 import org.subethamail.smtp.helper.SimpleMessageListenerAdapter;
 import org.subethamail.smtp.server.SMTPServer;
 
+/**
+ *
+ * FIXME Need to refactor this class
+ *
+ * @author Gunnar Hillert
+ *
+ */
 @Configuration
 public class DemoContextConfiguration {
 
@@ -68,9 +73,6 @@ public class DemoContextConfiguration {
 
                         try {
                         MimeMessage message = new MimeMessage(Session.getDefaultInstance(new Properties()), new ByteArrayInputStream(bytes));
-
-                        MimeMessageHelper helper = new MimeMessageHelper(message);
-                        MimeMailMessage m = new MimeMailMessage(message);
 
                         MimeMultipart mm = (MimeMultipart) message.getContent();
                         mm.getBodyPart(0);

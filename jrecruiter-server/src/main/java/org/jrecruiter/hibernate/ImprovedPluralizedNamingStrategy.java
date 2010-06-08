@@ -115,7 +115,9 @@ public class ImprovedPluralizedNamingStrategy implements NamingStrategy, Seriali
             String propertyName, String propertyEntityName, String propertyTableName, String referencedColumnName
     ) {
         String header = propertyName != null ? StringHelper.unqualify( propertyName ) : propertyTableName;
-        if (header == null) throw new AssertionFailure("NamingStrategy not properly filled");
+        if (header == null) {
+        	throw new AssertionFailure("NamingStrategy not properly filled");
+        }
         return columnName( header ); //+ "_" + referencedColumnName not used for backward compatibility
     }
 

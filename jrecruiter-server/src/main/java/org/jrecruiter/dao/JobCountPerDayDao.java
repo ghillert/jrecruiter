@@ -18,8 +18,6 @@ package org.jrecruiter.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.jrecruiter.dao.GenericDao;
-
 import org.jrecruiter.model.statistics.JobCountPerDay;
 
 /**

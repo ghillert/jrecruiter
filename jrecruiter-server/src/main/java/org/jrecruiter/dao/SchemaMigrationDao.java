@@ -15,11 +15,6 @@
 */
 package org.jrecruiter.dao;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-
-import org.jrecruiter.model.Job;
 import org.jrecruiter.model.SchemaMigration;
 
 /**

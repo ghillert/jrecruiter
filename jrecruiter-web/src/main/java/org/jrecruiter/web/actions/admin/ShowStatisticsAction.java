@@ -50,8 +50,8 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.statistics.JobCountPerDay;
 import org.jrecruiter.web.actions.BaseAction;
 
 /**

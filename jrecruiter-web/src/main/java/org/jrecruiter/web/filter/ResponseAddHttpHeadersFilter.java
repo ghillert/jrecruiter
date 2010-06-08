@@ -40,9 +40,20 @@ public class ResponseAddHttpHeadersFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res,
             FilterChain chain) throws IOException, ServletException {
 
-        final HttpServletResponse response = (HttpServletResponse) res;
-        final HttpServletRequest  request  = (HttpServletRequest) req;
-        // set the provided HTTP response parameters
+    	final HttpServletResponse response;
+    	final HttpServletRequest  request;
+
+    	if (res instanceof HttpServletResponse) {
+    		response = (HttpServletResponse) res;
+    	} else {
+    		throw new IllegalStateException("Cannot cast ServletResponse to HttpServletResponse.");
+    	}
+
+    	if (res instanceof HttpServletRequest) {
+    		request  = (HttpServletRequest) req;
+    	} else {
+    		throw new IllegalStateException("Cannot cast ServletRequest to HttpServletRequest.");
+    	}
 
         LOGGER.debug("RequestURI = " + request.getRequestURI());
 

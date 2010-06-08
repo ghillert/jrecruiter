@@ -1,8 +1,6 @@
 package org.jrecruiter.web.actions.admin;
 
 import org.jrecruiter.common.SystemPropertyInformation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +18,10 @@ public class SystemInformationController {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
-    private static final Logger LOGGER = LoggerFactory.getLogger(SystemInformationController.class);
 
     @RequestMapping(value="/admin/systemInformation", method=RequestMethod.GET)
     public void execute(final ModelMap model) {
         model.addAttribute("systemProperties", SystemPropertyInformation.getSystemPropertyValuesAsList());
-    }
-
-    public class Test {
-
     }
 
 }

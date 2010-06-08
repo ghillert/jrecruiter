@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
-import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,10 +83,7 @@ public class DwrAction extends BaseDwrAction {
 
                  viewedPostings = (Set<Long>)request.getSession().getAttribute("visited");
 
-                 if (viewedPostings.contains(jobId)){
-
-
-                 } else {
+                 if (viewedPostings.contains(jobId)) {
                      long counter = statistics.getCounter().longValue() + 1 ;
                      statistics.setCounter(Long.valueOf(counter));
                      viewedPostings.add(jobId);
@@ -96,8 +93,7 @@ public class DwrAction extends BaseDwrAction {
 
                  long counter;
 
-                 if (statistics.getCounter() != null)
-                 {
+                 if (statistics.getCounter() != null) {
                      counter = statistics.getCounter().longValue() + 1 ;
                  } else {
                      counter = 1;

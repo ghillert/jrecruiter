@@ -176,26 +176,31 @@ public class CustomChartResult implements Result {
      * @throws Exception if an error occurs when creating or writing the chart to the servlet output stream.
      */
     public void execute(ActionInvocation invocation) throws Exception {
-        if (!chartSet) // if our chart hasn't been set (by the testcase), we'll look it up in the value stack
+        if (!chartSet) { // if our chart hasn't been set (by the testcase), we'll look it up in the value stack
             chart = (JFreeChart) invocation.getStack().findValue(value, JFreeChart.class);
-        if (chart == null) // we need to have a chart object - if not, blow up
+        }
+        if (chart == null) {// we need to have a chart object - if not, blow up
             throw new IllegalArgumentException("No JFreeChart object found on the stack with name " + value);
+        }
         // make sure we have some value for the width and height
-        if (height == null)
+        if (height == null) {
             throw new IllegalArgumentException("No height parameter was given.");
-        if (width == null)
+        }
+        if (width == null) {
             throw new IllegalArgumentException("No width parameter was given.");
+        }
 
         // get a reference to the servlet output stream to write our chart image to
         OutputStream os = ServletActionContext.getResponse().getOutputStream();
         try {
             // check the type to see what kind of output we have to produce
-            if ("png".equalsIgnoreCase(type))
+            if ("png".equalsIgnoreCase(type)) {
                 ChartUtilities.writeChartAsPNG(os, chart, width, height, true, 0);
-            else if ("jpg".equalsIgnoreCase(type) || "jpeg".equalsIgnoreCase(type))
+            } else if ("jpg".equalsIgnoreCase(type) || "jpeg".equalsIgnoreCase(type)) {
                 ChartUtilities.writeChartAsJPEG(os, chart, width, height);
-            else
-                throw new IllegalArgumentException(type + " is not a supported render type (only JPG and PNG are).");
+            } else {
+            	throw new IllegalArgumentException(type + " is not a supported render type (only JPG and PNG are).");
+            }
         } finally {
             if (os != null) os.flush();
         }

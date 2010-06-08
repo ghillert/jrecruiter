@@ -48,7 +48,7 @@ public class EditUserAction extends BaseAction {
 
         if (changePassword) {
 
-            if (password != null && password != null) {
+            if (password != null && password2 != null) {
                 if (!password.trim().equals(password2.trim())) {
                     addFieldError("password2", "The passwords do not match.");
                 }

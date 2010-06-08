@@ -56,7 +56,7 @@ import org.jrecruiter.common.Constants.OfferedBy;
 * This class represents a job posting.
 *
 * @author Gunnar Hillert
-* @version $Id: Job.java 561 2010-03-04 15:12:02Z ghillert $
+* @version $Id$
 */
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -841,93 +841,130 @@ public class Job implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (!(obj instanceof Job))
+        }
+        if (!(obj instanceof Job)) {
             return false;
-        Job other = (Job) obj;
+        }
+
+        final Job other = (Job) obj;
+
         if (businessAddress1 == null) {
             if (other.businessAddress1 != null)
                 return false;
-        } else if (!businessAddress1.equals(other.businessAddress1))
+        } else if (!businessAddress1.equals(other.businessAddress1)) {
             return false;
+        }
         if (businessAddress2 == null) {
-            if (other.businessAddress2 != null)
+            if (other.businessAddress2 != null) {
                 return false;
-        } else if (!businessAddress2.equals(other.businessAddress2))
+            }
+        } else if (!businessAddress2.equals(other.businessAddress2)) {
             return false;
+        }
         if (businessCity == null) {
-            if (other.businessCity != null)
+            if (other.businessCity != null) {
                 return false;
-        } else if (!businessCity.equals(other.businessCity))
+            }
+        } else if (!businessCity.equals(other.businessCity)) {
             return false;
+        }
         if (businessEmail == null) {
-            if (other.businessEmail != null)
+            if (other.businessEmail != null) {
                 return false;
-        } else if (!businessEmail.equals(other.businessEmail))
+            }
+        } else if (!businessEmail.equals(other.businessEmail)) {
             return false;
+        }
         if (businessName == null) {
-            if (other.businessName != null)
+            if (other.businessName != null) {
                 return false;
-        } else if (!businessName.equals(other.businessName))
+            }
+        } else if (!businessName.equals(other.businessName)) {
             return false;
+        }
         if (businessPhone == null) {
-            if (other.businessPhone != null)
+            if (other.businessPhone != null) {
                 return false;
-        } else if (!businessPhone.equals(other.businessPhone))
+            }
+        } else if (!businessPhone.equals(other.businessPhone)) {
             return false;
+        }
         if (businessState == null) {
-            if (other.businessState != null)
+            if (other.businessState != null) {
                 return false;
-        } else if (!businessState.equals(other.businessState))
+            }
+        } else if (!businessState.equals(other.businessState)) {
             return false;
+        }
         if (businessZip == null) {
-            if (other.businessZip != null)
+            if (other.businessZip != null) {
                 return false;
-        } else if (!businessZip.equals(other.businessZip))
+            }
+        } else if (!businessZip.equals(other.businessZip)) {
             return false;
+        }
         if (jobTitle == null) {
-            if (other.jobTitle != null)
+            if (other.jobTitle != null) {
                 return false;
-        } else if (!jobTitle.equals(other.jobTitle))
+            }
+        } else if (!jobTitle.equals(other.jobTitle)) {
             return false;
+        }
         if (latitude == null) {
-            if (other.latitude != null)
+            if (other.latitude != null) {
                 return false;
-        } else if (!latitude.equals(other.latitude))
+            }
+        } else if (!latitude.equals(other.latitude)) {
             return false;
+        }
         if (longitude == null) {
-            if (other.longitude != null)
+            if (other.longitude != null) {
                 return false;
-        } else if (!longitude.equals(other.longitude))
+            }
+        } else if (!longitude.equals(other.longitude)) {
             return false;
+        }
         if (registrationDate == null) {
-            if (other.registrationDate != null)
+            if (other.registrationDate != null) {
                 return false;
-        } else if (!registrationDate.equals(other.registrationDate))
+            }
+        } else if (!registrationDate.equals(other.registrationDate)) {
             return false;
+        }
         if (universalId == null) {
-            if (other.universalId != null)
+            if (other.universalId != null) {
                 return false;
-        } else if (!universalId.equals(other.universalId))
+            }
+        } else if (!universalId.equals(other.universalId)) {
             return false;
+        }
         if (updateDate == null) {
-            if (other.updateDate != null)
+            if (other.updateDate != null) {
                 return false;
-        } else if (!updateDate.equals(other.updateDate))
+            }
+        } else if (!updateDate.equals(other.updateDate)) {
             return false;
+        }
         if (website == null) {
-            if (other.website != null)
+            if (other.website != null) {
                 return false;
-        } else if (!website.equals(other.website))
+            }
+        } else if (!website.equals(other.website)) {
             return false;
+        }
         if (zoomLevel == null) {
-            if (other.zoomLevel != null)
+            if (other.zoomLevel != null) {
                 return false;
-        } else if (!zoomLevel.equals(other.zoomLevel))
+            }
+        } else if (!zoomLevel.equals(other.zoomLevel)) {
             return false;
+        }
+
         return true;
     }
 

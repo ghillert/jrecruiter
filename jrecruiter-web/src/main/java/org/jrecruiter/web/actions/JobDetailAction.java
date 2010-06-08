@@ -8,8 +8,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Statistic;
 import org.jrecruiter.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,10 +91,7 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
                  viewedPostings = (Set<Long>)session.get("visited");
 
-                 if (viewedPostings.contains(jobId)){
-
-
-                 } else {
+                 if (!viewedPostings.contains(jobId)){
                      long counter = statistics.getCounter().longValue() + 1 ;
                      statistics.setCounter(Long.valueOf(counter));
                      viewedPostings.add(jobId);
@@ -104,13 +101,11 @@ public class JobDetailAction extends BaseAction implements SessionAware {
 
                  long counter;
 
-                 if (statistics.getCounter() != null)
-                 {
+                 if (statistics.getCounter() != null) {
                      counter = statistics.getCounter().longValue() + 1 ;
                  } else {
                      counter = 1;
                  }
-
 
                  statistics.setCounter(Long.valueOf(counter));
 

@@ -330,8 +330,9 @@ public class UrlEncodedQueryString
     {
         List<String> parameters = getValues( name );
 
-        if ( parameters == null || parameters.isEmpty() )
+        if ( parameters == null || parameters.isEmpty() ) {
             return null;
+        }
 
         return parameters.get( 0 );
     }
@@ -626,8 +627,10 @@ public class UrlEncodedQueryString
             builder.append( "//" );
             builder.append( uri.getAuthority() );
         }
-        if ( uri.getPath() != null )
+
+        if ( uri.getPath() != null ) {
             builder.append( uri.getPath() );
+        }
 
         String query = toString( separator );
         if ( query.length() != 0 )
@@ -681,11 +684,13 @@ public class UrlEncodedQueryString
     @Override
     public boolean equals( Object obj )
     {
-        if ( obj == this )
+        if ( obj == this ) {
             return true;
+        }
 
-        if ( !( obj instanceof UrlEncodedQueryString ) )
+        if ( !( obj instanceof UrlEncodedQueryString ) ) {
             return false;
+        }
 
         String query = toString();
         String thatQuery = ( (UrlEncodedQueryString) obj ).toString();
@@ -757,8 +762,9 @@ public class UrlEncodedQueryString
         {
             for ( String strValue : this.queryMap.get( strName ) )
             {
-                if ( builder.length() != 0 )
+                if ( builder.length() != 0 ) {
                     builder.append( separator );
+                }
 
                 // Encode names and values. Do this in toString(), rather than
                 // append/set, so that the Map always contains the
@@ -816,12 +822,12 @@ public class UrlEncodedQueryString
 
     private void appendOrSet( final String name, final String value, final boolean append )
     {
-        if ( name == null )
+        if ( name == null ) {
             throw new NullPointerException( "name" );
-
-        if ( value == null && append )
+        }
+        if ( value == null && append ) {
             return;
-
+        }
         // If we're appending, and there's an existing parameter...
 
         if ( append )
@@ -868,9 +874,9 @@ public class UrlEncodedQueryString
     {
         // Nothing to do?
 
-        if ( parameters == null )
+        if ( parameters == null ) {
             return;
-
+        }
         // Note we always parse using PARSE_PARAMETER_SEPARATORS, regardless
         // of what the user later nominates as their output parameter
         // separator using toString()
@@ -907,11 +913,12 @@ public class UrlEncodedQueryString
 
                 if ( !append )
                 {
-                    if ( setAlreadyParsed == null )
+                    if ( setAlreadyParsed == null ) {
                         setAlreadyParsed = new HashSet<String>();
-
-                    if ( !setAlreadyParsed.contains( strName ) )
+                    }
+                    if ( !setAlreadyParsed.contains( strName ) ) {
                         remove( strName );
+                    }
 
                     setAlreadyParsed.add( strName );
                 }
