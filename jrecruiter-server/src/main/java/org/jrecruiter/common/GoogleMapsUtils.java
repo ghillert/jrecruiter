@@ -6,16 +6,40 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+/**
+ * Provides a basic Java Apis for interacting with the static Google Maps Apis.
+ *
+ * @author Gunnar Hillert
+ * @version $Id$
+ *
+ */
 public class GoogleMapsUtils {
 
+	/** Defines the Google Maps Url. */
     public static final String googleMapsStaticUrl = "http://maps.google.com/staticmap";
+
+    /** Defines the default width of the requested image. */
     public static final Integer defaultWidth       = Integer.valueOf(400);
+
+    /** Defines the default height of the requested image. */
     public static final Integer defaultHeight      = Integer.valueOf(300);
 
+    /** Defines the default latitude (Atlanta, Ga). */
     public static final BigDecimal defaultMapLatitude  = BigDecimal.valueOf(33.74);
+
+    /** Defines the default longitude (Atlanta, Ga). */
     public static final BigDecimal defaultMapLongitude = BigDecimal.valueOf(-84.38);
+
+    /** Defines the default map zoom level. */
     public static final Integer    defaultMapZoomLevel = Integer.valueOf(10);
 
+    /**
+     * Defines the available Url parameters.
+     *
+     * @author Gunnar Hillert
+     * @version $Id$
+     *
+     */
     public enum GoogleMapsUrlParameterNames {
 
         CENTER("center"),
@@ -36,6 +60,13 @@ public class GoogleMapsUtils {
         }
     }
 
+    /**
+     * Defines the available color names.
+     *
+     * @author Gunnar Hillert
+     * @version $Id$
+     *
+     */
     public enum GoogleMapsColorNames {
 
         BLACK("black"),
@@ -60,6 +91,13 @@ public class GoogleMapsUtils {
         }
     }
 
+    /**
+     * Defines the available marker sizes.
+     *
+     * @author Gunnar Hillert
+     * @version $Id$
+     *
+     */
     public enum GoogleMapsMarkerSize {
 
         TINY("tiny"),
@@ -77,23 +115,60 @@ public class GoogleMapsUtils {
         }
     }
 
-    public static String buildSizeParameterValue(Integer width, Integer height) {
+    /**
+     * Create the size Url parameter.
+     *
+     * @param width
+     * @param height
+     * @return
+     */
+    public static String buildSizeParameterValue(final Integer width, final Integer height) {
         return width + "x" + height;
     }
 
-    public static String buildLatLongParameterValue(BigDecimal latitude, BigDecimal longitude) {
+    /**
+     * Create the latitude/longitude Url parameter.
+     *
+     * @param latitude
+     * @param longitude
+     * @return
+     */
+    public static String buildLatLongParameterValue(final BigDecimal latitude,
+    		                                        final BigDecimal longitude) {
         return String.valueOf(latitude) + "," + String.valueOf(longitude);
     }
 
-    public static String buildMarkerParameterValue(BigDecimal latitude, BigDecimal longitude, GoogleMapsMarkerSize size, GoogleMapsColorNames color, Character character) {
+    /**
+     * Create the maps marker parameter.
+     *
+     * @param latitude
+     * @param longitude
+     * @param size
+     * @param color
+     * @param character
+     * @return
+     */
+    public static String buildMarkerParameterValue(final BigDecimal latitude,
+    		                                       final BigDecimal longitude,
+    		                                       final GoogleMapsMarkerSize size,
+    		                                       final GoogleMapsColorNames color) {
         return String.valueOf(latitude) + "," + String.valueOf(longitude) + ","
              + size.markerSize + color.colorName;
     }
 
+    /**
+     * Main method to create the complete url to request the image to be generate.
+     *
+     * @param latitude
+     * @param longitude
+     * @param zoomLevel
+     * @param key
+     * @return The URL of the to request the map image.
+     */
     public static URL buildGoogleMapsStaticUrl(final BigDecimal latitude,
-                                              final BigDecimal longitude,
-                                              final Integer zoomLevel,
-                                              final String key) {
+                                               final BigDecimal longitude,
+                                               final Integer zoomLevel,
+                                               final String key) {
         final URI uri;
 
         try {
@@ -113,8 +188,7 @@ public class GoogleMapsUtils {
         queryString.set(GoogleMapsUrlParameterNames.MARKERS.getParameterName(),
                         GoogleMapsUtils.buildMarkerParameterValue(latitude, longitude,
                                                                   GoogleMapsMarkerSize.MID,
-                                                                  GoogleMapsColorNames.ORANGE,
-                                                                  Character.valueOf('J')));
+                                                                  GoogleMapsColorNames.ORANGE));
         queryString.set(GoogleMapsUrlParameterNames.SENSOR.getParameterName(), "false");
 
         try {
