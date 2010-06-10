@@ -61,7 +61,8 @@ public class User implements Serializable, UserDetails {
      */
     private static final long serialVersionUID = -1530641858689315559L;
 
-    // Fields
+    //~~~~~Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     private Long id;
     private String username;
     private String password;
