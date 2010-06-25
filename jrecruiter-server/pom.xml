@@ -21,12 +21,42 @@
         <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>            
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                </configuration>
+                </configuration>      
             </plugin>
 
             <plugin>
@@ -168,11 +198,20 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.2.131</version>
-            <scope>test</scope>
         </dependency>
 
-
-
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.8.0.Beta1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>2.8.0.Beta1</version>
+        </dependency>
+              
     </dependencies>
     <profiles>
         <profile>
@@ -186,117 +225,56 @@
         <profile>
             <id>derby</id>
             <properties>
-                <hibernate.dialect>org.hibernate.dialect.DerbyDialect</hibernate.dialect>
                 <jdbc.groupId>org.apache.derby</jdbc.groupId>
                 <jdbc.artifactId>derbyclient</jdbc.artifactId>
                 <jdbc.version>10.2.2.0</jdbc.version>
-                <jdbc.driverClassName>org.apache.derby.jdbc.ClientDriver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:derby://localhost/appfuse_test;create=true]]></jdbc.url>
-                <jdbc.username>jrecruiter</jdbc.username>
-                <jdbc.password>jrecruiter</jdbc.password>
-            </properties>
-        </profile>
-        <profile>
-            <id>h2</id>
-            <properties>
-                <dbunit.dataTypeFactoryName>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</dbunit.dataTypeFactoryName>
-                <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
-                <jdbc.groupId>com.h2database</jdbc.groupId>
-                <jdbc.artifactId>h2</jdbc.artifactId>
-                <jdbc.version>1.2.131</jdbc.version>
-                <jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:h2:jrecruiter_test]]></jdbc.url>
-                <jdbc.username>jrecruiter</jdbc.username>
-                <jdbc.password>jrecruiter</jdbc.password>
             </properties>
         </profile>
         <profile>
             <id>hsqldb</id>
             <properties>
-                <dbunit.dataTypeFactoryName>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</dbunit.dataTypeFactoryName>
-                <hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
                 <jdbc.groupId>hsqldb</jdbc.groupId>
                 <jdbc.artifactId>hsqldb</jdbc.artifactId>
                 <jdbc.version>1.8.0.7</jdbc.version>
-                <jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:hsqldb:jrecruiter_test;shutdown=true]]></jdbc.url>
-                <jdbc.username>jrecruiter</jdbc.username>
-                <jdbc.password>jrecruiter</jdbc.password>
             </properties>
         </profile>
         <profile>
             <id>oracle</id>
             <properties>
-                <dbunit.dataTypeFactoryName>org.dbunit.ext.oracle.OracleDataTypeFactory</dbunit.dataTypeFactoryName>
-                <dbunit.schema>SYSTEM</dbunit.schema> <!-- Make sure to capitalize the schema name -->
-                <hibernate.dialect>org.hibernate.dialect.Oracle9Dialect</hibernate.dialect>
                 <jdbc.groupId>com.oracle</jdbc.groupId>
                 <jdbc.artifactId>ojdbc14</jdbc.artifactId>
                 <jdbc.version>10.2.0.2.0</jdbc.version>
-                <jdbc.driverClassName>oracle.jdbc.OracleDriver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:oracle:thin:@localhost:1521:XE]]></jdbc.url>
-                <jdbc.username>jrecruiter</jdbc.username>
-                <jdbc.password>jrecruiter</jdbc.password>
             </properties>
         </profile>
         <profile>
             <id>postgresql</id>
             <properties>
-                <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
                 <jdbc.groupId>postgresql</jdbc.groupId>
                 <jdbc.artifactId>postgresql</jdbc.artifactId>
                 <jdbc.version>8.1-407.jdbc3</jdbc.version>
-                <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:postgresql://localhost:5432/jrecruiter]]></jdbc.url>
-                <jdbc.username>jrecruiter</jdbc.username>
-                <jdbc.password>jrecruiter</jdbc.password>
             </properties>
         </profile>
         <profile>
             <id>postgresql-test</id>
             <properties>
-                <dbunit.operation.type>INSERT</dbunit.operation.type>
-                <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
                 <jdbc.groupId>postgresql</jdbc.groupId>
                 <jdbc.artifactId>postgresql</jdbc.artifactId>
                 <jdbc.version>8.1-407.jdbc3</jdbc.version>
-                <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:postgresql://localhost:15432/jrecruiter]]></jdbc.url>
-                <jdbc.username>jrecruiter</jdbc.username>
-                <jdbc.password>jrecruiter</jdbc.password>
             </properties>
         </profile>
         <profile>
-            <!--
-                You need to enable TCP/IP Connections for SQL Server 2005 after
-                installing.
-            -->
-            <!-- http://www.mattwoodward.com/blog/index.cfm?commentID=211 -->
             <id>sqlserver</id>
             <properties>
-                <dbunit.dataTypeFactoryName>org.dbunit.ext.mssql.MsSqlDataTypeFactory</dbunit.dataTypeFactoryName>
-                <dbunit.operation.type>MSSQL_CLEAN_INSERT</dbunit.operation.type>
-                <hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect>
                 <jdbc.groupId>net.sourceforge.jtds</jdbc.groupId>
                 <jdbc.artifactId>jtds</jdbc.artifactId>
                 <jdbc.version>1.2</jdbc.version>
-                <jdbc.driverClassName>net.sourceforge.jtds.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url><![CDATA[jdbc:jtds:sqlserver://localhost:3683/jrecruiter]]></jdbc.url>
-                <jdbc.username>jrecruiter</jdbc.username>
-                <jdbc.password>jrecruiter</jdbc.password>
             </properties>
         </profile>
     </profiles>
 
     <properties>
-        <dbunit.operation.type>INSERT</dbunit.operation.type>
-        <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
         <jdbc.groupId>postgresql</jdbc.groupId>
         <jdbc.artifactId>postgresql</jdbc.artifactId>
         <jdbc.version>8.1-407.jdbc3</jdbc.version>
-        <jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-        <jdbc.url><![CDATA[jdbc:postgresql://localhost:15432/jrecruiter]]></jdbc.url>
-        <jdbc.username>jrecruiter</jdbc.username>
-        <jdbc.password>jrecruiter</jdbc.password>
     </properties>
 </project>
