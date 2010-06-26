@@ -7,7 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -44,10 +44,10 @@ class Region {
     @BeanProperty var id:Long = -1;
 
     @Column(name="name", unique=false, nullable=false, insertable=true, updatable=true)
- //   @Field(index=Index.TOKENIZED, store=Store.YES)
+    @Field(index=Index.TOKENIZED, store=Store.YES)
     @BeanProperty var name:String = "";
 
-    @OneToMany(val cascade = CascadeType.ALL, fetch=Array(FetchType.LAZY), mappedBy="job")
+    @OneToMany(cascade = Array(CascadeType.ALL), fetch=FetchType.LAZY, mappedBy="job")
     @Transient
     @ContainedIn
     @XmlTransient
