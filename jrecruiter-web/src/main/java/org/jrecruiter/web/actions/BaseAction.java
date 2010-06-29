@@ -1,5 +1,6 @@
 package org.jrecruiter.web.actions;
 
+import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.jrecruiter.common.AcegiUtil;
 import org.jrecruiter.model.User;
@@ -10,8 +11,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * @author Gunnar Hillert
@@ -111,10 +110,10 @@ public abstract class BaseAction extends ActionSupport {
     /**
      * @param applicationConfiguration the applicationConfiguration to set
      */
-//    public void setApplicationConfiguration(
-//            ApplicationConfiguration applicationConfiguration) {
-//        this.applicationConfiguration = applicationConfiguration;
-//    }
+    public void setApplicationConfiguration(
+            ApplicationConfiguration applicationConfiguration) {
+        this.applicationConfiguration = applicationConfiguration;
+    }
 
 
 }

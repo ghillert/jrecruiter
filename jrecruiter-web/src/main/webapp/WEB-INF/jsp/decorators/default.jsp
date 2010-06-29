@@ -49,7 +49,8 @@
               <li class="icon"><a class="icon-twitter" href="<c:url value='http://www.twitter.com/ajug_jobs/'/>"  title="<spring:message code="jsp.decorators.default.menu.twitter.title"/>">&nbsp;<span><spring:message code="jsp.decorators.default.menu.twitter"/></span></a></li>
               <li class="icon"><a class="icon-xml"     href="<c:url value='/s/indeed.xml'/>"                      title="<spring:message code="jsp.decorators.default.menu.xml.title"/>"    >&nbsp;<span>&nbsp;</span></a></li>
               <li style="margin-right: 1em; float: right;padding: 0.2em 0em;">
-                              <c:if test="${pageContext.request.secure}">Site is SSL secured</c:if></li>
+                  <c:if test="${pageContext.request.secure}">Site is SSL secured</c:if>
+                  <c:if test="${'DemoContextConfiguration' == springContextMode.code}">[Demo Mode - Embedded Database]</c:if>nn  ${shit}</li>
           </ul>
 
       </div>
