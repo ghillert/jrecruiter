@@ -37,20 +37,27 @@ import org.jrecruiter.common.CollectionUtils;
 @Indexed
 @Analyzer(impl = classOf[org.apache.lucene.analysis.standard.StandardAnalyzer])
 class Region (
+    var myid : java.lang.Long,
+    var myname : String) {
+
+  
+    def this() = this(null, null)
+
+
+    id = myid
+    name= myname
 
     /** Primary id of the industry */
     @Id @GeneratedValue(generator="hibseq")
     @DocumentId
     @BeanProperty
-    var id : java.lang.Long,
+    var id : java.lang.Long = null
 
     @Column(name="name", unique=false, nullable=false, insertable=true, updatable=true)
     @Field(index=Index.TOKENIZED, store=Store.YES)
     @BeanProperty
-    var name : String) {
-
+    var name : String = null
   
-    def this() = this(null, null)
 
     @OneToMany(cascade = Array(CascadeType.ALL), fetch=FetchType.LAZY, mappedBy="job")
     @Transient
