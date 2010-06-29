@@ -42,7 +42,7 @@ class Region (
     @Id @GeneratedValue(generator="hibseq")
     @DocumentId
     @BeanProperty
-    var id : Long,
+    var id : java.lang.Long,
 
     @Column(name="name", unique=false, nullable=false, insertable=true, updatable=true)
     @Field(index=Index.TOKENIZED, store=Store.YES)
@@ -50,7 +50,7 @@ class Region (
     var name : String) {
 
   
-    def this() = this(0L, "")
+    def this() = this(null, null)
 
     @OneToMany(cascade = Array(CascadeType.ALL), fetch=FetchType.LAZY, mappedBy="job")
     @Transient
