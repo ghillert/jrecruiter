@@ -1,20 +1,14 @@
 package org.jrecruiter.web.filter;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Servlet Filter implementation class LoggingFilter4Logback
@@ -43,7 +37,7 @@ public class LoggingFilter4Logback implements Filter {
     		throw new IllegalStateException("Cannot cast ServletResponse to HttpServletResponse.");
     	}
 
-    	if (res instanceof HttpServletRequest) {
+    	if (req instanceof HttpServletRequest) {
     		request  = (HttpServletRequest) req;
     	} else {
     		throw new IllegalStateException("Cannot cast ServletRequest to HttpServletRequest.");

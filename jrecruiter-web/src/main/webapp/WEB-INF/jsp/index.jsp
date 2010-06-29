@@ -41,8 +41,7 @@
   </div>
   <p style="clear: both;"><spring:message code="jsp.index.introduction.text.bottom" /></p>
   <p><spring:message code="jsp.index.introduction.text.support" /></p>
-
-
+            
    <script type="text/javascript">
         jQuery(function() {
             jQuery('#keyword').focus();

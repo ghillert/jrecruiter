@@ -25,6 +25,9 @@
                 <version>3.4.2</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <configurationReport>true</configurationReport>
+                    <coverageViewerPath></coverageViewerPath>
+                    <storepass></storepass>
                     <sourceFile>jobs.mxml</sourceFile>
                     <output>${basedir}/../jrecruiter-web/src/main/webapp/fx/jobs.swf</output>
                     <!--<services>${basedir}/../jrecruiter-web/src/main/webapp/WEB-INF/flex/services-config.xml</services>

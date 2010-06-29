@@ -18,7 +18,7 @@
 
     <aop:aspectj-autoproxy />
 
-    <bean id="applicationConfiguration" class="org.jrecruiter.spring.ApplicationConfiguration" />
+    <bean id="applicationConfiguration" class="org.jrecruiter.spring.ApplicationConfiguration" scope="request"/>
 
     <bean id="server.messageSource"
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
