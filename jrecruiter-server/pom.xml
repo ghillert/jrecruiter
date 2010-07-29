@@ -40,7 +40,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>            
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -52,11 +52,11 @@
                             </goals>
                         </execution>
                     </executions>
-                
+
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                </configuration>      
+                </configuration>
             </plugin>
 
             <plugin>
@@ -169,12 +169,6 @@
         </dependency>
 
         <dependency>
-            <groupId>jlibs</groupId>
-            <artifactId>jlibs-core</artifactId>
-            <version>r479</version>
-        </dependency>
-
-        <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
             <version>2.7.1</version>
@@ -205,13 +199,13 @@
             <artifactId>scala-library</artifactId>
             <version>2.8.0.Beta1</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-compiler</artifactId>
             <version>2.8.0.Beta1</version>
         </dependency>
-              
+
     </dependencies>
     <profiles>
         <profile>
