@@ -33,7 +33,7 @@ import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.dao.StatisticDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Configuration;
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.Statistic;
