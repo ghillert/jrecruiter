@@ -56,6 +56,8 @@ public interface DemoService {
      */
     void restore(InputStream inputStream);
 
+    Backup convertToBackupData(InputStream inputStream);
+
     /** Create the database using Hibernate's SchemaExport functionality */
     void createDatabase();
 
