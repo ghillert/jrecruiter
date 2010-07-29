@@ -22,9 +22,6 @@ public class IndexAction extends BaseAction {
      * context.
      */
     public String execute () {
-
-        this.springContextMode = super.applicationConfiguration.getSpringContextMode();
-
         return SUCCESS;
     }
 
