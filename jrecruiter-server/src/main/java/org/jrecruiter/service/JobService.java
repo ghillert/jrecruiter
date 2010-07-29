@@ -23,7 +23,7 @@ import java.util.Map;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.statistics.JobCountPerDay;
 
