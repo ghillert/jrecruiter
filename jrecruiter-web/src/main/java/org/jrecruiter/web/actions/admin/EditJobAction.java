@@ -23,7 +23,7 @@ import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.web.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

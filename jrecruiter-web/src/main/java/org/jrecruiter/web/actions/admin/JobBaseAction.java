@@ -24,7 +24,7 @@ import java.util.Set;
 import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.web.JobForm;
 import org.jrecruiter.web.actions.BaseAction;
 
