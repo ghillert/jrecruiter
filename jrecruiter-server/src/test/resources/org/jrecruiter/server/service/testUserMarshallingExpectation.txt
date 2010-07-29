@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<backup>
+    <industries/>
+    <regions/>
+    <roles/>
+    <users>
+        <user enabled="true" lastLoginDate="2010-07-25T15:50:00-04:00" updateDate="2010-06-24T15:50:00-04:00" registrationDate="2010-06-25T15:50:00-04:00" id="99">
+            <username>username</username>
+            <password>password</password>
+            <firstName>firstName</firstName>
+            <lastName>lastName</lastName>
+            <company>company</company>
+            <phone>123456789</phone>
+            <fax>123456789</fax>
+            <email>email</email>
+            <roles id="1">
+                <roleName>SPECIAL_ROLE</roleName>
+            </roles>
+            <verificationKey>SOME_LONG_STRING</verificationKey>
+            <userAuthenticationType>USERNAME_PASSWORD</userAuthenticationType>
+        </user>
+    </users>
+    <jobs/>
+    <statistics/>
+</backup>
