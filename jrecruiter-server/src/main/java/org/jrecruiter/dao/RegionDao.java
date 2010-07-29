@@ -17,7 +17,7 @@ package org.jrecruiter.dao;
 
 import java.util.List;
 
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 
 /**
  * @author Gunnar Hillert
