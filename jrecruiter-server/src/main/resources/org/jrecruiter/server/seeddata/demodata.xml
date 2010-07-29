@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<backup>
+	<users>
+        <user enabled="true" lastLoginDate="2010-07-12T23:45:44.416-04:00"
+            updateDate="2010-07-12T23:45:44.416-04:00" registrationDate="2008-01-10T14:12:00-05:00"
+            id="2">
+            <username>cartman</username>
+            <password>1hDkyZicBHVuFmOnsLtEAmf9KY4+HARGW4baAfiooCPH3qJv16cIbBlmwkaGQhDFCuaAzCbHKnKTOY3kv8x9NHpdbZQZpFXkNPOmjXoTyCs=</password>
+            <firstName>Kenny</firstName>
+            <lastName>Cartman</lastName>
+            <company>none</company>
+            <phone />
+            <fax />
+            <email>cartman@none.com</email>
+            <roles id="1">
+                <roleName>MANAGER</roleName>
+            </roles>
+            <userAuthenticationType>USERNAME_PASSWORD</userAuthenticationType>
+        </user>
+	</users>
+</backup>

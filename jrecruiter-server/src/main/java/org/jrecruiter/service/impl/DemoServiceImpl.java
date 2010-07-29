@@ -45,7 +45,8 @@ import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Region;
+import org.jrecruiter.model.UserToRole;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.export.Backup;
@@ -169,7 +170,24 @@ public class DemoServiceImpl implements DemoService {
         return demoUser;
     }
 
+    /* (non-Javadoc)
+     * @see org.jrecruiter.service.DemoService#restore(java.io.InputStream)
+     */
+    @Override
+    public Backup convertToBackupData(final InputStream inputStream) {
 
+        final StreamSource source = new StreamSource(inputStream);
+        final Backup backup = (Backup) marshaller.unmarshal(source);
+
+        LOGGER.info("Restoring: " + backup.getUsers().size() + " users, "
+                                  + backup.getRoles().size()      + " roles, "
+                                  + backup.getJobs().size()       + " jobs, "
+                                  + backup.getIndustries().size() + " industries, and "
+                                  + backup.getRegions().size()    + " regions.");
+
+        return backup;
+
+    }
 
     /* (non-Javadoc)
      * @see org.jrecruiter.service.DemoService#restore(java.io.InputStream)
@@ -177,14 +195,7 @@ public class DemoServiceImpl implements DemoService {
     @Override
     public void restore(final InputStream inputStream) {
 
-        StreamSource source = new StreamSource(inputStream);
-        Backup backup = (Backup) marshaller.unmarshal(source);
-
-        LOGGER.info("Restoring: " + backup.getUsers().size() + " users, "
-                                  + backup.getRoles().size()      + " roles, "
-                                  + backup.getJobs().size()       + " jobs, "
-                                  + backup.getIndustries().size() + " industries, and "
-                                  + backup.getRegions().size()    + " regions.");
+        final Backup backup = convertToBackupData(inputStream);
 
         this.restore(backup);
 
@@ -213,7 +224,6 @@ public class DemoServiceImpl implements DemoService {
             roleDao.replicate(role);
         }
 
-
         final List<User> usersFromDb = userDao.getAll();
 
         Set<String> userNames = CollectionUtils.getHashSet();
@@ -221,8 +231,6 @@ public class DemoServiceImpl implements DemoService {
         for (User user : usersFromDb) {
             userNames.add(user.getUsername());
         }
-
-
 
         for (final User userFromBackup : backup.getUsers()) {
 
@@ -249,8 +257,24 @@ public class DemoServiceImpl implements DemoService {
                     user.setUpdateDate(userFromBackup.getUpdateDate());
                     user.setUserAuthenticationType(userFromBackup.getUserAuthenticationType());
                     user.setUsername(userFromBackup.getUsername());
-                    user.setUserToRoles(userFromBackup.getUserToRoles());
+
+                    if (userFromBackup.getUserToRoles() != null && !userFromBackup.getUserToRoles().isEmpty()) {
+
+                    	for (UserToRole userToRole : userFromBackup.getUserToRoles()) {
+                    		final Role role = roleDao.getRole(userToRole.getRoleName());
+
+                    		if (role == null) {
+                    			throw new IllegalStateException("No role found for rolename: " + userToRole.getRoleName());
+                    		}
+
+                    		user.getUserToRoles().add(new UserToRole(null, role, user));
+                    	}
+
+                    }
+
                     user.setVerificationKey(userFromBackup.getVerificationKey());
+
+                    userFromBackup.getUserToRoles().iterator().next().getRole();
 
                     userDao.save(user);
 
@@ -264,13 +288,12 @@ public class DemoServiceImpl implements DemoService {
 
         //restore
 
-
-//        backup.setJobCountPerDay(jobCountPerDayDao.getAll());
-//        backup.setIndustries(jobService.getIndustries());
-//        backup.setRegions(jobService.getRegions());
-//        backup.setRoles(roleDao.getAll());
-//        backup.setUsers(userService.getAllUsers());
-//        backup.setJobs(jobService.getJobs());
+      //  backup.setJobCountPerDay(jobCountPerDayDao.getAll());
+        backup.setIndustries(jobService.getIndustries());
+        backup.setRegions(jobService.getRegions());
+        backup.setRoles(roleDao.getAll());
+        backup.setUsers(userService.getAllUsers());
+        backup.setJobs(jobService.getJobs());
 
     }
 
