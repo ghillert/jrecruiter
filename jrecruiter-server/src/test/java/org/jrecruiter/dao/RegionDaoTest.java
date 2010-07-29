@@ -7,7 +7,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
