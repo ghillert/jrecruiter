@@ -35,7 +35,7 @@ import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
