@@ -155,6 +155,16 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+    <repository>
+        <id>flex-mojos-repository2</id>
+        <url>http://repository.sonatype.org/content/groups/flexgroup/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
 
         <repository>
             <id>ObjectWEB</id>
@@ -210,6 +220,18 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+            <pluginRepository>
+        <id>flex-mojos-repository2</id>
+        <url>http://repository.sonatype.org/content/groups/flexgroup/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+
+
         <pluginRepository>
             <id>scala-tools.org</id>
             <name>Scala-tools Maven2 Repository</name>
