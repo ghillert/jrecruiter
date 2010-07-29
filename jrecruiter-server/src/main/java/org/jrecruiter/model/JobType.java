@@ -26,6 +26,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlValue;
 
 import org.jrecruiter.common.CollectionUtils;
 
@@ -45,7 +47,9 @@ public class JobType  implements java.io.Serializable {
     // Fields
 
     /** Primary id of the industry */
+    @XmlAttribute
     private Long id;
+    @XmlValue
     private String name;
     private Set<Job> jobs = CollectionUtils.getHashSet();
 

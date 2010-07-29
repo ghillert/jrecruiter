@@ -25,6 +25,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class represents a UserToRole (Many-To-Many 'Link Object' between
@@ -33,7 +36,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * @author  Gunnar Hillert
  * @version $Id$
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "users_id", "roles_id" } ) }
 )
@@ -45,11 +47,17 @@ public class UserToRole  implements java.io.Serializable {
     private static final long serialVersionUID = 5133190927935871627L;
 
 
-    // Fields
+     //~~~~~Variable Declarations~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+     @Id @GeneratedValue(generator="hibseq")
      private Long id;
+
+     @ManyToOne
+     @JoinColumn(name="roles_id", unique=false, nullable=false, insertable=true, updatable=true)
      private Role role;
 
+     @ManyToOne
+     @JoinColumn(name="users_id", unique=false, nullable=false, insertable=true, updatable=true)
      private User user;
 
      // Constructors
@@ -65,8 +73,9 @@ public class UserToRole  implements java.io.Serializable {
        this.user = user;
     }
 
-    // Property accessors
-    @Id @GeneratedValue(generator="hibseq")
+    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    @XmlAttribute
     public Long getId() {
         return this.id;
     }
@@ -75,9 +84,7 @@ public class UserToRole  implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(cascade={},
-        fetch=FetchType.LAZY)
-    @JoinColumn(name="roles_id", unique=false, nullable=false, insertable=true, updatable=true)
+    @XmlTransient
     public Role getRole() {
         return this.role;
     }
@@ -86,9 +93,7 @@ public class UserToRole  implements java.io.Serializable {
         this.role = role;
     }
 
-    @ManyToOne(cascade={},
-        fetch=FetchType.LAZY)
-    @JoinColumn(name="users_id", unique=false, nullable=false, insertable=true, updatable=true)
+    @XmlTransient
     public User getUser() {
         return this.user;
     }
@@ -97,7 +102,17 @@ public class UserToRole  implements java.io.Serializable {
         this.user = user;
     }
 
+    @XmlID
+    public String getRoleName() {
+    	return role.getName();
+    }
 
+    public void setRoleName(String roleName) {
+    	if (this.role == null) {
+    		this.role = new Role(roleName);
+    	} else {
+    		this.role.setName(roleName);
+    	}
 
-
+    }
 }

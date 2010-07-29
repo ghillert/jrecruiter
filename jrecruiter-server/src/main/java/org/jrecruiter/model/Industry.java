@@ -24,7 +24,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlValue;
 
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
@@ -44,6 +49,7 @@ import org.hibernate.search.annotations.Store;
 @Table(uniqueConstraints = {  })
 @Indexed
 @Analyzer(impl = org.apache.lucene.analysis.standard.StandardAnalyzer.class)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Industry  implements java.io.Serializable {
 
     /** serialVersionUID. */
@@ -53,7 +59,11 @@ public class Industry  implements java.io.Serializable {
     // Fields
 
     /** Primary id of the industry */
+    @XmlAttribute
     private Long id;
+
+    @XmlValue
+    @XmlID
     private String name;
 
     @XmlTransient

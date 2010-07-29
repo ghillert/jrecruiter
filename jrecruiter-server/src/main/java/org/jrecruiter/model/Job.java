@@ -18,6 +18,7 @@ package org.jrecruiter.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import org.jrecruiter.scala.Region;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,6 +38,9 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.Analyzer;
@@ -71,6 +75,7 @@ public class Job implements Serializable {
     private static final long serialVersionUID = 8966612480290486159L;
 
     /** Job posting id. */
+    @XmlAttribute
     private Long id;
 
     /** Uniquely identifies the data object. This key will be unique across migrations and is used
@@ -78,15 +83,19 @@ public class Job implements Serializable {
      * stored information is typically a UUID but does not have to be (migrating older data sets for
      * example)
      */
+    @XmlAttribute
     private String universalId;
 
     /** Industry. */
+    @XmlAttribute @XmlIDREF
     private Industry industry;
 
     /** Region where the job is located. */
+    @XmlAttribute @XmlIDREF
     private Region region;
 
     /** Owner of job posting) */
+    @XmlIDREF
     private User user;
 
     /** Business name. */
@@ -139,15 +148,19 @@ public class Job implements Serializable {
     private String jobRestrictions;
 
     /** Job posting creation date. */
+    @XmlAttribute
     private Date registrationDate;
 
     /** Date the job posting was updated. */
+    @XmlAttribute
     private Date updateDate;
 
     /** Status of job posting. */
+    @XmlAttribute
     private JobStatus status;
 
     /** */
+    @XmlAttribute
     private OfferedBy offeredBy;
 
     /** Used to map the Location of the job. */
@@ -166,6 +179,7 @@ public class Job implements Serializable {
     /** Flag that indicates whether this job is using google maps to further
      *  details the job's location.
      */
+    @XmlAttribute
     private Boolean usesMap;
 
     //~~~~~Constructors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -289,6 +303,7 @@ public class Job implements Serializable {
     @JoinColumn(name="regions_id", unique=false, nullable=true, insertable=true, updatable=true)
     @IndexedEmbedded
     @BatchSize(size=15)
+    @XmlTransient
     public Region getRegion() {
         return region;
     }

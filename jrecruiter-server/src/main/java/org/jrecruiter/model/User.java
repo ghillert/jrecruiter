@@ -35,6 +35,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Parameter;
@@ -63,7 +67,10 @@ public class User implements Serializable, UserDetails {
 
     //~~~~~Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    @XmlAttribute
     private Long id;
+
+    @XmlID
     private String username;
     private String password;
     private String firstName;
@@ -72,15 +79,23 @@ public class User implements Serializable, UserDetails {
     private String phone;
     private String fax;
     private String email;
+
+    @XmlAttribute
     private Date registrationDate;
+
+    @XmlAttribute
     private Date updateDate;
+
+    @XmlAttribute
     private Date lastLoginDate;
 
     @XmlTransient
     private Set<Job> jobs = new HashSet<Job>(0);
 
+    @XmlElement(name="roles")
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
+    @XmlAttribute
     private Boolean enabled  = Boolean.FALSE;
 
     private String  verificationKey;
@@ -243,6 +258,7 @@ public class User implements Serializable, UserDetails {
     public void setJobs(Set<Job> jobs) {
         this.jobs = jobs;
     }
+
     @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="user")
     public Set<UserToRole> getUserToRoles() {
         return this.userToRoles;

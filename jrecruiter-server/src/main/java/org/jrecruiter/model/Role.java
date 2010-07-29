@@ -31,7 +31,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlValue;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -53,13 +56,15 @@ public class Role implements Serializable, GrantedAuthority {
     private static final long serialVersionUID = 7447568690062928081L;
 
     // Fields
-
+    @XmlAttribute
     private Long id;
 
     /** Name of the role. */
+    @XmlAttribute @XmlID
     private String name;
 
     /** Description. */
+    @XmlValue
     private String description;
 
     @XmlTransient

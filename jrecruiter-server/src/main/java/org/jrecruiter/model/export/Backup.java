@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.Region;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.statistics.JobCountPerDay;
