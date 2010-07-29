@@ -27,6 +27,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.Parameter;
@@ -48,13 +49,16 @@ public class Statistic implements Serializable {
     private static final long serialVersionUID = -6450245841259870972L;
 
     // Fields
-
+    @XmlAttribute
     private Long  id;
 
     @XmlTransient
     private Job job;
 
+    @XmlAttribute
     private Long counter;
+
+    @XmlAttribute
     private Date lastAccess;
 
     // Constructors
