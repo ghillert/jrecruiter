@@ -16,24 +16,6 @@
     <bean id="viewNameTranslator"
         class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
 
-    <!-- FreeMarker Configurer and View Resolver -->
-    <bean id="freemarkerConfig"
-        class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/views/" />
-        <property name="freemarkerSettings">
-            <props>
-                <prop key="datetime_format">MM/dd/yyyy</prop>
-                <prop key="number_format">0.######</prop>
-            </props>
-        </property>
-        <property name="freemarkerVariables">
-            <map>
-                <entry key="xml_escape" value-ref="fmXmlEscape" />
-            </map>
-        </property>
-    </bean>
-    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
-
     <bean id="beanNameViewResolver"
         class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <property name="order" value="0"/>
@@ -44,14 +26,6 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
         <property name="order" value="1"/>
-    </bean>
-    <bean id="freeMarkerViewResolver"
-        class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="exposeSpringMacroHelpers" value="true" />
-        <property name="requestContextAttribute" value="rc" />
-        <property name="prefix" value="" />
-        <property name="suffix" value=".ftl" />
-        <property name="order" value="2"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
