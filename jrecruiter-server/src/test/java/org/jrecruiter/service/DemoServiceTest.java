@@ -15,7 +15,13 @@
 */
 package org.jrecruiter.service;
 
+import java.util.Set;
+
+import org.jrecruiter.model.User;
+import org.jrecruiter.model.UserToRole;
+import org.jrecruiter.model.export.Backup;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -31,9 +37,7 @@ public class DemoServiceTest extends BaseTest {
 
     @Test
     public void testCreateDatabase(){
-
         demoService.createDatabase();
-
     };
 
     @Test
@@ -46,6 +50,26 @@ public class DemoServiceTest extends BaseTest {
     @Rollback(false)
     public void testLoadAndRestoreSeedData(){
         demoService.loadAndRestoreSeedData();
+    };
+
+    @Test
+    @Rollback(false)
+    public void testRestore(){
+
+    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/demodata.xml");
+
+        final Backup backup = demoService.convertToBackupData(inputStream);
+
+        for (User user : backup.getUsers()) {
+
+        	final Set<UserToRole> userToRoles = user.getUserToRoles();
+        	Assert.assertTrue("Every user should have at least one role.", !userToRoles.isEmpty());
+
+        	for (final UserToRole userToRole : userToRoles) {
+        		Assert.assertNotNull(userToRole.getRoleName());
+        	}
+        }
+
     };
 
 }

@@ -15,8 +15,12 @@
 */
 package org.jrecruiter.service.impl;
 
+import static com.rosaloves.bitlyj.Bitly.as;
+import static com.rosaloves.bitlyj.Bitly.shorten;
+
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Map;
@@ -35,12 +39,10 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rosaloves.bitlyj.Url;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-
-import com.rosaloves.net.shorturl.bitly.Bitly;
-import com.rosaloves.net.shorturl.bitly.BitlyFactory;
-import com.rosaloves.net.shorturl.bitly.url.BitlyUrl;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -127,15 +129,16 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public URL shortenUrl(final String string) {
 
-        final Bitly bitly = BitlyFactory.newInstance(apiKeysHolder.getBitlyUsername(),
-                                               apiKeysHolder.getBitlyPassword());
-
+    	//FIXME Handle this better
+        Url url = as(apiKeysHolder.getBitlyUsername(),
+        		     apiKeysHolder.getBitlyPassword())
+        		 .call(shorten(string));
         try {
-            final BitlyUrl bUrl = bitly.shorten(string);
-            return bUrl.getShortUrl();
-        } catch (final IOException e) {
-            throw new IllegalStateException(e);
-        }
+			return new URL(url.getShortUrl());
+		} catch (MalformedURLException e) {
+			return null;
+		}
+
     }
 
 }
