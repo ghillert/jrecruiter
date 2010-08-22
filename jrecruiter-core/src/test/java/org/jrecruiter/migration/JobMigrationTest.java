@@ -16,7 +16,7 @@ public class JobMigrationTest extends MigrationV1toV2Base {
      *
      *
      */
-    @Test
+    //@Test
     @Rollback(false)
     public void migrateJobs() {
 
