@@ -14,7 +14,7 @@ public class UserMigrationTest extends MigrationV1toV2Base {
     /**
      *
      */
-    @Test
+    //@Test
     public void migrateUsers() {
         migrationService.migrateUserData(Boolean.TRUE);
     }

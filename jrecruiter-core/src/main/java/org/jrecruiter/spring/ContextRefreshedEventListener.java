@@ -16,6 +16,16 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Spring Event Listener that is triggered when the application context is loaded.
+ * This listener waits until all services are available and then populates
+ * the database with demo data. This also allows for populating seed and test data
+ * for integration testing.
+ *
+ * @author Gunnar Hillert
+ * @version $Id$
+ *
+ */
 public class ContextRefreshedEventListener implements
                                     ApplicationListener < ContextRefreshedEvent > {
 
@@ -28,6 +38,10 @@ public class ContextRefreshedEventListener implements
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedEventListener.class);
 
+    /**
+     *
+     *
+     */
     @Transactional
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -54,34 +68,6 @@ public class ContextRefreshedEventListener implements
             } else {
                 LOGGER.info("jRecruiter Database is running version '%s'", migrations.get(0));
             }
-
-//            final User user = new User();
-//
-//            user.setCompany("jRecruiter");
-//            user.setEmail("demo@jrecruiter.org");
-//            user.setRegistrationDate(new Date());
-//            user.setEnabled(true);
-//            user.setFirstName("Admin");
-//            user.setLastName("Admin");
-//            user.setUsername("admin");
-//            user.setPassword(stringDigester.digest("demo"));
-//            user.setUserAuthenticationType(UserAuthenticationType.USERNAME_PASSWORD);
-//
-//            Role adminRole = new Role(Roles.ADMIN.name()); //FIXME Map role directly to Enum
-//
-//            Role savedAdminRole   = roleDao.save(adminRole);
-//
-//            final Set<UserToRole>userRoles = CollectionUtils.getHashSet();
-//
-//            final UserToRole userToRole = new UserToRole();
-//            userToRole.setRole(savedAdminRole);
-//            userToRole.setUser(user);
-//
-//            userRoles.add(userToRole);
-//
-//            user.setUserToRoles(userRoles);
-//
-//            userDao.save(user);
 
         } else {
             System.out.println(">>>>>>>>  Child started; ignoring");
