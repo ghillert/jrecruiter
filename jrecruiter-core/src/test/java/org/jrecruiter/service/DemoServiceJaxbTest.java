@@ -24,7 +24,7 @@ import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.export.Backup;
 import org.jrecruiter.scala.Region;
-import org.jrecruiter.service.impl.DemoServiceImpl;
+import org.jrecruiter.service.system.impl.SystemSetupServiceImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class DemoServiceJaxbTest {
 
     	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/seeddata.xml");
 
-    	final DemoService demoService = new DemoServiceImpl();
+    	final SystemSetupService demoService = new SystemSetupServiceImpl();
     	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
 
     	final Backup backup = demoService.convertToBackupData(inputStream);
@@ -102,7 +102,7 @@ public class DemoServiceJaxbTest {
 
     	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/demodata.xml");
 
-    	final DemoService demoService = new DemoServiceImpl();
+    	final SystemSetupService demoService = new SystemSetupServiceImpl();
     	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
 
     	final Backup backup = demoService.convertToBackupData(inputStream);
@@ -155,7 +155,7 @@ public class DemoServiceJaxbTest {
 
     	backup.setRegions(regions);
 
-    	final DemoService demoService = new DemoServiceImpl();
+    	final SystemSetupService demoService = new SystemSetupServiceImpl();
     	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
 
     	jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));
@@ -217,7 +217,7 @@ public class DemoServiceJaxbTest {
     	backup.setUsers(users);
     	backup.setRoles(roles);
 
-    	final DemoService demoService = new DemoServiceImpl();
+    	final SystemSetupService demoService = new SystemSetupServiceImpl();
     	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
 
     	jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));

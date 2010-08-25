@@ -12,7 +12,7 @@ import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.export.Backup;
-import org.jrecruiter.service.DemoService;
+import org.jrecruiter.service.SystemSetupService;
 import org.jrecruiter.service.JobService;
 import org.jrecruiter.service.UserService;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class BackupController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BackupController.class);
 
-    private @Autowired DemoService demoService;
+    private @Autowired SystemSetupService demoService;
     private @Autowired JobService jobService;
     private @Autowired RoleDao roleDao;
     private @Autowired RegionDao regionDao;

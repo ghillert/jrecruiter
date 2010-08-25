@@ -13,31 +13,19 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.service;
+package org.jrecruiter.dao;
 
-import org.jrecruiter.model.User;
-import org.jrecruiter.test.BaseTest;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.InputStream;
+
+import org.jrecruiter.model.export.Backup;
 
 /**
- *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version $Id: RoleDao.java 564 2010-06-08 04:36:23Z ghillert $
  */
-public class CreateDemoJobsTest extends BaseTest {
+public interface BackupDao {
 
-    private @Autowired SystemSetupService  demoService;
-
-    @Test
-    public void testCreate30DemoJobsTest() throws Exception {
-
-        final int numberOfJobs = 30;
-
-        //FIXME
-    //    User user = demoService.createDemoUser();
-    //    demoService.createDemoJobs(user, numberOfJobs);
-
-    }
-
+	/**
+     */
+	Backup convertToBackupData(InputStream inputStream);
 }
