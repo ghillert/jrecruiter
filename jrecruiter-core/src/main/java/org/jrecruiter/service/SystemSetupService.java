@@ -29,7 +29,7 @@ import org.jrecruiter.model.export.Backup;
  *
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
-public interface DemoService {
+public interface SystemSetupService {
 
     /**
      * Adds specifiable number of demo jobs to the system.
@@ -38,13 +38,6 @@ public interface DemoService {
      * @param numberOfJobsToCreate How many job shall be created.
      */
     void createDemoJobs(User user, Integer numberOfJobsToCreate);
-
-    /**
-     * Creates a single default user. If the user does not exist, yet, a new
-     * user is created, otherwise the default user is returned.
-     *
-     */
-    User createDemoUser();
 
     /**
      * Restore a set of backed-up master data.
@@ -56,8 +49,6 @@ public interface DemoService {
      */
     void restore(InputStream inputStream);
 
-    Backup convertToBackupData(InputStream inputStream);
-
     /** Create the database using Hibernate's SchemaExport functionality */
     void createDatabase();
 
@@ -66,4 +57,9 @@ public interface DemoService {
 
     /** */
     void loadAndRestoreSeedData();
+
+    /** */
+	boolean isDatabaseSetup();
+
+	Backup convertToBackupData(InputStream inputStream);
 }

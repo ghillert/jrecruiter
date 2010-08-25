@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>jrecruiter-server</artifactId>
+	<artifactId>jrecruiter-core</artifactId>
 
 	<name>${project.artifactId}</name>
 	<description>

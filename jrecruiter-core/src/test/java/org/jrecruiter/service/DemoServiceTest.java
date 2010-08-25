@@ -33,7 +33,7 @@ import org.springframework.test.annotation.Rollback;
  */
 public class DemoServiceTest extends BaseTest {
 
-    @Autowired DemoService demoService;
+    @Autowired SystemSetupService demoService;
 
     @Test
     public void testCreateDatabase(){

@@ -18,6 +18,9 @@
     <aop:aspectj-autoproxy />
 
     <context:component-scan base-package="org.jrecruiter.dao.jpa" />
+    <context:component-scan base-package="org.jrecruiter.dao.jaxb" />
+    <context:component-scan base-package="org.jrecruiter.dao.hibernate" />
+	<context:component-scan base-package="org.jrecruiter.service.system.impl" />
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />

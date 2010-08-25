@@ -13,52 +13,38 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.service.impl;
+package org.jrecruiter.service.system.impl;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.sql.DataSource;
-import javax.xml.transform.stream.StreamSource;
-
-import org.hibernate.HibernateException;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.ejb.Ejb3Configuration;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
+import org.jrecruiter.dao.BackupDao;
 import org.jrecruiter.dao.IndustryDao;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.dao.RoleDao;
+import org.jrecruiter.dao.SchemaMigrationDao;
+import org.jrecruiter.dao.SystemDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.model.UserToRole;
-import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.Role;
+import org.jrecruiter.model.SchemaMigration;
 import org.jrecruiter.model.User;
+import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.export.Backup;
-import org.jrecruiter.service.DemoService;
-import org.jrecruiter.service.JobService;
-import org.jrecruiter.service.UserService;
-import org.jrecruiter.service.exceptions.DuplicateUserException;
+import org.jrecruiter.scala.Region;
+import org.jrecruiter.service.SystemSetupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,23 +54,20 @@ import de.svenjacobs.loremipsum.LoremIpsum;
  * @author Gunnar Hillert
  * @version $Id$
  */
-@Service("demoService")
+@Service("systemSetupService")
 @Transactional
-public class DemoServiceImpl implements DemoService {
+public class SystemSetupServiceImpl implements SystemSetupService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DemoServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SystemSetupServiceImpl.class);
 
-    private @Autowired JobService  jobService;
-    private @Autowired UserService userService;
     private @Autowired RegionDao   regionDao;
     private @Autowired RoleDao     roleDao;
     private @Autowired UserDao     userDao;
     private @Autowired JobDao      jobDao;
     private @Autowired IndustryDao industryDao;
-    private @Autowired Jaxb2Marshaller marshaller;
-    private @PersistenceContext EntityManager em;
-    private @Autowired DataSource dataSource;
-    private @Autowired LocalContainerEntityManagerFactoryBean fb;
+    private @Autowired SystemDao   systemDao;
+    private @Autowired BackupDao   backupDao;
+    private @Autowired SchemaMigrationDao   schemaMigrationDao;
 
     /** {@inheritDoc} */
     @Override
@@ -143,50 +126,8 @@ public class DemoServiceImpl implements DemoService {
             job.setUsesMap(Boolean.TRUE);
             job.setWebsite("http://www.google.com/");
 
-            this.jobService.addJob(job);
+            this.jobDao.save(job);
         }
-    }
-
-
-    /** {@inheritDoc} */
-    @Override
-    public User createDemoUser() {
-        User demoUser = getUser();
-
-        User userFromDb = userService.getUser(demoUser.getEmail());
-
-        if (userFromDb != null) {
-            return userFromDb;
-        } else {
-
-            try {
-                demoUser = userService.addUser(demoUser);
-            } catch (DuplicateUserException e) {
-                throw new IllegalStateException(e);
-            }
-
-        }
-
-        return demoUser;
-    }
-
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.DemoService#restore(java.io.InputStream)
-     */
-    @Override
-    public Backup convertToBackupData(final InputStream inputStream) {
-
-        final StreamSource source = new StreamSource(inputStream);
-        final Backup backup = (Backup) marshaller.unmarshal(source);
-
-        LOGGER.info("Restoring: " + backup.getUsers().size() + " users, "
-                                  + backup.getRoles().size()      + " roles, "
-                                  + backup.getJobs().size()       + " jobs, "
-                                  + backup.getIndustries().size() + " industries, and "
-                                  + backup.getRegions().size()    + " regions.");
-
-        return backup;
-
     }
 
     /* (non-Javadoc)
@@ -195,7 +136,7 @@ public class DemoServiceImpl implements DemoService {
     @Override
     public void restore(final InputStream inputStream) {
 
-        final Backup backup = convertToBackupData(inputStream);
+        final Backup backup = backupDao.convertToBackupData(inputStream);
 
         this.restore(backup);
 
@@ -204,7 +145,7 @@ public class DemoServiceImpl implements DemoService {
     /** {@inheritDoc} */
     @Override
     public void loadAndRestoreSeedData() {
-        final InputStream is = DemoServiceImpl.class.getResourceAsStream("/org/jrecruiter/server/seeddata/seeddata.xml");
+        final InputStream is = SystemSetupServiceImpl.class.getResourceAsStream("/org/jrecruiter/server/seeddata/seeddata.xml");
         restore(is);
     }
 
@@ -289,85 +230,41 @@ public class DemoServiceImpl implements DemoService {
         //restore
 
       //  backup.setJobCountPerDay(jobCountPerDayDao.getAll());
-        backup.setIndustries(jobService.getIndustries());
-        backup.setRegions(jobService.getRegions());
+        backup.setIndustries(industryDao.getAllIndustriesOrdered());
+        backup.setRegions(regionDao.getAllRegionsOrdered());
         backup.setRoles(roleDao.getAll());
-        backup.setUsers(userService.getAllUsers());
-        backup.setJobs(jobService.getJobs());
+        backup.setUsers(userDao.getAllUsers());
+        backup.setJobs(jobDao.getAllJobs());
 
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.DemoService#createDatabase()
-     */
-    @Override
-    public void createDatabase() {
+	@Override
+	public void createDatabase() {
+		systemDao.createDatabase();
+	}
 
-        final Ejb3Configuration cfg = new Ejb3Configuration();
-        final Ejb3Configuration configured = cfg.configure( fb.getPersistenceUnitInfo(), fb.getJpaPropertyMap() );
-        final Configuration configuration = configured.getHibernateConfiguration();
+	@Override
+	public void updateDatabase() {
+		systemDao.updateDatabase();
+	}
 
-        final SchemaExport schemaExport;
+	@Override
+	public boolean isDatabaseSetup() {
+		final List<SchemaMigration> migrations = schemaMigrationDao.getAll();
 
-        try {
-            schemaExport = new SchemaExport(configuration, dataSource.getConnection());
-        } catch (HibernateException e) {
-            throw new IllegalStateException(e);
-        } catch (SQLException e) {
-            throw new IllegalStateException(e);
-        }
+		if (migrations.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
 
-        schemaExport.create(true, true);
+	}
 
-    }
-
-    private static class HibernateHack {
-        public static DataSource dataSource;
-    }
-
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.DemoService#createDatabase()
-     */
-    @Override
-    public void updateDatabase() {
-
-        final Ejb3Configuration cfg = new Ejb3Configuration();
-        final Ejb3Configuration configured = cfg.configure( fb.getPersistenceUnitInfo(), fb.getJpaPropertyMap() );
-        final Configuration configuration = configured.getHibernateConfiguration();
-
-        HibernateHack.dataSource = dataSource;
-
-        Properties props = new Properties();
-        props.put("hibernate.connection.provider_class",
-         "org.jrecruiter.service.impl.DemoServiceImpl.HibernateHack");
+	@Override
+	public Backup convertToBackupData(InputStream inputStream) {
+		return backupDao.convertToBackupData(inputStream);
+	}
 
 
-        final org.hibernate.tool.hbm2ddl.SchemaUpdate schemaUpdate;
 
-        try {
-            schemaUpdate = new SchemaUpdate(configuration, props);
-        } catch (HibernateException e) {
-            throw new IllegalStateException(e);
-        }
-
-        schemaUpdate.execute(true, true);
-
-    }
-
-    //~~~~~Helper Method~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    private User getUser() {
-
-        User user = new User();
-        user.setUsername("demo44");
-        user.setEmail("demo@demo.com");
-        user.setFirstName("Demo First Name");
-        user.setLastName("Demo Last Name");
-        user.setPassword("demo");
-        user.setPhone("123456");
-        user.setRegistrationDate(new Date());
-
-        return user;
-
-    }
 }

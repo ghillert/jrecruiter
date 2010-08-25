@@ -1,14 +1,6 @@
 package org.jrecruiter.spring;
 
-import java.util.List;
-
-import org.jasypt.digest.StringDigester;
-import org.jrecruiter.dao.RoleDao;
-import org.jrecruiter.dao.SchemaMigrationDao;
-import org.jrecruiter.dao.UserDao;
-import org.jrecruiter.model.SchemaMigration;
-import org.jrecruiter.service.DemoService;
-import org.jrecruiter.service.JobService;
+import org.jrecruiter.service.SystemSetupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ContextRefreshedEventListener implements
                                     ApplicationListener < ContextRefreshedEvent > {
 
-    private @Autowired UserDao userDao;
-    private @Autowired JobService  jobService;
-    private @Autowired DemoService demoService;
-    private @Autowired StringDigester stringDigester;
-    private @Autowired RoleDao roleDao;
-    private @Autowired SchemaMigrationDao schemaMigrationDao;
+	/** Special Dao for creating and setting up the database */
+    private @Autowired SystemSetupService systemSetupService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedEventListener.class);
 
@@ -52,26 +40,21 @@ public class ContextRefreshedEventListener implements
 
             LOGGER.info("Parent Spring Context started.");
 
-            List<SchemaMigration> migrations = schemaMigrationDao.getAll();
+            if (!systemSetupService.isDatabaseSetup()) {
 
-            if (migrations.isEmpty()) {
                 LOGGER.info("jRecruiter Database is not setup, yet. Initializing DB...");
 
-                demoService.createDatabase();
+                systemSetupService.createDatabase();
 
                 LOGGER.info("jRecruiter Database is not setup, yet. Populating Seed Data...");
 
-                demoService.loadAndRestoreSeedData();
+                systemSetupService.loadAndRestoreSeedData();
 
                 LOGGER.info("jRecruiter Database is not setup, yet. Populating Test Data...");
-
-            } else {
-                LOGGER.info("jRecruiter Database is running version '%s'", migrations.get(0));
             }
 
-        } else {
-            System.out.println(">>>>>>>>  Child started; ignoring");
         }
+
     }
 
 }

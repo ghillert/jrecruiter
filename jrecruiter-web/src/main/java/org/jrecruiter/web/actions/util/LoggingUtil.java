@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.FileAppender;
 
@@ -117,7 +118,7 @@ public class LoggingUtil {
      * @return true if the logger has appenders.
      */
     public static boolean hasAppenders(ch.qos.logback.classic.Logger logger) {
-        Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
+        Iterator<Appender<ILoggingEvent>> it = logger.iteratorForAppenders();
         return it.hasNext();
     }
 
@@ -134,15 +135,15 @@ public class LoggingUtil {
 
         final Logger logger = lc.getLogger(Logger.ROOT_LOGGER_NAME);
 
-        final Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
+        final Iterator<Appender<ILoggingEvent>> it = logger.iteratorForAppenders();
 
         while (it.hasNext()) {
 
-            final Appender<LoggingEvent> appender = it.next();
+            final Appender<ILoggingEvent> appender = it.next();
 
             if (appender instanceof FileAppender) {
 
-                final FileAppender<LoggingEvent> fileAppender = (FileAppender<LoggingEvent>) appender;
+                final FileAppender<ILoggingEvent> fileAppender = (FileAppender<ILoggingEvent>) appender;
 
                 final File logFile = new File(fileAppender.getFile());
                 final LogFileInfo logFileInfo = new LogFileInfo();
@@ -174,15 +175,15 @@ public class LoggingUtil {
 
         final Logger logger = lc.getLogger(Logger.ROOT_LOGGER_NAME);
 
-        final Iterator<Appender<LoggingEvent>> it = logger.iteratorForAppenders();
+        final Iterator<Appender<ILoggingEvent>> it = logger.iteratorForAppenders();
 
         while (it.hasNext()) {
 
-            final Appender<LoggingEvent> appender = it.next();
+            final Appender<ILoggingEvent> appender = it.next();
 
             if (appender instanceof FileAppender) {
 
-                final FileAppender<LoggingEvent> fileAppender = (FileAppender<LoggingEvent>) appender;
+                final FileAppender<ILoggingEvent> fileAppender = (FileAppender<ILoggingEvent>) appender;
 
                 final File logFile = new File(fileAppender.getFile());
 
