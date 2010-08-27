@@ -165,10 +165,9 @@ public class GoogleMapsUtils {
      * @param key
      * @return The URL of the to request the map image.
      */
-    public static URL buildGoogleMapsStaticUrl(final BigDecimal latitude,
+    public static URI buildGoogleMapsStaticUrl(final BigDecimal latitude,
                                                final BigDecimal longitude,
-                                               final Integer zoomLevel,
-                                               final String key) {
+                                               final Integer zoomLevel) {
         final URI uri;
 
         try {
@@ -184,18 +183,14 @@ public class GoogleMapsUtils {
         queryString.set(GoogleMapsUrlParameterNames.ZOOM.getParameterName(), zoomLevel);
         queryString.set(GoogleMapsUrlParameterNames.SIZE.getParameterName(),
                 GoogleMapsUtils.buildSizeParameterValue(GoogleMapsUtils.defaultWidth, GoogleMapsUtils.defaultHeight));
-        queryString.set(GoogleMapsUrlParameterNames.KEY.getParameterName(), key);
         queryString.set(GoogleMapsUrlParameterNames.MARKERS.getParameterName(),
                         GoogleMapsUtils.buildMarkerParameterValue(latitude, longitude,
                                                                   GoogleMapsMarkerSize.MID,
                                                                   GoogleMapsColorNames.ORANGE));
         queryString.set(GoogleMapsUrlParameterNames.SENSOR.getParameterName(), "false");
 
-        try {
-            return queryString.apply(uri).toURL();
-        } catch (MalformedURLException e) {
-            throw new IllegalStateException("Malformed URL.", e);
-        }
+        return queryString.apply(uri);
+
     }
 
 

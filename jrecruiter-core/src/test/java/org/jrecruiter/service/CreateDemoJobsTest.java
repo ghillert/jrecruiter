@@ -16,6 +16,7 @@
 package org.jrecruiter.service;
 
 import org.jrecruiter.model.User;
+import org.jrecruiter.test.BaseServiceIntegrationTest;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class CreateDemoJobsTest extends BaseTest {
+public class CreateDemoJobsTest extends BaseServiceIntegrationTest {
 
-    private @Autowired SystemSetupService  demoService;
+    private @Autowired SystemSetupService  systemSetupService;
 
     @Test
     public void testCreate30DemoJobsTest() throws Exception {

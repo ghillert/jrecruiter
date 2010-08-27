@@ -8,7 +8,6 @@ import java.util.Date;
 import junit.framework.Assert;
 
 import org.jrecruiter.model.User;
-import org.jrecruiter.service.UserService;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class DaoAuthenticationProviderTest extends BaseTest {
 
-    private @Autowired UserService userService;
     private @Autowired UserDao userDao;
 
     @Test
@@ -36,7 +34,7 @@ public class DaoAuthenticationProviderTest extends BaseTest {
         user.setRegistrationDate(new Date());
         userDao.save(user);
 
-        UserDetails user2 = userService.loadUserByUsername("demo44");
+        UserDetails user2 = userDao.getUser("demo44");
         Assert.assertNotNull(user2);
 
     }

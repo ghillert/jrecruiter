@@ -17,6 +17,7 @@ package org.jrecruiter.service;
 
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -24,7 +25,6 @@ import javax.imageio.ImageIO;
 
 import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.GoogleMapsUtils;
-import org.jrecruiter.test.BaseTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class GoogleMapsStaticTest extends BaseTest {
+public class GoogleMapsStaticTest {
 
     private @Autowired ApiKeysHolder apiKeysHolder;
 
@@ -49,8 +49,8 @@ public class GoogleMapsStaticTest extends BaseTest {
     // Send a GET request to the servlet
     try {
 
-        final URL url = GoogleMapsUtils.buildGoogleMapsStaticUrl(BigDecimal.TEN, BigDecimal.TEN, 10, this.apiKeysHolder.getGoogleMapsKey());
-        final URLConnection conn = url.openConnection ();
+        final URI url = GoogleMapsUtils.buildGoogleMapsStaticUrl(BigDecimal.TEN, BigDecimal.TEN, 10);
+        final URLConnection conn = url.toURL().openConnection ();
 
         final BufferedImage img = ImageIO.read(conn.getInputStream());
 

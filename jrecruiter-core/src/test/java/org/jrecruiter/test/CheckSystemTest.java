@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Gunnar Hillert
  * @version $Id: BaseTest.java 455 2009-07-18 05:02:15Z ghillert $
  */
-public class CheckSystemTest extends BaseTest {
+public class CheckSystemTest extends BaseServiceIntegrationTest {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(CheckSystemTest.class);
 

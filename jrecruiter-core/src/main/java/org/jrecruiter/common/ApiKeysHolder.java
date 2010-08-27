@@ -10,7 +10,6 @@ package org.jrecruiter.common;
  */
 public class ApiKeysHolder {
 
-    private String googleMapsKey;
     private String reCaptchaKey;
 
     private String twitterUsername;
@@ -21,14 +20,6 @@ public class ApiKeysHolder {
 
 
     //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    public String getGoogleMapsKey() {
-        return googleMapsKey;
-    }
-
-    public void setGoogleMapsKey(String googleMapsKey) {
-        this.googleMapsKey = googleMapsKey;
-    }
 
     public String getReCaptchaKey() {
         return reCaptchaKey;
