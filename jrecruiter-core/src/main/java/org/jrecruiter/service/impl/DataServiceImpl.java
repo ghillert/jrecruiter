@@ -22,6 +22,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
@@ -72,12 +73,12 @@ public class DataServiceImpl implements org.jrecruiter.service.DataService {
             throw new IllegalArgumentException("ZoomLevel cannot be null.");
         }
 
-        final URL url = GoogleMapsUtils.buildGoogleMapsStaticUrl(latitude, longitude, zoomLevel, apiKeysHolder.getGoogleMapsKey());
+        final URI url = GoogleMapsUtils.buildGoogleMapsStaticUrl(latitude, longitude, zoomLevel);
 
 
         BufferedImage img;
         try {
-            URLConnection conn = url.openConnection ();
+            URLConnection conn = url.toURL().openConnection ();
             img = ImageIO.read(conn.getInputStream());
         } catch (UnknownHostException e) {
             LOGGER.error("Google static MAPS web service is not reachable (UnknownHostException).", e );

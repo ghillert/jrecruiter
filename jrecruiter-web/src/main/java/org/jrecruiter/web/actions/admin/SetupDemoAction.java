@@ -18,6 +18,7 @@ package org.jrecruiter.web.actions.admin;
 import org.apache.struts2.convention.annotation.Result;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.SystemSetupService;
+import org.jrecruiter.service.UserService;
 import org.jrecruiter.web.actions.BaseAction;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,12 +33,13 @@ public class SetupDemoAction extends BaseAction {
     /** serialVersionUID. */
     private static final long serialVersionUID = -3422780336408883930L;
 
-    private transient @Autowired SystemSetupService demoService;
+    private transient @Autowired SystemSetupService systemSetupService;
+    private transient @Autowired UserService userService;
 
     public String execute() {
 
-        User user = demoService.createDemoUser();
-        demoService.createDemoJobs(user, 300);
+        final User user = userService.getUser(1L);
+        systemSetupService.createDemoJobs(user, 300);
 
         addActionMessage("300 demo jobs have been created.");
         return SUCCESS;

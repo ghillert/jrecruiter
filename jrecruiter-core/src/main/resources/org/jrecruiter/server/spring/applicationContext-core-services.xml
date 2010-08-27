@@ -15,7 +15,7 @@
     <context:component-scan base-package="org.jrecruiter.scheduler" />
     <context:component-scan base-package="org.jrecruiter.service.impl" />
 
-    <bean id="applicationConfiguration" class="org.jrecruiter.spring.ApplicationConfiguration" scope="request"/>
+    <bean id="applicationConfiguration" class="org.jrecruiter.spring.ApplicationConfiguration"/>
 
     <bean id="server.messageSource"
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
@@ -34,7 +34,6 @@
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
      <bean id="apiKeysHolder" class="org.jrecruiter.common.ApiKeysHolder">
-       <property name="googleMapsKey"    value="${key.google.maps}"/>
        <property name="reCaptchaKey"     value="${key.recaptcha.public}"/>
        <property name="twitterUsername"  value="${twitter.username}"/>
        <property name="twitterPassword"  value="${twitter.password}"/>

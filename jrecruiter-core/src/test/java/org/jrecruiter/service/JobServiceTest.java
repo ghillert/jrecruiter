@@ -25,6 +25,7 @@ import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.test.BaseServiceIntegrationTest;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class JobServiceTest extends BaseTest {
+public class JobServiceTest extends BaseServiceIntegrationTest {
 
     @Autowired JobService jobService;
     @Autowired UserService userService;

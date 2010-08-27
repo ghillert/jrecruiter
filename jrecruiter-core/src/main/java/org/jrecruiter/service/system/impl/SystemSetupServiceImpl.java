@@ -253,9 +253,9 @@ public class SystemSetupServiceImpl implements SystemSetupService {
 		final List<SchemaMigration> migrations = schemaMigrationDao.getAll();
 
 		if (migrations.isEmpty()) {
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
 
 	}

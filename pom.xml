@@ -180,7 +180,7 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-search</artifactId>
-				<version>3.2.0.CR1</version>
+				<version>3.2.1.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -314,7 +314,7 @@
 				<version>1.6</version>
 			</dependency>
 
-			<!-- Dependencies with scope=provided aren't picked up from dependent 
+			<!-- Dependencies with scope=provided aren't picked up from dependent
 				JARs -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
@@ -758,8 +758,8 @@
 	<properties>
 
 		<!-- Testing dependency versions -->
-		<!-- <jsp.version>2.0</jsp.version> <servlet.version>2.5</servlet.version> 
-			<wiser.version>1.2</wiser.version> <commons.lang.version>2.3</commons.lang.version> 
+		<!-- <jsp.version>2.0</jsp.version> <servlet.version>2.5</servlet.version>
+			<wiser.version>1.2</wiser.version> <commons.lang.version>2.3</commons.lang.version>
 			<spring.security.version>2.0.4</spring.security.version> -->
 		<struts.devMode>true</struts.devMode>
 		<jawr.debug.on>true</jawr.debug.on>

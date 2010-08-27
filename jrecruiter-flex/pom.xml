@@ -1,93 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.jrecruiter</groupId>
-        <artifactId>jrecruiter</artifactId>
-        <version>2.0</version>
-    </parent>
+	<parent>
+		<groupId>org.jrecruiter</groupId>
+		<artifactId>jrecruiter</artifactId>
+		<version>2.0</version>
+	</parent>
 
-    <artifactId>jrecruiter-flex</artifactId>
-    <packaging>swf</packaging>
+	<artifactId>jrecruiter-flex</artifactId>
+	<packaging>swf</packaging>
 
-    <name>${project.artifactId}</name>
+	<name>${project.artifactId}</name>
 
 	<properties>
 		<dependency.flex.version>4.1.0.16248</dependency.flex.version>
 	</properties>
 
-    <build>
-        <finalName>main</finalName>
-        <sourceDirectory>src/main/flex</sourceDirectory>
-        <testSourceDirectory>src/test/flex</testSourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>org.sonatype.flexmojos</groupId>
-                <artifactId>flexmojos-maven-plugin</artifactId>
-                <version>3.7.1</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <configurationReport>true</configurationReport>
-                    <coverageViewerPath></coverageViewerPath>
-                    <storepass></storepass>
-                    <sourceFile>jobs.mxml</sourceFile>
-                    <output>${basedir}/../jrecruiter-web/src/main/webapp/fx/jobs.swf</output>
-                    <!--<services>${basedir}/../jrecruiter-web/src/main/webapp/WEB-INF/flex/services-config.xml</services>
-                    --><debug>true</debug><accessible>true</accessible><as3>true</as3><showWarnings>true</showWarnings>
-                    <contextRoot>/</contextRoot>
-                    <locales>
-                        <locale>en_US</locale>
-                    </locales>
-                </configuration>
-		        <dependencies>
-		                <dependency>
-		                        <groupId>com.adobe.flex</groupId>
-		                        <artifactId>compiler</artifactId>
-		                        <version>${dependency.flex.version}</version>
-		                        <type>pom</type>
-		                        </dependency>
-		                <dependency>
-		                        <groupId>com.adobe.flex.compiler</groupId>
-		                        <artifactId>asdoc</artifactId>
-		                        <version>${dependency.flex.version}</version>
-		                        <classifier>template</classifier>
-		                        <type>zip</type>
-		                </dependency>
-		        </dependencies>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<finalName>main</finalName>
+		<sourceDirectory>src/main/flex</sourceDirectory>
+		<testSourceDirectory>src/test/flex</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.flexmojos</groupId>
+				<artifactId>flexmojos-maven-plugin</artifactId>
+				<version>3.7.1</version>
+				<extensions>true</extensions>
+				<configuration>
+					<configurationReport>true</configurationReport>
+					<coverageViewerPath></coverageViewerPath>
+					<storepass></storepass>
+					<sourceFile>jobs.mxml</sourceFile>
+					<output>${basedir}/../jrecruiter-web/src/main/webapp/fx/jobs.swf</output>
+					<!--
+						<services>${basedir}/../jrecruiter-web/src/main/webapp/WEB-INF/flex/services-config.xml</services>
+					-->
+					<debug>true</debug>
+					<accessible>true</accessible>
+					<as3>true</as3>
+					<showWarnings>true</showWarnings>
+					<contextRoot>/</contextRoot>
+					<locales>
+						<locale>en_US</locale>
+					</locales>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.adobe.flex</groupId>
+						<artifactId>compiler</artifactId>
+						<version>${dependency.flex.version}</version>
+						<type>pom</type>
+					</dependency>
+					<dependency>
+						<groupId>com.adobe.flex.compiler</groupId>
+						<artifactId>asdoc</artifactId>
+						<version>${dependency.flex.version}</version>
+						<classifier>template</classifier>
+						<type>zip</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.adobe.flex.framework</groupId>
-            <artifactId>framework</artifactId>
-            <version>${dependency.flex.version}</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.flex.framework</groupId>
-            <artifactId>framework</artifactId>
-            <version>${dependency.flex.version}</version>
-            <type>swc</type>
-        </dependency>
-        <dependency>
-          	<groupId>googlemaps</groupId>
-          <artifactId>googlemaps</artifactId>
-          <version>1.9a</version>
-          <type>swc</type>
-        </dependency>
+	<dependencies>
+		    <dependency>
+      <groupId>com.adobe.flex.framework</groupId>
+      <artifactId>flex-framework</artifactId>
+      <version>${dependency.flex.version}</version>
+      <type>pom</type>
+    </dependency>
+
+		<dependency>
+			<groupId>googlemaps</groupId>
+			<artifactId>googlemaps</artifactId>
+			<version>1.9a</version>
+			<type>swc</type>
+		</dependency>
 
 
-        <!-- flexmojos Unit testing support -->
-        <!--
-            <dependency> <groupId>org.sonatype.flexmojos</groupId>
-            <artifactId>flexmojos-unittest-support</artifactId>
-            <version>3.2.0</version> <type>swc</type> <scope>test</scope>
-            </dependency>
-        -->
-    </dependencies>
+		<!-- flexmojos Unit testing support -->
+		<!--
+			<dependency> <groupId>org.sonatype.flexmojos</groupId>
+			<artifactId>flexmojos-unittest-support</artifactId>
+			<version>3.2.0</version> <type>swc</type> <scope>test</scope>
+			</dependency>
+		-->
+	</dependencies>
 
 </project>

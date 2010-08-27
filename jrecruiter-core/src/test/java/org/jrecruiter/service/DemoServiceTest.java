@@ -20,6 +20,7 @@ import java.util.Set;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.export.Backup;
+import org.jrecruiter.test.BaseServiceIntegrationTest;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,7 +32,7 @@ import org.springframework.test.annotation.Rollback;
  * @author Gunnar Hillert
  * @version $Id: UserServiceTest.java 561 2010-03-04 15:12:02Z ghillert $
  */
-public class DemoServiceTest extends BaseTest {
+public class DemoServiceTest extends BaseServiceIntegrationTest {
 
     @Autowired SystemSetupService demoService;
 

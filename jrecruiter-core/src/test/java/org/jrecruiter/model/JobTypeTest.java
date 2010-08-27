@@ -15,12 +15,15 @@
 */
 package org.jrecruiter.model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Set;
 
-import junit.framework.TestCase;
-
 import org.jrecruiter.common.CollectionUtils;
-
+import org.junit.Test;
 
 /**
  * Validate object creation of the job type object
@@ -28,8 +31,9 @@ import org.jrecruiter.common.CollectionUtils;
  * @author Gunnar Hillert
  * @version $Id$
  */
-public class JobTypeTest extends TestCase {
+public class JobTypeTest {
 
+	@Test
     public void testCreateJobType() throws Exception {
 
         JobType jobType = new JobType();
@@ -43,6 +47,7 @@ public class JobTypeTest extends TestCase {
 
     }
 
+	@Test
     public void testCreateJobType2() throws Exception {
 
         JobType jobType = new JobType(999L, "jobType2");
@@ -58,6 +63,7 @@ public class JobTypeTest extends TestCase {
 
     }
 
+	@Test
     public void testCreateJobType3() throws Exception {
 
         Job job = new Job();
@@ -78,6 +84,7 @@ public class JobTypeTest extends TestCase {
 
     }
 
+	@Test
     public void testCreateJobType4() throws Exception {
 
         Job job = new Job();

@@ -18,6 +18,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.io.IOUtils;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.UserAuthenticationType;
+import org.jrecruiter.dao.BackupDao;
+import org.jrecruiter.dao.jaxb.BackupDaoJaxb;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
@@ -38,24 +40,35 @@ import org.springframework.test.util.ReflectionTestUtils;
  * @version $Id$
  *
  */
-public class DemoServiceJaxbTest {
+public class SystemSetupServiceTest {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(DemoServiceJaxbTest.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(SystemSetupServiceTest.class);
 
-	@Test
-	public void testConvertToBackupData() throws Exception {
+	private SystemSetupService createSystemSetupService() throws Exception {
+
 
 		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+
+		BackupDao backupDao = new BackupDaoJaxb();
 
 		jaxb2Marshaller.setClassesToBeBound(new Class[]{Backup.class});
 		jaxb2Marshaller.afterPropertiesSet();
 
+    	final SystemSetupService systemSetupService = new SystemSetupServiceImpl();
+    	ReflectionTestUtils.setField(backupDao, "marshaller", jaxb2Marshaller);
+    	ReflectionTestUtils.setField(systemSetupService, "backupDao", backupDao);
+
+    	return systemSetupService;
+
+	}
+
+	@Test
+	public void testConvertToBackupData() throws Exception {
+
     	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/seeddata.xml");
+    	final SystemSetupService systemSetupService = this.createSystemSetupService();
 
-    	final SystemSetupService demoService = new SystemSetupServiceImpl();
-    	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
-
-    	final Backup backup = demoService.convertToBackupData(inputStream);
+    	final Backup backup = systemSetupService.convertToBackupData(inputStream);
 
     	final List<Industry> industries = backup.getIndustries();
     	final List<Region>   regions    = backup.getRegions();
@@ -95,17 +108,11 @@ public class DemoServiceJaxbTest {
 	@Test
 	public void testConvertTestToBackupData() throws Exception {
 
-		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-
-		jaxb2Marshaller.setClassesToBeBound(new Class[]{Backup.class});
-		jaxb2Marshaller.afterPropertiesSet();
-
     	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/demodata.xml");
 
-    	final SystemSetupService demoService = new SystemSetupServiceImpl();
-    	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
+    	final SystemSetupService systemSetupService = this.createSystemSetupService();
 
-    	final Backup backup = demoService.convertToBackupData(inputStream);
+    	final Backup backup = systemSetupService.convertToBackupData(inputStream);
 
     	final List<Industry> industries = backup.getIndustries();
     	final List<Region>   regions    = backup.getRegions();
@@ -154,9 +161,6 @@ public class DemoServiceJaxbTest {
     	regions.add(region);
 
     	backup.setRegions(regions);
-
-    	final SystemSetupService demoService = new SystemSetupServiceImpl();
-    	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
 
     	jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));
 
@@ -216,9 +220,6 @@ public class DemoServiceJaxbTest {
 
     	backup.setUsers(users);
     	backup.setRoles(roles);
-
-    	final SystemSetupService demoService = new SystemSetupServiceImpl();
-    	ReflectionTestUtils.setField(demoService, "marshaller", jaxb2Marshaller);
 
     	jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));
 
