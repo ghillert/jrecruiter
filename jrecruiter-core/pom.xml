@@ -378,7 +378,10 @@
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>recaptcha4j</groupId>
+			<artifactId>recaptcha4j</artifactId>
+		</dependency>
 		<!-- Testing -->
 
 		<dependency>
