@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -81,12 +82,15 @@ public class User implements Serializable, UserDetails {
     private String email;
 
     @XmlAttribute
+    @XmlJavaTypeAdapter(JaxbDateAdapter.class)
     private Date registrationDate;
 
     @XmlAttribute
+    @XmlJavaTypeAdapter(JaxbDateAdapter.class)
     private Date updateDate;
 
     @XmlAttribute
+    @XmlJavaTypeAdapter(JaxbDateAdapter.class)
     private Date lastLoginDate;
 
     @XmlTransient
