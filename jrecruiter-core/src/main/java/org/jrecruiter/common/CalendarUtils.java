@@ -23,6 +23,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.commons.lang.time.DateUtils;
+
 /**
  * Provide common helper methods to work around the issues with Java Calendar and Date
  *
@@ -49,6 +51,34 @@ public final class CalendarUtils {
 
     }
 
+    /** Returns the current date without time information.
+     *
+     * Parameters:
+     * @param year the value used to set the YEAR calendar field in the calendar.
+     * @param month the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g., 0 for January.
+     * @param dayOfMonth the value used to set the DAY_OF_MONTH calendar field in the calendar.
+     * @param hourOfDay the value used to set the HOUR_OF_DAY calendar field in the calendar.
+     * @param minute the value used to set the MINUTE calendar field in the calendar.
+     * @param second the value used to set the SECOND calendar field in the calendar.
+     *
+     *
+     */
+    public static Calendar getCalendarInUTC(int year, int month, int dayOfMonth, int hourOfDay, int minute, int second) {
+
+        final Calendar calendar = Calendar.getInstance(DateUtils.UTC_TIME_ZONE);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, second);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+
+        return calendar;
+
+    }
+
     /**
      * Get a XML-date representation (ISO 8601) of the current date/time.
      *
@@ -70,7 +100,7 @@ public final class CalendarUtils {
      * @return XML-date as String
      */
     public static String getXmlFormatedDate(final Date date) {
-        final Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance(DateUtils.UTC_TIME_ZONE);
         calendar.setTime(date);
         return CalendarUtils.getXmlFormatedDate(calendar);
     }
@@ -88,7 +118,7 @@ public final class CalendarUtils {
             throw new IllegalArgumentException("Calendar is a required parameter");
         }
 
-        final GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        final GregorianCalendar gregorianCalendar = new GregorianCalendar(calendar.getTimeZone());
         gregorianCalendar.setTime(calendar.getTime());
 
 

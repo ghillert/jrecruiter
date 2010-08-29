@@ -4,7 +4,7 @@
     <regions/>
     <roles/>
     <users>
-        <user enabled="true" lastLoginDate="2010-07-25T15:50:00-04:00" updateDate="2010-06-24T15:50:00-04:00" registrationDate="2010-06-25T15:50:00-04:00" id="99">
+        <user enabled="true" lastLoginDate="2010-07-25T15:50:00.000Z" updateDate="2010-06-24T15:50:00.000Z" registrationDate="2010-06-25T15:50:00.000Z" id="99">
             <username>username</username>
             <password>password</password>
             <firstName>firstName</firstName>

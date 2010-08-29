@@ -8,14 +8,17 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.StringWriter;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.IOUtils;
+import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.UserAuthenticationType;
 import org.jrecruiter.dao.BackupDao;
@@ -199,12 +202,18 @@ public class SystemSetupServiceTest {
     	user.setFax("123456789");
     	user.setFirstName("firstName");
     	user.setId(99L);
-    	user.setLastLoginDate(new GregorianCalendar(2010, 6, 25, 15, 50, 0).getTime());
+
+    	final Calendar lastLoginDate    = CalendarUtils.getCalendarInUTC(2010, 6, 25, 15, 50, 0);
+    	final Calendar registrationDate = CalendarUtils.getCalendarInUTC(2010, 5, 25, 15, 50, 0);
+    	final Calendar updateDate       = CalendarUtils.getCalendarInUTC(2010, 5, 24, 15, 50, 0);
+
+
+    	user.setLastLoginDate(lastLoginDate.getTime());
     	user.setLastName("lastName");
     	user.setPassword("password");
     	user.setPhone("123456789");
-    	user.setRegistrationDate(new GregorianCalendar(2010, 5, 25, 15, 50, 0).getTime());
-    	user.setUpdateDate(new GregorianCalendar(2010, 5, 24, 15, 50, 0).getTime());
+    	user.setRegistrationDate(registrationDate.getTime());
+    	user.setUpdateDate(updateDate.getTime());
     	user.setUserAuthenticationType(UserAuthenticationType.USERNAME_PASSWORD);
     	user.setUsername("username");
 
