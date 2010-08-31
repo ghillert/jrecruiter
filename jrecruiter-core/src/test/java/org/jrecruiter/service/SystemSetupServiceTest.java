@@ -9,10 +9,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.StringWriter;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamResult;
@@ -28,13 +26,13 @@ import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.export.Backup;
-import org.jrecruiter.scala.Region;
 import org.jrecruiter.service.system.impl.SystemSetupServiceImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.jrecruiter.scala.Region;
 
 /**
  * Contains test methods to verify the deserialization of backup data using Jaxb.

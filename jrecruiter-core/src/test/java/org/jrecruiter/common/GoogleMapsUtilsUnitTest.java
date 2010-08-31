@@ -5,7 +5,6 @@ package org.jrecruiter.common;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.net.URL;
 
 import junit.framework.TestCase;
 

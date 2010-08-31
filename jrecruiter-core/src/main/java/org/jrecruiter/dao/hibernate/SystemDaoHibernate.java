@@ -14,7 +14,6 @@ import org.jrecruiter.dao.SystemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 @Repository("systemDao")
 public class SystemDaoHibernate implements SystemDao {

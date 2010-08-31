@@ -15,9 +15,7 @@
 */
 package org.jrecruiter.service;
 
-import org.jrecruiter.model.User;
 import org.jrecruiter.test.BaseServiceIntegrationTest;
-import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -23,7 +23,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.Map;

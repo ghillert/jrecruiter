@@ -40,7 +40,6 @@ import org.jrecruiter.model.SchemaMigration;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.export.Backup;
-import org.jrecruiter.scala.Region;
 import org.jrecruiter.service.SystemSetupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +48,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
+import org.jrecruiter.scala.Region;
 
 /**
  * @author Gunnar Hillert

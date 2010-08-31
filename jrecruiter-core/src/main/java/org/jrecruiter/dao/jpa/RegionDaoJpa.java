@@ -18,9 +18,8 @@ package org.jrecruiter.dao.jpa;
 import java.util.List;
 
 import org.jrecruiter.dao.RegionDao;
-import org.jrecruiter.scala.Region;
 import org.springframework.stereotype.Repository;
-
+import org.jrecruiter.scala.Region;
 
 /**
  *

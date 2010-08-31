@@ -3,7 +3,6 @@
  */
 package org.jrecruiter.migration;
 
-import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 
 /**

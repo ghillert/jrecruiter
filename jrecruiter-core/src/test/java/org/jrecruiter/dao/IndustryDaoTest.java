@@ -7,11 +7,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.hibernate.ReplicationMode;
-import org.hibernate.Session;
-import org.jrecruiter.common.Constants.Roles;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.model.Role;
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
