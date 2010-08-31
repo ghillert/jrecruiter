@@ -18,7 +18,6 @@ package org.jrecruiter.service;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.net.URL;
 import java.net.URLConnection;
 
 import javax.imageio.ImageIO;

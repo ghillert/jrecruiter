@@ -35,7 +35,6 @@ import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
@@ -50,6 +49,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.jrecruiter.scala.Region;
 
 /**
  * @author Gunnar Hillert

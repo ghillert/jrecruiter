@@ -40,7 +40,6 @@ import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Configuration;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.scala.Region;
 import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
@@ -53,6 +52,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.jrecruiter.scala.Region;
 
 /**
  * @author Gunnar Hillert

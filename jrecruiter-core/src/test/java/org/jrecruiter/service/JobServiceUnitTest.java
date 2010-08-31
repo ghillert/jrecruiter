@@ -33,18 +33,17 @@ import org.jrecruiter.dao.RegionDao;
 import org.jrecruiter.dao.StatisticDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Configuration;
-import org.jrecruiter.scala.Region;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.ServerSettings;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.statistics.JobCountPerDay;
-import org.jrecruiter.model.Job;
 import org.jrecruiter.service.impl.JobServiceImpl;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-
+import org.jrecruiter.scala.Region;
 
 /**
  * Unit Test of the JobService class

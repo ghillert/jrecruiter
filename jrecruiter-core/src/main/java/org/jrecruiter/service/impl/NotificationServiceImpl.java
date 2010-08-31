@@ -39,10 +39,10 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rosaloves.bitlyj.Url;
-
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+
+import com.rosaloves.bitlyj.Url;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

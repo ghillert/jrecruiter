@@ -423,6 +423,12 @@
 				<groupId>org.springframework.flex</groupId>
 				<artifactId>spring-flex</artifactId>
 				<version>1.0.3.RELEASE</version>
+	            <exclusions>
+	                <exclusion>
+	                    <artifactId>spring-beans</artifactId>
+	                    <groupId>org.springframework</groupId>
+	                </exclusion>
+	            </exclusions>
 			</dependency>
 
 			<dependency>
@@ -750,7 +756,6 @@
 			<properties>
 				<struts.devMode>false</struts.devMode>
 				<jawr.debug.on>false</jawr.debug.on>
-				<web.xml.DwrServlet.debug>false</web.xml.DwrServlet.debug>
 			</properties>
 		</profile>
 	</profiles>

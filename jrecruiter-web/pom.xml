@@ -215,6 +215,11 @@
 			<artifactId>mockito-all</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>org.carrot2</groupId>
+            <artifactId>smartsprites</artifactId>
+        </dependency>
+
 		<dependency>
 			<groupId>net.jawr</groupId>
 			<artifactId>jawr</artifactId>

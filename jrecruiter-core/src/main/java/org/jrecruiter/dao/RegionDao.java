@@ -16,7 +16,6 @@
 package org.jrecruiter.dao;
 
 import java.util.List;
-
 import org.jrecruiter.scala.Region;
 
 /**

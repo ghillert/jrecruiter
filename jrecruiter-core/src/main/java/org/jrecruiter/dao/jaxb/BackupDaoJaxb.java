@@ -8,9 +8,7 @@ import java.io.InputStream;
 import javax.xml.transform.stream.StreamSource;
 
 import org.jrecruiter.dao.BackupDao;
-import org.jrecruiter.model.Role;
 import org.jrecruiter.model.export.Backup;
-import org.jrecruiter.service.system.impl.SystemSetupServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

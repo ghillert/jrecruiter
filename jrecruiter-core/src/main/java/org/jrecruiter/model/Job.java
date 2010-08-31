@@ -18,7 +18,6 @@ package org.jrecruiter.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import org.jrecruiter.scala.Region;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -55,7 +54,7 @@ import org.hibernate.search.annotations.Store;
 import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
-
+import org.jrecruiter.scala.Region;
 /**
 * This class represents a job posting.
 *

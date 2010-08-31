@@ -24,12 +24,12 @@ import java.util.Set;
 import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.Constants.OfferedBy;
 import org.jrecruiter.model.Industry;
-import org.jrecruiter.scala.Region;
 import org.jrecruiter.web.JobForm;
 import org.jrecruiter.web.actions.BaseAction;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import org.jrecruiter.scala.Region;
 
 /**
  * Edit a job. Save the changes or delete the job posting altogether.

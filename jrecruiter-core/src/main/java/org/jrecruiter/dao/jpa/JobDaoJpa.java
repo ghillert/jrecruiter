@@ -38,8 +38,8 @@ import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.jrecruiter.scala.Region;
 import org.springframework.stereotype.Repository;
+import org.jrecruiter.scala.Region;
 
 /**
  * This DAO provides job-related database methods.

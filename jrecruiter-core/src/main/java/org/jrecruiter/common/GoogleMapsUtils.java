@@ -1,10 +1,8 @@
 package org.jrecruiter.common;
 
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Provides a basic Java Apis for interacting with the static Google Maps Apis.

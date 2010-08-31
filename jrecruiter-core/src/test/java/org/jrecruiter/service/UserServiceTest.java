@@ -20,7 +20,6 @@ import java.util.Date;
 import junit.framework.Assert;
 
 import org.jasypt.digest.StringDigester;
-import org.jasypt.spring.security.PasswordEncoder;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
