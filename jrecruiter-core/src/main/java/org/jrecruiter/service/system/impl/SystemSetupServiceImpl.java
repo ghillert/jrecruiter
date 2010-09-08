@@ -145,7 +145,8 @@ public class SystemSetupServiceImpl implements SystemSetupService {
     /** {@inheritDoc} */
     @Override
     public void loadAndRestoreSeedData() {
-        final InputStream is = SystemSetupServiceImpl.class.getResourceAsStream("/org/jrecruiter/server/seeddata/seeddata.xml");
+        final InputStream is = SystemSetupServiceImpl.class.getResourceAsStream("/org/jrecruiter/core/seeddata/seeddata.xml");
+    	//FIXME verify file existence
         restore(is);
     }
 

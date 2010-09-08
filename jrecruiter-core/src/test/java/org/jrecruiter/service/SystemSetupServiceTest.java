@@ -66,7 +66,10 @@ public class SystemSetupServiceTest {
 	@Test
 	public void testConvertToBackupData() throws Exception {
 
-    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/seeddata.xml");
+    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/seeddata/seeddata.xml");
+
+    	//FIXME verify file existence
+
     	final SystemSetupService systemSetupService = this.createSystemSetupService();
 
     	final Backup backup = systemSetupService.convertToBackupData(inputStream);
@@ -109,7 +112,8 @@ public class SystemSetupServiceTest {
 	@Test
 	public void testConvertTestToBackupData() throws Exception {
 
-    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/demodata.xml");
+    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/seeddata/demodata.xml");
+    	//FIXME verify file existence
 
     	final SystemSetupService systemSetupService = this.createSystemSetupService();
 

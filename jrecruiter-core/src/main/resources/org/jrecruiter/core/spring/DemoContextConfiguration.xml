@@ -11,7 +11,7 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName"        value="org.h2.Driver"/>
-        <property name="url"                    value="jdbc:h2:jrecruiter_test"/>
+        <property name="url"                    value="jdbc:h2:jrecruiter_test?MVCC=TRUE"/>
         <property name="username"               value="sa"/>
         <property name="password"               value=""/>
         <property name="maxActive"              value="100"/>
@@ -48,4 +48,6 @@
 
     <bean id="contextStartedEventListener" class="org.jrecruiter.spring.ContextStartedEventListener"/>
     <bean id="seedDataEventListener"       class="org.jrecruiter.spring.ContextRefreshedEventListener"/>
+
+    <bean id="notificationService" class="org.jrecruiter.service.notification.impl.DemoNotificationServiceImpl"/>
 </beans>

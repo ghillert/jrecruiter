@@ -191,19 +191,19 @@ public class JobDetailPdfView extends AbstractPdfView {
 
     private void addPdfHeader(PdfWriter pdfWriter, Document document, String headerString) throws DocumentException {
 
-        final Paragraph jobLocationHeader = new Paragraph(new Phrase(headerString, FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD)));
-        document.add(jobLocationHeader);
-
-        float pos = pdfWriter.getVerticalPosition(false) - 2;
-
-        PdfContentByte cb = pdfWriter.getDirectContent();
-
-        cb.moveTo(document.leftMargin(), pos);
-        cb.lineTo(document.right()+document.rightMargin(), pos);
-        cb.setColorStroke(Color.RED);
-        cb.stroke();
-
-        cb.moveTo(document.leftMargin(), pos - 40);
+//        final Paragraph jobLocationHeader = new Paragraph(new Phrase(headerString, FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD)));
+//        document.add(jobLocationHeader);
+//
+//        float pos = pdfWriter.getVerticalPosition(false) - 2;
+//
+//        PdfContentByte cb = pdfWriter.getDirectContent();
+//
+//        cb.moveTo(document.leftMargin(), pos);
+//        cb.lineTo(document.right()+document.rightMargin(), pos);
+//        cb.setColorStroke(Color.RED);
+//        cb.stroke();
+//
+//        cb.moveTo(document.leftMargin(), pos - 40);
 
     }
 

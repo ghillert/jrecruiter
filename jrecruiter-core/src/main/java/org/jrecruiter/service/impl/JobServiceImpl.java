@@ -17,7 +17,6 @@ package org.jrecruiter.service.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -207,17 +206,18 @@ public class JobServiceImpl implements JobService {
         context.put("businessEmail", savedJob.getBusinessEmail());
         context.put("serverAddress", serverSettings.getServerAddress());
 
-        notificationService.sendEmail(((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(),
-                                      savedJob.getJobTitle(),
-                                      context, "add-job");
+        //FIXME
+//        notificationService.sendEmail(((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(),
+//                                      savedJob.getJobTitle(),
+//                                      context, "add-job");
         final String tweetMessage = "New Job: " + savedJob.getJobTitle() + " @ " + savedJob.getBusinessName();
 
-        final URL url = createShortenedJobDetailUrl(savedJob);
-        notificationService.sendTweetToTwitter(tweetMessage + ": " + url.toString());
+        final URI uri = createShortenedJobDetailUrl(savedJob);
+        notificationService.sendTweetToTwitter(tweetMessage + ": " + uri.toString());
 
     }
 
-    private URL createShortenedJobDetailUrl(final Job job) {
+    private URI createShortenedJobDetailUrl(final Job job) {
         final String jobUrl = this.serverSettings.getServerAddress() + ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
 
         final URI tweetUri;
@@ -228,7 +228,7 @@ public class JobServiceImpl implements JobService {
             throw new IllegalStateException("Cannot creat URI for " + jobUrl);
         }
 
-        final URL jobDetailUrl = notificationService.shortenUrl(tweetUri.toString());
+        final URI jobDetailUrl = notificationService.shortenUrl(tweetUri.toString());
 
         return jobDetailUrl;
     }
@@ -249,9 +249,9 @@ public class JobServiceImpl implements JobService {
 
         String tweetMessage = "Job Update: " + job.getJobTitle() + " @ " + job.getBusinessName();
 
-        final URL url = createShortenedJobDetailUrl(job);
+        final URI uri = createShortenedJobDetailUrl(job);
 
-        tweetMessage = tweetMessage + ": " + url.toString();
+        tweetMessage = tweetMessage + ": " + uri.toString();
         notificationService.sendTweetToTwitter(tweetMessage);
 
     }

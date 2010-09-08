@@ -16,7 +16,7 @@
 package org.jrecruiter.service;
 
 import java.math.BigDecimal;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,10 +40,10 @@ import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.statistics.JobCountPerDay;
+import org.jrecruiter.scala.Region;
 import org.jrecruiter.service.impl.JobServiceImpl;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.jrecruiter.scala.Region;
 
 /**
  * Unit Test of the JobService class
@@ -388,7 +388,7 @@ public class JobServiceUnitTest extends TestCase {
 
         Mockito.when(serverSettings.getServerAddress()).thenReturn("test");
 
-        Mockito.when(notificationService.shortenUrl((String)Mockito.anyObject())).thenReturn((new URL("http://www.google.com")));
+        Mockito.when(notificationService.shortenUrl((String)Mockito.anyObject())).thenReturn((new URI("http://www.google.com")));
 
         notificationService.sendTweetToTwitter((String)Mockito.anyObject());
 

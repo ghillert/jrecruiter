@@ -13,15 +13,15 @@
 *	permissions under this License.
 *
 */
-package org.jrecruiter.service.impl;
+package org.jrecruiter.service.notification.impl;
 
 import static com.rosaloves.bitlyj.Bitly.as;
 import static com.rosaloves.bitlyj.Bitly.shorten;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,7 +54,7 @@ import freemarker.template.TemplateException;
  */
 @Service("notificationService")
 @Transactional
-public class NotificationServiceImpl implements NotificationService {
+public class DefaultNotificationServiceImpl implements NotificationService {
 
     /**
      * Mailsender.
@@ -68,9 +68,8 @@ public class NotificationServiceImpl implements NotificationService {
      */
     private @Autowired ApiKeysHolder apiKeysHolder;
 
-    /**
-     *
-     */
+    /** {@inheritDoc} */
+    @Override
     public void sendEmail(final String email, final String subject, final Map context, final String templateName) {
 
         final MimeMessagePreparator preparator = new MimeMessagePreparator() {
@@ -109,6 +108,7 @@ public class NotificationServiceImpl implements NotificationService {
         mailSender.send(preparator);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void sendTweetToTwitter(final String tweet) {
 
@@ -123,20 +123,19 @@ public class NotificationServiceImpl implements NotificationService {
 
     }
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.NotificationService#shortenUrl(java.lang.String)
-     */
+    /** {@inheritDoc} */
     @Override
-    public URL shortenUrl(final String string) {
+    public URI shortenUrl(final String urlAsString) {
 
     	//FIXME Handle this better
         Url url = as(apiKeysHolder.getBitlyUsername(),
         		     apiKeysHolder.getBitlyPassword())
-        		 .call(shorten(string));
+        		 .call(shorten(urlAsString));
         try {
-			return new URL(url.getShortUrl());
-		} catch (MalformedURLException e) {
-			return null;
+			return new URI(url.getShortUrl());
+		} catch (URISyntaxException e) {
+    		throw new IllegalArgumentException(
+    	    		String.format("Please provide a valid URI - %s is not valid", urlAsString));
 		}
 
     }
