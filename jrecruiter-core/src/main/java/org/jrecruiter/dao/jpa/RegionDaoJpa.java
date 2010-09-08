@@ -20,7 +20,6 @@ import java.util.List;
 import org.jrecruiter.dao.RegionDao;
 import org.springframework.stereotype.Repository;
 import org.jrecruiter.scala.Region;
-
 /**
  *
  * @author Gunnar Hillert

@@ -95,10 +95,11 @@ public final class SystemInformationUtils {
         final Map<String, String> environmentVariablesAsMap = System.getenv();
 
         for (final Entry<String, String> entry : environmentVariablesAsMap.entrySet()) {
-            environmentVariables.append(entry.getKey() + ": " + entry.getValue() + "\n");
-        }
 
-        LOGGER.info(environmentVariables.toString());
+            final String label = StringUtils.rightPad(entry.getKey(), CONSOLE_SPACER_WIDTH, CONSOLE_SPACER_CHARACTER);
+            environmentVariables.append(label + ": " + entry.getValue() + "\n");
+
+        }
 
         return environmentVariables.toString();
     }
@@ -117,9 +118,6 @@ public final class SystemInformationUtils {
 
             systemProperties.append( label + ": " + property.getPropertyValue()).append("\n");
         }
-
-        LOGGER.info(systemProperties.toString());
-
         return systemProperties.toString();
     }
 

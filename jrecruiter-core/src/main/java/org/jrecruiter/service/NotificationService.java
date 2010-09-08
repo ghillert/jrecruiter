@@ -15,7 +15,7 @@
 */
 package org.jrecruiter.service;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Map;
 
 /**
@@ -44,6 +44,6 @@ public interface NotificationService {
      * */
     void sendTweetToTwitter(String tweet);
 
-    URL shortenUrl(String string);
+    URI shortenUrl(String string);
 
 }

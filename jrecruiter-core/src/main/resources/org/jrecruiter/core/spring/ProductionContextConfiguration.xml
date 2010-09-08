@@ -14,7 +14,6 @@
         <property name="searchSystemEnvironment" value="true"/>
         <property name="locations">
             <list>
-                <value>classpath:org/jrecruiter/server/jdbc.properties</value>
                 <value>file:${JRECRUITER_HOME}/jrecruiter.properties</value>
             </list>
         </property>
@@ -57,4 +56,5 @@
         </property>
     </bean>
 
+    <bean id="notificationService" class="org.jrecruiter.service.notification.impl.DefaultNotificationServiceImpl"/>
 </beans>

@@ -27,7 +27,7 @@
        <oxm:class-to-be-bound name="org.jrecruiter.model.export.Backup"/>
     </oxm:jaxb2-marshaller>
 
-    <import resource="classpath:org/jrecruiter/server/spring/${jRecruiterSpringContext}.xml"/>
-    <import resource="classpath:org/jrecruiter/server/spring/applicationContext-core-basic.xml"/>
-    <import resource="classpath:org/jrecruiter/server/spring/applicationContext-core-services.xml"/>
+    <import resource="classpath:org/jrecruiter/core/spring/${jRecruiterSpringContext}.xml"/>
+    <import resource="classpath:org/jrecruiter/core/spring/applicationContext-core-basic.xml"/>
+    <import resource="classpath:org/jrecruiter/core/spring/applicationContext-core-services.xml"/>
 </beans>

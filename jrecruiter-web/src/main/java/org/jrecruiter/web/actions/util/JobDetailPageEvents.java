@@ -100,6 +100,7 @@ public class JobDetailPageEvents extends PdfPageEventHelper {
         cb.endText();
         cb.addTemplate(tpl, document.right() - adjust, textBase);
         cb.saveState();
+        cb.restoreState();
 
     }
 

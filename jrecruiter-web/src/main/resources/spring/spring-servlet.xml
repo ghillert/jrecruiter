@@ -72,5 +72,8 @@
         <property name="maxUploadSize"><value>8194304</value> </property>
     </bean>
 
+	 <bean id="systemSetupFilter"
+	        class="org.jrecruiter.web.filter.SystemSetupFilter"/>
+
 </beans>
 

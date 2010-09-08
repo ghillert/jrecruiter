@@ -25,6 +25,7 @@ import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
 import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.statistics.JobCountPerDay;
+
 import org.jrecruiter.scala.Region;
 
 /**
