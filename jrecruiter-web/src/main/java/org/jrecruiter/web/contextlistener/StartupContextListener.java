@@ -123,14 +123,16 @@ public class StartupContextListener implements ServletContextListener {
 
         bootMessage.append(contextPathLabel + ": " + contextPath)     .append("\n");
         bootMessage.append(serverLabel      + ": " + server)          .append("\n");
-	    bootMessage.append("Java System Properties"               + "\n");
-	    bootMessage.append("=========================================\n");
-        bootMessage.append(SystemInformationUtils.getAllSystemProperties())  .append("\n");
         bootMessage.append("-----------------------------------------------").append("\n");
-	    bootMessage.append("Environment Variables"                + "\n");
-	    bootMessage.append("=========================================\n");
-        bootMessage.append(SystemInformationUtils.getAllEnvironmentVariables()).append("\n");
+        bootMessage.append("Systen Properties:").append("\n");
         bootMessage.append("-----------------------------------------------").append("\n");
+        bootMessage.append(SystemInformationUtils.getAllSystemProperties());
+        bootMessage.append("-----------------------------------------------").append("\n");
+        bootMessage.append("Environment Variables:").append("\n");
+        bootMessage.append("-----------------------------------------------").append("\n");
+        bootMessage.append(SystemInformationUtils.getAllEnvironmentVariables());
+        bootMessage.append("-----------------------------------------------").append("\n");
+
         LOGGER.info(bootMessage.toString());
         System.getProperty("jRecruiterSpringContext");
     }
