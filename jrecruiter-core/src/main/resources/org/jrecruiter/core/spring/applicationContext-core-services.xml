@@ -21,7 +21,7 @@
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
         <property name="basenames" >
             <list>
-                <value>classpath:org/jrecruiter/server/messages</value>
+                <value>classpath:org/jrecruiter/core/messages</value>
             </list>
         </property>
         <property name="defaultEncoding" value="utf-8"/>

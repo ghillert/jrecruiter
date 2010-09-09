@@ -178,7 +178,7 @@ public class SystemSetupServiceTest {
 	@Test
 	public void testUserMarshalling() throws Exception {
 
-		final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/service/testUserMarshallingExpectation.txt");
+		final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/service/testUserMarshallingExpectation.txt");
 
 		final String expectedString = IOUtils.toString(inputStream, "UTF-8");
 

@@ -56,7 +56,7 @@ public class DemoServiceTest extends BaseServiceIntegrationTest {
     @Rollback(false)
     public void testRestore(){
 
-    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/server/seeddata/demodata.xml");
+    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/seeddata/demodata.xml");
 
         final Backup backup = demoService.convertToBackupData(inputStream);
 
