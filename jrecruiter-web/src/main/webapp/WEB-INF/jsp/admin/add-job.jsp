@@ -21,7 +21,7 @@
 
 <!-- Google Maps -->
  <script
-   src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=${apiKeysHolder.googleMapsKey}"
+   src="http://maps.google.com/maps?file=api&amp;v=3"
    type="text/javascript"></script>
 
 <jsp:include page="includes/job_javascript.jsp"/>
