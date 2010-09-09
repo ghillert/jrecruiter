@@ -205,7 +205,7 @@ body {
 .container .header_menu  a.icon-xml {
     background-repeat: no-repeat;
     background-position: 8px 10px;
-    background-image: url(../images/icons/xml.gif); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; */
+    background-image: url(../images/icons/xml.gif); /** sprite-ref: mysprite; sprite-margin-left: 10px; sprite-margin-top: 10px; sprite-margin-bottom: 10px; */
 }
 
 .container .header_menu  a.icon span {
@@ -489,8 +489,8 @@ a.cancel span {
 /* Form Buttons */
 input.searchBox {
     background-repeat: no-repeat;
-    background-position: 2px 50%;
-    background-image: url(../images/icons/crystal/viewmag.png); /** sprite-ref: mysprite; */
+    background-position: 2px 0px;
+    background-image: url(../images/icons/crystal/viewmag.png); /** sprite-ref: mysprite; sprite-margin-left: 5px; sprite-margin-top: 10px; sprite-margin-bottom: 10px; */
     padding-left: 20px !important;
 }
 
@@ -505,6 +505,6 @@ input.searchBox {
 .openIdLogo {
     background-repeat: no-repeat;
     background-position: 100% 0px;
-    background-image: url(../images/icons/openid-logo-small.png); /** sprite-ref: mysprite; */
+    background-image: url(../images/icons/openid-logo-small.png);
     padding: 1px;
 }

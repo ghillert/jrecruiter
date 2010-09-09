@@ -160,8 +160,5 @@ public class AddJobAction extends JobBaseAction implements Preparable, ModelDriv
             }
         }
 
-        super.addFieldError("model.job.businessPhone", "errorMessage2222");
-super.getFieldErrors();
-
     }
 }

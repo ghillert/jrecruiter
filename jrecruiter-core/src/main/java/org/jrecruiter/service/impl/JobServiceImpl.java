@@ -213,7 +213,7 @@ public class JobServiceImpl implements JobService {
         final String tweetMessage = "New Job: " + savedJob.getJobTitle() + " @ " + savedJob.getBusinessName();
 
         final URI uri = createShortenedJobDetailUrl(savedJob);
-        notificationService.sendTweetToTwitter(tweetMessage + ": " + uri.toString());
+      //  notificationService.sendTweetToTwitter(tweetMessage + ": " + uri.toString());
 
     }
 
@@ -252,7 +252,7 @@ public class JobServiceImpl implements JobService {
         final URI uri = createShortenedJobDetailUrl(job);
 
         tweetMessage = tweetMessage + ": " + uri.toString();
-        notificationService.sendTweetToTwitter(tweetMessage);
+      //  notificationService.sendTweetToTwitter(tweetMessage);
 
     }
 
