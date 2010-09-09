@@ -159,7 +159,7 @@
         <s:if test="job.usesMap">
             <!-- Google Maps -->
             <script
-              src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=${apiKeysHolder.googleMapsKey}"
+              src="http://maps.google.com/maps?file=api&amp;v=3"
               type="text/javascript"></script>
             <script type="text/javascript">
             <!--
