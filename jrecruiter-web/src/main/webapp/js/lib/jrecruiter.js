@@ -61,39 +61,27 @@ for (i = 0; i < strString.length && blnResult == true; i++)
 return blnResult;
 }
 
-
 function showJob(jobDivId, latitude, longitude, zoomLevel) {
 
-  if (GBrowserIsCompatible()) {
-      var point = new GLatLng(parseFloat(latitude), parseFloat(longitude));
+  var latlng = new google.maps.LatLng(latitude, longitude);
+  var myOptions = {
+      zoom: zoomLevel,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var map = new google.maps.Map(document.getElementById(jobDivId),
+        myOptions);
 
-    if (map == null) {
-
-          map = new GMap2(document.getElementById(jobDivId));
-          map.checkResize();
-          map.addControl(new GSmallMapControl());
-          map.addControl(new GMapTypeControl());
-          map.enableScrollWheelZoom();
-          map.setCenter(point, parseFloat(zoomLevel));
-
-    } else {
-        map.clearOverlays();
-        map.setCenter(point, parseFloat(zoomLevel));
-        map.panTo(point);
-    }
-
-    map.addOverlay(new GMarker(point));
-
-  } else {
-    alert("Sorry but your browser is not compatible with Google Maps,");
-    return;
-  }
+  var marker = new google.maps.Marker({
+      position: latlng,
+      map: map
+  });
 }
 
 function getCoordinatesFromAddress() {
 
       if (geocoder == null) {
-           geocoder = new GClientGeocoder();
+           geocoder = new google.maps.Geocoder();
       }
 
       var address = jQuery("#businessAddress1").val()
@@ -101,19 +89,24 @@ function getCoordinatesFromAddress() {
             + ',' + jQuery('#businessState').val()
             + ',' + jQuery('#businessZip').val();
 
-      geocoder.getLocations(address, addAddressToMapCallBack);
+      geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
 
-}
+            document.getElementById('longitude').value=results[0].geometry.location.longitude;
+            document.getElementById('latitude').value=results[0].geometry.location.latitude;
+            showJob('map', results[0].geometry.location.longitude, results[0].geometry.location.latitude, jQuery('#zoomLevel').val());
 
-function addAddressToMapCallBack(response) {
-  if (!response || response.Status.code != 200) {
-    alert("Sorry, we were unable to geocode that address");
-  } else {
-    var place = response.Placemark[0];
-    document.getElementById('longitude').value=place.Point.coordinates[0];
-    document.getElementById('latitude').value=place.Point.coordinates[1];
-    showJob('map', place.Point.coordinates[1], place.Point.coordinates[0], jQuery('#zoomLevel').val());
-  }
+          } else {
+            alert("Geocode was not successful for the following reason: " + status);
+          }
+        });
+
+
 }
 
 var confirmHelper = { open: function (dialog) {
