@@ -32,15 +32,25 @@
       });
 
 
-   jQuery('#convertAddressButton').bind('click', function(event) {
+      jQuery('#convertAddressButton').bind('click', function(event) {
+          getCoordinatesFromAddress();
+      });
 
-      getCoordinatesFromAddress(); });
       usesMapChange();
 
     });
 
 jQuery('#showCoordinatesButton').bind('click', function(event) {
-    showJob('map', jQuery('#latitude').val(), jQuery('#longitude').val(), jQuery('#zoomLevel').val());
+
+    longitude = jQuery('#longitude').val();
+    latitude  = jQuery('#latitude').val();
+    zoomLevel = jQuery('#zoomLevel').val();
+
+    if (isNumeric(longitude) && isNumeric(latitude) && isNumeric(zoomLevel)) {
+        showJob('map', latitude, longitude, parseInt(zoomLevel));
+    } else {
+		alert("One of your fields is not numeric.");
+    }
 
   });
 
