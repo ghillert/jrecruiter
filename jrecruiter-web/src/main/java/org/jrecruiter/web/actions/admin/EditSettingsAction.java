@@ -50,9 +50,29 @@ public class EditSettingsAction extends BaseAction implements Preparable, ModelD
     public void prepare() throws Exception { }
 
     public String execute() {
-        form.setMailingListSubject( ((Configuration)jobService.getJRecruiterSetting("mail.jobposting.subject")).getMessageText());
-        form.setMailingListEmail(   ((Configuration)jobService.getJRecruiterSetting("mail.jobposting.email")).getMessageText());
-        form.setMailFrom(           ((Configuration)jobService.getJRecruiterSetting("mail.from")).getMessageText());
+
+    	final Configuration mailingListSubject = jobService.getJRecruiterSetting("mail.jobposting.subject");
+    	final Configuration mailingListEmail   = jobService.getJRecruiterSetting("mail.jobposting.email");
+    	final Configuration mailingListFrom    = jobService.getJRecruiterSetting("mail.from");
+
+    	if (mailingListSubject != null) {
+    		form.setMailingListSubject(mailingListSubject.getMessageText());
+    	} else {
+    		form.setMailingListSubject("");
+    	}
+
+    	if (mailingListEmail != null) {
+    		form.setMailingListEmail(mailingListEmail.getMessageText());
+    	} else {
+    		form.setMailingListEmail("");
+    	}
+
+    	if (mailingListFrom != null) {
+    		form.setMailFrom(mailingListFrom.getMessageText());
+    	} else {
+    		form.setMailFrom("");
+    	}
+
         return INPUT;
     }
 
