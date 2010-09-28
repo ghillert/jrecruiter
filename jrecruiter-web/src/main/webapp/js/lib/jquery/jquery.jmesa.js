@@ -41,6 +41,9 @@
             this.getTableFacade(id).limit.setMaxRows(maxRows);
             this.setPageToLimit(id, '1');
         },
+        setTotalRowsToLimit : function(id, totalRows) {
+            this.getTableFacade(id).limit.setTotalRows(totalRows);
+        },
         addSortToLimit : function(id, position, property, order) {
             /*First remove the sort if it is set on the limit,
                and then set the page back to the first one.*/
@@ -135,30 +138,38 @@
             return tableFacade.createParameterString();
         },
         setOnInvokeAction : function (id, functionName) {
-        	var tableFacade = this.getTableFacade(id);
-        	tableFacade.onInvokeAction = functionName;
+            var tableFacade = this.getTableFacade(id);
+            tableFacade.onInvokeAction = functionName;
         },
         setOnInvokeExportAction : function (id, functionName) {
+            var tableFacade = this.getTableFacade(id);
+            tableFacade.onInvokeExportAction = functionName;
+        },
+        setContextPath : function (id, contextPath) {
         	var tableFacade = this.getTableFacade(id);
-        	tableFacade.onInvokeExportAction = functionName;
+        	tableFacade.contextPath = contextPath;
+        },
+        getContextPath : function (id) {
+        	var tableFacade = this.getTableFacade(id);
+        	return tableFacade.contextPath;
         },
         onInvokeAction : function (id, action) {
-        	var tableFacade = this.getTableFacade(id);
-        	var f = window[tableFacade.onInvokeAction];
-        	if ($.isFunction(f) !== true) {
-        		throw tableFacade.onInvokeAction + ' is not a global function!';
-        	} else {
-	       		f(id, action);
-       		}
+            var tableFacade = this.getTableFacade(id);
+            var f = window[tableFacade.onInvokeAction];
+            if ($.isFunction(f) !== true) {
+                throw tableFacade.onInvokeAction + ' is not a global function!';
+            } else {
+                f(id, action);
+            }
         },
         onInvokeExportAction : function (id) {
-        	var tableFacade = this.getTableFacade(id);
-        	var f = window[tableFacade.onInvokeExportAction];
-        	if ($.isFunction(f) !== true) {
-        		throw tableFacade.onInvokeExportAction + ' is not a global function!';
-        	} else {
-	       		f(id);
-       		}
+            var tableFacade = this.getTableFacade(id);
+            var f = window[tableFacade.onInvokeExportAction];
+            if ($.isFunction(f) !== true) {
+                throw tableFacade.onInvokeExportAction + ' is not a global function!';
+            } else {
+                f(id);
+            }
         }
     };
 
@@ -170,6 +181,7 @@
             this.worksheet = new classes.Worksheet();
             this.onInvokeAction = 'onInvokeAction';
             this.onInvokeExportAction = 'onInvokeExportAction';
+            this.contextPath = '';
         },
         Worksheet : function () {
             this.save = null;
@@ -178,8 +190,9 @@
         Limit : function (id) {
             this.id = id;
             this.page = null;
-            this.maxRows = null;
-            this.sortSet = [];
+	        this.maxRows = null;
+	        this.totalRows = null;
+	        this.sortSet = [];
             this.filterSet = [];
             this.exportType = null;
         },
@@ -224,6 +237,20 @@
         setMaxRows : function (maxRows) {
             this.maxRows = maxRows;
         },
+        getTotalRows : function () {
+            return this.totalRows;
+        },
+        setTotalRows : function (totalRows) {
+            this.totalRows = totalRows;
+        },
+        getTotalPages : function () {
+	        if (this.maxRows == 0) return 1;
+            var pages = this.totalRows / this.maxRows;
+	        if ((this.totalRows % this.maxRows) > 0) {
+		        ++pages;
+	        }
+	        return pages;
+        },
         getSortSet : function () {
             return this.sortSet;
         },
@@ -254,7 +281,7 @@
         createHiddenInputFields : function(form) {
             var limit = this.limit;
 
-            var exists = $(form).find(':hidden[@name=' + limit.id + '_p_]').val();
+            var exists = $(form).find(':hidden[name=' + limit.id + '_p_]').val();
             if (exists) {
                 return false;
             }
@@ -283,7 +310,7 @@
             /* the filter objects */
             var filterSet = limit.getFilterSet();
             $.each(filterSet, function(index, filter) {
-                $(form).append('<input type="hidden" name="' + limit.id + '_f_' + filter.property + '" value="' + encodeURIComponent(filter.value) + '"/>');
+                $(form).append('<input type="hidden" name="' + limit.id + '_f_' + filter.property + '" value="' + filter.value + '"/>');
             });
 
             return true;
@@ -350,7 +377,7 @@
             /* Enforce the width with a style. */
             cell.width(width);
             cell.parent().width(width);
-            cell.css('overflow', 'hidden');
+            cell.css('overflow', 'visible');
 
             cell.html('<div id="dynFilterDiv"><input id="dynFilterInput" name="filter" style="width:' + (width + 2) + 'px" value="" /></div>');
 
@@ -361,6 +388,8 @@
             $(input).keypress(function(event) {
                 if (event.keyCode == 13) { /* Press the enter key. */
                     var changedValue = input.val();
+                    cell.text('');
+                    cell.css('overflow', 'hidden');
                     cell.text(changedValue);
                     $.jmesa.addFilterToLimit(dynFilter.id, dynFilter.property, changedValue);
                     $.jmesa.onInvokeAction(dynFilter.id, 'filter');
@@ -370,6 +399,8 @@
 
             $(input).blur(function() {
                 var changedValue = input.val();
+                cell.text('');
+                cell.css('overflow', 'hidden');
                 cell.text(changedValue);
                 $.jmesa.addFilterToLimit(dynFilter.id, dynFilter.property, changedValue);
                 dynFilter = null;
@@ -442,15 +473,16 @@
 
             $(input).change(function() {
                 var changedValue = $("#dynFilterDroplistDiv option:selected").val();
-                cell.text(changedValue);
+                var changedText = $("#dynFilterDroplistDiv option:selected").text();
+                cell.text(changedText);
                 $.jmesa.addFilterToLimit(dynFilter.id, dynFilter.property, changedValue);
                 $.jmesa.onInvokeAction(dynFilter.id, 'filter');
                 dynFilter = null;
             });
 
             $(input).blur(function() {
-                var changedValue = $("#dynFilterDroplistDiv option:selected").val();
-                cell.text(changedValue);
+                var changedText = $("#dynFilterDroplistDiv option:selected").text();
+                cell.text(changedText);
                 $('#dynFilterDroplistDiv').remove();
                 cell.css({backgroundColor:originalBackgroundColor});
                 dynFilter = null;
@@ -477,33 +509,98 @@
             /* Enforce the width with a style. */
             cell.width(width);
             cell.parent().width(width);
-            cell.css('overflow', 'hidden');
+            cell.css('overflow', 'visible');
 
             cell.html('<div id="wsColumnDiv"><input id="wsColumnInput" name="column" style="width:' + (width + 3) + 'px" value=""/></div>');
 
             var input = $('#wsColumnInput');
             input.val(originalValue);
             input.focus();
+            if (jQuery.browser.msie) { /* IE need a second focus */
+                input.focus();
+            }
 
-            $('#wsColumnInput').keypress(function(event) {
-                if (event.keyCode == 13) { /* Press the enter key. */
-                    var changedValue = input.val();
-                    cell.text(changedValue);
-                    if (changedValue != originalValue) {
-                        $.jmesa.submitWsColumn(originalValue, changedValue);
-                    }
-                    wsColumn = null;
-                }
-            });
+            this.wsColumnKeyEvent(cell, input, originalValue);
 
             $('#wsColumnInput').blur(function() {
                 var changedValue = input.val();
+                cell.text('');
+                cell.css('overflow', 'hidden');
                 cell.text(changedValue);
                 if (changedValue != originalValue) {
                     $.jmesa.submitWsColumn(originalValue, changedValue);
                 }
                 wsColumn = null;
             });
+        },
+        wsColumnKeyEvent : function(cell, input, originalValue) {
+            var keyEvent = function(event) {
+                if (event.keyCode == 13 || event.keyCode == 9) { /* Press the enter or tabulation key. */
+                    var divToClick = null;
+
+                    if (event.keyCode == 9) { /* Press the tabulation key ==> search last or next cell */
+                        var divElements = document.getElementsByTagName('div');
+                        var nextCell = false;
+                        var lastCell = false;
+                        var lastDiv = null;
+                        var firstDiv = null;
+
+                        for (i = 0 ; i < divElements.length ; i++){
+                            if (divElements[i].className == 'wsColumn'){
+                                if (firstDiv == null){
+                                    firstDiv = divElements[i];
+                                }
+
+                                if (nextCell){
+                                    divToClick = divElements[i];
+                                    break;
+                                } else if (divElements[i].style.overflow == 'visible'){
+                                    if (event.shiftKey){ /* shift-tabulation ==> Precedent cell */
+                                        if (divElements[i] == firstDiv){ /* shitf-tabulation in first cell */
+                                            lastCell = true;
+                                        } else {
+                                            divToClick = lastDiv;
+                                            break;
+                                        }
+                                    } else { /* tabulation ==> Next cell */
+                                        nextCell = true;
+                                    }
+                                }
+                                lastDiv = divElements[i];
+                            }
+                        }
+
+                        if (divToClick == null){
+                            if (nextCell){ /* tabulation in last cell */
+                                divToClick = firstDiv;
+                            } else if (lastCell) { /* shitf-tabulation in first cell */
+                                divToClick = lastDiv;
+                            }
+                        }
+                    }
+
+                    var changedValue = input.val();
+                    cell.text('');
+                    cell.css('overflow', 'hidden');
+                    cell.text(changedValue);
+                    if (changedValue != originalValue) {
+                        $.jmesa.submitWsColumn(originalValue, changedValue);
+                    }
+                    wsColumn = null;
+
+                    if (divToClick != null){
+                        divToClick.onclick();
+                        return false; /* Stop event for IE */
+                    }
+
+                }
+            };
+
+            if (jQuery.browser.msie || jQuery.browser.safari) { /* IE and Safari don't catch tabulation on keypress */
+                $('#wsColumnInput').keydown(keyEvent);
+            } else {
+                $('#wsColumnInput').keypress(keyEvent);
+            }
         },
         submitWsCheckboxColumn : function(column, id, uniqueProperties, property) {
             wsColumn = new classes.WsColumn(column, id, uniqueProperties, property);
@@ -539,7 +636,11 @@
 
             data += '}'
 
-            $.post('jmesa.wrk?', eval('(' + data + ')'), function(data) {});
+        	var contextPath = coreapi.getContextPath(wsColumn.id);
+        	if (contextPath) {
+        		contextPath += "/";
+        	}
+            $.post(contextPath + 'jmesa.wrk?', eval('(' + data + ')'), function(data) {});
         }
     }
 
