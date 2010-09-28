@@ -32,7 +32,7 @@ function usesMapChange() {
         jobDivId  = 'map';
 
         if (isNumeric(longitude) && isNumeric(latitude) && isNumeric(zoomLevel)) {
-            showJob(jobDivId, latitude, longitude, zoomLevel);
+            showJob(jobDivId, latitude, longitude, parseInt(zoomLevel));
         }
 
     } else {
@@ -62,14 +62,13 @@ return blnResult;
 }
 
 function showJob(jobDivId, latitude, longitude, zoomLevel) {
-
   var latlng = new google.maps.LatLng(latitude, longitude);
   var myOptions = {
       zoom: zoomLevel,
       center: latlng,
       mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  var map = new google.maps.Map(document.getElementById(jobDivId),
+  map = new google.maps.Map(document.getElementById(jobDivId),
         myOptions);
 
   var marker = new google.maps.Marker({
@@ -97,9 +96,22 @@ function getCoordinatesFromAddress() {
                 position: results[0].geometry.location
             });
 
-            document.getElementById('longitude').value=results[0].geometry.location.longitude;
-            document.getElementById('latitude').value=results[0].geometry.location.latitude;
-            showJob('map', results[0].geometry.location.longitude, results[0].geometry.location.latitude, jQuery('#zoomLevel').val());
+            var longitude = results[0].geometry.location.lng();
+            var latitude  = results[0].geometry.location.lat();
+
+            document.getElementById('longitude').value=longitude;
+            document.getElementById('latitude').value=latitude;
+
+            var zoomLevel = jQuery('#zoomLevel').val();
+
+            if (isNumeric(zoomLevel)) {
+            	showJob('map', longitude, latitude, parseInt(zoomLevel));
+            } else {
+            	showJob('map', longitude, latitude, 10);
+            	jQuery('#zoomLevel').val(10);
+            }
+
+
 
           } else {
             alert("Geocode was not successful for the following reason: " + status);
