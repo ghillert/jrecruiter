@@ -3,18 +3,6 @@
 <h2><spring:message code="jsp.signup.title" /></h2>
 <p class="info"><spring:message code="jsp.signup.text.introduction" /></p>
 
-<s:if test="user.userAuthenticationType.name() == 'OPEN_ID'">
-        We noticed that you have a valid OpenID account but you're not registered
-        with jRecruiter, yet. If you would like to register your account with
-        jRecruiter, please complete the form below.
-
-        <s:set name="signUpAction" value="%{'saveForOpenId'}"/>
-</s:if>
-<s:else>
-    <s:set name="signUpAction" value="%{'save'}"/>
-    If you like to register using an <img src="<c:url value='/images/icons/openid.gif'/>" />OpenID account, <a href="<c:url value='/login.html#openid-registration'/>">please login first here</a>.
-</s:else>
-
 <s:property value="%{signUpAction}"/>
 
     <s:form id="addUserForm">
@@ -80,7 +68,7 @@
         </div>
         <fieldset>
           <div class="submit">
-          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="saveForOpenId"/>
+          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"/>
           <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
           </div>
         </fieldset>

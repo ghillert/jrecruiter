@@ -206,10 +206,9 @@ public class JobServiceImpl implements JobService {
         context.put("businessEmail", savedJob.getBusinessEmail());
         context.put("serverAddress", serverSettings.getServerAddress());
 
-        //FIXME
-//        notificationService.sendEmail(((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(),
-//                                      savedJob.getJobTitle(),
-//                                      context, "add-job");
+        notificationService.sendEmail(((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(),
+                                      savedJob.getJobTitle(),
+                                      context, "add-job");
         final String tweetMessage = "New Job: " + savedJob.getJobTitle() + " @ " + savedJob.getBusinessName();
 
         final URI uri = createShortenedJobDetailUrl(savedJob);
