@@ -87,8 +87,6 @@
                     bgiframe: true,
                     width: 400,
                     height: 500,
-                    show: 'blind',
-                    hide: 'blind',
                     modal: true,
                     buttons: {
                         Ok: function() {
