@@ -52,8 +52,6 @@ jQuery(document).ready(function () {
         bgiframe: true,
         width: 400,
         height: 150,
-        show: 'blind',
-        hide: 'blind',
         modal: true
     });
 
