@@ -88,6 +88,11 @@ function getCoordinatesFromAddress() {
             + ',' + jQuery('#businessState').val()
             + ',' + jQuery('#businessZip').val();
 
+      if (address.length == 3) {
+    	alert("Please enter some address information first.");
+    	return;
+      }
+
       geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             map.setCenter(results[0].geometry.location);
@@ -105,9 +110,9 @@ function getCoordinatesFromAddress() {
             var zoomLevel = jQuery('#zoomLevel').val();
 
             if (isNumeric(zoomLevel)) {
-            	showJob('map', longitude, latitude, parseInt(zoomLevel));
+            	showJob('map', latitude, longitude, parseInt(zoomLevel));
             } else {
-            	showJob('map', longitude, latitude, 10);
+            	showJob('map', latitude, longitude, 10);
             	jQuery('#zoomLevel').val(10);
             }
 

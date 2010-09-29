@@ -31,11 +31,6 @@
         }
       });
 
-
-      jQuery('#convertAddressButton').bind('click', function(event) {
-          getCoordinatesFromAddress();
-      });
-
       usesMapChange();
 
     });
