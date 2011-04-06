@@ -33,6 +33,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -43,6 +45,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Email;
 import org.jrecruiter.common.Constants.UserAuthenticationType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -68,20 +71,43 @@ public class User implements Serializable, UserDetails {
     //~~~~~Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @XmlAttribute
+    @Id @GeneratedValue(generator="hibseq")
     private Long id;
 
     @XmlID
+    @NotNull
+    @Size(min=5, max=50)
+    @Column(unique=true)
     private String username;
+
+    @NotNull
+    @Size(max=120)
     private String password;
+
+    @NotNull
+    @Size(max=50)
     private String firstName;
+
+    @NotNull
+    @Size(max=50)
     private String lastName;
+
+    @Size(max=50)
     private String company;
+
+    @Size(max=25)
     private String phone;
+
+    @Size(max=25)
     private String fax;
+
+    @Size(max=50)
+    @Email
     private String email;
 
     @XmlAttribute
     @XmlJavaTypeAdapter(JaxbDateAdapter.class)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
     @XmlAttribute
@@ -90,19 +116,30 @@ public class User implements Serializable, UserDetails {
 
     @XmlAttribute
     @XmlJavaTypeAdapter(JaxbDateAdapter.class)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastLoginDate;
 
     @XmlTransient
+    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="user")
     private Set<Job> jobs = new HashSet<Job>(0);
 
     @XmlElement(name="roles")
+    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="user")
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
     @XmlAttribute
     private Boolean enabled  = Boolean.FALSE;
 
+    @Size(max=36)
+    @Column(unique=true)
     private String  verificationKey;
 
+    @Type(
+        type = "org.jrecruiter.common.GenericEnumUserType",
+        parameters = {
+                @Parameter(name  = "enumClass", value = "org.jrecruiter.common.Constants$UserAuthenticationType")}
+    )
+    @NotNull
     private UserAuthenticationType userAuthenticationType = UserAuthenticationType.USERNAME_PASSWORD;
 
     // Constructors
@@ -144,7 +181,6 @@ public class User implements Serializable, UserDetails {
     }
 
     // Property accessors
-    @Id @GeneratedValue(generator="hibseq")
     public Long getId() {
         return this.id;
     }
@@ -153,8 +189,6 @@ public class User implements Serializable, UserDetails {
         this.id = id;
     }
 
-    @Column(unique=true, nullable=false, insertable=true,
-            updatable=true, length=50)
     public String getUsername() {
         return this.username;
     }
@@ -163,8 +197,6 @@ public class User implements Serializable, UserDetails {
         this.username = username;
     }
 
-    @Column(unique=false, nullable=false, insertable=true,
-            updatable=true, length=120)
     public String getPassword() {
         return this.password;
     }
@@ -173,8 +205,6 @@ public class User implements Serializable, UserDetails {
         this.password = password;
     }
 
-    @Column(unique=false, nullable=false, insertable=true,
-            updatable=true, length=50)
     public String getFirstName() {
         return this.firstName;
     }
@@ -183,8 +213,6 @@ public class User implements Serializable, UserDetails {
         this.firstName = firstName;
     }
 
-    @Column(unique=false, nullable=false, insertable=true,
-            updatable=true, length=50)
     public String getLastName() {
         return this.lastName;
     }
@@ -203,8 +231,6 @@ public class User implements Serializable, UserDetails {
         this.company = company;
     }
 
-    @Column(unique=false, nullable=true, insertable=true,
-            updatable=true, length=25)
     public String getPhone() {
         return this.phone;
     }
@@ -213,8 +239,6 @@ public class User implements Serializable, UserDetails {
         this.phone = phone;
     }
 
-    @Column(unique=false, nullable=true, insertable=true,
-            updatable=true, length=25)
     public String getFax() {
         return this.fax;
     }
@@ -223,8 +247,6 @@ public class User implements Serializable, UserDetails {
         this.fax = fax;
     }
 
-    @Column(unique=true, nullable=false, insertable=true,
-            updatable=true, length=50)
     public String getEmail() {
         return this.email;
     }
@@ -233,9 +255,6 @@ public class User implements Serializable, UserDetails {
         this.email = email;
     }
 
-    @Column(unique=false, nullable=false, insertable=true,
-            updatable=true, length=8)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getRegistrationDate() {
         return this.registrationDate;
     }
@@ -244,8 +263,6 @@ public class User implements Serializable, UserDetails {
         this.registrationDate = registrationDate;
     }
 
-    @Column(unique=false, nullable=true, insertable=true,
-            updatable=true, length=8)
     public Date getUpdateDate() {
         return this.updateDate;
     }
@@ -253,7 +270,7 @@ public class User implements Serializable, UserDetails {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
-    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="user")
+
     public Set<Job> getJobs() {
         return this.jobs;
     }
@@ -262,7 +279,6 @@ public class User implements Serializable, UserDetails {
         this.jobs = jobs;
     }
 
-    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="user")
     public Set<UserToRole> getUserToRoles() {
         return this.userToRoles;
     }
@@ -271,12 +287,6 @@ public class User implements Serializable, UserDetails {
         this.userToRoles = userToRoles;
     }
 
-    @Column(name= "USER_AUTHENTICATION_TYPE", nullable = false)
-    @Type(
-        type = "org.jrecruiter.common.GenericEnumUserType",
-        parameters = {
-                @Parameter(name  = "enumClass", value = "org.jrecruiter.common.Constants$UserAuthenticationType")}
-    )
     public UserAuthenticationType getUserAuthenticationType() {
         return userAuthenticationType;
     }
@@ -327,7 +337,6 @@ public class User implements Serializable, UserDetails {
         this.enabled = enabled;
     }
 
-    @Column(unique=true, length=36)
     public String getVerificationKey() {
         return verificationKey;
     }
@@ -339,9 +348,6 @@ public class User implements Serializable, UserDetails {
     /**
      * @return the lastLoginDate
      */
-    @Column(unique=false, nullable=true, insertable=true,
-            updatable=true, length=8)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastLoginDate() {
         return lastLoginDate;
     }
