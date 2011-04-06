@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/jsp/includes/taglibs-spring.jsp"%>
+	<%@include file="/WEB-INF/jsp/includes/taglibs-spring.jsp"%>
 
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
