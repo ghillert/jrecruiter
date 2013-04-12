@@ -1,10 +1,7 @@
 package org.jrecruiter.common;
 
-import java.util.Iterator;
-import java.util.List;
-
-import de.rrze.idmone.utils.jpwgen.BlankRemover;
-import de.rrze.idmone.utils.jpwgen.PwGenerator;
+import de.rrze.jpwgen.IPwGenConstants;
+import de.rrze.jpwgen.impl.PwGenerator;
 
 /**
  * Helper class to generate a temporary password. Uses jpwgen
@@ -15,33 +12,21 @@ import de.rrze.idmone.utils.jpwgen.PwGenerator;
  */
 public final class PasswordGenerator {
 
-    private PasswordGenerator() {
-        // private utility class constructor
-    }
+	private PasswordGenerator() {
+		// private utility class constructor
+	}
 
-    /**
-     * Generate a temporary password. Using the jpwgen parameters:
-     *
-     * "-N 1 -M 100 -B -n -c -y -s 10 -o"
-     *
-     * @return The generated password.
-     */
-    public static String generatePassword() {
-        String flags = "-N 1 -M 100 -B -n -c -y -s 10 -o ";
-        flags = BlankRemover.itrim(flags);
-        final String[] ar = flags.split(" ");
-        final PwGenerator generator = new PwGenerator();
-        final List <String> passwords = generator.process(ar);
-
-        String password = null;
-
-        for (Iterator<String> iterator = passwords.iterator(); iterator.hasNext();) {
-            password = iterator.next();
-        }
-
-        return password;
-    }
-
+	/**
+	 * Generate a temporary password.
+	 *
+	 * @return The generated password.
+	 */
+	public static String generatePassword() {
+		//String flags = "-N 1 -M 100 -B -n -c -y -s 10 -o ";'
+		final int flags = IPwGenConstants.DEFAULT_FLAGS;
+		final String password = PwGenerator.generatePassword(10, flags, 100, null);
+		return password;
+	}
 
 }
 

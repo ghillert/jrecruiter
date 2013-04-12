@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.jrecruiter.scala.Region;
+import org.jrecruiter.model.Region;
 
 /**
  * Contains test methods to verify the deserialization of backup data using Jaxb.

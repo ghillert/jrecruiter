@@ -48,7 +48,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
-import org.jrecruiter.scala.Region;
+import org.jrecruiter.model.Region;
 
 /**
  * @author Gunnar Hillert

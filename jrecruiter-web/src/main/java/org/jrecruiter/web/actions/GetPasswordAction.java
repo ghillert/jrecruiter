@@ -32,7 +32,7 @@ public class GetPasswordAction extends BaseAction {
 
     @Validations(
             requiredStrings = {
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username", trim=true, key = "class.get-password.password_reset_not_possible")
+                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username", trim=true, key = "class.get-password.password_reset_not_possible", message="")
                      }
             )
     public String process() {

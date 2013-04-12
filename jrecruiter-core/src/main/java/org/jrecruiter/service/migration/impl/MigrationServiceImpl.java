@@ -49,7 +49,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.jrecruiter.scala.Region;
+import org.jrecruiter.model.Region;
 
 /**
  * @author Gunnar Hillert
