@@ -16,7 +16,6 @@
 package org.jrecruiter.model;
 
 import java.io.Serializable;
-import org.jrecruiter.scala.Region;
 import java.math.BigDecimal;
 import java.util.Date;
 

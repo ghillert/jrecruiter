@@ -39,7 +39,7 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
-import org.jrecruiter.scala.Region;
+import org.jrecruiter.model.Region;
 
 /**
  * Add a job posting.

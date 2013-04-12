@@ -40,7 +40,7 @@ import org.jrecruiter.model.Statistic;
 import org.jrecruiter.model.User;
 import org.jrecruiter.model.UserToRole;
 import org.jrecruiter.model.statistics.JobCountPerDay;
-import org.jrecruiter.scala.Region;
+import org.jrecruiter.model.Region;
 import org.jrecruiter.service.impl.JobServiceImpl;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
