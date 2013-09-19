@@ -11,7 +11,7 @@
     <constant name="struts.convention.default.parent.package" value="default" />
     <!-- http://cwiki.apache.org/WW/strutsproperties.html -->
     <constant name="struts.objectFactory" value="spring"/>
-    <constant name="struts.action.extension" value="html,rss" />
+    <constant name="struts.action.extension" value="html,rss,json" />
     <constant name="struts.custom.i18n.resources" value="messages, struts-messages" />
     <constant name="struts.multipart.maxSize" value="2097152" />
 
@@ -82,6 +82,14 @@
         </action>
     </package>
 
+    <package name="json" extends="default" namespace="/json">
+        <action name="jobs" class="org.jrecruiter.web.actions.JobsJsonAction">
+            <result type="stream" name="success">
+                <param name="contentType">text/json</param>
+                <param name="inputName">inputStream</param>
+            </result>   
+        </action>
+    </package>
 
     <package name="chart" extends="jfreechart-default" namespace="/chart">
             <result-types>

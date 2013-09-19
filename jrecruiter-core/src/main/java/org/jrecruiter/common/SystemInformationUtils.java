@@ -46,7 +46,7 @@ public final class SystemInformationUtils {
 
          } else if (StringUtils.isNotBlank(System.getenv(Constants.APP_HOME_DIRECTORY))) {
 
-            apphome.setAppHomePath(System.getProperty(Constants.APP_HOME_DIRECTORY));
+            apphome.setAppHomePath(System.getenv(Constants.APP_HOME_DIRECTORY));
             apphome.setAppHomeSource(AppHomeSource.ENVIRONMENT_VARIABLE);
 
          } else {
