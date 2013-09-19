@@ -103,6 +103,7 @@
         <url-pattern>*.html</url-pattern>
         <url-pattern>/s/*</url-pattern>
         <url-pattern>/rss/*</url-pattern>
+        <url-pattern>/json/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>lazyLoadingFilter</filter-name>
@@ -110,6 +111,7 @@
         <url-pattern>/s/*</url-pattern>
         <url-pattern>/flex/*</url-pattern>
         <url-pattern>/rss/*</url-pattern>
+        <url-pattern>/json/*</url-pattern>
         <url-pattern>/j_spring_security_check</url-pattern>
     </filter-mapping>
     <filter-mapping>
@@ -135,6 +137,7 @@
         <filter-name>struts</filter-name>
         <url-pattern>*.html</url-pattern>
         <url-pattern>/rss/*</url-pattern>
+        <url-pattern>/json/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>responseAddHttpHeadersFilter</filter-name>
