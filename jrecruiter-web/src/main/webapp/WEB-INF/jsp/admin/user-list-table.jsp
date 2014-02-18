@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-   <jmesa:tableFacade
+   <jmesa:tableModel
         id="userListTable2"
         items="${users}"
         limit="${limit}"
@@ -30,4 +30,4 @@
             <jmesa:htmlColumn property="company"     titleKey="user.company"/>
         </jmesa:htmlRow>
         </jmesa:htmlTable>
-    </jmesa:tableFacade>
+    </jmesa:tableModel>

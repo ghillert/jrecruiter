@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-    <jmesa:tableFacade id="loggingLoggerTable" items="${configuredLoggers}" var="bean" stateAttr="">
+    <jmesa:tableModel id="loggingLoggerTable" items="${configuredLoggers}" var="bean" stateAttr="">
     	<jmesa:htmlTable >
 	       	<jmesa:htmlRow >
 			 <jmesa:htmlColumn title="Current Log Level" property="logLevel.logLevelName" />
@@ -11,4 +11,4 @@
 			 </jmesa:htmlColumn>
 		  </jmesa:htmlRow>
 	   </jmesa:htmlTable>
-    </jmesa:tableFacade>
+    </jmesa:tableModel>

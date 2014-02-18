@@ -7,27 +7,27 @@
     <fieldset>
         <div class="required">
               <label for="email"><spring:message code="class.user.email" />*</label>
-              <s:textfield id="email" name="user.email" required="true" maxlength="25" tabindex="1"/>
+              <s:textfield id="email" name="user.email" requiredLabel="true" maxlength="25" tabindex="1"/>
         </div>
         <div class="required">
               <label for="firstName"><spring:message code="class.user.firstName" />*</label>
-              <s:textfield id="firstName" name="user.firstName" required="true" maxlength="50" tabindex="3"/>
+              <s:textfield id="firstName" name="user.firstName" requiredLabel="true" maxlength="50" tabindex="3"/>
         </div>
         <div class="required">
               <label for="lastName"><spring:message code="class.user.lastName" />*</label>
-              <s:textfield id="lastName" name="user.lastName" required="true" maxlength="50" tabindex="4"/>
+              <s:textfield id="lastName" name="user.lastName" requiredLabel="true" maxlength="50" tabindex="4"/>
         </div>
         <div class="required">
               <label for="company"><spring:message code="class.user.company" />*</label>
-              <s:textfield id="company" name="user.company" required="true" maxlength="50" tabindex="5"/>
+              <s:textfield id="company" name="user.company" requiredLabel="true" maxlength="50" tabindex="5"/>
         </div>
         <div class="optional">
               <label for="phone"><spring:message code="class.user.phone" /></label>
-              <s:textfield id="phone" name="user.phone" required="true" maxlength="25" tabindex="6"/>
+              <s:textfield id="phone" name="user.phone" requiredLabel="true" maxlength="25" tabindex="6"/>
         </div>
         <div class="optional">
               <label for="fax"><spring:message code="class.user.fax" /></label>
-              <s:textfield id="fax" name="user.fax" required="true" maxlength="25" tabindex="7"/>
+              <s:textfield id="fax" name="user.fax" requiredLabel="true" maxlength="25" tabindex="7"/>
         </div>
         <div class="required">
               <label for="password">&nbsp;</label>
@@ -38,7 +38,7 @@
         <div id="changePasswordDiv" style="display: none;">
             <div class="required">
                 <label for="password"><spring:message code="class.user.password" />*</label>
-                <s:password  id="password" name="password" required="true" maxlength="25" tabindex="9"/>
+                <s:password  id="password" name="password" requiredLabel="true" maxlength="25" tabindex="9"/>
             </div>
             <div class="optional">
                 <label><spring:message code="jsp.signup.label.password.strength" /></label>
@@ -49,7 +49,7 @@
             </div>
             <div class="required">
                 <label for="password2"><spring:message code="class.user.password2" />*</label>
-                <s:password  id="password2" name="password2" required="true" maxlength="25" tabindex="10"/>
+                <s:password  id="password2" name="password2" requiredLabel="true" maxlength="25" tabindex="10"/>
             </div>
         </div>
 

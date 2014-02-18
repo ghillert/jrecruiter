@@ -1,10 +1,10 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs-spring.jsp"%>
 
-	   <jmesa:tableFacade
+	   <jmesa:tableModel
 	        id="systemInformationTable"
 	        items="${systemProperties}"
 	        maxRows="${fn:length(systemProperties)}"
-	        var="systemProperty" 
+	        var="systemProperty"
 	        stateAttr="systemInformationTableRestore"
 	        view="org.jrecruiter.web.JmesaViewWithoutHeader">
 	      <jmesa:htmlTable >
@@ -14,4 +14,4 @@
 	                <jmesa:htmlColumn property="description"   titleKey="jsp.show.jobs.table.job.location" filterable="false" sortable="false" />
 	        </jmesa:htmlRow>
 	        </jmesa:htmlTable>
-	    </jmesa:tableFacade>
+	    </jmesa:tableModel>

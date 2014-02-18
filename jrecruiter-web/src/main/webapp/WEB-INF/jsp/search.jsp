@@ -11,7 +11,7 @@
     </div>
     <p style="clear: both;"/>
     <s:if test="jobs != null && !jobs.empty">
-       <jmesa:tableFacade
+       <jmesa:tableModel
             id="tag"
             items="${jobs}"
             var="job"
@@ -39,7 +39,7 @@
                         <jmesa:htmlColumn property="updateDate"   titleKey="jsp.show.jobs.table.date"         pattern="${datePattern}" cellEditor="org.jmesa.view.editor.DateCellEditor" filterable="false"/>
                 </jmesa:htmlRow>
             </jmesa:htmlTable>
-        </jmesa:tableFacade>
+        </jmesa:tableModel>
     </s:if>
     <s:else>No results found.</s:else>
 </s:form>
