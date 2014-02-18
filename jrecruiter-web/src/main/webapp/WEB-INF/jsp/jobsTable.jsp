@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-   <jmesa:tableFacade
+   <jmesa:tableModel
         id="jobsTable"
         items="${jobs}"
         limit="${limit}"
@@ -29,4 +29,4 @@
                 <jmesa:htmlColumn property="updateDate"   titleKey="jsp.show.jobs.table.date"         pattern="${datePattern}" cellEditor="org.jmesa.view.editor.DateCellEditor" filterable="false"/>
         </jmesa:htmlRow>
         </jmesa:htmlTable>
-    </jmesa:tableFacade>
+    </jmesa:tableModel>

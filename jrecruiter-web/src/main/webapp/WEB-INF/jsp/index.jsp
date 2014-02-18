@@ -19,10 +19,6 @@
         <a  id="showJobsButton" href="${showJobsUrl}" class="button"><span class="showJobs">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
       </li>
       <li>
-        <s:url namespace="/fx" action="flex-jobs" id="showFlexJobsUrl"/>
-        <a  id="showJobsFlexButton" href="${showFlexJobsUrl}" class="button"><span class="showJobsFlex">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
-      </li>
-      <li>
         <s:url namespace="/admin" action="index" id="adminMainUrl"/>
         <a id="manageAccountButton" href="${adminMainUrl}" class="button"><span class="manageAccount">&nbsp;</span><spring:message code="jsp.index.manageJobsAccount" /></a>
       </li>
@@ -41,7 +37,7 @@
   </div>
   <p style="clear: both;"><spring:message code="jsp.index.introduction.text.bottom" /></p>
   <p><spring:message code="jsp.index.introduction.text.support" /></p>
-            
+
    <script type="text/javascript">
         jQuery(function() {
             jQuery('#keyword').focus();

@@ -394,18 +394,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.springframework.flex</groupId>
-				<artifactId>spring-flex</artifactId>
-				<version>1.0.3.RELEASE</version>
-	            <exclusions>
-	                <exclusion>
-	                    <artifactId>spring-beans</artifactId>
-	                    <groupId>org.springframework</groupId>
-	                </exclusion>
-	            </exclusions>
-			</dependency>
-
-			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${dependency.spring.version}</version>
@@ -601,7 +589,7 @@
                        <dependency>
                                <groupId>org.apache.struts</groupId>
                                <artifactId>struts2-spring-plugin</artifactId>
-                               <version>2.2.1</version>
+                               <version>2.2.3.1</version>
                         <exclusions>
                                 <exclusion>
                                         <groupId>org.springframework</groupId>
@@ -634,19 +622,19 @@
                 <dependency>
                         <groupId>org.apache.struts</groupId>
                         <artifactId>struts2-convention-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>2.2.3.1</version>
                 </dependency>
 
                 <dependency>
                         <groupId>org.apache.struts</groupId>
                         <artifactId>struts2-jfreechart-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>2.2.3.1</version>
                 </dependency>
 
                 <dependency>
                         <groupId>org.apache.struts</groupId>
                         <artifactId>struts2-javatemplates-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>2.2.3.1</version>
                 </dependency>
 			<dependency>
 				<groupId>rome</groupId>
