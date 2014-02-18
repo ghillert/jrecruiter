@@ -109,7 +109,6 @@
         <filter-name>lazyLoadingFilter</filter-name>
         <url-pattern>*.html</url-pattern>
         <url-pattern>/s/*</url-pattern>
-        <url-pattern>/flex/*</url-pattern>
         <url-pattern>/rss/*</url-pattern>
         <url-pattern>/json/*</url-pattern>
         <url-pattern>/j_spring_security_check</url-pattern>
@@ -227,7 +226,6 @@
     <servlet-mapping>
         <servlet-name>spring-mvc</servlet-name>
         <url-pattern>/s/*</url-pattern>
-        <url-pattern>/flex/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>sitemesh-freemarker</servlet-name>

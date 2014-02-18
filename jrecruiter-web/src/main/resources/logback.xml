@@ -57,7 +57,7 @@
     <level value="WARN"/>
   </logger>
     <logger name="org.springframework">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.apache.struts">
     <level value="WARN"/>
@@ -69,7 +69,7 @@
     <level value="WARN"/>
   </logger>
   <logger name="org.hibernate.type">
-    <level value="INFO"/>
+    <level value="WARN"/>
   </logger>
   <logger name="org.apache">
     <level value="WARN"/>
@@ -93,7 +93,7 @@
     <level value="INFO"/>
   </logger>
   <logger name="org.jmesa">
-    <level value="DEBUG"/>
+    <level value="WARN"/>
   </logger>
   <logger name="com.opensymphony.xwork2.ognl.OgnlValueStack">
     <level value="ERROR"/>
@@ -108,8 +108,6 @@
     <level value="INFO"/>
     <appender-ref ref="LOGFILE-SECURITY"/>
   </logger>
-
-
 
   <root>
     <level value="WARN"/>
