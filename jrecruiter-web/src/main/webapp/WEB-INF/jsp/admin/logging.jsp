@@ -44,7 +44,7 @@
 </s:if> <s:else>
 	<h3>Configured Loggers | <a href="${showAllLoggersUrl}">All
 	Loggers</a></h3>
-</s:else> 
+</s:else>
 
 <div id="loggingLoggerTableDiv">
     <jsp:include page="loggingLoggerTable.jsp"/>
@@ -52,11 +52,11 @@
             <div class="submit" style="margin-right: auto; margin-left: 0; margin-top: 0.5em;">
               <s:submit value="Update Log Levels" method="updateLagLevels"/>
             </div>
-            
+
 	<fieldset style="margin: 1em 0 0 0;"><legend>Add a new Logger</legend>
 	        <div class="optional">
 	          <label for="username">Logger Name</label>
-	          <s:textfield id="loggerName" name="newLogger.loggerName" required="true" tabindex="1" size="40"/>
+	          <s:textfield id="loggerName" name="newLogger.loggerName" requiredLabel="true" tabindex="1" size="40"/>
 	        </div>
 	        <div class="optional">
 	          <label for="username">Log Level</label>

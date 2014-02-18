@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<jmesa:tableFacade id="loggingLogFileTable" items="${logFileInfos}" var="logFileInfo">
+<jmesa:tableModel id="loggingLogFileTable" items="${logFileInfos}" var="logFileInfo">
 	<jmesa:htmlTable>
 		<jmesa:htmlRow>
 			<jmesa:htmlColumn title="File Name" property="fileName" />
@@ -17,4 +17,4 @@
 			</jmesa:htmlColumn>
 		</jmesa:htmlRow>
 	</jmesa:htmlTable>
-</jmesa:tableFacade> 
+</jmesa:tableModel>
