@@ -28,6 +28,9 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.Results;
 
 /**
  * Responsible for registering potential job posters
@@ -36,7 +39,8 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 @Conversion
-@Result(name="success", location="index", type="redirectAction")
+@Results({@Result(name="success", location="index", type="redirectAction")})
+
 public class SignupAction extends BaseAction implements SessionAware {
 
 
@@ -83,6 +87,8 @@ public class SignupAction extends BaseAction implements SessionAware {
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25",  fieldName = "user.fax",       message = "The fax number must be shorter than ${maxLength} characters.")
                     }
             )
+    
+    @Action(value="/registration/saveSignup", results={@Result(name="input", location="registration/signup")})
     public String save() {
 
         final ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);
