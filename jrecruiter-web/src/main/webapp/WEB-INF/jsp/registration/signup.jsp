@@ -5,7 +5,7 @@
 
 <s:property value="%{signUpAction}"/>
 
-    <s:form id="addUserForm">
+<s:form id="addUserForm" method="post" action="saveSignup">
     <s:hidden name="user.userAuthenticationType"/>
 
     <fieldset>
