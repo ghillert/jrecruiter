@@ -11,7 +11,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.jmesa.facade.TableFacade;
-import org.jmesa.facade.TableFacadeFactory;
 import org.jmesa.limit.Filter;
 import org.jmesa.limit.FilterSet;
 import org.jmesa.limit.Limit;
@@ -62,7 +61,7 @@ public class ShowJobsAction extends BaseAction implements ServletRequestAware {
         })
     public String execute() throws Exception {
 
-        final TableFacade tableFacade = TableFacadeFactory.createTableFacade("jobsTable", request);
+        final TableFacade tableFacade = new TableFacade("jobsTable", request);
         tableFacade.setStateAttr("restore");
         limit                     = tableFacade.getLimit();
         final FilterSet filterSet = limit.getFilterSet();
