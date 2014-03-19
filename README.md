@@ -5,6 +5,11 @@ jRecruiter is the job posting service of the [Atlanta Java Users Group][].
 
 [Atlanta Java Users Group]: http://www.ajug.org/
 
+
+Build Status:
+
+[![Build Status](https://travis-ci.org/ghillert/jrecruiter.png?branch=master)](https://travis-ci.org/ghillert/jrecruiter)
+
 ### Configuration
 
 Configuration information is retrieved from a properties file called `jrecruiter.properties`
