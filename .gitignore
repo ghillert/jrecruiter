@@ -4,7 +4,6 @@ target
 .settings
 .classpath
 .cache
-.scala_dependencies
-jrecruiter-web/jrecruiter.home_IS_UNDEFINED/
-jrecruiter-core/jrecruiter_test?MVCC=TRUE.trace.db
-jrecruiter-core/jrecruiter_test?MVCC=TRUE.h2.db
+jrecruiter.home_IS_UNDEFINED/
+jrecruiter_test?MVCC=TRUE.trace.db
+jrecruiter_test?MVCC=TRUE.h2.db
