@@ -39,7 +39,7 @@ public class XmlView implements View {
      * @see org.springframework.web.servlet.View#render(java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
     @Override
-    public void render(final Map<String, ?> model,
+    public void render(final Map model,
                        final HttpServletRequest request,
                        final HttpServletResponse response) throws Exception {
 
