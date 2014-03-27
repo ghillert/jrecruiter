@@ -3,81 +3,115 @@
 <h2><spring:message code="jsp.signup.title" /></h2>
 <p class="info"><spring:message code="jsp.signup.text.introduction" /></p>
 
-<s:property value="%{signUpAction}"/>
+<form:form id="userForm" class="form-horizontal" role="form" method="post" modelAttribute="userForm" enctype="multipart/form-data">
 
-<s:form id="addUserForm" method="post" action="saveSignup">
-    <s:hidden name="user.userAuthenticationType"/>
+		<form:hidden path="userAuthenticationType"/>
 
-    <fieldset>
-        <div class="required">
-            <label for="email"><spring:message code="class.user.email" />*</label>
-            <s:textfield id="email" name="user.email" requiredLabel="true" maxlength="50" tabindex="1"/>
-        </div>
-        <s:if test="user.userAuthenticationType.name() != 'OPEN_ID'">
-                <div class="required">
-                    <label for="password"><spring:message code="class.user.password" />*</label>
-                    <s:password  id="password" name="password" requiredLabel="true" maxlength="120" tabindex="2"/>
-                </div>
-                <div class="optional">
-                    <label><spring:message code="jsp.signup.label.password.strength" /></label>
-                    <span id="passwordStrength"><spring:message code="jsp.signup.label.insert.password" /></span>
-                </div>
-                <div class="required">
-                    <div style="margin-left: 173px; width: 150px; border: 1px solid black;height: 5px; overflow: hidden;"><div id="passwordStrengthBar" style="width: 0px; background-color: green; height: 5px; overflow: "></div></div>
-                </div>
-                <div class="required">
-                    <label for="password2"><spring:message code="class.user.password2" />*</label>
-                    <s:password  id="password2" name="password2" requiredLabel="true" maxlength="120" tabindex="2"/>
-                </div>
-        </s:if>
+		<spring:bind path="firstName">
+			<c:set var="errorClass" value="${(not empty status.errorMessage) ? ' has-error' : ''}"/>
+		</spring:bind>
+		<div class="form-group${errorClass}">
+			<label for="email" class="col-lg-2 control-label"><spring:message code="class.user.email" />*</label>
+			<div class="col-lg-10">
+				<form:input cssClass="form-control" path="email" id="email" maxlength="255" tabindex="1"/>
+				<form:errors path="email" cssClass="fieldError"/>
+			</div>
+		</div>
 
-        <div class="required">
-            <label for="firstName"><spring:message code="class.user.firstName" />*</label>
-            <s:textfield id="firstName" name="user.firstName" requiredLabel="true" maxlength="50" tabindex="3"/>
-        </div>
-        <div class="required">
-            <label for="lastName"><spring:message code="class.user.lastName" />*</label>
-            <s:textfield id="lastName" name="user.lastName" requiredLabel="true" maxlength="50" tabindex="4"/>
-        </div>
-        <div class="required">
-            <label for="company"><spring:message code="class.user.company" />*</label>
-            <s:textfield id="company" name="user.company" requiredLabel="true" maxlength="50" tabindex="5"/>
-        </div>
-        <div class="optional">
-            <label for="phone"><spring:message code="class.user.phone" /></label>
-            <s:textfield id="phone" name="user.phone" requiredLabel="true" maxlength="25" tabindex="6"/>
-        </div>
-        <div class="optional">
-            <label for="fax"><spring:message code="class.user.fax" /></label>
-            <s:textfield id="fax" name="user.fax" requiredLabel="true" maxlength="25" tabindex="7"/>
-        </div>
-        </fieldset>
-        <div style="margin: 0 auto 0 auto; width: 320px;">
-            <script type="text/javascript"
-                src="https://www.google.com/recaptcha/api/challenge?k=${apiKeysHolder.reCaptchaKey}">
-            </script>
+		<c:if test="${userForm.userAuthenticationType.name() != 'OPEN_ID'}">
+			<spring:bind path="password">
+				<c:set var="errorClass" value="${(not empty status.errorMessage) ? ' has-error' : ''}"/>
+			</spring:bind>
+			<div class="form-group${errorClass}">
+				<label for="password" class="col-lg-2 control-label"><spring:message code="class.user.password" />*</label>
+				<div class="col-lg-10">
+					<form:input cssClass="form-control" path="password" id="password" maxlength="255" tabindex="2"/>
+					<form:errors path="password" cssClass="fieldError"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label><spring:message code="jsp.signup.label.password.strength" /></label>
+				<div class="col-lg-10">
+					<span id="passwordStrength"><spring:message code="jsp.signup.label.insert.password" /></span>
+				</div>
+			</div>
 
-            <noscript>
-                <iframe src="https://www.google.com/recaptcha/api/noscript?k=${apiKeysHolder.reCaptchaKey}"
-                    height="300" width="500" frameborder="0"></iframe><br>
-                <textarea name="recaptcha_challenge_field" rows="3" cols="40">
-                </textarea>
-                <input type="hidden" name="recaptcha_response_field"
-                    value="manual_challenge">
-            </noscript>
-        </div>
-        <fieldset>
-          <div class="submit">
-          <s:submit value="%{getText('jsp._ALL.button.submit')}" method="save"/>
-          <s:submit value="%{getText('jsp._ALL.button.cancel')}" method="cancel"/>
-          </div>
-        </fieldset>
-        <p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>
+			<spring:bind path="userForm.password2">
+				<c:set var="errorClass" value="${(not empty status.errorMessage) ? ' has-error' : ''}"/>
+			</spring:bind>
+			<div class="form-group${errorClass}">
+				<label for="password2" class="col-lg-2 control-label"><spring:message code="class.user.password2" />*</label>
+				<div class="col-lg-10">
+					<form:input cssClass="form-control" path="password2" id="password2" maxlength="255" tabindex="3"/>
+					<form:errors path="password2" cssClass="fieldError"/>
+				</div>
+			</div>
+		</c:if>
 
-        <s:if test="user.userAuthenticationType.name() != 'OPEN_ID'">
-            <jsp:include page="../includes/password-tips.jsp"/>
-        </s:if>
-</s:form>
+		<spring:bind path="userForm.firstName">
+			<c:set var="errorClass" value="${(not empty status.errorMessage) ? ' has-error' : ''}"/>
+		</spring:bind>
+		<div class="form-group${errorClass}">
+			<label for="firstName" class="col-lg-2 control-label"><spring:message code="class.user.firstName" />*</label>
+			<div class="col-lg-10">
+				<form:input cssClass="form-control" path="firstName" id="firstName" maxlength="255" tabindex="4"/>
+				<form:errors path="firstName" cssClass="fieldError"/>
+			</div>
+		</div>
+		<spring:bind path="userForm.lastName">
+			<c:set var="errorClass" value="${(not empty status.errorMessage) ? ' has-error' : ''}"/>
+		</spring:bind>
+		<div class="form-group${errorClass}">
+			<label for="lastName" class="col-lg-2 control-label"><spring:message code="class.user.lastName" />*</label>
+			<div class="col-lg-10">
+				<form:input cssClass="form-control" path="lastName" id="lastName" maxlength="255" tabindex="5"/>
+				<form:errors path="lastName" cssClass="fieldError"/>
+			</div>
+		</div>
+		<spring:bind path="userForm.company">
+			<c:set var="errorClass" value="${(not empty status.errorMessage) ? ' has-error' : ''}"/>
+		</spring:bind>
+		<div class="form-group${errorClass}">
+			<label for="company" class="col-lg-2 control-label"><spring:message code="class.user.company" />*</label>
+			<div class="col-lg-10">
+				<form:input cssClass="form-control" path="company" id="company" maxlength="255" tabindex="6"/>
+				<form:errors path="company" cssClass="fieldError"/>
+			</div>
+		</div>
+		<spring:bind path="userForm.phone">
+			<c:set var="errorClass" value="${(not empty status.errorMessage) ? ' has-error' : ''}"/>
+		</spring:bind>
+		<div class="form-group${errorClass}">
+			<label for="phone" class="col-lg-2 control-label"><spring:message code="class.user.phone" /></label>
+			<div class="col-lg-10">
+				<form:input cssClass="form-control" path="phone" id="phone" maxlength="25" tabindex="7"/>
+				<form:errors path="phone" cssClass="fieldError"/>
+			</div>
+		</div>
+
+		<c:if test="${reCaptchaEnabled}">
+			<label class="col-lg-2 control-label">Are you human?</label>
+			<div class="col-lg-10" style="margin-bottom: 1em;">
+				<c:out value="${reCaptchaHtml}" escapeXml="false"/>
+			</div>
+		</c:if>
+
+		<div class="row">
+			<p style="clear: both;"><spring:message code="jsp._ALL.marked.fields.are.required"/></p>
+		</div>
+
+		<c:if test="${userForm.userAuthenticationType.name() != 'OPEN_ID'}">
+			<jsp:include page="../includes/password-tips.jsp"/>
+		</c:if>
+
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+				<button type="submit" class="btn btn-default" lang="save" tabindex="8">Save</button>
+				<button type="submit" class="btn btn-default" name="cancel" tabindex="9">Cancel</button>
+			</div>
+		</div>
+
+</form:form>
 
 
 

@@ -25,8 +25,8 @@ import javax.persistence.NoResultException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.util.Version;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -38,8 +38,8 @@ import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.dao.JobDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
-import org.springframework.stereotype.Repository;
 import org.jrecruiter.model.Region;
+import org.springframework.stereotype.Repository;
 
 /**
  * This DAO provides job-related database methods.
@@ -168,13 +168,13 @@ implements JobDao {
 
             FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
 
-            MultiFieldQueryParser parser = new MultiFieldQueryParser(
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_CURRENT,
                     new String[]{"description", "industry.name", "region.name", "regionOther",
                         "jobTitle", "website", "businessAddress1", "businessAddress2",
                         "businessCity", "businessState", "businessZip", "businessPhone",
                         "businessEmail", "industryOther", "jobRestrictions",
                         "updateDate"},
-              new StandardAnalyzer());
+                        fullTextEntityManager.getSearchFactory().getAnalyzer( Job.class ));
             try {
             org.apache.lucene.search.Query query = parser.parse(keyword);
 

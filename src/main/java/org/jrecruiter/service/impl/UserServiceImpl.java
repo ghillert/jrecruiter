@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private @Autowired ServerSettings serverSettings;
 
-    private @Resource(name="server.messageSource") MessageSource messageSource;
+    private @Autowired MessageSource messageSource;
 
     /**
      * User Dao.

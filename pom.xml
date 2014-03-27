@@ -21,18 +21,20 @@
 
 	<properties>
 		<java-version>1.7</java-version>
-		<dependency.spring.version>3.0.3.RELEASE</dependency.spring.version>
+		<dependency.spring.version>4.0.2.RELEASE</dependency.spring.version>
+		<spring.security.version>3.2.2.RELEASE</spring.security.version>
 		<jdbc.groupId>postgresql</jdbc.groupId>
 		<jdbc.artifactId>postgresql</jdbc.artifactId>
-		<jdbc.version>8.1-407.jdbc3</jdbc.version>
+		<jdbc.version>9.1-901-1.jdbc4</jdbc.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.hibernate.version>4.2.5.Final</org.hibernate.version>
 	</properties>
 
 	<!-- Administrative Settings -->
 
 	<ciManagement>
-		<system>Hudson</system>
-		<url>http://www.jrecruiter.org:8080/hudson/job/jRecruiter/</url>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/ghillert/jrecruiter</url>
 	</ciManagement>
 
 	<inceptionYear>2006</inceptionYear>
@@ -219,51 +221,36 @@
 
 		<!-- Hibernate -->
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>3.5.1-Final</version>
-			<exclusions>
-				<exclusion>
-					<groupId>cglib</groupId>
-					<artifactId>cglib</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.5.1-Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-			<version>3.5.1-Final</version>
-		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${org.hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${org.hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${org.hibernate.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
-			<version>3.2.1.Final</version>
+			<version>4.0.0.Final</version>
 		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.0.1.Final</version>
+        </dependency>
+
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.5.1-Final</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>asm</artifactId>
-					<groupId>asm</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>cglib</artifactId>
-					<groupId>cglib</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.0.2.GA</version>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-web</artifactId>
+			<version>2.0.4</version>
 		</dependency>
 
 		<!-- Spring -->
@@ -336,42 +323,52 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${dependency.spring.version}</version>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.security.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${dependency.spring.version}</version>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.security.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${dependency.spring.version}</version>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-crypto</artifactId>
+				<version>${spring.security.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${dependency.spring.version}</version>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId>
+				<version>${spring.security.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-openid</artifactId>
-			<version>${dependency.spring.version}</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 
 		<!-- Other -->
 
-		<dependency>
-			<groupId>org.jasypt</groupId>
-			<artifactId>jasypt</artifactId>
-			<version>1.6</version>
-		</dependency>
+				<dependency>
+						<groupId>org.jasypt</groupId>
+						<artifactId>jasypt</artifactId>
+						<version>1.9.0</version>
+				</dependency>
+				<dependency>
+						<groupId>org.jasypt</groupId>
+						<artifactId>jasypt-springsecurity3</artifactId>
+						<version>1.9.0</version>
+				</dependency>
+				<dependency>
+						<groupId>org.jasypt</groupId>
+						<artifactId>jasypt-spring31</artifactId>
+						<version>1.9.0</version>
+				</dependency>
 
 		<dependency>
 			<groupId>com.rosaloves</groupId>
@@ -379,16 +376,11 @@
 			<version>2.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>net.homeip.yusuke</groupId>
-			<artifactId>twitter4j</artifactId>
-			<version>2.0.10</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>nlog4j</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-core</artifactId>
+			<version>3.0.5</version>
 		</dependency>
+
 		<dependency>
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
@@ -666,6 +658,11 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>1.0.0.RC1</version>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>

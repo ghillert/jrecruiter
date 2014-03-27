@@ -14,11 +14,13 @@ response.setHeader("Expires","0");
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
-<%@ taglib uri="/struts-tags" prefix="s" %>
+<%-- <%@ taglib uri="/struts-tags" prefix="s" %> --%>
 <%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 
+<%@ taglib prefix="sec"    uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+
 <c:set var="datePattern"><spring:message code="date.format"/></c:set>
 <c:set var="ctx" value="${pageContext['request'].contextPath}"/>
 

@@ -41,7 +41,7 @@
             <prop key="hibernate.show_sql">false</prop>
             <prop key="hibernate.format_sql">true</prop>
             <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-            <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.RAMDirectoryProvider</prop>
+            <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.RAMDirectoryProvider</prop>
         </props>
         </property>
     </bean>

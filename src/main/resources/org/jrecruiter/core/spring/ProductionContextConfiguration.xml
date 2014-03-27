@@ -50,10 +50,23 @@
             <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
             <prop key="hibernate.show_sql">${database.hibernate.show_sql}</prop>
             <prop key="hibernate.format_sql">true</prop>
-            <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
+            <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.FSDirectoryProvider</prop>
             <prop key="hibernate.search.default.indexBase">${JRECRUITER_HOME}/hibernate</prop>
         </props>
         </property>
+    </bean>
+
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.smtp.host}"/>
+        <property name="port" value="25"/>
+        <!-- Uncomment if you need to authenticate with your SMTP Server -->
+        <!--property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="javaMailProperties">
+            <value>
+                mail.smtp.auth=true
+            </value>
+        </property-->
     </bean>
 
     <bean id="notificationService" class="org.jrecruiter.service.notification.impl.DefaultNotificationServiceImpl"/>

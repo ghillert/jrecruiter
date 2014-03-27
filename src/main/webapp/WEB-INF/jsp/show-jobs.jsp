@@ -1,14 +1,14 @@
 <title>Job List</title>
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<s:url id="tableUrl" includeParams="none"/>
-<s:url id="tableUrlAjax" action="show-jobs-ajax" includeParams="none"/>
+<c:url var="tableUrlAjax" value="/show-jobs-ajax.html"/>
 
 <h2><spring:message code="jsp.show.jobs.title"/></h2>
 <p class="info"><spring:message code="jsp.show.jobs.description"/></p>
 
-<s:form name="jobsForm" action="show-jobs-ajax">
-    <s:hidden name="backTo"/>
+<form:form name="jobsForm"  class="form-horizontal" role="form" method="post">
+
+    <input type="hidden" name="backTo"/>
     <div id="jobsTableDiv">
         <jsp:include page="jobsTable.jsp"></jsp:include>
     </div>
@@ -20,7 +20,8 @@
 
       var parameterString = jQuery.jmesa.createParameterStringForLimit(id);
 
-      jQuery.get('<s:property value="%{#tableUrlAjax}"/>?ajax=true&restore=true&' + parameterString, function(data) {
+      jQuery.get('${tableUrlAjax}?ajax=true&restore=true&' + parameterString, function(data) {
+    	  console.log("#" + id + 'Div');
           jQuery("#" + id + 'Div').html(data);
       });
   }
@@ -44,6 +45,6 @@
   </table>
 
   <div class="submit" style="margin-left: 0;">
-      <s:submit value="%{getText('jsp.show.jobs.button.back')}" method="cancel"/>
+ 	<button type="submit" class="btn btn-default" lang="save">Back</button>
   </div>
-</s:form>
+</form:form>

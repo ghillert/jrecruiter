@@ -100,7 +100,7 @@ public class Region  implements java.io.Serializable {
     }
 
     @Column(unique=true, nullable=false, insertable=true, updatable=true)
-        @Field(index = Index.UN_TOKENIZED, store = Store.YES)
+        @Field(index = Index.YES, store = Store.YES)
     public String getName() {
         return this.name;
     }

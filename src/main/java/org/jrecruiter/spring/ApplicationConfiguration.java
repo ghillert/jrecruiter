@@ -18,8 +18,8 @@ package org.jrecruiter.spring;
 import java.io.Serializable;
 
 import org.jrecruiter.common.Apphome;
+import org.jrecruiter.common.SpringContextMode;
 import org.jrecruiter.common.SystemInformationUtils;
-import org.jrecruiter.common.Constants.SpringContextMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

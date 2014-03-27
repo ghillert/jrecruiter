@@ -57,8 +57,8 @@
       <div class="content"><security:authorize ifAnyGranted="MANAGER, ADMIN">
         <div style="text-align: right; margin-top: -0.5em;">You are logged in as
         <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> (<security:authentication property="principal.email"/>) | <a href="<c:url value='/logout.html'/>" ><spring:message code="jsp.decorators.default.logout"/></a></div>
-      </security:authorize><%@ include
-        file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
+      </security:authorize><%-- <%@ include
+        file="/WEB-INF/jsp/includes/messages.jsp"%> --%> <decorator:body />
       </div>
       <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"

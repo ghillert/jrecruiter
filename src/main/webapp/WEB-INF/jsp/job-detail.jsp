@@ -13,7 +13,7 @@
 <div id="jobHeader">
     <div style="float: right; width: 200px; text-align: right;">Statistics: ${job.statistic.counter} hit(s)</div>
     <ul>
-        <s:url var="showJobsUrl"  value="/show-jobs.html?restore=true" />
+        <c:url var="showJobsUrl"  value="/show-jobs.html?restore=true" />
         <c:url var="exportPdfUrl" value="/s/${job.id}/jobDetail.pdf"   />
 
         <li    ><a class="back" href="${showJobsUrl}">Back</a></li>
@@ -22,100 +22,100 @@
     </ul>
 </div>
 
-        <s:if test="job.usesMap">
+        <c:if test="${job.usesMap}">
           <fieldset id="jobDetailMap">
               <legend><spring:message code="jsp._ALL.job.field.location"/></legend>
               <div id="map_canvas" style="width: 100%; height: 300px; background-color: white;">
               ${job.latitude}, ${job.longitude}
               </div>
           </fieldset>
-        </s:if>
+        </c:if>
         <fieldset id="jobDetail">
             <legend><spring:message code="jsp.job-detail.label.summary"/></legend>
             <div class="optional">
                 <label>Job Id:</label>
-                <s:property value="%{job.id}" escape="true"/>
+                <c:out value="${job.id}"/>
             </div>
             <div class="optional">
                 <label><spring:message code="jsp._ALL.job.field.jobUpdateDate"/>:</label>
-                <s:property value="%{job.updateDate}" escape="true"/>
+                <c:out value="${job.updateDate}"/>
             </div>
             <div class="optional strong">
                 <label><spring:message code="jsp._ALL.job.field.jobTitle"/>:</label>
-                <s:property value="%{job.jobTitle}" escape="true"/>
+                <c:out value="${job.jobTitle}"/>
             </div>
             <div class="optional strong">
                 <label><spring:message code="jsp._ALL.job.field.businessName"/>:</label>
                     ${job.businessName}
             </div>
-            <s:if test="job.offeredBy != null">
+            <c:if test="${job.offeredBy != null}">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.offered.by"/>:</label>
-                    <s:property value="%{getText(job.offeredBy.descriptionKey)}" default="N/A"/>
+                    <spring:message code="${job.offeredBy.descriptionKey}" text="N/A"/>
                 </div>
-            </s:if>
-            <s:if test="job.regionForDisplay != null && job.regionForDisplay.length() > 0">
+            </c:if>
+            <c:if test="${job.regionForDisplay != null && job.regionForDisplay.length() > 0}">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.location"/>:</label>
                         ${job.regionForDisplay}
                 </div>
-            </s:if>
-            <s:if test="job.industryForDisplay != null && job.industryForDisplay.length() > 0">
+            </c:if>
+            <c:if test="${job.industryForDisplay != null && job.industryForDisplay.length() > 0}">
                 <div class="optional">
                   <label><spring:message code="jsp._ALL.job.field.industry"/>:</label>
                       ${job.industryForDisplay}
                 </div>
-            </s:if>
-            <s:if test="job.salary != null && job.salary.length() > 0">
+            </c:if>
+            <c:if test="${job.salary != null && job.salary.length() > 0}">
                 <div class="optional"><label><spring:message code="jsp._ALL.job.field.salary"/>:</label>
                     ${job.salary}
                 </div>
-            </s:if>
-            <s:if test="job.businessPhone != null && job.businessPhone.length() > 0">
+            </c:if>
+            <c:if test="${job.businessPhone != null && job.businessPhone.length() > 0}">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.phone"/>:</label>
                     ${job.businessPhone}
                 </div>
-            </s:if>
-            <s:if test="job.businessPhoneExtension != null && job.businessPhoneExtension.length() > 0">
+            </c:if>
+            <c:if test="${job.businessPhoneExtension != null && job.businessPhoneExtension.length() > 0}">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.phone_extension"/>:</label>
                     ${job.businessPhoneExtension}
                 </div>
-            </s:if>
-            <s:if test="job.businessEmail != null && job.businessEmail.length() > 0">
+            </c:if>
+            <c:if test="${job.businessEmail != null && job.businessEmail.length() > 0}">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.email"/>:</label>
                     <a href="mailto:${job.businessEmail}">${job.businessEmail}</a>
                 </div>
-            </s:if>
-            <s:if test="job.businessAddress1 != null && job.businessAddress1.length() > 0">
+            </c:if>
+            <c:if test="${job.businessAddress1 != null && job.businessAddress1.length() > 0}">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.address"/>:</label>
                     ${job.businessAddress1}
                 </div>
-            </s:if>
-            <s:if test="job.businessAddress2 != null  && job.businessAddress2.length() > 0">
+            </c:if>
+            <c:if test="${job.businessAddress2 != null  && job.businessAddress2.length() > 0}">
                 <div class="optional">
                      <label>&nbsp;</label>${job.businessAddress2}
                 </div>
-            </s:if>
-            <s:if test="job.city != null && job.city.length() > 0">
+            </c:if>
+            <c:if test="${job.businessCity != null && job.businessCity.length() > 0}">
                 <div class="optional">
                     <label><spring:message code="jsp._ALL.job.field.city"/>:</label>${job.businessCity}
                 </div>
-            </s:if>
-            <s:if test="job.businessState != null && job.businessState.length() > 0">
+            </c:if>
+            <c:if test="${job.businessState != null && job.businessState.length() > 0}">
               <div class="optional">
-                 <label><spring:message code="jsp._ALL.job.field.state"/>:</label><s:property value="%{job.businessState}"/>
+                 <label><spring:message code="jsp._ALL.job.field.state"/>:</label><c:out value="${job.businessState}"/>
               </div>
-            </s:if>
-            <s:if test="job.businessZip != null && job.businessZip.length() > 0">
+            </c:if>
+            <c:if test="${job.businessZip != null && job.businessZip.length() > 0}">
               <div class="optional">
-                  <label><spring:message code="jsp._ALL.job.field.zip"/>:</label><s:property value="%{job.businessZip}"/>
+                  <label><spring:message code="jsp._ALL.job.field.zip"/>:</label><c:out value="${job.businessZip}"/>
               </div>
-            </s:if>
-            <s:if test="job.website != null && job.website.length() > 0">
+            </c:if>
+            <c:if test="${job.website != null && job.website.length() > 0}">
                 <div class="optional">
                    <label><spring:message code="jsp._ALL.job.field.website"/>:</label>
                     <c:if test="${not fn:contains(job.website, 'http')}">
@@ -125,7 +125,7 @@
                       <a href="${job.website}">${job.website}</a>
                     </c:if>
                 </div>
-            </s:if>
+            </c:if>
         </fieldset>
         <fieldset id="jobDetailDescription">
             <legend><spring:message code="jsp._ALL.job.field.jobDescription"/></legend>
@@ -140,7 +140,7 @@
                         </c:otherwise>
                     </c:choose>
         </fieldset>
-        <s:if test="job.jobRestrictions != null && job.jobRestrictions.length() > 0">
+        <c:if test="${job.jobRestrictions != null && job.jobRestrictions.length() > 0}">
           <fieldset id="jobDetailRestriction">
               <legend><spring:message code="jsp._ALL.job.field.jobRestrictions"/></legend>
                 <c:set var="restr"><c:out value="${job.jobRestrictions}" escapeXml="true"/></c:set>
@@ -154,9 +154,9 @@
                           </c:otherwise>
                       </c:choose>
           </fieldset>
-        </s:if>
+        </c:if>
 
-        <s:if test="job.usesMap">
+        <c:if test="${job.usesMap}">
             <!-- Google Maps -->
 			<script type="text/javascript"
 			    src="http://maps.google.com/maps/api/js?sensor=false">
@@ -170,4 +170,4 @@
                 jQuery(document).unload(function() {GUnload();});
             //-->
             </script>
-        </s:if>
+        </c:if>

@@ -3,22 +3,24 @@
  */
 package org.jrecruiter.web.actions;
 
-import java.util.List;
-import java.util.Map;
-
-import org.jrecruiter.common.CollectionUtils;
-import org.jrecruiter.model.Job;
-import com.sun.syndication.feed.synd.SyndEntry;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants;
+import org.jrecruiter.model.Job;
 import org.jrecruiter.model.ServerSettings;
-import twitter4j.org.json.JSONException;
-import twitter4j.org.json.JSONObject;
+
+import twitter4j.internal.org.json.JSONException;
+import twitter4j.internal.org.json.JSONObject;
+
+import com.sun.syndication.feed.synd.SyndEntry;
 
 /**
  * @author Summers Pittman
@@ -34,7 +36,7 @@ public class JobsJsonAction extends BaseAction {
     private InputStream inputStream;
 
     private ServerSettings serverSettings;
-    
+
     public InputStream getInputStream() {
         return inputStream;
     }
@@ -97,6 +99,6 @@ public class JobsJsonAction extends BaseAction {
     public void setServerSettings(ServerSettings serverSettings) {
         this.serverSettings = serverSettings;
     }
-    
-    
+
+
 }
