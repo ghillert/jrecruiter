@@ -2,7 +2,7 @@
 
 <h2><spring:message code="jsp.admin.add-job.title" /></h2>
 
-<s:form id="addJobForm">
+<s:form id="addJobForm" method="post" action="saveAddJob">
 
     <jsp:include page="includes/job_header.jsp"/>
     <jsp:include page="includes/job_contact.jsp"/>
