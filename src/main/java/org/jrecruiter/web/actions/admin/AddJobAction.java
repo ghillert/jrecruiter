@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -39,6 +40,8 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Results;
 import org.jrecruiter.model.Region;
 
 /**
@@ -48,7 +51,9 @@ import org.jrecruiter.model.Region;
  * @version $Id$
  *
  */
-@Result(name="success", location="index", type="redirectAction")
+@Conversion
+@Results({@Result(name="success", location="index", type="redirectAction")})
+
 public class AddJobAction extends JobBaseAction implements Preparable, ModelDriven<JobForm> {
 
     /** serialVersionUID. */
@@ -103,7 +108,7 @@ public class AddJobAction extends JobBaseAction implements Preparable, ModelDriv
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhoneExtension", message = "The phone number extension must be shorter than ${maxLength} characters.")
                     }
             )
-
+    @Action(value="/admin/saveAddJob", results={@Result(name="input", location="admin/add-job")})
     public String save() {
 
         LOGGER.debug("Adding Job...");
