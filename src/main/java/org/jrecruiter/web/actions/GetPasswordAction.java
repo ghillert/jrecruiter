@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
+import org.apache.struts2.convention.annotation.Action;
 
 /**
  * Resets the users passwords and emails it back to the user.
@@ -35,6 +36,7 @@ public class GetPasswordAction extends BaseAction {
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username", trim=true, key = "class.get-password.password_reset_not_possible", message="")
                      }
             )
+    @Action(value="/getPassword", results={@Result(name="input", location="get-password")})
     public String process() {
 
         final User userFromDb = userService.getUser(this.user.getUsername());
