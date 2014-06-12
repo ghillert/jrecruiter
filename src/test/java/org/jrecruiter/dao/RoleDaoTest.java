@@ -5,78 +5,73 @@ package org.jrecruiter.dao;
 
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.jrecruiter.common.Constants.Roles;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.test.BaseTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
- * @version $Id$
  */
 public class RoleDaoTest extends BaseTest {
 
-    private @Autowired RoleDao roleDao;
+	private @Autowired RoleDao roleDao;
 
-    @Test
-    public void testSave() {
+	@Test
+	public void testSave() {
 
-        final Role role = new Role(null, "TEST");
-        Role savedRole = roleDao.save(role);
+		final Role role = new Role(null, "TEST");
+		Role savedRole = roleDao.save(role);
 
-        Assert.assertNotNull(savedRole.getId());
+		Assert.assertNotNull(savedRole.getId());
+		List<Role> roles = roleDao.getAll();
+		Assert.assertTrue(roles.size() >= 1);
+	}
 
-        List<Role> roles = roleDao.getAll();
+	@Test
+	public void testGetRole() {
 
-        Assert.assertTrue(roles.size() >= 1);
-    }
+		final Role role = new Role(null, "TEST");
+		Role savedRole = roleDao.save(role);
 
-    @Test
-    public void testGetRole() {
+		Assert.assertNotNull(savedRole.getId());
 
-        final Role role = new Role(null, "TEST");
-        Role savedRole = roleDao.save(role);
+		Role role2 = roleDao.getRole("TEST");
 
-        Assert.assertNotNull(savedRole.getId());
+		Assert.assertNotNull(role2);
+	}
 
-        Role role2 = roleDao.getRole("TEST");
+	/**
+	 * Test to verify that the seed data is correctly populated. Typically there
+	 * should be 2 roles in the system:
+	 *
+	 * <ul>
+	 *   <li>Admin Role</li>
+	 *   <li>Manager Role</li>
+	 * </ul>
+	 *
+	 */
+	@Test
+	public void testVerifyExistenceOfRoleSeedData() {
 
-        Assert.assertNotNull(role2);
-    }
+		final List<Role> roles = roleDao.getAll();
 
-    /**
-     * Test to verify that the seed data is correctly populated. Typically there
-     * should be 2 roles in the system:
-     *
-     * <ul>
-     *   <li>Admin Role</li>
-     *   <li>Manager Role</li>
-     * </ul>
-     *
-     */
-    @Test
-    public void testVerifyExistenceOfRoleSeedData() {
+		boolean managerRoleFound = false;
+		boolean adminRoleFound = false;
 
-        final List<Role> roles = roleDao.getAll();
+		for (final Role role : roles) {
 
-        boolean managerRoleFound = false;
-        boolean adminRoleFound = false;
+			if (Roles.ADMIN.name().equals(role.getName())) {
+				adminRoleFound = true;
+			} else if (Roles.MANAGER.name().equals(role.getName())) {
+				managerRoleFound = true;
+			}
 
-        for (final Role role : roles) {
+		}
 
-            if (Roles.ADMIN.name().equals(role.getName())) {
-                adminRoleFound = true;
-            } else if (Roles.MANAGER.name().equals(role.getName())) {
-                managerRoleFound = true;
-            }
-
-        }
-
-        Assert.assertTrue("Expected the manager role. Is seed data populated?", managerRoleFound);
-        Assert.assertTrue("Expected the admin role. Is seed data populated?",   adminRoleFound);
-
-    }
+		Assert.assertTrue("Expected the manager role. Is seed data populated?", managerRoleFound);
+		Assert.assertTrue("Expected the admin role. Is seed data populated?",   adminRoleFound);
+	}
 }

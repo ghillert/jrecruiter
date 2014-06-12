@@ -4,6 +4,8 @@ import org.jrecruiter.common.Constants.AppHomeSource;
 
 public final class Apphome {
 
+	public final static String APP_HOME_DIRECTORY = "JRECRUITER_HOME";
+
     private String appHomePath;
     private AppHomeSource appHomeSource;
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-twitter="http://www.springframework.org/schema/integration/twitter"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/twitter http://www.springframework.org/schema/integration/twitter/spring-integration-twitter.xsd">
+
+	<int:gateway service-interface="org.jrecruiter.service.NotificationService">
+		<int:method request-channel="sendToTwitter" name="sendTweetToTwitter"/>
+	</int:gateway>
+
+	<beans profile="twitter-enabled">
+		<bean id="twitterTemplate" class="org.springframework.social.twitter.api.impl.TwitterTemplate">
+			<constructor-arg name="consumerKey"       value="${twitter.oauth.consumerKey}"/>
+			<constructor-arg name="consumerSecret"    value="${twitter.oauth.consumerSecret}"/>
+			<constructor-arg name="accessToken"       value="${twitter.oauth.accessToken}"/>
+			<constructor-arg name="accessTokenSecret" value="${twitter.oauth.accessTokenSecret}"/>
+		</bean>
+		<int:channel id="sendToTwitter">
+			<int:queue/>
+		</int:channel>
+
+		<int-twitter:outbound-channel-adapter channel="sendToTwitter" twitter-template="twitterTemplate">
+			<int:poller fixed-delay="2000"/>
+		</int-twitter:outbound-channel-adapter>
+	</beans>
+
+	<beans profile="!twitter-enabled">
+		<int:logging-channel-adapter id="sendToTwitter" level="ERROR" log-full-message="true"/>
+	</beans>
+
+</beans>

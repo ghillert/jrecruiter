@@ -24,6 +24,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 import org.hibernate.annotations.Type;
 
@@ -36,6 +38,7 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(uniqueConstraints = {  }
 )
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Configuration implements Serializable {
 
     public enum ConfigurationKey {
@@ -61,8 +64,16 @@ public class Configuration implements Serializable {
 
     // Fields
 
+    @Id
+    @Column(length=200)
     private String messageKey;
+
+    @Column(unique=false, nullable=true, insertable=true, updatable=true)
+    @Type(type="text")
     private String messageText;
+
+    @Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
 
     // Constructors
@@ -83,8 +94,7 @@ public class Configuration implements Serializable {
     }
 
     // Property accessors
-    @Id
-    @Column(length=200)
+
     public String getMessageKey() {
         return this.messageKey;
     }
@@ -93,8 +103,6 @@ public class Configuration implements Serializable {
         this.messageKey = messageKey;
     }
 
-    @Column(unique=false, nullable=true, insertable=true, updatable=true)
-    @Type(type="text")
     public String getMessageText() {
         return this.messageText;
     }
@@ -103,8 +111,6 @@ public class Configuration implements Serializable {
         this.messageText = messageText;
     }
 
-    @Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastModified() {
         return this.lastModified;
     }

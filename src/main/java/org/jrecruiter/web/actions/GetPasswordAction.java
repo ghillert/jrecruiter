@@ -1,15 +1,17 @@
 package org.jrecruiter.web.actions;
 
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.jrecruiter.common.Constants.UserAuthenticationType;
 import org.jrecruiter.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
-import org.apache.struts2.convention.annotation.Action;
 
 /**
  * Resets the users passwords and emails it back to the user.
@@ -17,7 +19,8 @@ import org.apache.struts2.convention.annotation.Action;
  * @author Gunnar Hillert
  * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
-@Result(name="success", location="login", type="redirectAction")
+@Conversion
+@Results({@Result(name="success", location="login", type="redirectAction")})
 public class GetPasswordAction extends BaseAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetPasswordAction.class);
@@ -36,7 +39,6 @@ public class GetPasswordAction extends BaseAction {
                         @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "user.username", trim=true, key = "class.get-password.password_reset_not_possible", message="")
                      }
             )
-    @Action(value="/getPassword", results={@Result(name="input", location="get-password")})
     public String process() {
 
         final User userFromDb = userService.getUser(this.user.getUsername());

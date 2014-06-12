@@ -15,7 +15,6 @@
  */
 package org.jrecruiter.model;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -25,8 +24,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -61,7 +58,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "email" } ),
         @UniqueConstraint( columnNames = { "username" } ) }
 )
-public class User implements Serializable, UserDetails {
+public class User extends BaseModelObject implements UserDetails {
 
     /**
      * serialVersionUID.
@@ -69,10 +66,6 @@ public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = -1530641858689315559L;
 
     //~~~~~Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    @XmlAttribute
-    @Id @GeneratedValue(generator="hibseq")
-    private Long id;
 
     @XmlID
     @NotNull
@@ -93,6 +86,8 @@ public class User implements Serializable, UserDetails {
     private String lastName;
 
     @Size(max=50)
+    @Column(unique=false, nullable=true, insertable=true,
+    updatable=true, length=50)
     private String company;
 
     @Size(max=25)
@@ -120,7 +115,7 @@ public class User implements Serializable, UserDetails {
     private Date lastLoginDate;
 
     @XmlTransient
-    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="user")
+    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="user", targetEntity = Job.class)
     private Set<Job> jobs = new HashSet<Job>(0);
 
     @XmlElement(name="roles")
@@ -134,11 +129,10 @@ public class User implements Serializable, UserDetails {
     @Column(unique=true)
     private String  verificationKey;
 
-    @Type(
-        type = "org.jrecruiter.common.GenericEnumUserType",
-        parameters = {
-                @Parameter(name  = "enumClass", value = "org.jrecruiter.common.Constants$UserAuthenticationType")}
-    )
+	@Type(type = "org.jrecruiter.common.GenericEnumUserType", parameters = {
+			@Parameter(name = "enumClass", value = "org.jrecruiter.common.Constants$UserAuthenticationType"),
+			@Parameter(name = "identifierMethod", value = "getId"),
+			@Parameter(name = "valueOfMethod", value = "fromId") })
     @NotNull
     private UserAuthenticationType userAuthenticationType = UserAuthenticationType.USERNAME_PASSWORD;
 
@@ -180,15 +174,6 @@ public class User implements Serializable, UserDetails {
         this.userToRoles = userToRoles;
     }
 
-    // Property accessors
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return this.username;
     }
@@ -221,8 +206,6 @@ public class User implements Serializable, UserDetails {
         this.lastName = lastName;
     }
 
-    @Column(unique=false, nullable=true, insertable=true,
-            updatable=true, length=50)
     public String getCompany() {
         return this.company;
     }

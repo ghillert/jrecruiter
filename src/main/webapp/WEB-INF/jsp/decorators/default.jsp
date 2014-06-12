@@ -1,12 +1,8 @@
-	<%@include file="/WEB-INF/jsp/includes/taglibs-spring.jsp"%>
-
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html>
+<%@include file="/WEB-INF/jsp/includes/taglibs-decorators.jsp" %>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title><decorator:title default="Welcome to jRecruiter" /></title>
+    <title><sitemesh:write property='title'/></title>
 
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma"        content="no-cache" />
@@ -35,7 +31,7 @@
             jQuery(':input').bind('blur', function(event) { jQuery(event.target).removeClass('selected'); });
         });
     </script>
-
+    <sitemesh:write property='head'/>
   </head>
   <body>
     <div class="container"><div class="outer-header">
@@ -58,7 +54,7 @@
         <div style="text-align: right; margin-top: -0.5em;">You are logged in as
         <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/> (<security:authentication property="principal.email"/>) | <a href="<c:url value='/logout.html'/>" ><spring:message code="jsp.decorators.default.logout"/></a></div>
       </security:authorize><%@ include
-        file="/WEB-INF/jsp/includes/messages.jsp"%> <decorator:body />
+        file="/WEB-INF/jsp/includes/messages.jsp"%> <sitemesh:write property='body'/>
       </div>
       <div class="footer"><a class="footerLogo"
         href="http://www.jrecruiter.org"
@@ -120,6 +116,7 @@
         pageTracker._trackPageview();
         } catch(err) {}</script>
 
+  <sitemesh:write property='page.bottom'/>
   </body>
 </html>
 

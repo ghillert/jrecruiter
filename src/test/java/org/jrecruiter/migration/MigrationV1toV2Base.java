@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.jrecruiter.service.migration.MigrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -37,6 +38,6 @@ public abstract class MigrationV1toV2Base extends AbstractTransactionalJUnit4Spr
 
     @Autowired
     public void setDataSource(@Qualifier("dataSource") final DataSource dataSource) {
-        this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 }

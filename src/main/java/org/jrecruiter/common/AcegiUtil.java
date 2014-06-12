@@ -18,7 +18,7 @@ public final class AcegiUtil {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public static boolean containsRole(final Collection<GrantedAuthority> grantedAuthorities, final String role) {
+    public static boolean containsRole(final Collection<? extends GrantedAuthority> grantedAuthorities, final String role) {
         for (final GrantedAuthority grantedAuthority : grantedAuthorities)
             if (grantedAuthority.getAuthority().equals(role)) {
                 return true;
@@ -44,7 +44,7 @@ public final class AcegiUtil {
             throw new AccessDeniedException("User is not authenticated");
         }
 
-        final Collection<GrantedAuthority> authorities = authentication.getAuthorities();
+        final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         for (final String role : roles) {
             if (containsRole(authorities, role)) {
@@ -62,7 +62,7 @@ public final class AcegiUtil {
             throw new AccessDeniedException("User is not authenticated");
         }
 
-        final Collection<GrantedAuthority> authorities = authentication.getAuthorities();
+        final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         for (final String role : roles) {
             if (!containsRole(authorities, role)) {
