@@ -4,8 +4,12 @@ package org.jrecruiter.test;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jrecruiter.web.config.DefaultApplicationContextInitializer;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Base class for Dao Test Cases.
@@ -13,14 +17,16 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  * @author Gunnar Hillert
  * @version $Id: BaseTest.java 598 2010-08-22 20:18:58Z ghillert $
  */
-@ContextConfiguration(
-        locations={
-                "classpath:org/jrecruiter/core/spring/applicationContext-core-basic.xml",
-                "classpath:org/jrecruiter/core/spring/applicationContext-core-services.xml",
-                "classpath:org/jrecruiter/core/spring/test-applicationContext-mail.xml",
-                "classpath:org/jrecruiter/core/spring/DemoContextConfiguration.xml"
-                 })
-public abstract class BaseServiceIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
+@ActiveProfiles({"demo"})
+@ContextConfiguration(initializers=DefaultApplicationContextInitializer.class,
+locations={
+		"classpath:org/jrecruiter/core/spring/applicationContext-core-basic.xml",
+		"classpath:org/jrecruiter/core/spring/applicationContext-core-services.xml",
+		"classpath:org/jrecruiter/core/spring/test-applicationContext-mail.xml"
+		 })
+public abstract class BaseServiceIntegrationTest {
 
-    protected @PersistenceContext(unitName="base") EntityManager entityManager;
+	protected @PersistenceContext(unitName="base") EntityManager entityManager;
 }

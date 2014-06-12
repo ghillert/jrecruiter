@@ -449,11 +449,6 @@ a.button:hover {
     background-image: url(../images/icons/crystal/viewmag.png); /** sprite-ref: mysprite; */
 }
 
-.button span.showJobsFlex {
-    background-repeat: no-repeat;
-    background-image: url(../images/icons/flex-16x16.png); /** sprite-ref: mysprite; */
-}
-
 .button span.manageAccount {
     background-repeat: no-repeat;
     background-image: url(../images/icons/crystal/configure.png); /** sprite-ref: mysprite; */

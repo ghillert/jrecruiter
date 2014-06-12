@@ -2,37 +2,38 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
   <p><spring:message code="jsp.index.introduction.text.top" /></p>
 
-  <s:form action="search">
+
+<%--   <s:form action="search">
     <div class="required" style="border: 1px solid #aaaaCC; padding-top: 1em; margin-left: 0; text-align: center; background-color: #FAFAFA; width: 700px;">
        <label for="keyword"><spring:message code="jsp.index.search.term"/></label>
        <s:textfield name="keyword" id="keyword" size="30" tabindex="1" cssClass="searchBox"/>
        <s:submit value="%{getText('jsp.index.search.button')}" method="search" cssClass="button" cssStyle="margin-left: 1em; border-style: solid; border-width: 1px;"/>
        <br style="clear: both;"/>
     </div>
-  </s:form>
+  </s:form> --%>
 
   <div id="startPageMenuContainer">
-    <s:url id="jobCountUrl" namespace="/chart" action="viewJobCountChart"/>
+   <%--  <s:url id="jobCountUrl" namespace="/chart" action="viewJobCountChart"/> --%>
     <ul class="menuList" style="width: 15em; float: left;">
       <li>
-        <s:url namespace="/" action="show-jobs" id="showJobsUrl"/>
+        <c:url var="showJobsUrl" value="/s/show-jobs"/>
         <a  id="showJobsButton" href="${showJobsUrl}" class="button"><span class="showJobs">&nbsp;</span><spring:message code="jsp.index.showJobs"/></a>
       </li>
       <li>
-        <s:url namespace="/admin" action="index" id="adminMainUrl"/>
+        <c:url value="/admin/index.html" var="adminMainUrl"/>
         <a id="manageAccountButton" href="${adminMainUrl}" class="button"><span class="manageAccount">&nbsp;</span><spring:message code="jsp.index.manageJobsAccount" /></a>
       </li>
       <security:authorize ifNotGranted="MANAGER, ADMIN">
           <li>
-            <s:url namespace="/registration" action="signup" id="signupUrl"/>
+            <c:url value="/registration/signup.html" var="signupUrl"/>
             <a id="addUserButton" href="${signupUrl}" class="button"><span class="addUser">&nbsp;</span><spring:message code="jsp.index.createNewUser" /></a>
           </li>
       </security:authorize>
 
     </ul>
-    <div style="margin-left: 0; margin-right: auto;">
+<%--     <div style="margin-left: 0; margin-right: auto;">
         <img src="${jobCountUrl}" alt="Job statistics graph - Number of Jobs" style="width: 550px; height: 200px;"/>
-    </div>
+    </div> --%>
 
   </div>
   <p style="clear: both;"><spring:message code="jsp.index.introduction.text.bottom" /></p>

@@ -17,8 +17,7 @@ package org.jrecruiter.service;
 
 import java.util.Date;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.User;
@@ -29,7 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.jasypt.springsecurity3.authentication.encoding.PasswordEncoder;
 /**
  *
  * @author Gunnar Hillert
@@ -40,7 +41,7 @@ public class UserServiceTest extends BaseServiceIntegrationTest {
     @Autowired UserService userService;
     @Autowired RoleDao roleDao;
     @Autowired StringDigester stringDigester;
-    @Autowired org.jasypt.spring.security3.PasswordEncoder passwordEncoder;
+    @Autowired PasswordEncoder passwordEncoder;
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceTest.class);
 

@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Spring Event Listener that is triggered when the application context is loaded.
@@ -15,46 +14,33 @@ import org.springframework.transaction.annotation.Transactional;
  * for integration testing.
  *
  * @author Gunnar Hillert
- * @version $Id$
  *
  */
 public class ContextRefreshedEventListener implements
-                                    ApplicationListener < ContextRefreshedEvent > {
+									ApplicationListener < ContextRefreshedEvent > {
 
 	/** Special Dao for creating and setting up the database */
-    private @Autowired SystemSetupService systemSetupService;
+	private @Autowired SystemSetupService systemSetupService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedEventListener.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedEventListener.class);
 
-    /**
-     *
-     *
-     */
-    @Transactional
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
+		if (event.getApplicationContext().getParent() == null) {
 
-        //From: http://forum.springsource.org/showthread.php?t=84312&page=2
+			LOGGER.info("Parent Spring Context started.");
 
-        if (event.getApplicationContext().getParent() == null) {
+			if (event.getApplicationContext().getParent() == null) {
 
-            LOGGER.info("Parent Spring Context started.");
+				if (!systemSetupService.isDatabaseSetup()) {
+					LOGGER.info("Setting up database...");
+					systemSetupService.setupDatabase();
+				}
+				else {
+					LOGGER.info("Database already setup.");
+				}
 
-            if (!systemSetupService.isDatabaseSetup()) {
-
-                LOGGER.info("jRecruiter Database is not setup, yet. Initializing DB...");
-
-                systemSetupService.createDatabase();
-
-                LOGGER.info("jRecruiter Database is not setup, yet. Populating Seed Data...");
-
-                systemSetupService.loadAndRestoreSeedData();
-
-                LOGGER.info("jRecruiter Database is not setup, yet. Populating Test Data...");
-            }
-
-        }
-
-    }
-
+			}
+		}
+	}
 }

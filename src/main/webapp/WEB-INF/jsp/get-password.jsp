@@ -2,7 +2,7 @@
 
   <h2><spring:message code="jsp.get-password.title"/></h2>
 
-    <s:form id="getPasswordForm"  method="post" action="getPassword">
+    <s:form id="getPasswordForm"  method="post" action="get-password">
 
     <p>
         <spring:message code="jsp.get-password.user.forgot.password.text"/>

@@ -1,16 +1,4 @@
 <decorators defaultdir="/WEB-INF/jsp/decorators">
-    <decorator name="default" page="default.jsp">
-        <pattern>/*</pattern>
-    </decorator>
-    <excludes>
-        <pattern>/show-jobs-ajax*</pattern>
-        <pattern>/admin/logging-ajax-log-file-table*</pattern>
-        <pattern>/admin/show-jobs-ajax*</pattern>
-        <pattern>/admin/show-users-ajax*</pattern>
-        <pattern>/admin/logging-ajax-logger-table*</pattern>
-        <pattern>/contact.html*</pattern>
-        <pattern>/fx/*</pattern>
-        <pattern>/s/admin/systemInformation</pattern>
-        <pattern>/s/admin/restore*</pattern>
-    </excludes>
+	<decorator name="default" page="default.jsp"/>
 </decorators>
+

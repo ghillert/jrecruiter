@@ -22,13 +22,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
@@ -36,7 +33,6 @@ import javax.xml.bind.annotation.XmlValue;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -46,29 +42,30 @@ import org.hibernate.search.annotations.Store;
 * This class represents an industry (assignable to a job posting).
 *
 * @author Gunnar Hillert
-* @version $Id:Industry.java 201 2008-05-05 12:57:04Z ghillert $
+*
 */
 @Entity
 @BatchSize(size=15)
 @Indexed
 @Analyzer(impl = org.apache.lucene.analysis.standard.StandardAnalyzer.class)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Region  implements java.io.Serializable {
+public class Region extends BaseModelObject {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 5352730251720839547L;
 
     // Fields
 
-    /** Primary id of the industry */
-    @XmlAttribute
-    private Long id;
-
     @XmlValue
     @XmlID
+    @Column(unique=true, nullable=false, insertable=true, updatable=true)
+    @Field(index = Index.YES, store = Store.YES)
     private String name;
 
     @XmlTransient
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="job")
+    @Transient
+    @ContainedIn
     private Set<Job> jobs = new HashSet<Job>(0);
 
     // Constructors
@@ -88,19 +85,6 @@ public class Region  implements java.io.Serializable {
        this.jobs = jobs;
     }
 
-    @Id @GeneratedValue(generator="hibseq")
-    @Column(unique=true, nullable=false, insertable=true, updatable=true)
-    @DocumentId
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Column(unique=true, nullable=false, insertable=true, updatable=true)
-        @Field(index = Index.UN_TOKENIZED, store = Store.YES)
     public String getName() {
         return this.name;
     }
@@ -109,10 +93,6 @@ public class Region  implements java.io.Serializable {
         this.name = name;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="job")
-    @Transient
-    @ContainedIn
-    @XmlTransient
     public Set<Job> getJobs() {
         return this.jobs;
     }
