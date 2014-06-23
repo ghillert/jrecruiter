@@ -15,7 +15,7 @@
 */
 package org.jrecruiter.web.actions.admin;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.jrecruiter.web.actions.BaseActionTest;
 

@@ -17,20 +17,18 @@ package org.jrecruiter.service;
 
 import java.util.Date;
 
-import org.junit.Assert;
 import org.jasypt.digest.StringDigester;
+import org.jasypt.springsecurity3.authentication.encoding.PasswordEncoder;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.model.User;
 import org.jrecruiter.service.exceptions.DuplicateUserException;
 import org.jrecruiter.test.BaseServiceIntegrationTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.jasypt.springsecurity3.authentication.encoding.PasswordEncoder;
 /**
  *
  * @author Gunnar Hillert
