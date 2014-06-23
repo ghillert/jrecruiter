@@ -17,6 +17,8 @@ package org.jrecruiter.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
 * This class is used for database versioning and setup purposes.
@@ -25,6 +27,7 @@ import javax.persistence.Id;
 * @version $Id:Industry.java 201 2008-05-05 12:57:04Z ghillert $
 */
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SchemaMigration  implements java.io.Serializable {
 
     /** serialVersionUID. */

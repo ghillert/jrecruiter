@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 public class GoogleMapsUtils {
 
 	/** Defines the Google Maps Url. */
-    public static final String googleMapsStaticUrl = "http://maps.google.com/staticmap";
+    public static final String googleMapsStaticUrl = "http://maps.googleapis.com/maps/api/staticmap";
 
     /** Defines the default width of the requested image. */
     public static final Integer defaultWidth       = Integer.valueOf(400);

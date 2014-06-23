@@ -1,88 +1,141 @@
+/*
+ * Copyright 2010-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.common;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 /**
  * Holder Object for Api keys such as for webservices like Google Maps.
  *
  * @author Gunnar Hillert
- * @version $Id$
+ * @version 2.0
  *
  */
 public class ApiKeysHolder {
 
-    private String reCaptchaKey;
+	private final boolean twitterEnabled;
 
-    private String twitterUsername;
-    private String twitterPassword;
+	private final String twitterConsumerKey;
+	private final String twitterConsumerSecret;
+	private final String twitterAccessToken;
+	private final String twitterAccessTokenSecret;
 
-    private String bitlyUsername;
-    private String bitlyPassword;
+	private final boolean reCaptchaEnabled;
+	private final String reCaptchaPublicKey;
+	private final String reCaptchaPrivateKey;
 
+	private final boolean bitlyEnabled;
+	private final String bitlyUsername;
+	private final String bitlyPassword;
 
-    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	@Autowired
+	public ApiKeysHolder(Environment environment) {
 
-    public String getReCaptchaKey() {
-        return reCaptchaKey;
-    }
+		this.twitterEnabled = environment.getProperty("twitter.enabled", Boolean.class, false);
+		this.twitterConsumerKey = environment.getProperty("twitter.oauth.consumerKey", String.class, "");
+		this.twitterConsumerSecret = environment.getProperty("twitter.oauth.consumerSecret", String.class, "");
+		this.twitterAccessToken = environment.getProperty("twitter.oauth.accessToken", String.class, "");
+		this.twitterAccessTokenSecret = environment.getProperty("twitter.oauth.accessTokenSecret", String.class, "");
 
-    public void setReCaptchaKey(String reCaptchaKey) {
-        this.reCaptchaKey = reCaptchaKey;
-    }
+		this.bitlyEnabled = environment.getProperty("bitly.enabled", boolean.class, false);
+		this.bitlyUsername = environment.getProperty("bitly.username", String.class, "");
+		this.bitlyPassword = environment.getProperty("bitly.password", String.class, "");
 
-    /**
-     * @return the twitterUsername
-     */
-    public String getTwitterUsername() {
-        return twitterUsername;
-    }
+		this.reCaptchaEnabled = environment.getProperty("recaptcha.enabled", boolean.class, false);
+		this.reCaptchaPublicKey = environment.getProperty("recaptcha.publicKey", String.class, "");
+		this.reCaptchaPrivateKey = environment.getProperty("recaptcha.privateKey", String.class, "");
 
-    /**
-     * @param twitterUsername the twitterUsername to set
-     */
-    public void setTwitterUsername(String twitterUsername) {
-        this.twitterUsername = twitterUsername;
-    }
+	}
 
-    /**
-     * @return the twitterPassword
-     */
-    public String getTwitterPassword() {
-        return twitterPassword;
-    }
+	/**
+	 * @return the twitterEnabled
+	 */
+	public boolean isTwitterEnabled() {
+		return twitterEnabled;
+	}
 
-    /**
-     * @param twitterPassword the twitterPassword to set
-     */
-    public void setTwitterPassword(String twitterPassword) {
-        this.twitterPassword = twitterPassword;
-    }
+	/**
+	 * @return the twitterConsumerKey
+	 */
+	public String getTwitterConsumerKey() {
+		return twitterConsumerKey;
+	}
 
-    /**
-     * @return the bitlyUsername
-     */
-    public String getBitlyUsername() {
-        return bitlyUsername;
-    }
+	/**
+	 * @return the twitterConsumerSecret
+	 */
+	public String getTwitterConsumerSecret() {
+		return twitterConsumerSecret;
+	}
 
-    /**
-     * @param bitlyUsername the bitlyUsername to set
-     */
-    public void setBitlyUsername(String bitlyUsername) {
-        this.bitlyUsername = bitlyUsername;
-    }
+	/**
+	 * @return the twitterAccessToken
+	 */
+	public String getTwitterAccessToken() {
+		return twitterAccessToken;
+	}
 
-    /**
-     * @return the bitlyPassword
-     */
-    public String getBitlyPassword() {
-        return bitlyPassword;
-    }
+	/**
+	 * @return the twitterAccessTokenSecret
+	 */
+	public String getTwitterAccessTokenSecret() {
+		return twitterAccessTokenSecret;
+	}
 
-    /**
-     * @param bitlyPassword the bitlyPassword to set
-     */
-    public void setBitlyPassword(String bitlyPassword) {
-        this.bitlyPassword = bitlyPassword;
-    }
+	/**
+	 * @return the reCaptchaEnabled
+	 */
+	public boolean isReCaptchaEnabled() {
+		return reCaptchaEnabled;
+	}
+
+	/**
+	 * @return the reCaptchaPublicKey
+	 */
+	public String getReCaptchaPublicKey() {
+		return reCaptchaPublicKey;
+	}
+
+	/**
+	 * @return the reCaptchaPrivateKey
+	 */
+	public String getReCaptchaPrivateKey() {
+		return reCaptchaPrivateKey;
+	}
+
+	/**
+	 * @return the bitlyEnabled
+	 */
+	public boolean isBitlyEnabled() {
+		return bitlyEnabled;
+	}
+
+	/**
+	 * @return the bitlyUsername
+	 */
+	public String getBitlyUsername() {
+		return bitlyUsername;
+	}
+
+	/**
+	 * @return the bitlyPassword
+	 */
+	public String getBitlyPassword() {
+		return bitlyPassword;
+	}
 
 }

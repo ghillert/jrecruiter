@@ -62,4 +62,6 @@ public interface SystemSetupService {
 	boolean isDatabaseSetup();
 
 	Backup convertToBackupData(InputStream inputStream);
+
+	void setupDatabase();
 }

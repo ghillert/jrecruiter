@@ -36,5 +36,14 @@ mail.host=localhost=
 
 ### Testing SMTP for Development
 
-http://nilhcem.github.io/FakeSMTP 
+http://nilhcem.github.io/FakeSMTP
+
+## Postgres on Mac
+
+Before starting up Postgres you may have to execute:
+
+```
+sudo sysctl -w kern.sysv.shmmax=12582912
+sudo sysctl -w kern.sysv.shmall=12582912
+```
 

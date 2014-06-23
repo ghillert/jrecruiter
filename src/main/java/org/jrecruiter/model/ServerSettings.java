@@ -17,12 +17,16 @@ package org.jrecruiter.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 /**
  * This class represents configuration data.
  *
  * @author Gunnar Hillert
  * @version $Id: Configuration.java 422 2009-07-05 04:14:27Z ghillert $
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ServerSettings implements Serializable {
 
     /** serialVersionUID. */
