@@ -15,7 +15,7 @@
 */
 package org.jrecruiter.web;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 import org.jrecruiter.common.Constants.JobStatus;
