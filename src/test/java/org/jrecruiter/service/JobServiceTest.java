@@ -18,7 +18,7 @@ package org.jrecruiter.service;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;

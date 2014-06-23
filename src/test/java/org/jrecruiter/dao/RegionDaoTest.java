@@ -5,7 +5,7 @@ package org.jrecruiter.dao;
 
 import java.util.List;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.jrecruiter.test.BaseTest;
 import org.junit.Test;

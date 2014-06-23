@@ -5,7 +5,7 @@ package org.jrecruiter.dao;
 
 import java.util.Date;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.User;
