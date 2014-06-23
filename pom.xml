@@ -576,10 +576,11 @@
 		  <artifactId>httpclient</artifactId>
 		  <version>4.3.4</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.sitemesh</groupId>
 			<artifactId>sitemesh</artifactId>
-			<version>3.0.0-SNAPSHOT</version>
+			<version>3.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -759,6 +760,10 @@
 		<repository>
 			<id>version99</id>
 			<url>http://version99.qos.ch/</url>
+		</repository>
+		<repository>
+			<id>sitemesh.repo</id>
+			<url>https://oss.sonatype.org/content/repositories/orgsitemesh-1000</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
