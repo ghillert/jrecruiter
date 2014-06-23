@@ -15,11 +15,9 @@
 */
 package org.jrecruiter.web.actions;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.jrecruiter.service.JobService;
-import org.mockito.Mockito;
+import org.junit.Assert;
 
 /**
  * Test the Struts 2 Logout Action
@@ -31,13 +29,11 @@ public class LogoutActionTest extends TestCase {
 
     public void testExecute() throws Exception {
 
-        LogoutAction logoutAction = new LogoutAction();
-
-        JobService jobService = Mockito.mock(JobService.class);
+        LogoutController logoutAction = new LogoutController();
 
         String ret = logoutAction.execute();
 
-        Assert.assertEquals("success", ret);
+        Assert.assertEquals("redirect:/", ret);
     }
 }
 

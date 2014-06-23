@@ -1,15 +1,24 @@
 package org.jrecruiter.dao.hibernate;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.persistence.Persistence;
+import javax.persistence.spi.PersistenceProvider;
+import javax.persistence.spi.PersistenceProviderResolver;
+import javax.persistence.spi.PersistenceProviderResolverHolder;
+import javax.persistence.spi.PersistenceUnitInfo;
 import javax.sql.DataSource;
 
 import org.hibernate.HibernateException;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.ejb.Ejb3Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import org.jrecruiter.dao.SystemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,65 +27,86 @@ import org.springframework.stereotype.Repository;
 @Repository("systemDao")
 public class SystemDaoHibernate implements SystemDao {
 
-    private @Autowired DataSource dataSource;
-    private @Autowired LocalContainerEntityManagerFactoryBean fb;
+	private @Autowired DataSource dataSource;
+	private @Autowired LocalContainerEntityManagerFactoryBean fb;
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.DemoService#createDatabase()
-     */
-    @Override
-    public void updateDatabase() {
+	/* (non-Javadoc)
+	 * @see org.jrecruiter.service.DemoService#createDatabase()
+	 */
+	@Override
+	public void updateDatabase() {
 
-        final Ejb3Configuration cfg = new Ejb3Configuration();
-        final Ejb3Configuration configured = cfg.configure( fb.getPersistenceUnitInfo(), fb.getJpaPropertyMap() );
-        final Configuration configuration = configured.getHibernateConfiguration();
+		PersistenceUnitInfo persistenceUnitInfo = fb.getPersistenceUnitInfo();
+		Map<String, Object> props = fb.getJpaPropertyMap();
 
-        HibernateHack.dataSource = dataSource;
+		try (FileWriter out = new FileWriter("schema-komplett.sql")) {
+		   //Map<String, Object> props = new HashMap<>();
+		   props.put("javax.persistence.schema-generation.scripts.action", "update");
+		   props.put("javax.persistence.schema-generation.scripts.create-target", out);
+		   props.put("hibernate.connection.provider_class", "org.jrecruiter.service.impl.DemoServiceImpl.HibernateHack");
+		   Persistence.generateSchema(persistenceUnitInfo.getPersistenceUnitName(), props);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-        Properties props = new Properties();
-        props.put("hibernate.connection.provider_class",
-         "org.jrecruiter.service.impl.DemoServiceImpl.HibernateHack");
+	}
 
+	/* (non-Javadoc)
+	 * @see org.jrecruiter.service.DemoService#createDatabase()
+	 */
+	@Override
+	public void createDatabase() {
 
-        final org.hibernate.tool.hbm2ddl.SchemaUpdate schemaUpdate;
+		CustomPersistenceProviderResolver.persistenceProvider = fb.getPersistenceProvider();
+		PersistenceProviderResolverHolder.setPersistenceProviderResolver(new CustomPersistenceProviderResolver());
+		HibernateHack.dataSource = this.dataSource;
 
-        try {
-            schemaUpdate = new SchemaUpdate(configuration, props);
-        } catch (HibernateException e) {
-            throw new IllegalStateException(e);
-        }
+		PersistenceUnitInfo persistenceUnitInfo = fb.getPersistenceUnitInfo();
+		//Map<String, Object> props = fb.getJpaPropertyMap();
+		Map<String, Object> props = new HashMap<String, Object>();
+		props.put("hibernate.id.new_generator_mappings", true);
+		props.put("hibernate.query.substitutions", "true '1', false '0'");
+		props.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+		props.put("hibernate.ejb.naming_strategy", "org.jrecruiter.hibernate.ImprovedPluralizedNamingStrategy");
+		//fb.getPersistenceProvider()
+		for (Entry<String, Object> entry : props.entrySet()) {
+			System.out.println(">>>>" + entry.getKey());
+			System.out.println(">>>>" + entry.getValue());
+		}
 
-        schemaUpdate.execute(true, true);
+		try (FileWriter out = new FileWriter("/tmp/schema-komplett-create.sql")) {
+		   //Map<String, Object> props = new HashMap<>();
+		   props.put("javax.persistence.schema-generation.database.action", "create");
+		   props.put("javax.persistence.schema-generation.connection", this.dataSource);
+		   props.put("javax.persistence.schema-generation.scripts.create-target", out);
+		   //props.put("hibernate.connection.provider_class", "org.jrecruiter.service.impl.DemoServiceImpl.HibernateHack");
 
-    }
+		   fb.getPersistenceProvider().generateSchema(persistenceUnitInfo, props);
 
-    /* (non-Javadoc)
-     * @see org.jrecruiter.service.DemoService#createDatabase()
-     */
-    @Override
-    public void createDatabase() {
+		   //Persistence.generateSchema(persistenceUnitInfo.getPersistenceUnitName(), props);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-        final Ejb3Configuration cfg = new Ejb3Configuration();
-        final Ejb3Configuration configured = cfg.configure( fb.getPersistenceUnitInfo(), fb.getJpaPropertyMap() );
-        final Configuration configuration = configured.getHibernateConfiguration();
+	}
 
-        final SchemaExport schemaExport;
+	private static class HibernateHack {
+		public static DataSource dataSource;
+	}
 
-        try {
-            schemaExport = new SchemaExport(configuration, dataSource.getConnection());
-        } catch (HibernateException e) {
-            throw new IllegalStateException(e);
-        } catch (SQLException e) {
-            throw new IllegalStateException(e);
-        }
+	static class CustomPersistenceProviderResolver implements PersistenceProviderResolver {
 
-        schemaExport.create(true, true);
+		public static PersistenceProvider persistenceProvider;
 
-    }
+		@Override
+		public List<PersistenceProvider> getPersistenceProviders() {
+			return Arrays.<PersistenceProvider> asList(persistenceProvider);
+		}
 
-    private static class HibernateHack {
-        public static DataSource dataSource;
-    }
-
+		@Override
+		public void clearCachedProviders() {}
+	}
 
 }

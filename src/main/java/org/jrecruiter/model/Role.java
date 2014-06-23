@@ -15,7 +15,6 @@
  */
 package org.jrecruiter.model;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,8 +22,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -48,26 +45,25 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "name" } ) }
 )
-public class Role implements Serializable, GrantedAuthority {
+public class Role extends BaseModelObject implements GrantedAuthority {
 
     /**
      * serialVersionUID.
      */
     private static final long serialVersionUID = 7447568690062928081L;
 
-    // Fields
-    @XmlAttribute
-    private Long id;
-
     /** Name of the role. */
     @XmlAttribute @XmlID
+    @Column(unique=true, nullable=false, insertable=true, updatable=true, length=50)
     private String name;
 
     /** Description. */
     @XmlValue
+    @Column(unique=false, nullable=true, insertable=true, updatable=true)
     private String description;
 
     @XmlTransient
+    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="role")
     private Set<UserToRole> userToRoles = new HashSet<UserToRole>(0);
 
     // Constructors
@@ -93,17 +89,6 @@ public class Role implements Serializable, GrantedAuthority {
         this.userToRoles = userToRoles;
     }
 
-    // Property accessors
-    @Id @GeneratedValue(generator="hibseq")
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Column(unique=true, nullable=false, insertable=true, updatable=true, length=50)
     public String getName() {
         return this.name;
     }
@@ -112,7 +97,6 @@ public class Role implements Serializable, GrantedAuthority {
         this.name = name;
     }
 
-    @Column(unique=false, nullable=true, insertable=true, updatable=true)
     public String getDescription() {
         return this.description;
     }
@@ -121,7 +105,6 @@ public class Role implements Serializable, GrantedAuthority {
         this.description = description;
     }
 
-    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="role")
     public Set<UserToRole> getUserToRoles() {
         return this.userToRoles;
     }

@@ -16,13 +16,11 @@
 package org.jrecruiter.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,9 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * @version $Id$
  */
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "users_id", "roles_id" } ) }
-)
-public class UserToRole  implements java.io.Serializable {
+@Table()
+//uniqueConstraints = { @UniqueConstraint( columnNames = { "users_id", "roles_id" } ) }
+@XmlAccessorType(XmlAccessType.FIELD)
+public class UserToRole extends BaseModelObject {
 
     /**
      * serialVersionUID.
@@ -46,15 +45,14 @@ public class UserToRole  implements java.io.Serializable {
 
      //~~~~~Variable Declarations~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-     @Id @GeneratedValue(generator="hibseq")
-     private Long id;
-
-     @ManyToOne
-     @JoinColumn(name="roles_id", unique=false, nullable=false, insertable=true, updatable=true)
+    @XmlTransient
+    @ManyToOne
+    @JoinColumn(name="roles_id", unique=false, nullable=false, insertable=true, updatable=true)
      private Role role;
 
-     @ManyToOne
-     @JoinColumn(name="users_id", unique=false, nullable=false, insertable=true, updatable=true)
+    @XmlTransient
+    @ManyToOne
+    @JoinColumn(name="users_id", unique=false, nullable=false, insertable=true, updatable=true)
      private User user;
 
      // Constructors
@@ -72,16 +70,6 @@ public class UserToRole  implements java.io.Serializable {
 
     //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    @XmlAttribute
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @XmlTransient
     public Role getRole() {
         return this.role;
     }
@@ -90,7 +78,6 @@ public class UserToRole  implements java.io.Serializable {
         this.role = role;
     }
 
-    @XmlTransient
     public User getUser() {
         return this.user;
     }

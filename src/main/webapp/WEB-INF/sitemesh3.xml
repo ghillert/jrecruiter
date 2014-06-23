@@ -1,0 +1,17 @@
+<sitemesh>
+	<mapping decorator="/WEB-INF/jsp/decorators/default.jsp"/>
+	<mapping path="/brochures/*" exclue="true"/>
+
+	<mapping path="/s/show-jobs-ajax*" exclue="true"/>
+	<mapping path="/admin/logging-ajax-log-file-table*" exclue="true"/>
+	<mapping path="/admin/show-jobs-ajax*" exclue="true"/>
+	<mapping path="/admin/show-users-ajax*" exclue="true"/>
+	<mapping path="/admin/logging-ajax-logger-table*" exclue="true"/>
+	<mapping path="/contact.html*" exclue="true"/>
+	<mapping path="/s/admin/systemInformation" exclue="true"/>
+	<mapping path="/s/admin/restore*" exclue="true"/>
+
+	<content-processor>
+		<tag-rule-bundle class="org.sitemesh.content.tagrules.html.Sm2TagRuleBundle"/>
+	</content-processor>
+</sitemesh>

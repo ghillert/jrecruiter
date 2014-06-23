@@ -1,33 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns=     "http://www.springframework.org/schema/beans"
-    xmlns:xsi=    "http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:aop=    "http://www.springframework.org/schema/aop"
-    xmlns:tx=     "http://www.springframework.org/schema/tx"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:task=   "http://www.springframework.org/schema/task"
-    xmlns:oxm=    "http://www.springframework.org/schema/oxm"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                        http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-                        http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-                        http://www.springframework.org/schema/task    http://www.springframework.org/schema/task/spring-task-3.0.xsd
-                        http://www.springframework.org/schema/oxm     http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+												http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop.xsd
+												http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx.xsd
+												http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+												http://www.springframework.org/schema/task    http://www.springframework.org/schema/task/spring-task.xsd
+												http://www.springframework.org/schema/oxm     http://www.springframework.org/schema/oxm/spring-oxm.xsd">
 
-    <tx:annotation-driven/>
-    <context:annotation-config />
-    <aop:aspectj-autoproxy />
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<context:annotation-config />
 
-    <context:component-scan base-package="org.jrecruiter.dao.jpa" />
-    <context:component-scan base-package="org.jrecruiter.dao.jaxb" />
-    <context:component-scan base-package="org.jrecruiter.dao.hibernate" />
+	<aop:aspectj-autoproxy />
+	<context:property-placeholder />
+
+	<context:component-scan base-package="org.jrecruiter.dao.jpa" />
+	<context:component-scan base-package="org.jrecruiter.dao.jaxb" />
+	<context:component-scan base-package="org.jrecruiter.dao.hibernate" />
 	<context:component-scan base-package="org.jrecruiter.service.system.impl" />
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <oxm:jaxb2-marshaller id="marshaller">
-       <oxm:class-to-be-bound name="org.jrecruiter.model.export.Backup"/>
-    </oxm:jaxb2-marshaller>
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 
+	<oxm:jaxb2-marshaller id="marshaller">
+		<oxm:class-to-be-bound name="org.jrecruiter.model.export.Backup" />
+	</oxm:jaxb2-marshaller>
+
+	<beans profile="standalone, default, demo">
+		<bean id="persistenceProvider" class="org.hibernate.jpa.HibernatePersistenceProvider"/>
+
+		<bean id="hibernateJpaVendorAdapter"
+			class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+			<property name="showSql"     value="false" />
+			<property name="generateDdl" value="false" />
+		</bean>
+
+		<bean id="abstractEntityManagerFactory" abstract="true"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="dataSource"          ref="dataSource"/>
+			<property name="jpaVendorAdapter"    ref="hibernateJpaVendorAdapter"/>
+			<property name="persistenceProvider" ref="persistenceProvider"/>
+			<property name="packagesToScan">
+				<list>
+					<value>org/jrecruiter/model</value>
+				</list>
+			</property>
+			<property name="persistenceUnitName" value="base" />
+		</bean>
+	</beans>
+	<beans profile="demo">
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+			<property name="driverClassName"        value="org.h2.Driver"/>
+			<property name="url"                    value="jdbc:h2:mem:jrecruiter_test?MVCC=TRUE"/>
+			<property name="username"               value="sa"/>
+			<property name="password"               value=""/>
+			<property name="maxActive"              value="100"/>
+			<property name="maxIdle"                value="30" />
+			<property name="maxWait"                value="1000"/>
+			<property name="poolPreparedStatements" value="true"/>
+			<property name="defaultAutoCommit"      value="true"/>
+		</bean>
+		<bean id="entityManagerFactory" parent="abstractEntityManagerFactory"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="jpaProperties">
+				<props>
+					<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+					<prop key="hibernate.query.substitutions">true '1', false '0'</prop>
+					<prop key="hibernate.cache.use_second_level_cache">true</prop>
+					<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+					<prop key="hibernate.show_sql">false</prop>
+					<prop key="hibernate.format_sql">true</prop>
+					<prop key="hibernate.id.new_generator_mappings">true</prop>
+					<prop key="hibernate.ejb.naming_strategy">org.jrecruiter.hibernate.ImprovedPluralizedNamingStrategy</prop>
+					<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.RAMDirectoryProvider</prop>
+				</props>
+			</property>
+		</bean>
+		<bean id="contextStartedEventListener" class="org.jrecruiter.spring.ContextStartedEventListener"/>
+		<bean id="seedDataEventListener"       class="org.jrecruiter.spring.ContextRefreshedEventListener"/>
+		<bean id="notificationService" class="org.jrecruiter.service.notification.impl.DemoNotificationServiceImpl"/>
+	</beans>
+
+	<beans profile="standalone">
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+			<property name="driverClassName"        value="${database.jdbc.driverClassName}"/>
+			<property name="url"                    value="${database.jdbc.url}"/>
+			<property name="username"               value="${database.jdbc.username}"/>
+			<property name="password"               value="${database.jdbc.password}"/>
+			<property name="maxActive"              value="100"/>
+			<property name="maxIdle"                value="30" />
+			<property name="maxWait"                value="1000"/>
+			<property name="poolPreparedStatements" value="true"/>
+			<property name="defaultAutoCommit"      value="true"/>
+		</bean>
+		<bean id="entityManagerFactory" parent="abstractEntityManagerFactory"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="jpaProperties">
+				<props>
+						<prop key="hibernate.dialect">${database.hibernate.dialect}</prop>
+						<prop key="hibernate.query.substitutions">true '1', false '0'</prop>
+						<prop key="hibernate.cache.use_second_level_cache">true</prop>
+						<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+						<prop key="hibernate.show_sql">${database.hibernate.show_sql}</prop>
+						<prop key="hibernate.format_sql">true</prop>
+						<prop key="hibernate.id.new_generator_mappings">true</prop>
+						<prop key="hibernate.ejb.naming_strategy">org.jrecruiter.hibernate.ImprovedPluralizedNamingStrategy</prop>
+						<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.FSDirectoryProvider</prop>
+						<prop key="hibernate.search.default.indexBase">${JRECRUITER_HOME}/hibernate</prop>
+				</props>
+			</property>
+		</bean>
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="host" value="${mail.smtp.host}" />
+			<property name="port" value="25" />
+			<!-- Uncomment if you need to authenticate with your SMTP Server -->
+			<!--property name="username" value="${mail.username}"/> <property name="password"
+				value="${mail.password}"/> <property name="javaMailProperties"> <value> mail.smtp.auth=true
+				</value> </property -->
+		</bean>
+
+		<bean id="notificationService"
+			class="org.jrecruiter.service.notification.impl.DefaultNotificationServiceImpl" />
+	</beans>
 </beans>
+

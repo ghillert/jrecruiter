@@ -21,12 +21,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlValue;
 
 import org.jrecruiter.common.CollectionUtils;
@@ -39,18 +38,20 @@ import org.jrecruiter.common.CollectionUtils;
 */
 @Entity
 @Table(uniqueConstraints = {  })
-public class JobType  implements java.io.Serializable {
+@XmlAccessorType(XmlAccessType.FIELD)
+public class JobType extends BaseModelObject {
 
     /** serialVersionUID. */
     private static final long serialVersionUID = -6878911371987087795L;
 
     // Fields
 
-    /** Primary id of the industry */
-    @XmlAttribute
-    private Long id;
     @XmlValue
+    @Column(unique=false, nullable=false, insertable=true, updatable=true)
     private String name;
+
+    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="job")
+    @Transient
     private Set<Job> jobs = CollectionUtils.getHashSet();
 
     // Constructors
@@ -70,17 +71,6 @@ public class JobType  implements java.io.Serializable {
        this.jobs = jobs;
     }
 
-    // Property accessors
-    @Id @GeneratedValue(generator="hibseq")
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Column(unique=false, nullable=false, insertable=true, updatable=true)
     public String getName() {
         return this.name;
     }
@@ -89,8 +79,6 @@ public class JobType  implements java.io.Serializable {
         this.name = name;
     }
 
-    @OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="job")
-    @Transient
     public Set<Job> getJobs() {
         return this.jobs;
     }

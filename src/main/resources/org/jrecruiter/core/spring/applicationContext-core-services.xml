@@ -1,99 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns=     "http://www.springframework.org/schema/beans"
-    xmlns:xsi=    "http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:aop=    "http://www.springframework.org/schema/aop"
-    xmlns:tx=     "http://www.springframework.org/schema/tx"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:task=   "http://www.springframework.org/schema/task"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                        http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-                        http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-                        http://www.springframework.org/schema/task    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+												http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop.xsd
+												http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx.xsd
+												http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+												http://www.springframework.org/schema/task    http://www.springframework.org/schema/task/spring-task.xsd">
 
 
-    <context:component-scan base-package="org.jrecruiter.scheduler" />
-    <context:component-scan base-package="org.jrecruiter.service.impl" />
+	<context:component-scan base-package="org.jrecruiter.scheduler" />
+	<context:component-scan base-package="org.jrecruiter.service.impl" />
 
-    <bean id="applicationConfiguration" class="org.jrecruiter.spring.ApplicationConfiguration"/>
+	<bean id="applicationConfiguration" class="org.jrecruiter.spring.ApplicationConfiguration" />
 
-    <bean id="server.messageSource"
-        class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
-        <property name="basenames" >
-            <list>
-                <value>classpath:org/jrecruiter/core/messages</value>
-            </list>
-        </property>
-        <property name="defaultEncoding" value="utf-8"/>
-        <property name="cacheSeconds" value="0"/>
-    </bean>
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:org/jrecruiter/core/messages</value>
+				<value>classpath:messages</value>
+				<value>classpath:struts-messages</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="cacheSeconds" value="0" />
+	</bean>
 
-    <bean                  class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-    <bean id="validator"   class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource"/>
+	</bean>
 
-     <bean id="apiKeysHolder" class="org.jrecruiter.common.ApiKeysHolder">
-       <property name="reCaptchaKey"     value="${key.recaptcha.public}"/>
-       <property name="twitterUsername"  value="${twitter.username}"/>
-       <property name="twitterPassword"  value="${twitter.password}"/>
-       <property name="bitlyUsername"    value="${bitly.username}"/>
-       <property name="bitlyPassword"    value="${bitly.password}"/>
-     </bean>
+	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" />
 
-     <bean id="serverSettings" class="org.jrecruiter.model.ServerSettings">
-       <property name="serverAddress"    value="${server.address}"/>
-     </bean>
+	<bean id="apiKeysHolder" class="org.jrecruiter.common.ApiKeysHolder"/>
 
-     <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
-       <property name="templateLoaderPath"><value>classpath:freemarker/</value></property>
-     </bean>
+	<bean id="serverSettings" class="org.jrecruiter.model.ServerSettings">
+		<property name="serverAddress" value="${server.address}" />
+	</bean>
 
-    <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
-        <property name="privateKey" value="${key.recaptcha.private}" />
-        <property name="publicKey" value="${key.recaptcha.public}" />
-        <property name="recaptchaServer" value="http://api.recaptcha.net" />
-        <!--
-            Or, if you want to use SSL, then use this: <property
-            name="recaptchaServer" value="http://secure-api.recaptcha.net" />
-        -->
-        <property name="includeNoscript" value="false" />
-    </bean>
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath">
+			<value>classpath:freemarker/</value>
+		</property>
+	</bean>
 
-    <bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
-        <!-- wait 10 seconds before starting repeated execution -->
-        <property name="delay" value="10000" />
-        <property name="period" value="80000000" />
-        <property name="timerTask" ref="updateJobCountPerDays" />
-    </bean>
+	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+		<property name="privateKey" value="${recaptcha.privateKey}" />
+		<property name="publicKey" value="${recaptcha.publicKey}" />
+		<property name="recaptchaServer" value="http://api.recaptcha.net" />
+		<!-- Or, if you want to use SSL, then use this: <property name="recaptchaServer"
+			value="http://secure-api.recaptcha.net" /> -->
+		<property name="includeNoscript" value="false" />
+	</bean>
 
-    <bean id="updateJobCountPerDays" class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
-        <property name="targetObject" ref="jobService" />
-        <property name="targetMethod" value="updateJobCountPerDays" />
-    </bean>
+	<task:scheduler id="jobServiceScheduler" pool-size="2"/>
 
-    <bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
-        <property name="scheduledTimerTasks">
-            <list>
-                <ref bean="scheduledTask"/>
-            </list>
-        </property>
-    </bean>
+	<task:scheduled-tasks scheduler="jobServiceScheduler">
+		<task:scheduled ref="jobService" method="updateJobCountPerDays" fixed-delay="80000000" initial-delay="10000"/>
+	</task:scheduled-tasks>
 
-  <bean id="stringDigester" class="org.jasypt.digest.StandardStringDigester" >
-    <property name="algorithm"     value="SHA-512" />
-    <property name="iterations"    value="100000" />
-    <property name="saltSizeBytes" value="16" />
-  </bean>
+	<bean id="stringDigester" class="org.jasypt.digest.StandardStringDigester">
+		<property name="algorithm" value="SHA-512" />
+		<property name="iterations" value="100000" />
+		<property name="saltSizeBytes" value="16" />
+	</bean>
 
-  <bean id="passwordEncoder" class="org.jasypt.spring.security3.PasswordEncoder">
-    <property name="stringDigester">
-      <ref bean="stringDigester" />
-    </property>
-  </bean>
+	<bean id="passwordEncoder" class="org.jasypt.springsecurity3.authentication.encoding.PasswordEncoder">
+		<property name="stringDigester">
+			<ref bean="stringDigester" />
+		</property>
+	</bean>
 
-  <task:scheduler id="scheduler" pool-size="10"/>
-  <task:executor  id="executor"  pool-size="10"/>
-  <task:annotation-driven scheduler="scheduler" executor = "executor" />
+	<task:scheduler id="scheduler" pool-size="10" />
+	<task:executor id="executor" pool-size="10" />
+	<task:annotation-driven scheduler="scheduler" executor="executor" />
 
 </beans>

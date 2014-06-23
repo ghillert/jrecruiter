@@ -11,26 +11,22 @@
 </p>
 
     <div class="adminMain">
-          <s:url action="index" id="adminIndexUrl" includeContext="false" includeParams="none"/>
+          <c:url value="/admin/index" var="adminIndexUrl"/>
 
-          <s:url action="edit-user"             id="editUserUrl"/>
-          <s:url action="show-jobs"             id="showJobsNotAdminUrl" namespace="/"
-                 encode="true" escapeAmp="true" includeParams="none">
-            <s:param name="backTo" value="%{#adminIndexUrl}"/>
-          </s:url>
-          <s:url action="show-jobs"             id="showJobsForAdminUrl"/>
-          <s:url action="add-job"               id="addJobUrl"/>
-          <s:url action="show-statistics"       id="showStatisticsUrl"/>
-          <s:url action="show-users"            id="userListUrl"/>
-          <s:url action="add-user"              id="addUserUrl"/>
-          <s:url action="edit-settings"         id="editSettingsUrl"/>
-          <s:url action="edit-job"              id="editJobUrl">
-            <s:param name="show-jobs" value="true"/>
-          </s:url>
-          <s:url action="logout"                id="logoutUrl" namespace="/"/>
-          <s:url action="search-index"          id="searchIndexUrl"/>
-          <s:url action="setup-demo"            id="setupDemoUrl"/>
-          <s:url action="logging"               id="loggingUrl"/>
+          <c:url value="/admin/edit-user.html"             var="editUserUrl"/>
+          <c:url value="/s/show-jobs?backTo=${adminIndexUrl}" var="showJobsNotAdminUrl"/>
+          <c:url value="/admin/show-jobs.html"             var="showJobsForAdminUrl"/>
+          <c:url value="/admin/add-job.html"               var="addJobUrl"/>
+          <c:url value="/admin/show-statistics.html"       var="showStatisticsUrl"/>
+          <c:url value="/admin/show-users.html"            var="userListUrl"/>
+          <c:url value="/admin/add-user.html"              var="addUserUrl"/>
+          <c:url value="/admin/edit-settings.html"         var="editSettingsUrl"/>
+          <c:url value="/admin/edit-job.html?show-jobs=true" var="editJobUrl"/>
+
+          <c:url value="/admin/logout.html"                var="logoutUrl"/>
+          <c:url value="/admin/search-index.html"          var="searchIndexUrl"/>
+          <c:url value="/admin/setup-demo.html"            var="setupDemoUrl"/>
+          <c:url value="/admin/logging.html"               var="loggingUrl"/>
       <fieldset class="manageJobPostings">
           <legend><spring:message code="jsp.admin.index.legend.manage.jobs"/></legend>
                 <ul>

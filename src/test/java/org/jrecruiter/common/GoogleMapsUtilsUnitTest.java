@@ -25,13 +25,13 @@ public class GoogleMapsUtilsUnitTest extends TestCase {
 
         URI uri = GoogleMapsUtils.buildGoogleMapsStaticUrl(BigDecimal.TEN, BigDecimal.TEN, 10);
 
-        LOGGER.info("http://maps.google.com/staticmap?center=10%2C10&zoom=10&size=400x300&markers=10%2C10%2Cmidorange&sensor=false");
+        LOGGER.info("http://maps.googleapis.com/maps/api/staticmap?center=10%2C10&zoom=10&size=400x300&markers=10%2C10%2Cmidorange&sensor=false");
 
         String uriAsString = uri.toString();
 
         LOGGER.info(uriAsString);
 
-        assertEquals("http://maps.google.com/staticmap?center=10%2C10&zoom=10&size=400x300&markers=10%2C10%2Cmidorange&sensor=false", uriAsString);
+        assertEquals("http://maps.googleapis.com/maps/api/staticmap?center=10%2C10&zoom=10&size=400x300&markers=10%2C10%2Cmidorange&sensor=false", uriAsString);
 
     }
 

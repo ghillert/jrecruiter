@@ -10,12 +10,18 @@
     <level value="INFO"/>
   </logger>
     <logger name="org.springframework.web">
-    <level value="INFO"/>
+    <level value="WARN"/>
+  </logger>
+    <logger name="org.springframework">
+    <level value="WARN"/>
   </logger>
   <logger name="org.apache.struts">
     <level value="INFO"/>
   </logger>
   <logger name="org.apache.commons.validator">
+    <level value="WARN"/>
+  </logger>
+  <logger name="org.hibernate">
     <level value="WARN"/>
   </logger>
   <logger name="org.hibernate.cache">

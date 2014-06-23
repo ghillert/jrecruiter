@@ -54,11 +54,11 @@
         </fieldset>
         <div style="margin: 0 auto 0 auto; width: 320px;">
             <script type="text/javascript"
-                src="https://www.google.com/recaptcha/api/challenge?k=${apiKeysHolder.reCaptchaKey}">
+                src="https://www.google.com/recaptcha/api/challenge?k=${apiKeysHolder.reCaptchaPublicKey}">
             </script>
 
             <noscript>
-                <iframe src="https://www.google.com/recaptcha/api/noscript?k=${apiKeysHolder.reCaptchaKey}"
+                <iframe src="https://www.google.com/recaptcha/api/noscript?k=${apiKeysHolder.reCaptchaPublicKey}"
                     height="300" width="500" frameborder="0"></iframe><br>
                 <textarea name="recaptcha_challenge_field" rows="3" cols="40">
                 </textarea>

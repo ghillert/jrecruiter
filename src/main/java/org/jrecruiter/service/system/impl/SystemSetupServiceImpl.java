@@ -35,6 +35,7 @@ import org.jrecruiter.dao.SystemDao;
 import org.jrecruiter.dao.UserDao;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Region;
 import org.jrecruiter.model.Role;
 import org.jrecruiter.model.SchemaMigration;
 import org.jrecruiter.model.User;
@@ -44,18 +45,17 @@ import org.jrecruiter.service.SystemSetupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
-import org.jrecruiter.model.Region;
 
 /**
  * @author Gunnar Hillert
- * @version $Id$
  */
 @Service("systemSetupService")
-@Transactional
 public class SystemSetupServiceImpl implements SystemSetupService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemSetupServiceImpl.class);
@@ -71,6 +71,7 @@ public class SystemSetupServiceImpl implements SystemSetupService {
 
     /** {@inheritDoc} */
     @Override
+    @Transactional
     public void createDemoJobs(final User user, final Integer numberOfJobsToCreate) {
         final LoremIpsum loremIpsum = new LoremIpsum();
 
@@ -134,6 +135,7 @@ public class SystemSetupServiceImpl implements SystemSetupService {
      * @see org.jrecruiter.service.DemoService#restore(java.io.InputStream)
      */
     @Override
+    @Transactional
     public void restore(final InputStream inputStream) {
 
         final Backup backup = backupDao.convertToBackupData(inputStream);
@@ -144,6 +146,7 @@ public class SystemSetupServiceImpl implements SystemSetupService {
 
     /** {@inheritDoc} */
     @Override
+    @Transactional
     public void loadAndRestoreSeedData() {
         final InputStream is = SystemSetupServiceImpl.class.getResourceAsStream("/org/jrecruiter/core/seeddata/seeddata.xml");
     	//FIXME verify file existence
@@ -152,6 +155,7 @@ public class SystemSetupServiceImpl implements SystemSetupService {
 
     /** {@inheritDoc} */
     @Override
+    @Transactional
     public void restore(final Backup backup) {
 
         for (final Region region : backup.getRegions()) {
@@ -240,25 +244,34 @@ public class SystemSetupServiceImpl implements SystemSetupService {
     }
 
 	@Override
+	@Transactional
 	public void createDatabase() {
 		systemDao.createDatabase();
 	}
 
 	@Override
+	@Transactional
 	public void updateDatabase() {
 		systemDao.updateDatabase();
 	}
 
 	@Override
 	public boolean isDatabaseSetup() {
-		final List<SchemaMigration> migrations = schemaMigrationDao.getAll();
+		try {
+			final List<SchemaMigration> migrations = schemaMigrationDao.getAll();
 
-		if (migrations.isEmpty()) {
+//			if (migrations.isEmpty()) {
+//				return false;
+//			} else {
+				return true;
+//			}
+		} catch (InvalidDataAccessResourceUsageException e) {
+			LOGGER.warn("Looks like the database has not been set up, yet.", e.getMessage());
 			return false;
-		} else {
-			return true;
+		} catch (JpaSystemException e) {
+			LOGGER.warn("Looks like the database has not been set up, yet.", e.getCause());
+			return false;
 		}
-
 	}
 
 	@Override
@@ -266,6 +279,15 @@ public class SystemSetupServiceImpl implements SystemSetupService {
 		return backupDao.convertToBackupData(inputStream);
 	}
 
+	@Override
+	@Transactional
+	public void setupDatabase() {
+		LOGGER.info("jRecruiter Database is not setup, yet. Initializing DB...");
 
+		this.createDatabase();
 
+		LOGGER.info("jRecruiter Database is not setup, yet. Populating Seed Data...");
+
+		this.loadAndRestoreSeedData();
+	}
 }
