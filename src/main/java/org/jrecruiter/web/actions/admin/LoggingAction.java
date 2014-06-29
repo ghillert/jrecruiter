@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions.admin;
 
 import java.io.File;
@@ -41,202 +41,201 @@ import com.opensymphony.xwork2.Preparable;
  * to be changed dynamically at runtime.
  *
  * @author Gunnar Hillert
- * @version $Id$
  *
  */
 @Results({
-    @Result(name="ajaxLoggingLogFileTable", location="/WEB-INF/jsp/admin/loggingLogFileTable.jsp"),
-    @Result(name="ajaxLoggerTable",         location="/WEB-INF/jsp/admin/loggingLoggerTable.jsp"),
-    @Result(name="success",                 location="/WEB-INF/jsp/admin/logging.jsp"),
-    @Result(name="successRedirect",         location="logging", type="redirectAction"),
-    @Result(name="download",                location="fileToDownLoad", type="stream",
-              params={"contentType","text/plain",
-                      "inputName","fileToDownLoad",
-                      "contentDisposition","attachment; filename=logfile.txt",
-                      "bufferSize", "1024"})
-    })
+	@Result(name="ajaxLoggingLogFileTable", location="/WEB-INF/jsp/admin/loggingLogFileTable.jsp"),
+	@Result(name="ajaxLoggerTable",         location="/WEB-INF/jsp/admin/loggingLoggerTable.jsp"),
+	@Result(name="success",                 location="/WEB-INF/jsp/admin/logging.jsp"),
+	@Result(name="successRedirect",         location="logging", type="redirectAction"),
+	@Result(name="download",                location="fileToDownLoad", type="stream",
+			  params={"contentType","text/plain",
+					  "inputName","fileToDownLoad",
+					  "contentDisposition","attachment; filename=logfile.txt",
+					  "bufferSize", "1024"})
+	})
 public class LoggingAction extends BaseAction implements Preparable, ModelDriven<LoggingForm> {
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = -8382245048461549536L;
+	/** serialVersionUID. */
+	private static final long serialVersionUID = -8382245048461549536L;
 
-    /** Show all loggers or only the configured loggers */
-    private boolean showAll = false;
+	/** Show all loggers or only the configured loggers */
+	private boolean showAll = false;
 
-    /** List of log files and associated information */
-    private List<LogFileInfo> logFileInfos = CollectionUtils.getArrayList();
+	/** List of log files and associated information */
+	private List<LogFileInfo> logFileInfos = CollectionUtils.getArrayList();
 
-    /** List of Loggers, simplified for display purposes */
-    private List<LoggerInfo> configuredLoggers = CollectionUtils.getArrayList();
+	/** List of Loggers, simplified for display purposes */
+	private List<LoggerInfo> configuredLoggers = CollectionUtils.getArrayList();
 
-    /** Used to stream a logfile back to the client */
-    private transient InputStream fileToDownLoad;
+	/** Used to stream a logfile back to the client */
+	private transient InputStream fileToDownLoad;
 
-    private LoggingForm model = new LoggingForm();
+	private LoggingForm model = new LoggingForm();
 
-    //~~~~~Reference Data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Reference Data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    /** Defines a collection of log levels. Unfortunately logback does not use
-     *  enums to define its log levels. */
-    private Set<LogLevels> logLevels = EnumSet.allOf(LogLevels.class);
+	/** Defines a collection of log levels. Unfortunately logback does not use
+	 *  enums to define its log levels. */
+	private Set<LogLevels> logLevels = EnumSet.allOf(LogLevels.class);
 
-    //~~~~~Prepare data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Prepare data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    @Override
-    public void prepare() {
-    }
+	@Override
+	public void prepare() {
+	}
 
-    public void prepareExecute() {
-        loadLoggers();
-        loadLogFiles();
-    }
+	public void prepareExecute() {
+		loadLoggers();
+		loadLogFiles();
+	}
 
-    public void prepareUpdateLagLevels() {
-        loadLoggers();
-        loadLogFiles();
-    }
+	public void prepareUpdateLagLevels() {
+		loadLoggers();
+		loadLogFiles();
+	}
 
-    public void prepareAddNewLogger() {
-        loadLoggers();
-        loadLogFiles();
-    }
+	public void prepareAddNewLogger() {
+		loadLoggers();
+		loadLogFiles();
+	}
 
-    //~~~~~Helper Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Helper Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private void loadLoggers() {
-        this.configuredLoggers.clear();
+	private void loadLoggers() {
+		this.configuredLoggers.clear();
 
-        final List<Logger> loggers = LoggingUtil.getLoggers(this.showAll);
+		final List<Logger> loggers = LoggingUtil.getLoggers(this.showAll);
 
-        for (Logger logger : loggers) {
+		for (Logger logger : loggers) {
 
-            this.configuredLoggers.add(new LoggerInfo(logger.getName(), logger.getEffectiveLevel().levelInt));
-        }
-    }
+			this.configuredLoggers.add(new LoggerInfo(logger.getName(), logger.getEffectiveLevel().levelInt));
+		}
+	}
 
-    private void loadLogFiles() {
-        this.logFileInfos = LoggingUtil.getLogFileInfos();
-    }
+	private void loadLogFiles() {
+		this.logFileInfos = LoggingUtil.getLogFileInfos();
+	}
 
-    //~~~~~Ajax Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Ajax Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    /** Reload the data for table that displays log file data. */
-    @Action(value="logging-ajax-log-file-table")
-    public String executeAjaxLoggingLogFileTable() {
-        loadLogFiles();
-        return "ajaxLoggingLogFileTable";
-    }
+	/** Reload the data for table that displays log file data. */
+	@Action(value="logging-ajax-log-file-table")
+	public String executeAjaxLoggingLogFileTable() {
+		loadLogFiles();
+		return "ajaxLoggingLogFileTable";
+	}
 
-    /** Reload the data for table that displays loggers. */
-    @Action(value="logging-ajax-logger-table")
-    public String executeAjaxLoggerTable() {
-        loadLoggers();
-        return "ajaxLoggerTable";
-    }
+	/** Reload the data for table that displays loggers. */
+	@Action(value="logging-ajax-logger-table")
+	public String executeAjaxLoggerTable() {
+		loadLoggers();
+		return "ajaxLoggerTable";
+	}
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    /** Loads the page with default parameters. */
-    @Override
-    @Action("logging")
-    public String execute() {
-        return SUCCESS;
-    }
+	/** Loads the page with default parameters. */
+	@Override
+	@Action("logging")
+	public String execute() {
+		return SUCCESS;
+	}
 
-    /** Updates loglevels for loggers */
-    public String updateLagLevels() {
+	/** Updates loglevels for loggers */
+	public String updateLagLevels() {
 
-        if (this.model.getUpdatedLoggers() != null && !this.model.getUpdatedLoggers().isEmpty()) {
+		if (this.model.getUpdatedLoggers() != null && !this.model.getUpdatedLoggers().isEmpty()) {
 
-            for (LoggerInfo loggerInfo : this.model.getUpdatedLoggers()) {
+			for (LoggerInfo loggerInfo : this.model.getUpdatedLoggers()) {
 
-                if (loggerInfo != null && loggerInfo.getNewLogLevel() != null) {
+				if (loggerInfo != null && loggerInfo.getNewLogLevel() != null) {
 
-                    LoggingUtil.getLogger(loggerInfo.getLoggerName())
-                               .setLevel(Level.toLevel(loggerInfo.getNewLogLevel().getLogLevel()));
+					LoggingUtil.getLogger(loggerInfo.getLoggerName())
+							   .setLevel(Level.toLevel(loggerInfo.getNewLogLevel().getLogLevel()));
 
-                }
-            }
+				}
+			}
 
-            //Need to refresh the loggers
-            loadLoggers();
-        }
+			//Need to refresh the loggers
+			loadLoggers();
+		}
 
 
-        return "successRedirect";
+		return "successRedirect";
 
-    }
+	}
 
-    /** Adds a new logger at runtime.  */
-    public String addNewLogger() {
+	/** Adds a new logger at runtime.  */
+	public String addNewLogger() {
 
-        if (this.model.getNewLogger() != null
-                && this.model.getNewLogger().getLoggerName() != null
-                && this.model.getNewLogger().getNewLogLevel() != null) {
-            final Logger newLogger = LoggingUtil.getLogger(this.model.getNewLogger().getLoggerName());
-            newLogger.setLevel(Level.toLevel(this.model.getNewLogger().getNewLogLevel().getLogLevel()));
+		if (this.model.getNewLogger() != null
+				&& this.model.getNewLogger().getLoggerName() != null
+				&& this.model.getNewLogger().getNewLogLevel() != null) {
+			final Logger newLogger = LoggingUtil.getLogger(this.model.getNewLogger().getLoggerName());
+			newLogger.setLevel(Level.toLevel(this.model.getNewLogger().getNewLogLevel().getLogLevel()));
 
-            //Need to refresh the loggers
-            loadLoggers();
-        }
+			//Need to refresh the loggers
+			loadLoggers();
+		}
 
-        return "successRedirect";
-    }
+		return "successRedirect";
+	}
 
-    /**
-     * Retrieve the requested log file.
-     *
-     * @return
-     * @throws Exception
-     */
-    @Action("downloadLogFile")
-    public String download() throws Exception {
+	/**
+	 * Retrieve the requested log file.
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	@Action("downloadLogFile")
+	public String download() throws Exception {
 
-        if (this.model.getFileName() == null) {
-            throw new IllegalArgumentException("FileName must not be null.");
-        }
+		if (this.model.getFileName() == null) {
+			throw new IllegalArgumentException("FileName must not be null.");
+		}
 
-        final File logFile = LoggingUtil.getLogFile(this.model.getFileName());
+		final File logFile = LoggingUtil.getLogFile(this.model.getFileName());
 
-        if (logFile != null) {
-            this.fileToDownLoad = new FileInputStream(logFile);
-        }
+		if (logFile != null) {
+			this.fileToDownLoad = new FileInputStream(logFile);
+		}
 
-        return "download";
-    }
+		return "download";
+	}
 
-    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public List<LogFileInfo> getLogFileInfos() {
-        return logFileInfos;
-    }
+	public List<LogFileInfo> getLogFileInfos() {
+		return logFileInfos;
+	}
 
-    public InputStream getFileToDownLoad() {
-        return fileToDownLoad;
-    }
+	public InputStream getFileToDownLoad() {
+		return fileToDownLoad;
+	}
 
-    public List<LoggerInfo> getConfiguredLoggers() {
-        return configuredLoggers;
-    }
+	public List<LoggerInfo> getConfiguredLoggers() {
+		return configuredLoggers;
+	}
 
-    public boolean isShowAll() {
-        return showAll;
-    }
+	public boolean isShowAll() {
+		return showAll;
+	}
 
-    public void setShowAll(boolean showAll) {
-        this.showAll = showAll;
-    }
+	public void setShowAll(boolean showAll) {
+		this.showAll = showAll;
+	}
 
-    public Set<LogLevels> getLogLevels() {
-        return logLevels;
-    }
+	public Set<LogLevels> getLogLevels() {
+		return logLevels;
+	}
 
-    public LoggingForm getModel() {
-        return model;
-    }
+	public LoggingForm getModel() {
+		return model;
+	}
 
-    public void setModel(LoggingForm model) {
-        this.model = model;
-    }
+	public void setModel(LoggingForm model) {
+		this.model = model;
+	}
 
 }

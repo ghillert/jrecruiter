@@ -1,5 +1,17 @@
-/**
+/*
+ * Copyright 2006-2014 the original author or authors.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.jrecruiter.web.actions;
 
@@ -20,71 +32,70 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
 
 /**
  * @author Gunnar Hillert
- * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public class JobsRssAction extends BaseAction {
 
-    /** serialVersionUID */
-    private static final long serialVersionUID = -4901833648423551648L;
+	/** serialVersionUID */
+	private static final long serialVersionUID = -4901833648423551648L;
 
-    private SyndFeed rssFeed = new SyndFeedImpl();
+	private SyndFeed rssFeed = new SyndFeedImpl();
 
-    private ServerSettings serverSettings;
+	private ServerSettings serverSettings;
 
-    /**
-     * @return the rssFeed
-     */
-    public SyndFeed getRssFeed() {
-        return rssFeed;
-    }
+	/**
+	 * @return the rssFeed
+	 */
+	public SyndFeed getRssFeed() {
+		return rssFeed;
+	}
 
-    /**
-     * @param rssFeed the rssFeed to set
-     */
-    public void setRssFeed(SyndFeed rssFeed) {
-        this.rssFeed = rssFeed;
-    }
+	/**
+	 * @param rssFeed the rssFeed to set
+	 */
+	public void setRssFeed(SyndFeed rssFeed) {
+		this.rssFeed = rssFeed;
+	}
 
-    public String execute() {
-        rssFeed.setFeedType("rss_1.0");
-        rssFeed.setTitle("AJUG Job Postings");
-        rssFeed.setLink("http://www.ajug.org/jobs");
-        rssFeed.setDescription("RSS feed of the Atlanta Java User Group's job posting service.");
+	public String execute() {
+		rssFeed.setFeedType("rss_1.0");
+		rssFeed.setTitle("AJUG Job Postings");
+		rssFeed.setLink("http://www.ajug.org/jobs");
+		rssFeed.setDescription("RSS feed of the Atlanta Java User Group's job posting service.");
 
-        final List <SyndEntry>entries = CollectionUtils.getArrayList();
+		final List <SyndEntry>entries = CollectionUtils.getArrayList();
 
-        final Map<String, String>sortOrders = CollectionUtils.getHashMap();
-        sortOrders.put("updateDate", "DESC"); //FIXME
-        List <Job> jobs = jobService.getJobs(20, 1, sortOrders, null);
+		final Map<String, String>sortOrders = CollectionUtils.getHashMap();
+		sortOrders.put("updateDate", "DESC"); //FIXME
+		List <Job> jobs = jobService.getJobs(20, 1, sortOrders, null);
 
-        for (Job job : jobs) {
+		for (Job job : jobs) {
 
-            final SyndEntry entry = new SyndEntryImpl();
-            entry.setTitle(job.getJobTitle());
-            entry.setPublishedDate(job.getUpdateDate());
+			final SyndEntry entry = new SyndEntryImpl();
+			entry.setTitle(job.getJobTitle());
+			entry.setPublishedDate(job.getUpdateDate());
 
-            final SyndContent description = new SyndContentImpl();
-            description.setType("text/plain");
-            description.setValue(job.getDescription());
-            entry.setDescription(description);
-            entries.add(entry);
+			final SyndContent description = new SyndContentImpl();
+			description.setType("text/plain");
+			description.setValue(job.getDescription());
+			entry.setDescription(description);
+			entries.add(entry);
 
-            final String jobUrl = this.serverSettings.getServerAddress() + ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
+			final String jobUrl = this.serverSettings.getServerAddress() + ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
 
-            entry.setLink(jobUrl);
-        }
+			entry.setLink(jobUrl);
+		}
 
-        rssFeed.setEntries(entries);
+		rssFeed.setEntries(entries);
 
-        return SUCCESS;
-    }
+		return SUCCESS;
+	}
 
-    /**
-     * @param serverSettings the serverSettings to set
-     */
-    public void setServerSettings(ServerSettings serverSettings) {
-        this.serverSettings = serverSettings;
-    }
+	/**
+	 * @param serverSettings the serverSettings to set
+	 */
+	public void setServerSettings(ServerSettings serverSettings) {
+		this.serverSettings = serverSettings;
+	}
 
 
 }

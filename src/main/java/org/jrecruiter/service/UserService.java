@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.service;
 
 import java.util.List;
@@ -30,102 +30,101 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * @author Dorota Puchala
  * @author Gunnar Hillert
  *
- * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 public interface UserService {
 
-    /**
-     * Adds a brand new user to the system. If a user
-     * with the username already exists a duplicate user exception
-     * is thrown.
-     *
-     * @param user The user to add
-     * @throws DuplicateUserException
-     */
-    User addUser(User user) throws DuplicateUserException;
+	/**
+	 * Adds a brand new user to the system. If a user
+	 * with the username already exists a duplicate user exception
+	 * is thrown.
+	 *
+	 * @param user The user to add
+	 * @throws DuplicateUserException
+	 */
+	User addUser(User user) throws DuplicateUserException;
 
-    /**
-     * Adds a brand new user to the system. If a user
-     * with the username already exists a duplicate user exception
-     * is thrown.
-     *
-     * @param user The user to add
-     * @param validationRequired Must this user be verified?
-     * @throws DuplicateUserException
-     */
-    User addUser(User user, Boolean verificationRequired) throws DuplicateUserException;
+	/**
+	 * Adds a brand new user to the system. If a user
+	 * with the username already exists a duplicate user exception
+	 * is thrown.
+	 *
+	 * @param user The user to add
+	 * @param validationRequired Must this user be verified?
+	 * @throws DuplicateUserException
+	 */
+	User addUser(User user, Boolean verificationRequired) throws DuplicateUserException;
 
-    /**
-     * Load a user by the provided username
-     * @param username
-     * @return a single user
-     */
-    User getUser(String username);
+	/**
+	 * Load a user by the provided username
+	 * @param username
+	 * @return a single user
+	 */
+	User getUser(String username);
 
-    /**
-     * Load a user by the provided user id.
-     * @param userId
-     * @return a single user
-     */
-    User getUser(Long userId);
+	/**
+	 * Load a user by the provided user id.
+	 * @param userId
+	 * @return a single user
+	 */
+	User getUser(Long userId);
 
-    /**
-     * Load a user by the provided user id.
-     * @param userId
-     * @return a single user
-     */
-    void updateUser(User user);
+	/**
+	 * Load a user by the provided user id.
+	 * @param userId
+	 * @return a single user
+	 */
+	void updateUser(User user);
 
-    /**
-     * Get a list of all users.
-     * @return List of users
-     */
-    List<User> getAllUsers();
+	/**
+	 * Get a list of all users.
+	 * @return List of users
+	 */
+	List<User> getAllUsers();
 
-    /**
-     * Method for returning a filtered list of available job postings.
-     *
-     * @return List of jobs.
-     */
-    List < User > getUsers(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> userFilters);
+	/**
+	 * Method for returning a filtered list of available job postings.
+	 *
+	 * @return List of jobs.
+	 */
+	List < User > getUsers(Integer pageSize, Integer pageNumber, Map<String, String> sortOrders, Map<String, String> userFilters);
 
-    /**
-     * Returns the number of totally available jobs in the system.
-     *
-     * @return Total number of jobs
-     */
-    Long getUsersCount();
+	/**
+	 * Returns the number of totally available jobs in the system.
+	 *
+	 * @return Total number of jobs
+	 */
+	Long getUsersCount();
 
-    /**
-     * Delete a user from the system.
-     * @param user
-     */
-    void deleteUser(User user);
+	/**
+	 * Delete a user from the system.
+	 * @param user
+	 */
+	void deleteUser(User user);
 
-    /**
-     * Reset the password for the provided user.
-     * @param user
-     */
-    void resetPassword(User user);
+	/**
+	 * Reset the password for the provided user.
+	 * @param user
+	 */
+	void resetPassword(User user);
 
-    /**
-     * This method is used by ACEGI security to load user details for authentication.
-     * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-     *
-     * @param username Username
-     * @return Details of the user
-     * @throws DataAccessException
-     * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
-     */
-    UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException, DataAccessException;
+	/**
+	 * This method is used by ACEGI security to load user details for authentication.
+	 * @see org.acegisecurity.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+	 *
+	 * @param username Username
+	 * @return Details of the user
+	 * @throws DataAccessException
+	 * @throws UsernameNotFoundException Thrown if no user was found in persistence store.
+	 */
+	UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException, DataAccessException;
 
-    /**
-     * Get a user by its verification key. This method is used to verify user
-     * account creation.
-     *
-     * @param key Key for which the corresponding user supposedly exists
-     * @return Return a user for the existing key
-     */
-    User getUserByVerificationKey(String key);
+	/**
+	 * Get a user by its verification key. This method is used to verify user
+	 * account creation.
+	 *
+	 * @param key Key for which the corresponding user supposedly exists
+	 * @return Return a user for the existing key
+	 */
+	User getUserByVerificationKey(String key);
 }

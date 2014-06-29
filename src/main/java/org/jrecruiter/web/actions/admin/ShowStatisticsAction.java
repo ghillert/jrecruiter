@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions.admin;
 
 import java.awt.BasicStroke;
@@ -58,201 +58,200 @@ import org.jrecruiter.web.actions.BaseAction;
  * List all the jobs.
  *
  * @author Gunnar Hillert
- * @version $Id$
  *
  */
 @Result(name="success", location="index", type="redirectAction")
 public class ShowStatisticsAction extends BaseAction {
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = 4467043520853890820L;
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 4467043520853890820L;
 
-    private JFreeChart chart;
+	private JFreeChart chart;
 
-    private List<Job> jobs = CollectionUtils.getArrayList();
+	private List<Job> jobs = CollectionUtils.getArrayList();
 
-    Boolean displayAjax = Boolean.FALSE;
+	Boolean displayAjax = Boolean.FALSE;
 
-    /**
-     * Default view for this controller.
-     *
-     */
-    public final String execute() {
+	/**
+	 * Default view for this controller.
+	 *
+	 */
+	public final String execute() {
 
-        jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername());
+		jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername());
 
-        if (displayAjax) {
-            return "ajax";
-        }
+		if (displayAjax) {
+			return "ajax";
+		}
 
-        return INPUT;
-    }
+		return INPUT;
+	}
 
-    /**
-     *
-     */
-    public final String chartJobsHits() throws Exception {
+	/**
+	 *
+	 */
+	public final String chartJobsHits() throws Exception {
 
-        String chartTitle = null;
+		String chartTitle = null;
 
-        jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10);
-        chartTitle = "Job Statistics Top 10 - Hits";
+		jobs = jobService.getUsersJobsForStatistics(super.getLoggedInUser().getUsername(), 10);
+		chartTitle = "Job Statistics Top 10 - Hits";
 
-            final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+			final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-            for (Job job : jobs) {
+			for (Job job : jobs) {
 
-                if (job.getStatistic() != null) {
+				if (job.getStatistic() != null) {
 
-                        if (job.getStatistic().getCounter().longValue() >= 0) {
-                            dataset.addValue(job.getStatistic().getCounter(),
-                                    job.getJobTitle() + "_" + job.getId(), "");
-                        }
-                }
-            }
+						if (job.getStatistic().getCounter().longValue() >= 0) {
+							dataset.addValue(job.getStatistic().getCounter(),
+									job.getJobTitle() + "_" + job.getId(), "");
+						}
+				}
+			}
 
-            this.chart = createChart(dataset, chartTitle);
+			this.chart = createChart(dataset, chartTitle);
 
-        return SUCCESS;
-    }
+		return SUCCESS;
+	}
 
-    private static JFreeChart createChart(
-            final CategoryDataset categorydataset, final String chartTitle) {
-        final JFreeChart chart = ChartFactory.createBarChart(chartTitle,
-                "Jobs", "Number of Hits", categorydataset,
-                PlotOrientation.VERTICAL, true, true, false);
+	private static JFreeChart createChart(
+			final CategoryDataset categorydataset, final String chartTitle) {
+		final JFreeChart chart = ChartFactory.createBarChart(chartTitle,
+				"Jobs", "Number of Hits", categorydataset,
+				PlotOrientation.VERTICAL, true, true, false);
 
-        final CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
-        categoryplot.setNoDataMessage("NO DATA!");
+		final CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+		categoryplot.setNoDataMessage("NO DATA!");
 
-        chart.setBackgroundPaint(new Color(245, 245, 255));
-        chart.setBorderPaint(new Color(204, 204, 204));
-        chart.setBorderStroke(new BasicStroke(1f));
+		chart.setBackgroundPaint(new Color(245, 245, 255));
+		chart.setBorderPaint(new Color(204, 204, 204));
+		chart.setBorderStroke(new BasicStroke(1f));
 
-        final LegendTitle legend = chart.getLegend();
-        legend.setWidth(1000);
-        legend.setPosition(RectangleEdge.BOTTOM);
+		final LegendTitle legend = chart.getLegend();
+		legend.setWidth(1000);
+		legend.setPosition(RectangleEdge.BOTTOM);
 
-        final BlockBorder border = new BlockBorder(new Color(204, 204, 204));
-        legend.setBorder(border);
+		final BlockBorder border = new BlockBorder(new Color(204, 204, 204));
+		legend.setBorder(border);
 
-        final CategoryPlot categoryPlot = (CategoryPlot) chart.getPlot();
-        categoryPlot.setBackgroundPaint(Color.WHITE);
-        categoryPlot.setRangeGridlinePaint(new Color(204, 204, 204));
-        categoryPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
-        final NumberAxis numberaxis = (NumberAxis) categoryPlot.getRangeAxis();
+		final CategoryPlot categoryPlot = (CategoryPlot) chart.getPlot();
+		categoryPlot.setBackgroundPaint(Color.WHITE);
+		categoryPlot.setRangeGridlinePaint(new Color(204, 204, 204));
+		categoryPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+		final NumberAxis numberaxis = (NumberAxis) categoryPlot.getRangeAxis();
 
-        numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        final BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
-        renderer.setDrawBarOutline(true);
+		numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		final BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+		renderer.setDrawBarOutline(true);
 
-        final ItemLabelPosition itemlabelposition = new ItemLabelPosition(
-                ItemLabelAnchor.CENTER, TextAnchor.CENTER);
-        renderer.setPositiveItemLabelPosition(itemlabelposition);
+		final ItemLabelPosition itemlabelposition = new ItemLabelPosition(
+				ItemLabelAnchor.CENTER, TextAnchor.CENTER);
+		renderer.setPositiveItemLabelPosition(itemlabelposition);
 
-        renderer
-                .setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		renderer
+				.setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 
-        renderer.setItemLabelsVisible(true);
-        return chart;
-    }
+		renderer.setItemLabelsVisible(true);
+		return chart;
+	}
 
-    public final String chartJobCount() throws Exception {
+	public final String chartJobCount() throws Exception {
 
-            final Calendar calendarToday = CalendarUtils.getCalendarWithoutTime();
+			final Calendar calendarToday = CalendarUtils.getCalendarWithoutTime();
 
-            final Calendar calendar30    = CalendarUtils.getCalendarWithoutTime();
-            calendar30.add(Calendar.MONTH, -36);
+			final Calendar calendar30    = CalendarUtils.getCalendarWithoutTime();
+			calendar30.add(Calendar.MONTH, -36);
 
-            final List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
+			final List<JobCountPerDay>jobCountPerDayList = jobService.getJobCountPerDayAndPeriod(calendar30.getTime(), calendarToday.getTime());
 
-            final TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );
-            final XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
-            this.chart = ChartFactory.createTimeSeriesChart("",
-                    super.getText("class.ShowStatisticsAcion.chart.job.count.caption"), "", hitsPerDayDataset, false, true, false);
-
-
-            final XYPlot xyplot = (XYPlot)this.chart.getPlot();
-
-            for(JobCountPerDay jobCountPerDay : jobCountPerDayList ) {
-
-              final Day day =  new Day(jobCountPerDay.getJobDate());
-
-              if (jobCountPerDay.getAutomaticallyCleaned()) {
-
-                  final Marker originalEnd = new ValueMarker(day.getFirstMillisecond());
-                  originalEnd.setPaint(new Color(0, 80, 138, 150));
-                  float[] dashPattern = { 6, 2 };
-
-                  originalEnd.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT,
-                          BasicStroke.JOIN_MITER, 10,
-                          dashPattern, 0));
-                  originalEnd.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-                  originalEnd.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
-                  originalEnd.setLabel("C");
-                  originalEnd.setAlpha(0.1F);
-                  xyplot.addDomainMarker(originalEnd);
-              }
-
-              hitsPerDayData.add(day, jobCountPerDay.getTotalNumberOfJobs());
-            }
+			final TimeSeries hitsPerDayData = new TimeSeries( "Hits", Day.class );
+			final XYDataset hitsPerDayDataset = new TimeSeriesCollection( hitsPerDayData );
+			this.chart = ChartFactory.createTimeSeriesChart("",
+					super.getText("class.ShowStatisticsAcion.chart.job.count.caption"), "", hitsPerDayDataset, false, true, false);
 
 
+			final XYPlot xyplot = (XYPlot)this.chart.getPlot();
+
+			for(JobCountPerDay jobCountPerDay : jobCountPerDayList ) {
+
+			  final Day day =  new Day(jobCountPerDay.getJobDate());
+
+			  if (jobCountPerDay.getAutomaticallyCleaned()) {
+
+				  final Marker originalEnd = new ValueMarker(day.getFirstMillisecond());
+				  originalEnd.setPaint(new Color(0, 80, 138, 150));
+				  float[] dashPattern = { 6, 2 };
+
+				  originalEnd.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT,
+						  BasicStroke.JOIN_MITER, 10,
+						  dashPattern, 0));
+				  originalEnd.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+				  originalEnd.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
+				  originalEnd.setLabel("C");
+				  originalEnd.setAlpha(0.1F);
+				  xyplot.addDomainMarker(originalEnd);
+			  }
+
+			  hitsPerDayData.add(day, jobCountPerDay.getTotalNumberOfJobs());
+			}
 
 
-            chart.setBackgroundPaint(new Color(255,255,255,0));
 
 
-            xyplot.setDomainGridlinePaint(Color.LIGHT_GRAY);
-            xyplot.setBackgroundPaint(new Color(255,255,255,0));
-
-            xyplot.setRangeGridlinePaint(Color.LIGHT_GRAY);
-            xyplot.setAxisOffset(new RectangleInsets(5D, 5D, 5D, 5D));
-            xyplot.setDomainCrosshairVisible(true);
-            xyplot.setRangeCrosshairVisible(true);
-
-            org.jfree.chart.renderer.xy.XYItemRenderer xyitemrenderer = xyplot.getRenderer();
-            if(xyitemrenderer instanceof XYLineAndShapeRenderer)
-            {
-                XYLineAndShapeRenderer xylineandshaperenderer = (XYLineAndShapeRenderer)xyitemrenderer;
-                xylineandshaperenderer.setBaseShapesVisible(false);
-                xyitemrenderer.setSeriesPaint(0, new Color(244, 66, 0));
-            }
-
-            DateAxis dateaxis = (DateAxis)xyplot.getDomainAxis();
-
-            dateaxis.setAutoRange(true);
-            dateaxis.setAutoTickUnitSelection(true);
-
-            NumberAxis valueAxis = (NumberAxis)xyplot.getRangeAxis();
-            valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+			chart.setBackgroundPaint(new Color(255,255,255,0));
 
 
-        return SUCCESS;
-    }
+			xyplot.setDomainGridlinePaint(Color.LIGHT_GRAY);
+			xyplot.setBackgroundPaint(new Color(255,255,255,0));
 
-    public Boolean getDisplayAjax() {
-        return displayAjax;
-    }
+			xyplot.setRangeGridlinePaint(Color.LIGHT_GRAY);
+			xyplot.setAxisOffset(new RectangleInsets(5D, 5D, 5D, 5D));
+			xyplot.setDomainCrosshairVisible(true);
+			xyplot.setRangeCrosshairVisible(true);
 
-    public void setDisplayAjax(Boolean displayAjax) {
-        this.displayAjax = displayAjax;
-    }
+			org.jfree.chart.renderer.xy.XYItemRenderer xyitemrenderer = xyplot.getRenderer();
+			if(xyitemrenderer instanceof XYLineAndShapeRenderer)
+			{
+				XYLineAndShapeRenderer xylineandshaperenderer = (XYLineAndShapeRenderer)xyitemrenderer;
+				xylineandshaperenderer.setBaseShapesVisible(false);
+				xyitemrenderer.setSeriesPaint(0, new Color(244, 66, 0));
+			}
 
-    public JFreeChart getChart() {
-        return chart;
-    }
+			DateAxis dateaxis = (DateAxis)xyplot.getDomainAxis();
 
-    public void setChart(JFreeChart chart) {
-        this.chart = chart;
-    }
+			dateaxis.setAutoRange(true);
+			dateaxis.setAutoTickUnitSelection(true);
 
-    public List<Job> getJobs() {
-        return jobs;
-    }
+			NumberAxis valueAxis = (NumberAxis)xyplot.getRangeAxis();
+			valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
+
+		return SUCCESS;
+	}
+
+	public Boolean getDisplayAjax() {
+		return displayAjax;
+	}
+
+	public void setDisplayAjax(Boolean displayAjax) {
+		this.displayAjax = displayAjax;
+	}
+
+	public JFreeChart getChart() {
+		return chart;
+	}
+
+	public void setChart(JFreeChart chart) {
+		this.chart = chart;
+	}
+
+	public List<Job> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
+	}
 
 }

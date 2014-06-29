@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web;
 
 import java.text.SimpleDateFormat;
@@ -25,63 +25,62 @@ import junit.framework.TestCase;
  * Test the Struts 2 custom Date Converter
  *
  * @author Gunnar Hillert
- * @version $Id$
  */
 public class DateConverterTest extends TestCase {
 
-    public void testConvertFromStringWithNull() throws Exception {
+	public void testConvertFromStringWithNull() throws Exception {
 
-    	DateConverter dateConverter = new DateConverter();
+		DateConverter dateConverter = new DateConverter();
 
-    	Object ret = dateConverter.convertFromString(null, null, null);
+		Object ret = dateConverter.convertFromString(null, null, null);
 
-    	Assert.assertNull(ret);
-    }
+		Assert.assertNull(ret);
+	}
 
-    public void testConvertFromStringWithNull2() throws Exception {
+	public void testConvertFromStringWithNull2() throws Exception {
 
-    	DateConverter dateConverter = new DateConverter();
+		DateConverter dateConverter = new DateConverter();
 
-    	Object ret = dateConverter.convertFromString(null, new String[]{null}, null);
+		Object ret = dateConverter.convertFromString(null, new String[]{null}, null);
 
-    	Assert.assertNull(ret);
-    }
+		Assert.assertNull(ret);
+	}
 
-    public void testConvertFromStringWithWrongFormat() throws Exception {
+	public void testConvertFromStringWithWrongFormat() throws Exception {
 
-    	DateConverter dateConverter = new DateConverter();
+		DateConverter dateConverter = new DateConverter();
 
-    	final String dateAsString = "2008-1-30";
+		final String dateAsString = "2008-1-30";
 
-    	Object ret = dateConverter.convertFromString(null, new String[]{dateAsString}, null);
-    	Assert.assertNull(ret);
-    }
+		Object ret = dateConverter.convertFromString(null, new String[]{dateAsString}, null);
+		Assert.assertNull(ret);
+	}
 
-    public void testConvertFromString() throws Exception {
-    	DateConverter dateConverter = new DateConverter();
+	public void testConvertFromString() throws Exception {
+		DateConverter dateConverter = new DateConverter();
 
-    	final String dateAsString = "01/30/2008";
+		final String dateAsString = "01/30/2008";
 
-    	Object ret = dateConverter.convertFromString(null, new String[]{dateAsString}, null);
+		Object ret = dateConverter.convertFromString(null, new String[]{dateAsString}, null);
 
-    	Assert.assertNotNull(ret);
-    	Assert.assertTrue(ret instanceof Date);
+		Assert.assertNotNull(ret);
+		Assert.assertTrue(ret instanceof Date);
 
-    	SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-    	Date expectedDate = formatter.parse(dateAsString);
-    	Assert.assertTrue(expectedDate.equals(ret));
-    }
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		Date expectedDate = formatter.parse(dateAsString);
+		Assert.assertTrue(expectedDate.equals(ret));
+	}
 
-    public void testConvertToString() throws Exception {
-    	DateConverter dateConverter = new DateConverter();
-    	final String dateAsString = "01/30/2008";
-    	SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-    	Date expectedDate = formatter.parse(dateAsString);
+	public void testConvertToString() throws Exception {
+		DateConverter dateConverter = new DateConverter();
+		final String dateAsString = "01/30/2008";
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		Date expectedDate = formatter.parse(dateAsString);
 
-    	String ret = dateConverter.convertToString(null, expectedDate);
+		String ret = dateConverter.convertToString(null, expectedDate);
 
-    	Assert.assertNotNull(ret);
-    	Assert.assertTrue(dateAsString.equals(ret));
-    }
+		Assert.assertNotNull(ret);
+		Assert.assertTrue(dateAsString.equals(ret));
+	}
 }
 

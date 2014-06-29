@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2014 the original author or authors.
+ * Copyright 2006-2014 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import org.springframework.core.env.Environment;
  * Holder Object for Api keys such as for webservices like Google Maps.
  *
  * @author Gunnar Hillert
- * @version 2.0
+ * @since 2.0
  *
  */
 public class ApiKeysHolder {

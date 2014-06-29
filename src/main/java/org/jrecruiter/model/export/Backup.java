@@ -1,3 +1,18 @@
+/*
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.model.export;
 
 import java.util.List;
@@ -20,104 +35,104 @@ import org.jrecruiter.model.Region;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Backup {
 
-    @XmlElementWrapper(name = "industries")
-    @XmlElement(name = "industry")
-    private List<Industry> industries = CollectionUtils.getArrayList();
+	@XmlElementWrapper(name = "industries")
+	@XmlElement(name = "industry")
+	private List<Industry> industries = CollectionUtils.getArrayList();
 
-    @XmlElementWrapper(name = "regions")
-    @XmlElement(name = "region")
-    private List<Region>   regions    = CollectionUtils.getArrayList();
+	@XmlElementWrapper(name = "regions")
+	@XmlElement(name = "region")
+	private List<Region>   regions    = CollectionUtils.getArrayList();
 
-    @XmlElementWrapper(name = "roles")
-    @XmlElement(name = "role")
-    private List<Role>     roles      = CollectionUtils.getArrayList();
+	@XmlElementWrapper(name = "roles")
+	@XmlElement(name = "role")
+	private List<Role>     roles      = CollectionUtils.getArrayList();
 
-    @XmlElementWrapper(name = "users")
-    @XmlElement(name = "user")
-    private List<User>     users      = CollectionUtils.getArrayList();
+	@XmlElementWrapper(name = "users")
+	@XmlElement(name = "user")
+	private List<User>     users      = CollectionUtils.getArrayList();
 
-    @XmlElementWrapper(name = "jobs")
-    @XmlElement(name = "job")
-    private List<Job>      jobs       = CollectionUtils.getArrayList();
+	@XmlElementWrapper(name = "jobs")
+	@XmlElement(name = "job")
+	private List<Job>      jobs       = CollectionUtils.getArrayList();
 
-    @XmlElementWrapper(name = "statistics")
-    @XmlElement(name = "jobCountPerDay")
-    private List<JobCountPerDay>      jobCountPerDay = CollectionUtils.getArrayList();
+	@XmlElementWrapper(name = "statistics")
+	@XmlElement(name = "jobCountPerDay")
+	private List<JobCountPerDay>      jobCountPerDay = CollectionUtils.getArrayList();
 
-    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    /**
-     * @return the industries
-     */
-    public List<Industry> getIndustries() {
-        return industries;
-    }
-    /**
-     * @param industries the industries to set
-     */
-    public void setIndustries(List<Industry> industries) {
-        this.industries = industries;
-    }
-    /**
-     * @return the regions
-     */
-    public List<Region> getRegions() {
-        return regions;
-    }
-    /**
-     * @param regions the regions to set
-     */
-    public void setRegions(List<Region> regions) {
-        this.regions = regions;
-    }
-    /**
-     * @return the roles
-     */
-    public List<Role> getRoles() {
-        return roles;
-    }
-    /**
-     * @param roles the roles to set
-     */
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-    /**
-     * @return the users
-     */
-    public List<User> getUsers() {
-        return users;
-    }
-    /**
-     * @param users the users to set
-     */
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-    /**
-     * @return the jobs
-     */
-    public List<Job> getJobs() {
-        return jobs;
-    }
-    /**
-     * @param jobs the jobs to set
-     */
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
-    /**
-     * @return the jobCountPerDay
-     */
-    public List<JobCountPerDay> getJobCountPerDay() {
-        return jobCountPerDay;
-    }
-    /**
-     * @param jobCountPerDay the jobCountPerDay to set
-     */
-    public void setJobCountPerDay(List<JobCountPerDay> jobCountPerDay) {
-        this.jobCountPerDay = jobCountPerDay;
-    }
+	/**
+	 * @return the industries
+	 */
+	public List<Industry> getIndustries() {
+		return industries;
+	}
+	/**
+	 * @param industries the industries to set
+	 */
+	public void setIndustries(List<Industry> industries) {
+		this.industries = industries;
+	}
+	/**
+	 * @return the regions
+	 */
+	public List<Region> getRegions() {
+		return regions;
+	}
+	/**
+	 * @param regions the regions to set
+	 */
+	public void setRegions(List<Region> regions) {
+		this.regions = regions;
+	}
+	/**
+	 * @return the roles
+	 */
+	public List<Role> getRoles() {
+		return roles;
+	}
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	/**
+	 * @return the users
+	 */
+	public List<User> getUsers() {
+		return users;
+	}
+	/**
+	 * @param users the users to set
+	 */
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	/**
+	 * @return the jobs
+	 */
+	public List<Job> getJobs() {
+		return jobs;
+	}
+	/**
+	 * @param jobs the jobs to set
+	 */
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
+	}
+	/**
+	 * @return the jobCountPerDay
+	 */
+	public List<JobCountPerDay> getJobCountPerDay() {
+		return jobCountPerDay;
+	}
+	/**
+	 * @param jobCountPerDay the jobCountPerDay to set
+	 */
+	public void setJobCountPerDay(List<JobCountPerDay> jobCountPerDay) {
+		this.jobCountPerDay = jobCountPerDay;
+	}
 
 
 

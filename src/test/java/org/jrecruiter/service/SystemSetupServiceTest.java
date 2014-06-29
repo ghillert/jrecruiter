@@ -1,5 +1,17 @@
-/**
+/*
+ * Copyright 2006-2014 the original author or authors.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.jrecruiter.service;
 
@@ -38,7 +50,6 @@ import org.jrecruiter.model.Region;
  * Contains test methods to verify the deserialization of backup data using Jaxb.
  *
  * @author Gunnar Hillert
- * @version $Id$
  *
  */
 public class SystemSetupServiceTest {
@@ -55,93 +66,93 @@ public class SystemSetupServiceTest {
 		jaxb2Marshaller.setClassesToBeBound(new Class[]{Backup.class});
 		jaxb2Marshaller.afterPropertiesSet();
 
-    	final SystemSetupService systemSetupService = new SystemSetupServiceImpl();
-    	ReflectionTestUtils.setField(backupDao, "marshaller", jaxb2Marshaller);
-    	ReflectionTestUtils.setField(systemSetupService, "backupDao", backupDao);
+		final SystemSetupService systemSetupService = new SystemSetupServiceImpl();
+		ReflectionTestUtils.setField(backupDao, "marshaller", jaxb2Marshaller);
+		ReflectionTestUtils.setField(systemSetupService, "backupDao", backupDao);
 
-    	return systemSetupService;
+		return systemSetupService;
 
 	}
 
 	@Test
 	public void testConvertToBackupData() throws Exception {
 
-    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/seeddata/seeddata.xml");
+		final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/seeddata/seeddata.xml");
 
-    	//FIXME verify file existence
+		//FIXME verify file existence
 
-    	final SystemSetupService systemSetupService = this.createSystemSetupService();
+		final SystemSetupService systemSetupService = this.createSystemSetupService();
 
-    	final Backup backup = systemSetupService.convertToBackupData(inputStream);
+		final Backup backup = systemSetupService.convertToBackupData(inputStream);
 
-    	final List<Industry> industries = backup.getIndustries();
-    	final List<Region>   regions    = backup.getRegions();
-    	final List<Role>     roles      = backup.getRoles();
+		final List<Industry> industries = backup.getIndustries();
+		final List<Region>   regions    = backup.getRegions();
+		final List<Role>     roles      = backup.getRoles();
 
-    	assertTrue("Expecting 16 industries but found: " + industries.size(), industries.size() == 16);
-    	assertTrue("Expecting 10 regions but found: " + regions.size(), regions.size() == 10);
-    	assertTrue("Expecting 2 roles but found: " + roles.size(), roles.size() == 2);
+		assertTrue("Expecting 16 industries but found: " + industries.size(), industries.size() == 16);
+		assertTrue("Expecting 10 regions but found: " + regions.size(), regions.size() == 10);
+		assertTrue("Expecting 2 roles but found: " + roles.size(), roles.size() == 2);
 
-    	for (final Industry industry : industries) {
-    		assertNotNull(industry.getId());
-    		assertNotNull(industry.getName());
-    	}
+		for (final Industry industry : industries) {
+			assertNotNull(industry.getId());
+			assertNotNull(industry.getName());
+		}
 
-    	for (final Region region : regions) {
-    		assertNotNull(region.getId());
-    		assertNotNull(region.getName());
-    	}
+		for (final Region region : regions) {
+			assertNotNull(region.getId());
+			assertNotNull(region.getName());
+		}
 
-    	for (final Role role : roles) {
-    		assertNotNull(role.getId());
-    		assertNotNull(role.getName());
-    	}
+		for (final Role role : roles) {
+			assertNotNull(role.getId());
+			assertNotNull(role.getName());
+		}
 
-    	final List<User>     users       = backup.getUsers();
+		final List<User>     users       = backup.getUsers();
 
-    	assertTrue("Expecting 1 user but found: " + users.size(), users.size() == 1);
+		assertTrue("Expecting 1 user but found: " + users.size(), users.size() == 1);
 
-    	for (final User user : users) {
-    		assertNotNull(user.getId());
-    		assertNotNull(user.getUsername());
+		for (final User user : users) {
+			assertNotNull(user.getId());
+			assertNotNull(user.getUsername());
 
-    		assertEquals("aswCoBHvJHtCSyJWRHvch0e4sKflhzkRsP8bUsf1FPTjEkFi3nlQbgtbRx95GluwVr82Ol6WHaLiW/eeoJzXvwjZjEYPgrVYuZmm3Xn0Rek=", user.getPassword());
-    	}
+			assertEquals("aswCoBHvJHtCSyJWRHvch0e4sKflhzkRsP8bUsf1FPTjEkFi3nlQbgtbRx95GluwVr82Ol6WHaLiW/eeoJzXvwjZjEYPgrVYuZmm3Xn0Rek=", user.getPassword());
+		}
 	}
 
 	@Test
 	public void testConvertTestToBackupData() throws Exception {
 
-    	final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/seeddata/demodata.xml");
-    	//FIXME verify file existence
+		final java.io.InputStream inputStream =  DemoServiceTest.class.getResourceAsStream("/org/jrecruiter/core/seeddata/demodata.xml");
+		//FIXME verify file existence
 
-    	final SystemSetupService systemSetupService = this.createSystemSetupService();
+		final SystemSetupService systemSetupService = this.createSystemSetupService();
 
-    	final Backup backup = systemSetupService.convertToBackupData(inputStream);
+		final Backup backup = systemSetupService.convertToBackupData(inputStream);
 
-    	final List<Industry> industries = backup.getIndustries();
-    	final List<Region>   regions    = backup.getRegions();
-    	final List<Role>     roles      = backup.getRoles();
+		final List<Industry> industries = backup.getIndustries();
+		final List<Region>   regions    = backup.getRegions();
+		final List<Role>     roles      = backup.getRoles();
 
-    	assertTrue("Expecting 0 industries but found: " + industries.size(), industries.size() == 0);
-    	assertTrue("Expecting 0 regions but found: " + regions.size(), regions.size() == 0);
-    	assertTrue("Expecting 0 roles but found: " + roles.size(), roles.size() == 0);
+		assertTrue("Expecting 0 industries but found: " + industries.size(), industries.size() == 0);
+		assertTrue("Expecting 0 regions but found: " + regions.size(), regions.size() == 0);
+		assertTrue("Expecting 0 roles but found: " + roles.size(), roles.size() == 0);
 
-    	final List<User>     users       = backup.getUsers();
+		final List<User>     users       = backup.getUsers();
 
-    	assertTrue("Expecting 1 user but found: " + users.size(), users.size() == 1);
+		assertTrue("Expecting 1 user but found: " + users.size(), users.size() == 1);
 
-    	for (final User user : users) {
-    		assertNotNull(user.getId());
-    		assertNotNull(user.getUsername());
+		for (final User user : users) {
+			assertNotNull(user.getId());
+			assertNotNull(user.getUsername());
 
-    		assertTrue("Expecting 1 role associated but found: " + user.getUserToRoles().size(), user.getUserToRoles().size() == 1);
+			assertTrue("Expecting 1 role associated but found: " + user.getUserToRoles().size(), user.getUserToRoles().size() == 1);
 
-    		for (UserToRole userToRole : user.getUserToRoles()) {
-    		    assertNotNull(userToRole.getRoleName());
-    		}
+			for (UserToRole userToRole : user.getUserToRoles()) {
+				assertNotNull(userToRole.getRoleName());
+			}
 
-    	}
+		}
 
 	}
 
@@ -157,21 +168,21 @@ public class SystemSetupServiceTest {
 		jaxb2Marshaller.setClassesToBeBound(new Class[]{Backup.class});
 		jaxb2Marshaller.afterPropertiesSet();
 
-    	Backup backup = new Backup();
+		Backup backup = new Backup();
 
-    	Region region = new Region(1L, "MyRegion");
+		Region region = new Region(1L, "MyRegion");
 
-    	final List<Region> regions = CollectionUtils.getArrayList();
+		final List<Region> regions = CollectionUtils.getArrayList();
 
-    	regions.add(region);
+		regions.add(region);
 
-    	backup.setRegions(regions);
+		backup.setRegions(regions);
 
-    	jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));
+		jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));
 
-    	assertNotNull(stringWriter);
+		assertNotNull(stringWriter);
 
-    	assertEquals(expectedString, stringWriter.toString());
+		assertEquals(expectedString, stringWriter.toString());
 
 	}
 
@@ -195,50 +206,50 @@ public class SystemSetupServiceTest {
 		jaxb2Marshaller.setMarshallerProperties(jaxbContextProperties);
 		jaxb2Marshaller.afterPropertiesSet();
 
-    	final Backup backup = new Backup();
+		final Backup backup = new Backup();
 
-    	final User user = new User();
-    	user.setCompany("company");
-    	user.setEmail("email");
-    	user.setEnabled(true);
-    	user.setFax("123456789");
-    	user.setFirstName("firstName");
-    	user.setId(99L);
+		final User user = new User();
+		user.setCompany("company");
+		user.setEmail("email");
+		user.setEnabled(true);
+		user.setFax("123456789");
+		user.setFirstName("firstName");
+		user.setId(99L);
 
-    	final Calendar lastLoginDate    = CalendarUtils.getCalendarInUTC(2010, 6, 25, 15, 50, 0);
-    	final Calendar registrationDate = CalendarUtils.getCalendarInUTC(2010, 5, 25, 15, 50, 0);
-    	final Calendar updateDate       = CalendarUtils.getCalendarInUTC(2010, 5, 24, 15, 50, 0);
+		final Calendar lastLoginDate    = CalendarUtils.getCalendarInUTC(2010, 6, 25, 15, 50, 0);
+		final Calendar registrationDate = CalendarUtils.getCalendarInUTC(2010, 5, 25, 15, 50, 0);
+		final Calendar updateDate       = CalendarUtils.getCalendarInUTC(2010, 5, 24, 15, 50, 0);
 
 
-    	user.setLastLoginDate(lastLoginDate.getTime());
-    	user.setLastName("lastName");
-    	user.setPassword("password");
-    	user.setPhone("123456789");
-    	user.setRegistrationDate(registrationDate.getTime());
-    	user.setUpdateDate(updateDate.getTime());
-    	user.setUserAuthenticationType(UserAuthenticationType.USERNAME_PASSWORD);
-    	user.setUsername("username");
+		user.setLastLoginDate(lastLoginDate.getTime());
+		user.setLastName("lastName");
+		user.setPassword("password");
+		user.setPhone("123456789");
+		user.setRegistrationDate(registrationDate.getTime());
+		user.setUpdateDate(updateDate.getTime());
+		user.setUserAuthenticationType(UserAuthenticationType.USERNAME_PASSWORD);
+		user.setUsername("username");
 
-    	Role role = new Role(1L, "SPECIAL_ROLE");
+		Role role = new Role(1L, "SPECIAL_ROLE");
 
-    	user.getUserToRoles().add(new UserToRole(1L, role, user));
-    	user.setVerificationKey("SOME_LONG_STRING");
+		user.getUserToRoles().add(new UserToRole(1L, role, user));
+		user.setVerificationKey("SOME_LONG_STRING");
 
-    	final List<User> users = CollectionUtils.getArrayList();
-    	final List<Role> roles = CollectionUtils.getArrayList();
+		final List<User> users = CollectionUtils.getArrayList();
+		final List<Role> roles = CollectionUtils.getArrayList();
 
-    	users.add(user);
+		users.add(user);
 
-    	backup.setUsers(users);
-    	backup.setRoles(roles);
+		backup.setUsers(users);
+		backup.setRoles(roles);
 
-    	jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));
+		jaxb2Marshaller.marshal(backup, new StreamResult(stringWriter));
 
-    	LOGGER.info(stringWriter.toString());
+		LOGGER.info(stringWriter.toString());
 
-    	assertNotNull(stringWriter);
+		assertNotNull(stringWriter);
 
-    	assertEquals(expectedString, stringWriter.toString());
+		assertEquals(expectedString, stringWriter.toString());
 
 	}
 

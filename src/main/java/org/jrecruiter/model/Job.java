@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.model;
 
 import java.math.BigDecimal;
@@ -272,40 +272,40 @@ public class Job extends BaseModelObject {
 	}
 	/** full constructor */
 	public Job(Long id, Industry industry, User user, String businessName,
-			   String businessLocation, String jobTitle, String salary,
-			   String description, String website, String businessAddress1,
-			   String businessAddress2, String businessCity,
-			   String businessState, String businessZip, String businessPhone,
-			   String businessEmail, String industryOther,
-			   String jobRestrictions, Date registrationDate,
-			   Date expirationDate, Date updateDate, JobStatus status,
-			   OfferedBy offeredBy, BigDecimal longitude, BigDecimal latitude,
-			   Statistic statistic) {
-	   this.id = id;
-	   this.industry = industry;
-	   this.user = user;
-	   this.businessName = businessName;
-	   this.regionOther = businessLocation;
-	   this.jobTitle = jobTitle;
-	   this.salary = salary;
-	   this.description = description;
-	   this.website = website;
-	   this.businessAddress1 = businessAddress1;
-	   this.businessAddress2 = businessAddress2;
-	   this.businessCity = businessCity;
-	   this.businessState = businessState;
-	   this.businessZip = businessZip;
-	   this.businessPhone = businessPhone;
-	   this.businessEmail = businessEmail;
-	   this.industryOther = industryOther;
-	   this.jobRestrictions = jobRestrictions;
-	   this.registrationDate = registrationDate;
-	   this.updateDate = updateDate;
-	   this.status = status;
-	   this.offeredBy = offeredBy;
-	   this.longitude = longitude;
-	   this.latitude = latitude;
-	   this.statistic = statistic;
+			String businessLocation, String jobTitle, String salary,
+			String description, String website, String businessAddress1,
+			String businessAddress2, String businessCity,
+			String businessState, String businessZip, String businessPhone,
+			String businessEmail, String industryOther,
+			String jobRestrictions, Date registrationDate,
+			Date expirationDate, Date updateDate, JobStatus status,
+			OfferedBy offeredBy, BigDecimal longitude, BigDecimal latitude,
+			Statistic statistic) {
+	this.id = id;
+	this.industry = industry;
+	this.user = user;
+	this.businessName = businessName;
+	this.regionOther = businessLocation;
+	this.jobTitle = jobTitle;
+	this.salary = salary;
+	this.description = description;
+	this.website = website;
+	this.businessAddress1 = businessAddress1;
+	this.businessAddress2 = businessAddress2;
+	this.businessCity = businessCity;
+	this.businessState = businessState;
+	this.businessZip = businessZip;
+	this.businessPhone = businessPhone;
+	this.businessEmail = businessEmail;
+	this.industryOther = industryOther;
+	this.jobRestrictions = jobRestrictions;
+	this.registrationDate = registrationDate;
+	this.updateDate = updateDate;
+	this.status = status;
+	this.offeredBy = offeredBy;
+	this.longitude = longitude;
+	this.latitude = latitude;
+	this.statistic = statistic;
 	}
 
 	/**

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions.admin;
 
 import java.io.IOException;
@@ -34,86 +49,85 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
  * defined by Indeed.com
  *
  * @author Gunnar Hillert
- * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 @Controller
 public class BackupController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BackupController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BackupController.class);
 
-    private @Autowired SystemSetupService demoService;
-    private @Autowired JobService jobService;
-    private @Autowired RoleDao roleDao;
-    private @Autowired RegionDao regionDao;
-    private @Autowired IndustryDao industryDao;
-    private @Autowired JobCountPerDayDao jobCountPerDayDao;
-    private @Autowired UserService userService;
-    private @Autowired ServerSettings serverSettings;
-    private @Autowired Jaxb2Marshaller marshaller;
-    private @Autowired CommonsMultipartResolver multipartResolver;
+	private @Autowired SystemSetupService demoService;
+	private @Autowired JobService jobService;
+	private @Autowired RoleDao roleDao;
+	private @Autowired RegionDao regionDao;
+	private @Autowired IndustryDao industryDao;
+	private @Autowired JobCountPerDayDao jobCountPerDayDao;
+	private @Autowired UserService userService;
+	private @Autowired ServerSettings serverSettings;
+	private @Autowired Jaxb2Marshaller marshaller;
+	private @Autowired CommonsMultipartResolver multipartResolver;
 
 
-    private static final long serialVersionUID = -3422780336408883930L;
+	private static final long serialVersionUID = -3422780336408883930L;
 
-    /**
-     * Provide a complete set of master data as XML document.
-     *
-     * @param model
-     * @param out
-     * @throws JAXBException
-     */
-    @RequestMapping("/admin/backup.xml")
-    public void backup(final ModelMap model, final OutputStream out) throws JAXBException {
+	/**
+	 * Provide a complete set of master data as XML document.
+	 *
+	 * @param model
+	 * @param out
+	 * @throws JAXBException
+	 */
+	@RequestMapping("/admin/backup.xml")
+	public void backup(final ModelMap model, final OutputStream out) throws JAXBException {
 
-        Backup backup = new Backup();
-        backup.setJobCountPerDay(jobCountPerDayDao.getAll());
-        backup.setIndustries(jobService.getIndustries());
-        backup.setRegions(jobService.getRegions());
-        backup.setRoles(roleDao.getAll());
-        backup.setUsers(userService.getAllUsers());
-        backup.setJobs(jobService.getJobs());
+		Backup backup = new Backup();
+		backup.setJobCountPerDay(jobCountPerDayDao.getAll());
+		backup.setIndustries(jobService.getIndustries());
+		backup.setRegions(jobService.getRegions());
+		backup.setRoles(roleDao.getAll());
+		backup.setUsers(userService.getAllUsers());
+		backup.setJobs(jobService.getJobs());
 
-        marshaller.marshal(backup, new StreamResult(out));
+		marshaller.marshal(backup, new StreamResult(out));
 
-    }
+	}
 
-    /**
-     * Render the restore screen, where the user can upload a data file
-     * to restore master data.
-     *
-     * @return
-     * @throws JAXBException
-     * @throws IOException
-     */
-    @RequestMapping(value="/admin/restore", method = RequestMethod.GET)
-    public String restore() throws JAXBException, IOException {
-        return "admin/restore";
-    }
+	/**
+	 * Render the restore screen, where the user can upload a data file
+	 * to restore master data.
+	 *
+	 * @return
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/admin/restore", method = RequestMethod.GET)
+	public String restore() throws JAXBException, IOException {
+		return "admin/restore";
+	}
 
-    /**
-     * Perform the master data restore operation (the user has provided a
-     * file and posted the file to the server).
-     *
-     *
-     * @param file The file to restore
-     * @param result Validation issues
-     * @return The view to return to.
-     * @throws JAXBException
-     * @throws IOException
-     */
-    @Transactional
-    @RequestMapping(value="/admin/restore", method = RequestMethod.POST)
-    public String restore(final @RequestParam("file") MultipartFile file,
-    		              final BindingResult result) throws JAXBException, IOException {
+	/**
+	 * Perform the master data restore operation (the user has provided a
+	 * file and posted the file to the server).
+	 *
+	 *
+	 * @param file The file to restore
+	 * @param result Validation issues
+	 * @return The view to return to.
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Transactional
+	@RequestMapping(value="/admin/restore", method = RequestMethod.POST)
+	public String restore(final @RequestParam("file") MultipartFile file,
+						  final BindingResult result) throws JAXBException, IOException {
 
-        if (!file.isEmpty()) {
-            demoService.restore(file.getInputStream());
-        } else {
-            result.reject("class.backupcontroller.validation.file.empty");
-        }
+		if (!file.isEmpty()) {
+			demoService.restore(file.getInputStream());
+		} else {
+			result.reject("class.backupcontroller.validation.file.empty");
+		}
 
-        return "redirect:../../admin/index.html";
+		return "redirect:../../admin/index.html";
 
-    }
+	}
 
 }

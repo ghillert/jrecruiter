@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.service;
 
 import java.math.BigDecimal;
@@ -49,303 +49,302 @@ import org.springframework.test.util.ReflectionTestUtils;
  * Unit Test of the JobService class
  *
  * @author Gunnar Hillert
- * @version $Id$
  */
 public class JobServiceUnitTest extends TestCase {
 
-    public void testDeleteJobForIdTest() throws Exception {
+	public void testDeleteJobForIdTest() throws Exception {
 
-        JobServiceImpl jobService = new JobServiceImpl();
+		JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = Mockito.mock(JobDao.class);
-        final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
+		final JobDao jobDao = Mockito.mock(JobDao.class);
+		final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
 
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
 
-        jobDao.remove(1L);
+		jobDao.remove(1L);
 
-        JobCountPerDay jobCountPerDay = new JobCountPerDay();
+		JobCountPerDay jobCountPerDay = new JobCountPerDay();
 
-        Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
+		Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
 
-        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
+		Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
-        Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
+		Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
 
-        final Job job = new Job();
-        job.setId(1L);
+		final Job job = new Job();
+		job.setId(1L);
 
-        jobService.deleteJobForId(job.getId());
+		jobService.deleteJobForId(job.getId());
 
-    }
+	}
 
-    public void testGetJobs() throws Exception {
+	public void testGetJobs() throws Exception {
 
-        List<Job> jobs = new ArrayList<Job>();
+		List<Job> jobs = new ArrayList<Job>();
 
-        for (long i=1; i<=10; i++) {
-            jobs.add(this.getJob(i));
-        }
+		for (long i=1; i<=10; i++) {
+			jobs.add(this.getJob(i));
+		}
 
-        JobServiceImpl jobService = new JobServiceImpl();
-        JobDao jobDao = Mockito.mock(JobDao.class);
+		JobServiceImpl jobService = new JobServiceImpl();
+		JobDao jobDao = Mockito.mock(JobDao.class);
 
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        Mockito.when(jobDao.getAllJobs()).thenReturn(jobs);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		Mockito.when(jobDao.getAllJobs()).thenReturn(jobs);
 
-        List<Job> jobsFromDb = jobService.getJobs();
+		List<Job> jobsFromDb = jobService.getJobs();
 
-        assertNotNull(jobsFromDb);
-        assertTrue(jobsFromDb.size() == 10);
+		assertNotNull(jobsFromDb);
+		assertTrue(jobsFromDb.size() == 10);
 
-    }
+	}
 
-    public void testGetIndustries() throws Exception {
+	public void testGetIndustries() throws Exception {
 
-        List<Job> jobs = new ArrayList<Job>();
+		List<Job> jobs = new ArrayList<Job>();
 
-        for (long i=1; i<=10; i++) {
-            jobs.add(this.getJob(i));
-        }
+		for (long i=1; i<=10; i++) {
+			jobs.add(this.getJob(i));
+		}
 
-        JobServiceImpl jobService = new JobServiceImpl();
-        JobDao jobDao = Mockito.mock(JobDao.class);
+		JobServiceImpl jobService = new JobServiceImpl();
+		JobDao jobDao = Mockito.mock(JobDao.class);
 
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        Mockito.when(jobDao.getAllJobs()).thenReturn(jobs);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		Mockito.when(jobDao.getAllJobs()).thenReturn(jobs);
 
-        List<Job> jobsFromDb = jobService.getJobs();
+		List<Job> jobsFromDb = jobService.getJobs();
 
-        assertNotNull(jobsFromDb);
-        assertTrue(jobsFromDb.size() == 10);
+		assertNotNull(jobsFromDb);
+		assertTrue(jobsFromDb.size() == 10);
 
-    }
+	}
 
-    public void testGetRegions() throws Exception {
+	public void testGetRegions() throws Exception {
 
-        List<Region> regions = new ArrayList<Region>();
+		List<Region> regions = new ArrayList<Region>();
 
-        for (long i=1; i<=10; i++) {
-            regions.add(new Region(i, "Test_" + i));
-        }
+		for (long i=1; i<=10; i++) {
+			regions.add(new Region(i, "Test_" + i));
+		}
 
-        JobServiceImpl jobService = new JobServiceImpl();
-        RegionDao regionDao = Mockito.mock(RegionDao.class);
+		JobServiceImpl jobService = new JobServiceImpl();
+		RegionDao regionDao = Mockito.mock(RegionDao.class);
 
-        ReflectionTestUtils.setField(jobService, "regionDao", regionDao, RegionDao.class);
-        Mockito.when(regionDao.getAllRegionsOrdered()).thenReturn(regions);
+		ReflectionTestUtils.setField(jobService, "regionDao", regionDao, RegionDao.class);
+		Mockito.when(regionDao.getAllRegionsOrdered()).thenReturn(regions);
 
-        List<Region> regionsromDb = jobService.getRegions();
+		List<Region> regionsromDb = jobService.getRegions();
 
-        assertNotNull(regionsromDb);
-        assertTrue(regionsromDb.size() == 10);
+		assertNotNull(regionsromDb);
+		assertTrue(regionsromDb.size() == 10);
 
-    }
+	}
 
-    public void testGetJobsForPagination() throws Exception {
+	public void testGetJobsForPagination() throws Exception {
 
-        final List<Job> jobs = new ArrayList<Job>();
+		final List<Job> jobs = new ArrayList<Job>();
 
-        for (long i=1; i<=10; i++) {
-            jobs.add(this.getJob(i));
-        }
+		for (long i=1; i<=10; i++) {
+			jobs.add(this.getJob(i));
+		}
 
-        final JobServiceImpl jobService = new JobServiceImpl();
-        final JobDao jobDao = Mockito.mock(JobDao.class);
+		final JobServiceImpl jobService = new JobServiceImpl();
+		final JobDao jobDao = Mockito.mock(JobDao.class);
 
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        Mockito.when(jobDao.getJobs(5, 1, null, null)).thenReturn(jobs);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		Mockito.when(jobDao.getJobs(5, 1, null, null)).thenReturn(jobs);
 
-        final List<Job> jobsFromDb = jobService.getJobs(5, 1, null, null);
+		final List<Job> jobsFromDb = jobService.getJobs(5, 1, null, null);
 
-        assertNotNull(jobsFromDb);
-        assertTrue(jobsFromDb.size() == 10);
+		assertNotNull(jobsFromDb);
+		assertTrue(jobsFromDb.size() == 10);
 
-    }
+	}
 
-    public void testGetJobsCountTest() throws Exception {
-        final JobServiceImpl jobService = new JobServiceImpl();
+	public void testGetJobsCountTest() throws Exception {
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = Mockito.mock(JobDao.class);
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		final JobDao jobDao = Mockito.mock(JobDao.class);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
+		Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
-        final Long jobsCounted = jobService.getJobsCount();
+		final Long jobsCounted = jobService.getJobsCount();
 
-        assertEquals(Long.valueOf(10), jobsCounted);
-    }
+		assertEquals(Long.valueOf(10), jobsCounted);
+	}
 
-    public void testGetJRecruiterSettings() throws Exception {
+	public void testGetJRecruiterSettings() throws Exception {
 
-        final JobServiceImpl jobService = new JobServiceImpl();
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        List<Configuration>settings = new ArrayList<Configuration>();
+		List<Configuration>settings = new ArrayList<Configuration>();
 
-        for (long i=1; i<=10; i++) {
-            Configuration configuration = new Configuration("configuration_" + i);
-            settings.add(configuration);
-        }
+		for (long i=1; i<=10; i++) {
+			Configuration configuration = new Configuration("configuration_" + i);
+			settings.add(configuration);
+		}
 
-        final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
-        Mockito.when(configurationDao.getAll()).thenReturn(settings);
+		final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
+		Mockito.when(configurationDao.getAll()).thenReturn(settings);
 
-        ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
+		ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
-        List<Configuration>settings2 = jobService.getJRecruiterSettings();
+		List<Configuration>settings2 = jobService.getJRecruiterSettings();
 
-        assertNotNull(settings2);
-        assertTrue(settings2.size() == 10);
-    }
+		assertNotNull(settings2);
+		assertTrue(settings2.size() == 10);
+	}
 
-    public void testGetJRecruiterSetting() throws Exception {
+	public void testGetJRecruiterSetting() throws Exception {
 
-        final JobServiceImpl jobService = new JobServiceImpl();
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        Configuration configuration = new Configuration();
+		Configuration configuration = new Configuration();
 
-        final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
-        Mockito.when(configurationDao.get("key")).thenReturn(configuration);
+		final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
+		Mockito.when(configurationDao.get("key")).thenReturn(configuration);
 
-        ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
+		ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
-        Configuration configuration2 = jobService.getJRecruiterSetting("key");
+		Configuration configuration2 = jobService.getJRecruiterSetting("key");
 
-        assertNotNull(configuration2);
-    }
+		assertNotNull(configuration2);
+	}
 
-    public void testSaveJRecruiterSetting() throws Exception {
-        final JobServiceImpl jobService = new JobServiceImpl();
-        Configuration configuration = new Configuration();
+	public void testSaveJRecruiterSetting() throws Exception {
+		final JobServiceImpl jobService = new JobServiceImpl();
+		Configuration configuration = new Configuration();
 
-        final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
-        Mockito.when(configurationDao.save(configuration)).thenReturn(configuration);
+		final ConfigurationDao configurationDao = Mockito.mock(ConfigurationDao.class);
+		Mockito.when(configurationDao.save(configuration)).thenReturn(configuration);
 
-        ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
+		ReflectionTestUtils.setField(jobService, "configurationDao", configurationDao, ConfigurationDao.class);
 
-        jobService.saveJRecruiterSetting(configuration);
-    }
+		jobService.saveJRecruiterSetting(configuration);
+	}
 
-    public void testGetUsersJobsTestAsAdminUser() throws Exception {
+	public void testGetUsersJobsTestAsAdminUser() throws Exception {
 
-        final User user = this.getUser();
-        user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.ADMIN.name()), user));
+		final User user = this.getUser();
+		user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.ADMIN.name()), user));
 
-        final JobServiceImpl jobService = new JobServiceImpl();
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = Mockito.mock(JobDao.class);
+		final JobDao jobDao = Mockito.mock(JobDao.class);
 
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        final UserDao userDao = Mockito.mock(UserDao.class);
-        ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
+		final UserDao userDao = Mockito.mock(UserDao.class);
+		ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
-        Mockito.when(userDao.getUser("demo44")).thenReturn(user);
+		Mockito.when(userDao.getUser("demo44")).thenReturn(user);
 
-        final List<Job>adminJobs = new ArrayList<Job>();
+		final List<Job>adminJobs = new ArrayList<Job>();
 
-        for (long i=1; i<=10; i++) {
-            Job job = new Job(i);
-            adminJobs.add(job);
-        }
+		for (long i=1; i<=10; i++) {
+			Job job = new Job(i);
+			adminJobs.add(job);
+		}
 
-        Mockito.when(jobDao.getAllJobs()).thenReturn(adminJobs);
+		Mockito.when(jobDao.getAllJobs()).thenReturn(adminJobs);
 
-        final List<Job>jobsFromService = jobService.getUsersJobs("demo44");
+		final List<Job>jobsFromService = jobService.getUsersJobs("demo44");
 
-        assertTrue(jobsFromService.size() == 10);
+		assertTrue(jobsFromService.size() == 10);
 
-    }
+	}
 
-    public void testGetUsersJobsAsNormalUser() throws Exception {
+	public void testGetUsersJobsAsNormalUser() throws Exception {
 
-        final User user = this.getUser();
-        user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.MANAGER.name()), user));
+		final User user = this.getUser();
+		user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.MANAGER.name()), user));
 
-        final JobServiceImpl jobService = new JobServiceImpl();
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = Mockito.mock(JobDao.class);
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		final JobDao jobDao = Mockito.mock(JobDao.class);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        final UserDao userDao = Mockito.mock(UserDao.class);
-        ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
+		final UserDao userDao = Mockito.mock(UserDao.class);
+		ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
-        Mockito.when(userDao.getUser("demo44")).thenReturn(user);
+		Mockito.when(userDao.getUser("demo44")).thenReturn(user);
 
-        final List<Job>userJobs = new ArrayList<Job>();
+		final List<Job>userJobs = new ArrayList<Job>();
 
-        for (long i=1; i<=5; i++) {
-            Job job = new Job(i);
-            userJobs.add(job);
-        }
+		for (long i=1; i<=5; i++) {
+			Job job = new Job(i);
+			userJobs.add(job);
+		}
 
-        Mockito.when(jobDao.getAllUserJobs("demo44")).thenReturn(userJobs);
+		Mockito.when(jobDao.getAllUserJobs("demo44")).thenReturn(userJobs);
 
-        final List<Job>jobsFromService = jobService.getUsersJobs("demo44");
+		final List<Job>jobsFromService = jobService.getUsersJobs("demo44");
 
-        assertTrue(jobsFromService.size() == 5);
+		assertTrue(jobsFromService.size() == 5);
 
-    }
+	}
 
-    public void testGetUsersJobsForStatistics() throws Exception {
+	public void testGetUsersJobsForStatistics() throws Exception {
 
-        final User user = this.getUser();
-        user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.MANAGER.name()), user));
+		final User user = this.getUser();
+		user.getUserToRoles().add(new UserToRole(1L, new Role(1L, Constants.Roles.MANAGER.name()), user));
 
-        final JobServiceImpl jobService = new JobServiceImpl();
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        final JobDao jobDao = Mockito.mock(JobDao.class);
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		final JobDao jobDao = Mockito.mock(JobDao.class);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
 
-        final UserDao userDao = Mockito.mock(UserDao.class);
-        ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
+		final UserDao userDao = Mockito.mock(UserDao.class);
+		ReflectionTestUtils.setField(jobService, "userDao", userDao, UserDao.class);
 
-        Mockito.when(userDao.getUser("demo44")).thenReturn(user);
+		Mockito.when(userDao.getUser("demo44")).thenReturn(user);
 
-        final List<Job>jobs = new ArrayList<Job>();
+		final List<Job>jobs = new ArrayList<Job>();
 
-        for (long i=1; i<=5; i++) {
-            Job job = new Job(i);
-            jobs.add(job);
-        }
+		for (long i=1; i<=5; i++) {
+			Job job = new Job(i);
+			jobs.add(job);
+		}
 
-        Mockito.when(jobDao.getAllUserJobsForStatistics(user.getId())).thenReturn(jobs);
+		Mockito.when(jobDao.getAllUserJobsForStatistics(user.getId())).thenReturn(jobs);
 
-        final List<Job>jobs2 = jobService.getUsersJobsForStatistics("demo44");
+		final List<Job>jobs2 = jobService.getUsersJobsForStatistics("demo44");
 
-        assertNotNull(jobs2);
-        assertTrue(jobs2.size() == 5);
+		assertNotNull(jobs2);
+		assertTrue(jobs2.size() == 5);
 
-    }
+	}
 
 
-    public void testAddJob() throws Exception {
+	public void testAddJob() throws Exception {
 
-        final JobServiceImpl jobService = new JobServiceImpl();
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        Job job = this.getJob(1L);
+		Job job = this.getJob(1L);
 
-        final JobDao jobDao = Mockito.mock(JobDao.class);
-        final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
+		final JobDao jobDao = Mockito.mock(JobDao.class);
+		final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
 
 
-        Mockito.when(jobDao.save(job)).thenReturn(job);
+		Mockito.when(jobDao.save(job)).thenReturn(job);
 
-        JobCountPerDay jobCountPerDay = new JobCountPerDay();
+		JobCountPerDay jobCountPerDay = new JobCountPerDay();
 
-        Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
+		Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
 
-        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
+		Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
-        Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
+		Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
 
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		ReflectionTestUtils.setField(jobService, "jobCountPerDayDao", jobCountPerDayDao, JobCountPerDayDao.class);
 
-        jobService.addJob(job);
+		jobService.addJob(job);
 
-    }
+	}
 
 //    public void testGetJobForId() throws Exception {
 //
@@ -366,111 +365,111 @@ public class JobServiceUnitTest extends TestCase {
 //    }
 
 
-    public void testUpdateJobTest() throws Exception {
-        final JobServiceImpl jobService = new JobServiceImpl();
+	public void testUpdateJobTest() throws Exception {
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        final Job job = this.getJob(1L);
+		final Job job = this.getJob(1L);
 
-        final JobDao jobDao = Mockito.mock(JobDao.class);
-        final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
-        final NotificationService notificationService = Mockito.mock(NotificationService.class);
-        final ServerSettings serverSettings = Mockito.mock(ServerSettings.class);
+		final JobDao jobDao = Mockito.mock(JobDao.class);
+		final JobCountPerDayDao jobCountPerDayDao = Mockito.mock(JobCountPerDayDao.class);
+		final NotificationService notificationService = Mockito.mock(NotificationService.class);
+		final ServerSettings serverSettings = Mockito.mock(ServerSettings.class);
 
-        Mockito.when(jobDao.save(job)).thenReturn(job);
+		Mockito.when(jobDao.save(job)).thenReturn(job);
 
-        JobCountPerDay jobCountPerDay = new JobCountPerDay();
+		JobCountPerDay jobCountPerDay = new JobCountPerDay();
 
-        Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
+		Mockito.when(jobCountPerDayDao.getByDate((Date)Mockito.anyObject())).thenReturn(jobCountPerDay);
 
-        Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
+		Mockito.when(jobDao.getJobsCount()).thenReturn(10L);
 
-        Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
+		Mockito.when(jobCountPerDayDao.save(jobCountPerDay)).thenReturn(jobCountPerDay);
 
-        Mockito.when(serverSettings.getServerAddress()).thenReturn("test");
+		Mockito.when(serverSettings.getServerAddress()).thenReturn("test");
 
-        Mockito.when(notificationService.shortenUrl((String)Mockito.anyObject())).thenReturn((new URI("http://www.google.com")));
+		Mockito.when(notificationService.shortenUrl((String)Mockito.anyObject())).thenReturn((new URI("http://www.google.com")));
 
-        notificationService.sendTweetToTwitter((String)Mockito.anyObject());
+		notificationService.sendTweetToTwitter((String)Mockito.anyObject());
 
-        ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
-        ReflectionTestUtils.setField(jobService, "notificationService", notificationService, NotificationService.class);
-        ReflectionTestUtils.setField(jobService, "serverSettings", serverSettings, ServerSettings.class);
+		ReflectionTestUtils.setField(jobService, "jobDao", jobDao, JobDao.class);
+		ReflectionTestUtils.setField(jobService, "notificationService", notificationService, NotificationService.class);
+		ReflectionTestUtils.setField(jobService, "serverSettings", serverSettings, ServerSettings.class);
 
 
-        jobService.updateJob(job);
+		jobService.updateJob(job);
 
-    }
+	}
 
-    public void testUpdateJobStatistic() throws Exception {
-        final JobServiceImpl jobService = new JobServiceImpl();
+	public void testUpdateJobStatistic() throws Exception {
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        final Statistic statistic = new Statistic();
-        statistic.setJob(this.getJob(1L));
-        statistic.setId(1L);
+		final Statistic statistic = new Statistic();
+		statistic.setJob(this.getJob(1L));
+		statistic.setId(1L);
 
-        final StatisticDao statisticDao = Mockito.mock(StatisticDao.class);
-        Mockito.when(statisticDao.save(statistic)).thenReturn(statistic);
-        ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
+		final StatisticDao statisticDao = Mockito.mock(StatisticDao.class);
+		Mockito.when(statisticDao.save(statistic)).thenReturn(statistic);
+		ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
 
-        jobService.updateJobStatistic(statistic);
-    }
+		jobService.updateJobStatistic(statistic);
+	}
 
-    public void testUpdateJobStatistic2() throws Exception {
-        final JobServiceImpl jobService = new JobServiceImpl();
+	public void testUpdateJobStatistic2() throws Exception {
+		final JobServiceImpl jobService = new JobServiceImpl();
 
-        final Statistic statistic = new Statistic();
-        statistic.setJob(this.getJob(1L));
+		final Statistic statistic = new Statistic();
+		statistic.setJob(this.getJob(1L));
 
-        final StatisticDao statisticDao = Mockito.mock(StatisticDao.class);
-        Mockito.when(statisticDao.save(statistic)).thenReturn(statistic);
+		final StatisticDao statisticDao = Mockito.mock(StatisticDao.class);
+		Mockito.when(statisticDao.save(statistic)).thenReturn(statistic);
 
-        ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
+		ReflectionTestUtils.setField(jobService, "statisticDao", statisticDao, StatisticDao.class);
 
-        jobService.updateJobStatistic(statistic);
-    }
+		jobService.updateJobStatistic(statistic);
+	}
 //~~~~~Helper methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 private Job getJob(Long jobId) {
 
-    Job job = new Job(jobId);
-    job.setBusinessAddress1("businessAddress1");
-    job.setBusinessAddress2("businessAddress2");
-    job.setBusinessCity("businessCity");
-    job.setBusinessEmail("businessEmail");
-    job.setRegionOther("businessLocation");
-    job.setBusinessName("businessName");
-    job.setBusinessPhone("businessPhone");
-    job.setBusinessState("businessState");
-    job.setBusinessZip("businessZip");
-    job.setDescription("description");
+	Job job = new Job(jobId);
+	job.setBusinessAddress1("businessAddress1");
+	job.setBusinessAddress2("businessAddress2");
+	job.setBusinessCity("businessCity");
+	job.setBusinessEmail("businessEmail");
+	job.setRegionOther("businessLocation");
+	job.setBusinessName("businessName");
+	job.setBusinessPhone("businessPhone");
+	job.setBusinessState("businessState");
+	job.setBusinessZip("businessZip");
+	job.setDescription("description");
 
-    job.setJobRestrictions("jobRestrictions");
-    job.setJobTitle("jobTitle");
-    job.setLatitude(BigDecimal.ONE);
-    job.setLongitude(BigDecimal.ZERO);
-    job.setOfferedBy(OfferedBy.RECRUITER);
-    job.setRegistrationDate(new Date());
-    job.setSalary("10000");
-    job.setStatus(JobStatus.ACTIVE);
-    job.setUpdateDate(new Date());
-    job.setWebsite("www.google.com");
+	job.setJobRestrictions("jobRestrictions");
+	job.setJobTitle("jobTitle");
+	job.setLatitude(BigDecimal.ONE);
+	job.setLongitude(BigDecimal.ZERO);
+	job.setOfferedBy(OfferedBy.RECRUITER);
+	job.setRegistrationDate(new Date());
+	job.setSalary("10000");
+	job.setStatus(JobStatus.ACTIVE);
+	job.setUpdateDate(new Date());
+	job.setWebsite("www.google.com");
 
-    return job;
+	return job;
 
 }
 
 private User getUser() {
 
-    User user = new User();
-    user.setUsername("demo44");
-    user.setEmail("demo@demo.com");
-    user.setFirstName("Demo First Name");
-    user.setLastName("Demo Last Name");
-    user.setPassword("demo");
-    user.setPhone("123456");
-    user.setRegistrationDate(new Date());
+	User user = new User();
+	user.setUsername("demo44");
+	user.setEmail("demo@demo.com");
+	user.setFirstName("Demo First Name");
+	user.setLastName("Demo Last Name");
+	user.setPassword("demo");
+	user.setPhone("123456");
+	user.setRegistrationDate(new Date());
 
-    return user;
+	return user;
 
 }
 

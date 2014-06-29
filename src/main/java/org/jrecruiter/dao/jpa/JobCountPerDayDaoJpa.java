@@ -1,17 +1,17 @@
 /*
- *	http://www.jrecruiter.org
+ * Copyright 2006-2014 the original author or authors.
  *
- *	Disclaimer of Warranty.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *	Unless required by applicable law or agreed to in writing, Licensor provides
- *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
- *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
- *	including, without limitation, any warranties or conditions of TITLE,
- *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
- *	solely responsible for determining the appropriateness of using or
- *	redistributing the Work and assume any risks associated with Your exercise of
- *	permissions under this License.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.jrecruiter.dao.jpa;
 
@@ -27,59 +27,58 @@ import org.springframework.stereotype.Repository;
 /**
  * This DAO provides job-related database methods.
  *
- * @author 	 Puchala, Gunnar Hillert
- * @version $Id$
+ * @author Puchala, Gunnar Hillert
  */
 @Repository("jobCountPerDayDao")
 public final class JobCountPerDayDaoJpa extends GenericDaoJpa< JobCountPerDay, Long>
 implements JobCountPerDayDao {
 
-    /**
-     * Constructor.
-     *
-     */
-    private JobCountPerDayDaoJpa() {
-        super(JobCountPerDay.class);
-    }
+	/**
+	 * Constructor.
+	 *
+	 */
+	private JobCountPerDayDaoJpa() {
+		super(JobCountPerDay.class);
+	}
 
-    /** {@inheritDoc} */
-    public JobCountPerDay getByDate(Date day) {
-        Session session = (Session)entityManager.getDelegate();
-        Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
-                + " where jcpd.jobDate = :jobDate ");
-        query.setDate("jobDate", day);
+	/** {@inheritDoc} */
+	public JobCountPerDay getByDate(Date day) {
+		Session session = (Session)entityManager.getDelegate();
+		Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
+				+ " where jcpd.jobDate = :jobDate ");
+		query.setDate("jobDate", day);
 
-        return (JobCountPerDay)query.uniqueResult();
-    }
+		return (JobCountPerDay)query.uniqueResult();
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public List<JobCountPerDay> getJobCountPerDayAndPeriod(Date fromDate, Date toDate) {
 
-        Session session = (Session)entityManager.getDelegate();
-        Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
-                + " where jcpd.jobDate >= :fromDate and jcpd.jobDate <= :toDate "
-                + " order by jobDate asc");
-        query.setDate("fromDate", fromDate);
-        query.setDate("toDate", toDate);
+		Session session = (Session)entityManager.getDelegate();
+		Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
+				+ " where jcpd.jobDate >= :fromDate and jcpd.jobDate <= :toDate "
+				+ " order by jobDate asc");
+		query.setDate("fromDate", fromDate);
+		query.setDate("toDate", toDate);
 
-        List<JobCountPerDay> jobCountPerDayList = query.list();
+		List<JobCountPerDay> jobCountPerDayList = query.list();
 
-        return jobCountPerDayList;
-    }
+		return jobCountPerDayList;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public List<JobCountPerDay> getLatestTwoJobCounts() {
-        Session session = (Session)entityManager.getDelegate();
-        Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
-                + " order by jobDate desc");
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public List<JobCountPerDay> getLatestTwoJobCounts() {
+		Session session = (Session)entityManager.getDelegate();
+		Query query = session.createQuery("select jcpd from JobCountPerDay jcpd "
+				+ " order by jobDate desc");
 
-        query.setMaxResults(2);
-        final List<JobCountPerDay> jobCountPerDayList = query.list();
+		query.setMaxResults(2);
+		final List<JobCountPerDay> jobCountPerDayList = query.list();
 
-        return jobCountPerDayList;
-    }
+		return jobCountPerDayList;
+	}
 
 }
 

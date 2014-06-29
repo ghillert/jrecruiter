@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.mock;
 
 import javax.mail.Session;
@@ -27,43 +27,42 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 
 /**
  * @author Gunnar Hillert
- * @version $Id$
  */
 public class MockJavaMailSender extends JavaMailSenderImpl {
 
-    public MockJavaMailSender() {
-        super();
-    }
+	public MockJavaMailSender() {
+		super();
+	}
 
-    /**
-     * Logger for this class.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(MockJavaMailSender.class);
+	/**
+	 * Logger for this class.
+	 */
+	private final static Logger LOGGER = LoggerFactory.getLogger(MockJavaMailSender.class);
 
-    private MimeMessage message;
+	private MimeMessage message;
 
-    @Override
-    public void send(MimeMessagePreparator preparator) throws MailException {
+	@Override
+	public void send(MimeMessagePreparator preparator) throws MailException {
 
-        message = new MimeMessage((Session) null);
-        try {
-            preparator.prepare(message);
-        } catch (Exception e) {
-            throw new IllegalStateException("Error while preparing message.", e);
-        }
+		message = new MimeMessage((Session) null);
+		try {
+			preparator.prepare(message);
+		} catch (Exception e) {
+			throw new IllegalStateException("Error while preparing message.", e);
+		}
 
-        LOGGER.info("send() - Mock message successfully sent.");
+		LOGGER.info("send() - Mock message successfully sent.");
 
-    }
+	}
 
-    @Override
-    public void send(SimpleMailMessage simpleMessage) throws MailException {
-        LOGGER.info("Sending...");
-    }
+	@Override
+	public void send(SimpleMailMessage simpleMessage) throws MailException {
+		LOGGER.info("Sending...");
+	}
 
-    @Override
-    public void send(MimeMessage msg) throws MailException {
-        message = msg;
-    }
+	@Override
+	public void send(MimeMessage msg) throws MailException {
+		message = msg;
+	}
 
 }

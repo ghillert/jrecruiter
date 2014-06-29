@@ -1,17 +1,17 @@
 /*
- *	http://www.jrecruiter.org
+ * Copyright 2006-2014 the original author or authors.
  *
- *	Disclaimer of Warranty.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *	Unless required by applicable law or agreed to in writing, Licensor provides
- *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
- *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
- *	including, without limitation, any warranties or conditions of TITLE,
- *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
- *	solely responsible for determining the appropriateness of using or
- *	redistributing the Work and assume any risks associated with Your exercise of
- *	permissions under this License.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.jrecruiter.dao.jpa;
 
@@ -44,306 +44,305 @@ import org.springframework.stereotype.Repository;
 /**
  * This DAO provides job-related database methods.
  *
- * @author 	 Puchala, Gunnar Hillert
- * @version $Id$
+ * @author Puchala, Gunnar Hillert
  */
 @Repository("jobDao")
 public final class JobDaoJpa extends GenericDaoJpa< Job, Long>
 implements JobDao {
 
-    /**
-     * Constructor.
-     *
-     */
-    private JobDaoJpa() {
-        super(Job.class);
-    }
-
-
-
-    /**
-     * Method for returning list of all jobs.
-     *
-     * @return List of Jobs
-     *
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getAllJobs() {
-
-        List < Job > jobs = entityManager
-        .createQuery("select job from Job job "
-                + "left outer join fetch job.statistic "
-                + " order by job.updateDate DESC")
-                .getResultList();
-
-        return jobs;
-    }
-
-    /**
-     * Method for getting users jobs.
-     *
-     * @param username name of user owning the job.
-     * @return List of Job objects for given User
-     * @see org.jrecruiter.persistent.dao.
-     *      JobReqDAO#getAllUserJobs(java.lang.String)
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getAllUserJobs(final String username) {
-
-        List < Job > jobs = entityManager
-        .createQuery("from Job j where j.user.username=:username")
-        .setParameter("username", username)
-        .getResultList();
-        return jobs;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.jrecruiter.persistent.dao.
-     *      JobReqDAO#getAllUserJobs(java.lang.String)
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getAllUserJobsForStatistics(Long userId) {
-
-        List < Job > jobs = entityManager
-        .createQuery("from Job j left outer join fetch j.statistic where j.user.id=:userId")
-        .setParameter("userId", userId)
-        .getResultList();
-        return jobs;
-    }
-
-    /**
-     * Method for returning list of jobs owned by the user for statistical
-     * purposes.
-     *
-     * @param username username for which statistics shall be obtained
-     * @param maxResult maximum number of statistics objects returned
-     * @param statsMode  what type of statistical information to be generated
-     * @return List of jobs.
-     *
-     * @see org.jrecruiter.dao.JobsDao#getUsersJobsForStatistics(java.lang.String,
-     *      java.lang.Integer, org.jrecruiter.common.Constants.StatsMode)
-     */
-    @SuppressWarnings("unchecked")
-    public List < Job > getUsersJobsForStatistics(final Long userId,
-            final Integer maxResult,
-            final Boolean administrator) {
-
-        final List < Job > jobs;
-
-            javax.persistence.Query query = null;
-
-            if (administrator) {
-
-                query = entityManager
-                .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                        + "where stats is not null order by stats.counter desc");
-
-            } else {
-
-                query = entityManager
-                .createQuery("select j from Job j left outer join fetch j.statistic as stats "
-                        + "where j.user.id=:userId and stats is not null "
-                        + "order by stats.counter desc");
-                query.setParameter("userId", userId);
-            }
-
-            query.setMaxResults(maxResult);
-
-            jobs = query.getResultList();
-
-            return jobs;
-        }
-
-        /**
-         * Perform a simple search within the persistence store.
-         *
-         * @param keyword
-         *            The search keyword
-         * @return List of job postings representing the search results.
-         */
-        @SuppressWarnings("unchecked")
-        public List<Job> searchByKeyword(final String keyword) {
-
-            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-
-            MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_CURRENT,
-                    new String[]{"description", "industry.name", "region.name", "regionOther",
-                        "jobTitle", "website", "businessAddress1", "businessAddress2",
-                        "businessCity", "businessState", "businessZip", "businessPhone",
-                        "businessEmail", "industryOther", "jobRestrictions",
-                        "updateDate"},
-                        fullTextEntityManager.getSearchFactory().getAnalyzer( Job.class ));
-            try {
-            org.apache.lucene.search.Query query = parser.parse(keyword);
-
-            javax.persistence.Query hibQuery = fullTextEntityManager.createFullTextQuery( query, Job.class );
-            List<Job> result = hibQuery.getResultList();
-
-            return result;
-
-              } catch ( org.apache.lucene.queryParser.ParseException e) {
-                throw new IllegalStateException(e);
-            }
-
-        }
-
-        /**
-         * Method for returning list of available job postings.
-         * @param pageSize Max number of results returned
-         * @param pageNumber Which page are you one?
-         * @param fieldSorted Which field shall be sorted
-         * @param sortOrder What is the sort order?
-         * @return List of jobs.
-         */
-        @SuppressWarnings("unchecked")
-        public List < Job > getJobs(final Integer pageSize,
-                                    final Integer pageNumber,
-                                    Map<String, String> sortOrders,
-                                    Map<String, String> jobFilters) {
-            List < Job > jobs;
-
-            if (pageSize == null) {
-                throw new IllegalStateException("pageSize must not be null.");
-            }
-            if (pageNumber == null) {
-                throw new IllegalStateException("pageNumber must not be null.");
-            }
-
-            if (sortOrders == null) {
-                sortOrders = CollectionUtils.getHashMap();
-            }
-
-            if (sortOrders.isEmpty()) {
-                sortOrders.put("updateDate", "ASC");
-            }
-
-            if (jobFilters == null) {
-                jobFilters = CollectionUtils.getHashMap();
-            }
-
-
-            Session session = (Session)entityManager.getDelegate();
-            final Criteria criteria = session.createCriteria(Job.class);
-
-            //criteria.setFetchMode("statistics", FetchMode.JOIN);
-            //criteria.setFetchMode("region", FetchMode.JOIN);
-
-            for (Entry<String, String> entry : sortOrders.entrySet()) {
-                if (entry.getValue().equalsIgnoreCase("DESC")) {
-                    criteria.addOrder(Order.desc(entry.getKey()));
-                } else if (entry.getValue().equalsIgnoreCase("ASC")) {
-                    criteria.addOrder(Order.asc(entry.getKey()));
-                } else {
-                    throw new IllegalStateException("SortOrder " + entry.getValue() + " is not supported.");
-                }
-            }
-
-            for (Entry<String, String> entry : jobFilters.entrySet()) {
-                    criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue()));
-            }
+	/**
+	 * Constructor.
+	 *
+	 */
+	private JobDaoJpa() {
+		super(Job.class);
+	}
+
+
+
+	/**
+	 * Method for returning list of all jobs.
+	 *
+	 * @return List of Jobs
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getAllJobs() {
+
+		List < Job > jobs = entityManager
+		.createQuery("select job from Job job "
+				+ "left outer join fetch job.statistic "
+				+ " order by job.updateDate DESC")
+				.getResultList();
+
+		return jobs;
+	}
+
+	/**
+	 * Method for getting users jobs.
+	 *
+	 * @param username name of user owning the job.
+	 * @return List of Job objects for given User
+	 * @see org.jrecruiter.persistent.dao.
+	 *      JobReqDAO#getAllUserJobs(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getAllUserJobs(final String username) {
+
+		List < Job > jobs = entityManager
+		.createQuery("from Job j where j.user.username=:username")
+		.setParameter("username", username)
+		.getResultList();
+		return jobs;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.jrecruiter.persistent.dao.
+	 *      JobReqDAO#getAllUserJobs(java.lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getAllUserJobsForStatistics(Long userId) {
+
+		List < Job > jobs = entityManager
+		.createQuery("from Job j left outer join fetch j.statistic where j.user.id=:userId")
+		.setParameter("userId", userId)
+		.getResultList();
+		return jobs;
+	}
+
+	/**
+	 * Method for returning list of jobs owned by the user for statistical
+	 * purposes.
+	 *
+	 * @param username username for which statistics shall be obtained
+	 * @param maxResult maximum number of statistics objects returned
+	 * @param statsMode  what type of statistical information to be generated
+	 * @return List of jobs.
+	 *
+	 * @see org.jrecruiter.dao.JobsDao#getUsersJobsForStatistics(java.lang.String,
+	 *      java.lang.Integer, org.jrecruiter.common.Constants.StatsMode)
+	 */
+	@SuppressWarnings("unchecked")
+	public List < Job > getUsersJobsForStatistics(final Long userId,
+			final Integer maxResult,
+			final Boolean administrator) {
+
+		final List < Job > jobs;
+
+			javax.persistence.Query query = null;
+
+			if (administrator) {
+
+				query = entityManager
+				.createQuery("select j from Job j left outer join fetch j.statistic as stats "
+						+ "where stats is not null order by stats.counter desc");
+
+			} else {
+
+				query = entityManager
+				.createQuery("select j from Job j left outer join fetch j.statistic as stats "
+						+ "where j.user.id=:userId and stats is not null "
+						+ "order by stats.counter desc");
+				query.setParameter("userId", userId);
+			}
+
+			query.setMaxResults(maxResult);
+
+			jobs = query.getResultList();
+
+			return jobs;
+		}
+
+		/**
+		 * Perform a simple search within the persistence store.
+		 *
+		 * @param keyword
+		 *            The search keyword
+		 * @return List of job postings representing the search results.
+		 */
+		@SuppressWarnings("unchecked")
+		public List<Job> searchByKeyword(final String keyword) {
+
+			FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+
+			MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_CURRENT,
+					new String[]{"description", "industry.name", "region.name", "regionOther",
+						"jobTitle", "website", "businessAddress1", "businessAddress2",
+						"businessCity", "businessState", "businessZip", "businessPhone",
+						"businessEmail", "industryOther", "jobRestrictions",
+						"updateDate"},
+						fullTextEntityManager.getSearchFactory().getAnalyzer( Job.class ));
+			try {
+			org.apache.lucene.search.Query query = parser.parse(keyword);
+
+			javax.persistence.Query hibQuery = fullTextEntityManager.createFullTextQuery( query, Job.class );
+			List<Job> result = hibQuery.getResultList();
+
+			return result;
+
+			  } catch ( org.apache.lucene.queryParser.ParseException e) {
+				throw new IllegalStateException(e);
+			}
+
+		}
+
+		/**
+		 * Method for returning list of available job postings.
+		 * @param pageSize Max number of results returned
+		 * @param pageNumber Which page are you one?
+		 * @param fieldSorted Which field shall be sorted
+		 * @param sortOrder What is the sort order?
+		 * @return List of jobs.
+		 */
+		@SuppressWarnings("unchecked")
+		public List < Job > getJobs(final Integer pageSize,
+									final Integer pageNumber,
+									Map<String, String> sortOrders,
+									Map<String, String> jobFilters) {
+			List < Job > jobs;
+
+			if (pageSize == null) {
+				throw new IllegalStateException("pageSize must not be null.");
+			}
+			if (pageNumber == null) {
+				throw new IllegalStateException("pageNumber must not be null.");
+			}
+
+			if (sortOrders == null) {
+				sortOrders = CollectionUtils.getHashMap();
+			}
+
+			if (sortOrders.isEmpty()) {
+				sortOrders.put("updateDate", "ASC");
+			}
+
+			if (jobFilters == null) {
+				jobFilters = CollectionUtils.getHashMap();
+			}
+
+
+			Session session = (Session)entityManager.getDelegate();
+			final Criteria criteria = session.createCriteria(Job.class);
+
+			//criteria.setFetchMode("statistics", FetchMode.JOIN);
+			//criteria.setFetchMode("region", FetchMode.JOIN);
+
+			for (Entry<String, String> entry : sortOrders.entrySet()) {
+				if (entry.getValue().equalsIgnoreCase("DESC")) {
+					criteria.addOrder(Order.desc(entry.getKey()));
+				} else if (entry.getValue().equalsIgnoreCase("ASC")) {
+					criteria.addOrder(Order.asc(entry.getKey()));
+				} else {
+					throw new IllegalStateException("SortOrder " + entry.getValue() + " is not supported.");
+				}
+			}
+
+			for (Entry<String, String> entry : jobFilters.entrySet()) {
+					criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue()));
+			}
 
-            criteria.setFirstResult((pageNumber - 1) * pageSize);
-            criteria.setMaxResults(pageSize);
+			criteria.setFirstResult((pageNumber - 1) * pageSize);
+			criteria.setMaxResults(pageSize);
 
-            jobs = criteria.list();
+			jobs = criteria.list();
 
-            return jobs;
-        }
+			return jobs;
+		}
 
 
-        /**
-         * Returns the number of totally available jobs in the system.
-         *
-         * @return Total number of jobs
-         * @see org.jrecruiter.dao.JobsDao#getJobsCount()
-         */
-        public Long getJobsCount() {
+		/**
+		 * Returns the number of totally available jobs in the system.
+		 *
+		 * @return Total number of jobs
+		 * @see org.jrecruiter.dao.JobsDao#getJobsCount()
+		 */
+		public Long getJobsCount() {
 
-            Long numberOfJobs = null;
+			Long numberOfJobs = null;
 
-            Session session = (Session)entityManager.getDelegate();
-            Query query = session.createQuery("select count(*) from Job");
-            numberOfJobs = (Long) query.uniqueResult();
+			Session session = (Session)entityManager.getDelegate();
+			Query query = session.createQuery("select count(*) from Job");
+			numberOfJobs = (Long) query.uniqueResult();
 
-            return numberOfJobs;
-        }
+			return numberOfJobs;
+		}
 
-        /** {@inheritDoc} */
-        @SuppressWarnings("unchecked")
-        public void reindexSearch() {
+		/** {@inheritDoc} */
+		@SuppressWarnings("unchecked")
+		public void reindexSearch() {
 
-            final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-            fullTextEntityManager.setFlushMode(FlushModeType.COMMIT);
+			final FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+			fullTextEntityManager.setFlushMode(FlushModeType.COMMIT);
 
-            final List<Job> jobs = entityManager.createQuery("select job from Job as job").getResultList();
+			final List<Job> jobs = entityManager.createQuery("select job from Job as job").getResultList();
 
-            for (final Job job : jobs) {
-                fullTextEntityManager.index(job);
-            }
+			for (final Job job : jobs) {
+				fullTextEntityManager.index(job);
+			}
 
-            final List<Region> regions = entityManager.createQuery("select region from Region as region").getResultList();
+			final List<Region> regions = entityManager.createQuery("select region from Region as region").getResultList();
 
-            for (final Region region : regions) {
-                fullTextEntityManager.index(region);
-            }
+			for (final Region region : regions) {
+				fullTextEntityManager.index(region);
+			}
 
-            final List<Industry> industries = entityManager.createQuery("select industry from Industry as industry").getResultList();
+			final List<Industry> industries = entityManager.createQuery("select industry from Industry as industry").getResultList();
 
-            for (final Industry industry : industries) {
-                fullTextEntityManager.index(industry);
-            }
+			for (final Industry industry : industries) {
+				fullTextEntityManager.index(industry);
+			}
 
-        }
+		}
 
-        /** {@inheritDoc} */
-        @SuppressWarnings("unchecked")
-        public List<Job> getJobSummaries() {
+		/** {@inheritDoc} */
+		@SuppressWarnings("unchecked")
+		public List<Job> getJobSummaries() {
 
-            final List < Job > jobs = entityManager
-            .createQuery("select new Job(j.id, j.businessName, j.jobTitle, j.region, j.updateDate, j.usesMap, j.latitude, j.longitude, j.zoomLevel) from Job j left outer join j.region order by j.updateDate desc")
-            .getResultList();
-            return jobs;
-        }
+			final List < Job > jobs = entityManager
+			.createQuery("select new Job(j.id, j.businessName, j.jobTitle, j.region, j.updateDate, j.usesMap, j.latitude, j.longitude, j.zoomLevel) from Job j left outer join j.region order by j.updateDate desc")
+			.getResultList();
+			return jobs;
+		}
 
-        /* (non-Javadoc)
-         * @see org.jrecruiter.dao.JobDao#getForUniversalId(java.lang.Long)
-         */
-        @Override
-        public Job getForUniversalId(final String universalId) {
+		/* (non-Javadoc)
+		 * @see org.jrecruiter.dao.JobDao#getForUniversalId(java.lang.Long)
+		 */
+		@Override
+		public Job getForUniversalId(final String universalId) {
 
-            Job job;
+			Job job;
 
-            try {
-                job = (Job) entityManager
-                .createQuery("select j from Job j where j.universalId = :universalId")
-                .setParameter("universalId", universalId)
-                .getSingleResult();
-            } catch(NoResultException e) {
-                job = null;
-            }
+			try {
+				job = (Job) entityManager
+				.createQuery("select j from Job j where j.universalId = :universalId")
+				.setParameter("universalId", universalId)
+				.getSingleResult();
+			} catch(NoResultException e) {
+				job = null;
+			}
 
-            return job;
-        }
+			return job;
+		}
 
 
 
-        @SuppressWarnings("unchecked")
-        @Override
-        public List<Job> getJobsByUpdateDate(@NotNull @Past final Calendar updateDate) {
+		@SuppressWarnings("unchecked")
+		@Override
+		public List<Job> getJobsByUpdateDate(@NotNull @Past final Calendar updateDate) {
 
-            final List<Job> jobs;
+			final List<Job> jobs;
 
-            jobs = entityManager
-                .createQuery("select j from Job j where j.updateDate <= :updateDate")
-                .setParameter("updateDate", updateDate.getTime())
-                .getResultList();
+			jobs = entityManager
+				.createQuery("select j from Job j where j.updateDate <= :updateDate")
+				.setParameter("updateDate", updateDate.getTime())
+				.getResultList();
 
-            return jobs;
-        }
+			return jobs;
+		}
 
 
-    }
+	}
 
 

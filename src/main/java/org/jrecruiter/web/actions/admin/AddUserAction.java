@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions.admin;
 
 import org.apache.struts2.convention.annotation.Result;
@@ -24,44 +24,43 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Gunnar Hillert
- * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 
 @Result(name="success", location="index", type="redirectAction")
 public class AddUserAction extends BaseAction {
 
-    private User user;
+	private User user;
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = -3422780336408883930L;
-    private final static Logger LOGGER = LoggerFactory.getLogger(AddUserAction.class);
+	/** serialVersionUID. */
+	private static final long serialVersionUID = -3422780336408883930L;
+	private final static Logger LOGGER = LoggerFactory.getLogger(AddUserAction.class);
 
-    public String save() {
+	public String save() {
 
-        try {
-           //FIXME
-           userService.addUser(user);
-        } catch (DuplicateUserException e) {
+		try {
+		   //FIXME
+		   userService.addUser(user);
+		} catch (DuplicateUserException e) {
 
-            LOGGER.warn(e.getMessage());
-              addFieldError("username", getText("error.duplicateUsername"));
-              return INPUT;
-        }
+			LOGGER.warn(e.getMessage());
+			  addFieldError("username", getText("error.duplicateUsername"));
+			  return INPUT;
+		}
 
-        addActionMessage(getText("user.add.success", user.getUsername()));
-        return SUCCESS;
-    }
+		addActionMessage(getText("user.add.success", user.getUsername()));
+		return SUCCESS;
+	}
 
-    public String execute() {
-        return INPUT;
-    }
+	public String execute() {
+		return INPUT;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }

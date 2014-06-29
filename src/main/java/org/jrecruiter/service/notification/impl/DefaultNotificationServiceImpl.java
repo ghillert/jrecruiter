@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.service.notification.impl;
 
 import static com.rosaloves.bitlyj.Bitly.as;
@@ -47,7 +47,6 @@ import freemarker.template.TemplateException;
 
 /**
  * @author Gunnar Hillert
- * @version $Id$
  */
 @Service("notificationService")
 @Transactional
@@ -117,8 +116,8 @@ public class DefaultNotificationServiceImpl implements NotificationService {
 
 		//FIXME Handle this better
 		Url url = as(apiKeysHolder.getBitlyUsername(),
-					 apiKeysHolder.getBitlyPassword())
-				 .call(shorten(urlAsString));
+					apiKeysHolder.getBitlyPassword())
+				.call(shorten(urlAsString));
 		try {
 			return new URI(url.getShortUrl());
 		} catch (URISyntaxException e) {

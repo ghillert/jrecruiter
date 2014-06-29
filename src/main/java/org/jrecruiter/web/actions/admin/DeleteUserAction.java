@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions.admin;
 
 import java.util.List;
@@ -29,63 +29,62 @@ import org.slf4j.LoggerFactory;
  * Deletes one or more users.
  *
  * @author Gunnar Hillert
- * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 @Result(name="success", location="show-users", type="redirectAction")
 public class DeleteUserAction extends BaseAction {
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = -2825056640805045453L;
+	/** serialVersionUID. */
+	private static final long serialVersionUID = -2825056640805045453L;
 
-    private List<Long>userIds;
+	private List<Long>userIds;
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DeleteUserAction.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(DeleteUserAction.class);
 
-    /**
-     * Initialize the edit user form with the registration information of the
-     * currently logged in user.
-     */
-    public String execute() {
+	/**
+	 * Initialize the edit user form with the registration information of the
+	 * currently logged in user.
+	 */
+	public String execute() {
 
-        if (this.userIds != null && !this.userIds.isEmpty()) {
+		if (this.userIds != null && !this.userIds.isEmpty()) {
 
-            int validUserIds = 0;
+			int validUserIds = 0;
 
-            for (Long userId : userIds) {
+			for (Long userId : userIds) {
 
-                if (userId != null) {
+				if (userId != null) {
 
-                    User user = userService.getUser(userId);
+					User user = userService.getUser(userId);
 
-                    if (AcegiUtil.containsRole(user.getAuthorities(), Roles.ADMIN.name())) {
-                        LOGGER.warn("User tried to delete admin user.");
-                        super.addActionMessage("Cannot delete admin user.");
-                    } else {
-                        validUserIds++;
-                        userService.deleteUser(user);
-                    }
-                }
-            }
+					if (AcegiUtil.containsRole(user.getAuthorities(), Roles.ADMIN.name())) {
+						LOGGER.warn("User tried to delete admin user.");
+						super.addActionMessage("Cannot delete admin user.");
+					} else {
+						validUserIds++;
+						userService.deleteUser(user);
+					}
+				}
+			}
 
-            if (validUserIds == 1) {
-                super.addActionMessage(validUserIds + " user was deleted.");
-            } else {
-                super.addActionMessage(validUserIds + " users were deleted.");
-            }
+			if (validUserIds == 1) {
+				super.addActionMessage(validUserIds + " user was deleted.");
+			} else {
+				super.addActionMessage(validUserIds + " users were deleted.");
+			}
 
-        } else {
-            super.addActionMessage("No User was deleted.");
-        }
+		} else {
+			super.addActionMessage("No User was deleted.");
+		}
 
-        return SUCCESS;
-    }
+		return SUCCESS;
+	}
 
-    public List<Long> getUserIds() {
-        return userIds;
-    }
+	public List<Long> getUserIds() {
+		return userIds;
+	}
 
-    public void setUserIds(List<Long> userIds) {
-        this.userIds = userIds;
-    }
+	public void setUserIds(List<Long> userIds) {
+		this.userIds = userIds;
+	}
 
 }

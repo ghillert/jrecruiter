@@ -1,3 +1,18 @@
+/*
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions;
 
 import org.jrecruiter.model.ServerSettings;
@@ -12,24 +27,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * defined by Indeed.com
  *
  * @author Gunnar Hillert
- * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 @Controller
 public class SetupApiKeysController {
 
-    private @Autowired JobService jobService;
-    private @Autowired ServerSettings serverSettings;
+	private @Autowired JobService jobService;
+	private @Autowired ServerSettings serverSettings;
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = -3422780336408883930L;
+	/** serialVersionUID. */
+	private static final long serialVersionUID = -3422780336408883930L;
 
-    @RequestMapping("/setup-api-keys")
-    public String execute(ModelMap model) {
+	@RequestMapping("/setup-api-keys")
+	public String execute(ModelMap model) {
 
-        model.addAttribute("jobs", jobService.getJobs());
-        model.addAttribute("serverAddress", serverSettings.getServerAddress());
+		model.addAttribute("jobs", jobService.getJobs());
+		model.addAttribute("serverAddress", serverSettings.getServerAddress());
 
-        return "setup-api-keys";
-    }
+		return "setup-api-keys";
+	}
 
 }

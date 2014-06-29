@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2014 the original author or authors.
+ * Copyright 2006-2014 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * is thrown telling you to setup one or the other.
  *
  * @author Gunnar Hillert
- * @version 2.0
+ * @since 2.0
  *
  */
 public class StartupContextListener implements ServletContextListener {
@@ -91,22 +91,22 @@ public class StartupContextListener implements ServletContextListener {
 
 			case SYSTEM_PROPERTY:
 				jrecruiterHomeMessage = "System Property '" + Apphome.APP_HOME_DIRECTORY
-									  + "' found: " + apphome.getAppHomePath();
+									+ "' found: " + apphome.getAppHomePath();
 				break;
 
 			case ENVIRONMENT_VARIABLE:
 				System.setProperty(Apphome.APP_HOME_DIRECTORY, apphome.getAppHomePath());
 
 				jrecruiterHomeMessage = "Environment Variable '" + Apphome.APP_HOME_DIRECTORY
-									  + "' found: " + apphome.getAppHomePath()
-									  + ". Using it to set system property.";
+									+ "' found: " + apphome.getAppHomePath()
+									+ ". Using it to set system property.";
 				break;
 
 			case USER_DIRECTORY:
 
 				jrecruiterHomeMessage = "'" + Apphome.APP_HOME_DIRECTORY
-									  + "' not found. Please set '" + Apphome.APP_HOME_DIRECTORY
-									  + "' as a system property or as an environment variable. DEMO Mode, using embedded database.";
+									+ "' not found. Please set '" + Apphome.APP_HOME_DIRECTORY
+									+ "' as a system property or as an environment variable. DEMO Mode, using embedded database.";
 				break;
 			default: throw new IllegalStateException("Was expecting to resolve a home directory.");
 

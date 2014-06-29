@@ -1,5 +1,17 @@
-/**
+/*
+ * Copyright 2006-2014 the original author or authors.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.jrecruiter.web.views;
 
@@ -27,166 +39,165 @@ import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * @author Gunnar Hillert
- * @version $Id$
  */
 public class JobDetailPdfView extends AbstractPdfView {
 
-    //~~~~~Initialization~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Initialization~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-    @Override
-    protected void prepareWriter(Map<String, Object> model, PdfWriter writer,
-            HttpServletRequest request) throws DocumentException {
+	@Override
+	protected void prepareWriter(Map<String, Object> model, PdfWriter writer,
+			HttpServletRequest request) throws DocumentException {
 
-        super.prepareWriter(model, writer, request);
-        writer.setPageEvent(new JobDetailPageEvents());
-    }
+		super.prepareWriter(model, writer, request);
+		writer.setPageEvent(new JobDetailPageEvents());
+	}
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    @Override
-    protected void buildPdfDocument(final Map<String, Object> model,
-                                    final Document document,
-                                    final PdfWriter pdfWriter,
-                                    final HttpServletRequest request,
-                                    final HttpServletResponse response)
-            throws Exception {
+	@Override
+	protected void buildPdfDocument(final Map<String, Object> model,
+									final Document document,
+									final PdfWriter pdfWriter,
+									final HttpServletRequest request,
+									final HttpServletResponse response)
+			throws Exception {
 
-        final Job job = (Job)model.get("job");
-        final Image googleMapImage = (Image)model.get("googleMapImage");
+		final Job job = (Job)model.get("job");
+		final Image googleMapImage = (Image)model.get("googleMapImage");
 
-        super.setContentType("application/pdf");
+		super.setContentType("application/pdf");
 
-        document.addCreationDate();
-        document.addAuthor("www.jRecruiter.org (Gunnar Hillert)");
-        document.addTitle("jRecruiter Job Posting Detail");
+		document.addCreationDate();
+		document.addAuthor("www.jRecruiter.org (Gunnar Hillert)");
+		document.addTitle("jRecruiter Job Posting Detail");
 
-        response.setHeader("Expires", "0");
-        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-        response.setHeader("Pragma", "public");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
 
-        if (job == null) {
+		if (job == null) {
 
-            response.setHeader("Content-disposition",
-                    "attachment; filename=" +
-                    "No_Job.pdf");
+			response.setHeader("Content-disposition",
+					"attachment; filename=" +
+					"No_Job.pdf");
 
-            document.add(new Paragraph("No job posting found for the provided id."));
-        } else {
+			document.add(new Paragraph("No job posting found for the provided id."));
+		} else {
 
-            response.setHeader("Content-disposition",
-                    "attachment; filename=" + "JobDetail_" + job.getId() + ".pdf");
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + "JobDetail_" + job.getId() + ".pdf");
 
-       //~~~~Render Job Summary~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	   //~~~~Render Job Summary~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            this.addPdfHeader(pdfWriter, document, "Summary");
+			this.addPdfHeader(pdfWriter, document, "Summary");
 
-            final PdfPTable table = new PdfPTable(2);
+			final PdfPTable table = new PdfPTable(2);
 
-            table.setWidthPercentage(100);
-            table.setSpacingBefore(10);
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(10);
 
-            table.setWidths(new float[]{25, 75});
+			table.setWidths(new float[]{25, 75});
 
-            addPdfRow(table, "Job Id:", String.valueOf(job.getId()));
+			addPdfRow(table, "Job Id:", String.valueOf(job.getId()));
 
-            final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());
+			final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());
 
-            addPdfRow(table, "Updated:", String.valueOf(dateFormat.format(job.getUpdateDate())));
+			addPdfRow(table, "Updated:", String.valueOf(dateFormat.format(job.getUpdateDate())));
 
-            if (StringUtils.isNotBlank(job.getJobTitle())) {
-                addPdfRow(table, "Job Title:", job.getJobTitle());
-            }
-            if (StringUtils.isNotBlank(job.getBusinessName())) {
-                addPdfRow(table, "Business Name:", job.getBusinessName());
-            }
+			if (StringUtils.isNotBlank(job.getJobTitle())) {
+				addPdfRow(table, "Job Title:", job.getJobTitle());
+			}
+			if (StringUtils.isNotBlank(job.getBusinessName())) {
+				addPdfRow(table, "Business Name:", job.getBusinessName());
+			}
 
-            if (job.getOfferedBy() != null) {
-                addPdfRow(table, "Job Offered By:", job.getOfferedBy().getName());
-            }
+			if (job.getOfferedBy() != null) {
+				addPdfRow(table, "Job Offered By:", job.getOfferedBy().getName());
+			}
 
-            if (StringUtils.isNotBlank(job.getRegionForDisplay())) {
-                addPdfRow(table, "Job Location:", job.getRegionForDisplay());
-            }
+			if (StringUtils.isNotBlank(job.getRegionForDisplay())) {
+				addPdfRow(table, "Job Location:", job.getRegionForDisplay());
+			}
 
-            if (StringUtils.isNotBlank(job.getIndustryForDisplay())) {
-                addPdfRow(table, "Industry:", job.getIndustryForDisplay());
-            }
+			if (StringUtils.isNotBlank(job.getIndustryForDisplay())) {
+				addPdfRow(table, "Industry:", job.getIndustryForDisplay());
+			}
 
-            if (StringUtils.isNotBlank(job.getSalary())) {
-                addPdfRow(table, "Salary:", job.getSalary());
-            }
+			if (StringUtils.isNotBlank(job.getSalary())) {
+				addPdfRow(table, "Salary:", job.getSalary());
+			}
 
-            if (StringUtils.isNotBlank(job.getBusinessPhone())) {
-                addPdfRow(table, "Phone:", job.getBusinessPhone());
-            }
-            if (StringUtils.isNotBlank(job.getBusinessPhoneExtension())) {
-                addPdfRow(table, "Phone Extension:", job.getBusinessPhoneExtension());
-            }
-            if (StringUtils.isNotBlank(job.getBusinessEmail())) {
-                addPdfRow(table, "Email:", job.getBusinessEmail());
-            }
+			if (StringUtils.isNotBlank(job.getBusinessPhone())) {
+				addPdfRow(table, "Phone:", job.getBusinessPhone());
+			}
+			if (StringUtils.isNotBlank(job.getBusinessPhoneExtension())) {
+				addPdfRow(table, "Phone Extension:", job.getBusinessPhoneExtension());
+			}
+			if (StringUtils.isNotBlank(job.getBusinessEmail())) {
+				addPdfRow(table, "Email:", job.getBusinessEmail());
+			}
 
-            if (StringUtils.isNotBlank(job.getBusinessAddress1())) {
-                addPdfRow(table, "Address 1:", job.getBusinessAddress1());
-            }
-            if (StringUtils.isNotBlank(job.getBusinessAddress2())) {
-                addPdfRow(table, "Address 2:", job.getBusinessAddress2());
-            }
-            if (StringUtils.isNotBlank(job.getBusinessCity())) {
-                addPdfRow(table, "City:", job.getBusinessCity());
-            }
+			if (StringUtils.isNotBlank(job.getBusinessAddress1())) {
+				addPdfRow(table, "Address 1:", job.getBusinessAddress1());
+			}
+			if (StringUtils.isNotBlank(job.getBusinessAddress2())) {
+				addPdfRow(table, "Address 2:", job.getBusinessAddress2());
+			}
+			if (StringUtils.isNotBlank(job.getBusinessCity())) {
+				addPdfRow(table, "City:", job.getBusinessCity());
+			}
 
-            if (StringUtils.isNotBlank(job.getBusinessState())) {
-                addPdfRow(table, "State:", job.getBusinessState());
-            }
-            if (StringUtils.isNotBlank(job.getBusinessZip())) {
-                addPdfRow(table, "Zip:", job.getBusinessZip());
-            }
+			if (StringUtils.isNotBlank(job.getBusinessState())) {
+				addPdfRow(table, "State:", job.getBusinessState());
+			}
+			if (StringUtils.isNotBlank(job.getBusinessZip())) {
+				addPdfRow(table, "Zip:", job.getBusinessZip());
+			}
 
-            addPdfRow(table, "Website:", job.getWebsite());
-            document.add(table);
+			addPdfRow(table, "Website:", job.getWebsite());
+			document.add(table);
 
-            //~~~~~Render Map Location if available~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			//~~~~~Render Map Location if available~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            if (job.getUsesMap() && googleMapImage != null) {
+			if (job.getUsesMap() && googleMapImage != null) {
 
-                this.addPdfHeader(pdfWriter, document, "Job Location");
+				this.addPdfHeader(pdfWriter, document, "Job Location");
 
-                com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(googleMapImage,
-                        Color.WHITE);
-                img.scalePercent(75);
-                img.setBorder(Rectangle.BOX);
-                img.enableBorderSide(Rectangle.BOX);
-                img.setBorderColor(Color.BLACK);
-                img.setBorderWidth(1);
+				com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(googleMapImage,
+						Color.WHITE);
+				img.scalePercent(75);
+				img.setBorder(Rectangle.BOX);
+				img.enableBorderSide(Rectangle.BOX);
+				img.setBorderColor(Color.BLACK);
+				img.setBorderWidth(1);
 
-                document.add(img);
+				document.add(img);
 
-            }
+			}
 
-            //~~~~~Render Job Description~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			//~~~~~Render Job Description~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            this.addPdfHeader(pdfWriter, document, "Job Description");
+			this.addPdfHeader(pdfWriter, document, "Job Description");
 
-            Paragraph jobDescription = new Paragraph(job.getDescription());
-            document.add(jobDescription);
+			Paragraph jobDescription = new Paragraph(job.getDescription());
+			document.add(jobDescription);
 
-            //~~~~~Render Job Restrictions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			//~~~~~Render Job Restrictions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            if (StringUtils.isNotBlank(job.getJobRestrictions())) {
-                this.addPdfHeader(pdfWriter, document, "Job Restrictions");
+			if (StringUtils.isNotBlank(job.getJobRestrictions())) {
+				this.addPdfHeader(pdfWriter, document, "Job Restrictions");
 
-                Paragraph jobRestrictions = new Paragraph(job.getJobRestrictions());
-                document.add(jobRestrictions);
-            }
-        }
+				Paragraph jobRestrictions = new Paragraph(job.getJobRestrictions());
+				document.add(jobRestrictions);
+			}
+		}
 
-    }
+	}
 
-    //~~~~~Helper~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Helper~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private void addPdfHeader(PdfWriter pdfWriter, Document document, String headerString) throws DocumentException {
+	private void addPdfHeader(PdfWriter pdfWriter, Document document, String headerString) throws DocumentException {
 
 //        final Paragraph jobLocationHeader = new Paragraph(new Phrase(headerString, FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD)));
 //        document.add(jobLocationHeader);
@@ -202,27 +213,27 @@ public class JobDetailPdfView extends AbstractPdfView {
 //
 //        cb.moveTo(document.leftMargin(), pos - 40);
 
-    }
+	}
 
-    private void addPdfRow(PdfPTable table, String label, String value) throws DocumentException {
+	private void addPdfRow(PdfPTable table, String label, String value) throws DocumentException {
 
-        final PdfPCell labelCell = new PdfPCell(new Phrase(label));
-        final PdfPCell valueCell = new PdfPCell(new Phrase(value));
+		final PdfPCell labelCell = new PdfPCell(new Phrase(label));
+		final PdfPCell valueCell = new PdfPCell(new Phrase(value));
 
-        labelCell.disableBorderSide(PdfPCell.LEFT);
-        labelCell.disableBorderSide(PdfPCell.TOP);
-        labelCell.disableBorderSide(PdfPCell.RIGHT);
-        labelCell.disableBorderSide(PdfPCell.BOTTOM);
+		labelCell.disableBorderSide(PdfPCell.LEFT);
+		labelCell.disableBorderSide(PdfPCell.TOP);
+		labelCell.disableBorderSide(PdfPCell.RIGHT);
+		labelCell.disableBorderSide(PdfPCell.BOTTOM);
 
-        valueCell.disableBorderSide(PdfPCell.LEFT);
-        valueCell.disableBorderSide(PdfPCell.TOP);
-        valueCell.disableBorderSide(PdfPCell.RIGHT);
-        valueCell.disableBorderSide(PdfPCell.BOTTOM);
+		valueCell.disableBorderSide(PdfPCell.LEFT);
+		valueCell.disableBorderSide(PdfPCell.TOP);
+		valueCell.disableBorderSide(PdfPCell.RIGHT);
+		valueCell.disableBorderSide(PdfPCell.BOTTOM);
 
-        table.addCell(labelCell);
-        table.addCell(valueCell);
+		table.addCell(labelCell);
+		table.addCell(valueCell);
 
-    }
+	}
 
 
 

@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions.admin;
 
 import java.util.Date;
@@ -40,167 +40,166 @@ import org.jrecruiter.model.Region;
  * Edit a job. Save the changes or delete the job posting altogether.
  *
  * @author Gunnar Hillert
- * @version $Id$
  *
  */
 @Result(name="success", location="show-jobs", type="redirectAction")
 public class EditJobAction extends JobBaseAction {
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = 2621352739536377825L;
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 2621352739536377825L;
 
-    /**
-     * Logger Declaration.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(EditJobAction.class);
+	/**
+	 * Logger Declaration.
+	 */
+	private final static Logger LOGGER = LoggerFactory.getLogger(EditJobAction.class);
 
-    /**
-     * Delete the job.
-     */
-    public String delete() {
+	/**
+	 * Delete the job.
+	 */
+	public String delete() {
 
-         final Job jobFromDB = jobService.getJobForId(this.model.getJob().getId());
+		 final Job jobFromDB = jobService.getJobForId(this.model.getJob().getId());
 
-         if (jobFromDB == null) {
-             throw new IllegalArgumentException("Job with id " + model.getJob().getId() + " does not exist.");
-         }
+		 if (jobFromDB == null) {
+			 throw new IllegalArgumentException("Job with id " + model.getJob().getId() + " does not exist.");
+		 }
 
-         jobService.deleteJobForId(this.model.getJob().getId()); //FIXME SECURITY
-         super.addActionMessage(getText("class.ShowJobsAction.job_delete_success_one"));
-         return SUCCESS;
-    }
+		 jobService.deleteJobForId(this.model.getJob().getId()); //FIXME SECURITY
+		 super.addActionMessage(getText("class.ShowJobsAction.job_delete_success_one"));
+		 return SUCCESS;
+	}
 
-    /**
-     * Retrieve a job for edting.
-     */
-    public String execute() {
+	/**
+	 * Retrieve a job for edting.
+	 */
+	public String execute() {
 
-        if (this.id == null) {
-            throw new IllegalArgumentException("No job id was provided.");
-        }
+		if (this.id == null) {
+			throw new IllegalArgumentException("No job id was provided.");
+		}
 
-        final Job jobFromDb = jobService.getJobForId(this.id);
+		final Job jobFromDb = jobService.getJobForId(this.id);
 
-        if (jobFromDb != null) {
-            LOGGER.info("Loaded job with Id: " + jobFromDb.getId());
-            this.model.setJob(jobFromDb);
-        } else {
-            throw new IllegalStateException("No job found for id " + this.id);
-        }
+		if (jobFromDb != null) {
+			LOGGER.info("Loaded job with Id: " + jobFromDb.getId());
+			this.model.setJob(jobFromDb);
+		} else {
+			throw new IllegalStateException("No job found for id " + this.id);
+		}
 
-        if (!this.model.getJob().getUsesMap()) {
-            this.model.getJob().setZoomLevel(GoogleMapsUtils.defaultMapZoomLevel);
-            this.model.getJob().setLatitude(GoogleMapsUtils.defaultMapLatitude);
-            this.model.getJob().setLongitude(GoogleMapsUtils.defaultMapLongitude);
-        }
+		if (!this.model.getJob().getUsesMap()) {
+			this.model.getJob().setZoomLevel(GoogleMapsUtils.defaultMapZoomLevel);
+			this.model.getJob().setLatitude(GoogleMapsUtils.defaultMapLatitude);
+			this.model.getJob().setLongitude(GoogleMapsUtils.defaultMapLongitude);
+		}
 
-        return INPUT;
-    }
+		return INPUT;
+	}
 
-    /**
-     * Save the job.
-     */
-    @Validations(
-            requiredFields = {
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.businessEmail", message = "You must enter an Email Address."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.industry.id", message = "You must select an industry."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.offeredBy", message = "Please select whether you are the hiring company or a recruiter."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.region.id", message = "Please select a region."),
-                    @RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.usesMap", message = "Do you want to use Google Maps.")
-                    },
-            requiredStrings = {
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "job.jobTitle", message = "You must enter a job title."),
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "job.businessName", message = "You must provide a company name."),
-                        @RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "job.description", message = "You must enter a job description.")
-                    },
-            emails =
-                    { @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "job.businessEmail", message = "You must enter a valid email.")},
-            urls =
-                    { @UrlValidator(type = ValidatorType.SIMPLE, fieldName = "job.website", message = "You must enter a valid url.")},
-            stringLengthFields = {
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "model.job.jobTitle",               message = "The job title must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhone",          message = "The phone number must be shorter than ${maxLength} characters."),
-                    @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhoneExtension", message = "The phone number extension must be shorter than ${maxLength} characters.")
-            })
-    public String save() {
+	/**
+	 * Save the job.
+	 */
+	@Validations(
+			requiredFields = {
+					@RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.businessEmail", message = "You must enter an Email Address."),
+					@RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.industry.id", message = "You must select an industry."),
+					@RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.offeredBy", message = "Please select whether you are the hiring company or a recruiter."),
+					@RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.region.id", message = "Please select a region."),
+					@RequiredFieldValidator(type = ValidatorType.SIMPLE, fieldName = "job.usesMap", message = "Do you want to use Google Maps.")
+					},
+			requiredStrings = {
+						@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "job.jobTitle", message = "You must enter a job title."),
+						@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "job.businessName", message = "You must provide a company name."),
+						@RequiredStringValidator(type = ValidatorType.SIMPLE, fieldName = "job.description", message = "You must enter a job description.")
+					},
+			emails =
+					{ @EmailValidator(type = ValidatorType.SIMPLE, fieldName = "job.businessEmail", message = "You must enter a valid email.")},
+			urls =
+					{ @UrlValidator(type = ValidatorType.SIMPLE, fieldName = "job.website", message = "You must enter a valid url.")},
+			stringLengthFields = {
+					@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "50", fieldName = "model.job.jobTitle",               message = "The job title must be shorter than ${maxLength} characters."),
+					@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhone",          message = "The phone number must be shorter than ${maxLength} characters."),
+					@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhoneExtension", message = "The phone number extension must be shorter than ${maxLength} characters.")
+			})
+	public String save() {
 
-        final Job jobFromDB = jobService.getJobForId(model.getJob().getId());
+		final Job jobFromDB = jobService.getJobForId(model.getJob().getId());
 
-        if (jobFromDB == null) {
-            throw new IllegalArgumentException("Job with id " + model.getJob().getId() + " does not exist.");
-        }
+		if (jobFromDB == null) {
+			throw new IllegalArgumentException("Job with id " + model.getJob().getId() + " does not exist.");
+		}
 
-        if (this.model.getJob().getIndustry() != null && this.model.getJob().getIndustry().getId() != null) {
-            final Industry industry = jobService.getIndustry(jobFromDB.getIndustry().getId());
+		if (this.model.getJob().getIndustry() != null && this.model.getJob().getIndustry().getId() != null) {
+			final Industry industry = jobService.getIndustry(jobFromDB.getIndustry().getId());
 
-            if (industry == null) {
-                throw new IllegalArgumentException("Industry with id " + this.model.getJob().getIndustry().getId() + " does not exist.");
-            } else {
-                jobFromDB.setIndustry(model.getJob().getIndustry());
-            }
-        }
+			if (industry == null) {
+				throw new IllegalArgumentException("Industry with id " + this.model.getJob().getIndustry().getId() + " does not exist.");
+			} else {
+				jobFromDB.setIndustry(model.getJob().getIndustry());
+			}
+		}
 
-        if (this.model.getJob().getRegion() != null && this.model.getJob().getRegion().getId() != null) {
-            final Region region = jobService.getRegion(this.model.getJob().getRegion().getId());
+		if (this.model.getJob().getRegion() != null && this.model.getJob().getRegion().getId() != null) {
+			final Region region = jobService.getRegion(this.model.getJob().getRegion().getId());
 
-            if (region == null) {
-                throw new IllegalArgumentException("Region with id " + this.model.getJob().getRegion().getId() + " does not exist.");
-            } else {
-                jobFromDB.setRegion(model.getJob().getRegion());
-            }
-        }
+			if (region == null) {
+				throw new IllegalArgumentException("Region with id " + this.model.getJob().getRegion().getId() + " does not exist.");
+			} else {
+				jobFromDB.setRegion(model.getJob().getRegion());
+			}
+		}
 
-        final String jobDescription = model.getJob().getDescription();
+		final String jobDescription = model.getJob().getDescription();
 
-        jobFromDB.setBusinessName(model.getJob().getBusinessName());
-        jobFromDB.setRegionOther(model.getJob().getRegionOther());
-        jobFromDB.setJobTitle(model.getJob().getJobTitle());
-        jobFromDB.setSalary(model.getJob().getSalary());
-        jobFromDB.setDescription(WebUtil.stripTags(jobDescription, "<b>"));
-        jobFromDB.setWebsite(model.getJob().getWebsite());
-        jobFromDB.setBusinessAddress1(model.getJob().getBusinessAddress1());
-        jobFromDB.setBusinessAddress2(model.getJob().getBusinessAddress2());
-        jobFromDB.setBusinessCity(model.getJob().getBusinessCity());
-        jobFromDB.setBusinessState(model.getJob().getBusinessState());
-        jobFromDB.setBusinessZip(model.getJob().getBusinessZip());
-        jobFromDB.setBusinessPhone(model.getJob().getBusinessPhone());
-        jobFromDB.setBusinessEmail(model.getJob().getBusinessEmail());
-        jobFromDB.setJobRestrictions(model.getJob().getJobRestrictions());
+		jobFromDB.setBusinessName(model.getJob().getBusinessName());
+		jobFromDB.setRegionOther(model.getJob().getRegionOther());
+		jobFromDB.setJobTitle(model.getJob().getJobTitle());
+		jobFromDB.setSalary(model.getJob().getSalary());
+		jobFromDB.setDescription(WebUtil.stripTags(jobDescription, "<b>"));
+		jobFromDB.setWebsite(model.getJob().getWebsite());
+		jobFromDB.setBusinessAddress1(model.getJob().getBusinessAddress1());
+		jobFromDB.setBusinessAddress2(model.getJob().getBusinessAddress2());
+		jobFromDB.setBusinessCity(model.getJob().getBusinessCity());
+		jobFromDB.setBusinessState(model.getJob().getBusinessState());
+		jobFromDB.setBusinessZip(model.getJob().getBusinessZip());
+		jobFromDB.setBusinessPhone(model.getJob().getBusinessPhone());
+		jobFromDB.setBusinessEmail(model.getJob().getBusinessEmail());
+		jobFromDB.setJobRestrictions(model.getJob().getJobRestrictions());
 
-        if (model.getJob().getUsesMap()) {
-            jobFromDB.setUsesMap(Boolean.TRUE);
-            jobFromDB.setLongitude(model.getJob().getLongitude());
-            jobFromDB.setLatitude(model.getJob().getLatitude());
-            jobFromDB.setZoomLevel(model.getJob().getZoomLevel());
-        } else {
-            jobFromDB.setUsesMap(Boolean.FALSE);
-            jobFromDB.setLongitude(null);
-            jobFromDB.setLatitude(null);
-            jobFromDB.setZoomLevel(null);
-        }
+		if (model.getJob().getUsesMap()) {
+			jobFromDB.setUsesMap(Boolean.TRUE);
+			jobFromDB.setLongitude(model.getJob().getLongitude());
+			jobFromDB.setLatitude(model.getJob().getLatitude());
+			jobFromDB.setZoomLevel(model.getJob().getZoomLevel());
+		} else {
+			jobFromDB.setUsesMap(Boolean.FALSE);
+			jobFromDB.setLongitude(null);
+			jobFromDB.setLatitude(null);
+			jobFromDB.setZoomLevel(null);
+		}
 
-        jobFromDB.setUpdateDate(new Date());
-        jobService.updateJob(jobFromDB);
+		jobFromDB.setUpdateDate(new Date());
+		jobService.updateJob(jobFromDB);
 
-        super.addActionMessage(getText("class.EditJobAction.job_edit_success", ""));
+		super.addActionMessage(getText("class.EditJobAction.job_edit_success", ""));
 
-        return SUCCESS;
+		return SUCCESS;
 
-    }
+	}
 
-    public void validateSave() {
+	public void validateSave() {
 
-        if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getIndustry().getId())
-                && StringUtils.isEmpty(this.model.getJob().getIndustryOther())) {
+		if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getIndustry().getId())
+				&& StringUtils.isEmpty(this.model.getJob().getIndustryOther())) {
 
-            super.addFieldError("job.industryOther", "Please enter an industry.");
+			super.addFieldError("job.industryOther", "Please enter an industry.");
 
-        }
-        if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getRegion().getId())
-                && StringUtils.isEmpty(this.model.getJob().getRegionOther())) {
+		}
+		if (CommongKeyIds.OTHER.getId().equals(this.model.getJob().getRegion().getId())
+				&& StringUtils.isEmpty(this.model.getJob().getRegionOther())) {
 
-            super.addFieldError("job.regionOther", "Please enter a region.");
+			super.addFieldError("job.regionOther", "Please enter a region.");
 
-        }
-    }
+		}
+	}
 }

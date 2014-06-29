@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2014 the original author or authors.
+ * Copyright 2006-2014 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Gunnar Hillert
- * @version 2.0
+ * @since 2.0
  *
  */
 public final class SystemInformationUtils {
@@ -58,19 +58,19 @@ public final class SystemInformationUtils {
 			apphome.setAppHomePath(System.getProperty(Apphome.APP_HOME_DIRECTORY));
 			apphome.setAppHomeSource(AppHomeSource.SYSTEM_PROPERTY);
 
-		 } else if (StringUtils.isNotBlank(System.getenv(Apphome.APP_HOME_DIRECTORY))) {
+		} else if (StringUtils.isNotBlank(System.getenv(Apphome.APP_HOME_DIRECTORY))) {
 
 			apphome.setAppHomePath(System.getenv(Apphome.APP_HOME_DIRECTORY));
 			apphome.setAppHomeSource(AppHomeSource.ENVIRONMENT_VARIABLE);
 
-		 } else {
+		} else {
 
-			 final String userHomeDirectiory = System.getProperty("user.home");
+			final String userHomeDirectiory = System.getProperty("user.home");
 
-			 apphome.setAppHomePath(userHomeDirectiory + File.separator + ".jrecruiter");
-			 apphome.setAppHomeSource(AppHomeSource.USER_DIRECTORY);
+			apphome.setAppHomePath(userHomeDirectiory + File.separator + ".jrecruiter");
+			apphome.setAppHomeSource(AppHomeSource.USER_DIRECTORY);
 
-		 }
+		}
 
 		return apphome;
 	}

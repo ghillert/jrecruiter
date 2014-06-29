@@ -1,3 +1,18 @@
+/*
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions;
 
 import java.util.Date;
@@ -17,148 +32,147 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Gunnar Hillert
- * @version $Id:UserService.java 128 2007-07-27 03:55:54Z ghillert $
  */
 
 @Result(name="showJobs", location="show-jobs", type="redirectAction")
 public class JobDetailAction extends BaseAction implements SessionAware {
 
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = 369806210598096582L;
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 369806210598096582L;
 
-    /** The primary id of the job posting */
-    private Long jobId;
+	/** The primary id of the job posting */
+	private Long jobId;
 
-    /** The unique id (UUID) of the job posting */
-    private String id;
+	/** The unique id (UUID) of the job posting */
+	private String id;
 
-    private Job job;
+	private Job job;
 
-    private ApiKeysHolder apiKeysHolder;
+	private ApiKeysHolder apiKeysHolder;
 
-    private transient @Autowired JobService jobService;
-    private Map<String, Object>session;
+	private transient @Autowired JobService jobService;
+	private Map<String, Object>session;
 
-    /**
-     * Logger Declaration.
-     */
-    private final static Logger LOGGER = LoggerFactory.getLogger(JobDetailAction.class);
+	/**
+	 * Logger Declaration.
+	 */
+	private final static Logger LOGGER = LoggerFactory.getLogger(JobDetailAction.class);
 
-    @SuppressWarnings("unchecked")
-    public void setSession(Map session) {
-        this.session = session;
-    }
+	@SuppressWarnings("unchecked")
+	public void setSession(Map session) {
+		this.session = session;
+	}
 
-    /* (non-Javadoc)
-     * @see com.opensymphony.xwork2.ActionSupport#execute()
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public String execute() throws Exception {
+	/* (non-Javadoc)
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public String execute() throws Exception {
 
-        if (this.jobId == null && this.id == null) {
-            super.addActionError("Please provide a valid job id.");
-            return "showJobs";
-        }
+		if (this.jobId == null && this.id == null) {
+			super.addActionError("Please provide a valid job id.");
+			return "showJobs";
+		}
 
-        if (this.id != null) {
-            this.job = jobService.getJobForUniversalId(this.id);
-        } else {
-            this.job = jobService.getJobForId(jobId);
-        }
-        if (this.job==null){
+		if (this.id != null) {
+			this.job = jobService.getJobForUniversalId(this.id);
+		} else {
+			this.job = jobService.getJobForId(jobId);
+		}
+		if (this.job==null){
 
-            String errorMessage = "Requested jobposting with id " + (this.id == null ? this.jobId : this.id) + " was not found.";
-            LOGGER.warn(errorMessage);
-            super.addActionMessage("The requested job posting does not exist.");
-            return "showJobs";
-        } else {
+			String errorMessage = "Requested jobposting with id " + (this.id == null ? this.jobId : this.id) + " was not found.";
+			LOGGER.warn(errorMessage);
+			super.addActionMessage("The requested job posting does not exist.");
+			return "showJobs";
+		} else {
 
-             Statistic statistics = job.getStatistic();
+			 Statistic statistics = job.getStatistic();
 
-             if (statistics == null) {
+			 if (statistics == null) {
 
-                 statistics = new Statistic();
-                 statistics.setJob(job);
-                 statistics.setCounter(Long.valueOf(0));
-                 job.setStatistic(statistics);
-             }
+				 statistics = new Statistic();
+				 statistics.setJob(job);
+				 statistics.setCounter(Long.valueOf(0));
+				 job.setStatistic(statistics);
+			 }
 
-             Set<Long> viewedPostings = CollectionUtils.getHashSet();
+			 Set<Long> viewedPostings = CollectionUtils.getHashSet();
 
-             if (session.get("visited") != null){
+			 if (session.get("visited") != null){
 
-                 viewedPostings = (Set<Long>)session.get("visited");
+				 viewedPostings = (Set<Long>)session.get("visited");
 
-                 if (!viewedPostings.contains(jobId)){
-                     long counter = statistics.getCounter().longValue() + 1 ;
-                     statistics.setCounter(Long.valueOf(counter));
-                     viewedPostings.add(jobId);
-                 }
+				 if (!viewedPostings.contains(jobId)){
+					 long counter = statistics.getCounter().longValue() + 1 ;
+					 statistics.setCounter(Long.valueOf(counter));
+					 viewedPostings.add(jobId);
+				 }
 
-             } else {
+			 } else {
 
-                 long counter;
+				 long counter;
 
-                 if (statistics.getCounter() != null) {
-                     counter = statistics.getCounter().longValue() + 1 ;
-                 } else {
-                     counter = 1;
-                 }
+				 if (statistics.getCounter() != null) {
+					 counter = statistics.getCounter().longValue() + 1 ;
+				 } else {
+					 counter = 1;
+				 }
 
-                 statistics.setCounter(Long.valueOf(counter));
+				 statistics.setCounter(Long.valueOf(counter));
 
-                 viewedPostings.add(jobId);
-                 session.put("visited", viewedPostings);
+				 viewedPostings.add(jobId);
+				 session.put("visited", viewedPostings);
 
-             }
+			 }
 
-             statistics.setLastAccess(new Date());
-             jobService.updateJobStatistic(statistics);
+			 statistics.setLastAccess(new Date());
+			 jobService.updateJobStatistic(statistics);
 
-            }
+			}
 
-    return SUCCESS;
-    }
+	return SUCCESS;
+	}
 
-    public Long getJobId() {
-        return jobId;
-    }
+	public Long getJobId() {
+		return jobId;
+	}
 
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
+	public void setJobId(Long jobId) {
+		this.jobId = jobId;
+	}
 
-    public Job getJob() {
-        return job;
-    }
+	public Job getJob() {
+		return job;
+	}
 
-    public void setJob(Job job) {
-        this.job = job;
-    }
+	public void setJob(Job job) {
+		this.job = job;
+	}
 
-    public ApiKeysHolder getApiKeysHolder() {
-        return apiKeysHolder;
-    }
+	public ApiKeysHolder getApiKeysHolder() {
+		return apiKeysHolder;
+	}
 
-    public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
-        this.apiKeysHolder = apiKeysHolder;
-    }
+	public void setApiKeysHolder(ApiKeysHolder apiKeysHolder) {
+		this.apiKeysHolder = apiKeysHolder;
+	}
 
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
 
 
 

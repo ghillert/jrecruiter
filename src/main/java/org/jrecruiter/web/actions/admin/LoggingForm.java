@@ -1,18 +1,18 @@
 /*
-*	http://www.jrecruiter.org
-*
-*	Disclaimer of Warranty.
-*
-*	Unless required by applicable law or agreed to in writing, Licensor provides
-*	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
-*	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
-*	including, without limitation, any warranties or conditions of TITLE,
-*	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
-*	solely responsible for determining the appropriateness of using or
-*	redistributing the Work and assume any risks associated with Your exercise of
-*	permissions under this License.
-*
-*/
+ * Copyright 2006-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.jrecruiter.web.actions.admin;
 
 import java.io.Serializable;
@@ -24,58 +24,57 @@ import org.jrecruiter.common.CollectionUtils;
  * Form for the Logging Action.
  *
  * @author Gunnar Hillert
- * @version $Id$
  *
  */
 public class LoggingForm implements Serializable {
 
-    /** serialVersionUID. */
-    private static final long serialVersionUID = 5970927715241338665L;
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 5970927715241338665L;
 
-    /** List of Loggers, simplified for display purposes */
-    private List<LoggerInfo> updatedLoggers = CollectionUtils.getArrayList();
+	/** List of Loggers, simplified for display purposes */
+	private List<LoggerInfo> updatedLoggers = CollectionUtils.getArrayList();
 
-    /** The user can enter a new logger to be configured */
-    private LoggerInfo newLogger;
+	/** The user can enter a new logger to be configured */
+	private LoggerInfo newLogger;
 
-    /** Used for requesting a logfile download */
-    private String fileName;
+	/** Used for requesting a logfile download */
+	private String fileName;
 
-    //~~~~~Constructors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~Constructors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    /**
-     *
-     */
-    public LoggingForm() {
-        super();
-    }
-
-
-    //~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	/**
+	 *
+	 */
+	public LoggingForm() {
+		super();
+	}
 
 
-    public List<LoggerInfo> getUpdatedLoggers() {
-        return updatedLoggers;
-    }
+	//~~~~~Getters and Setters~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public void setUpdatedLoggers(List<LoggerInfo> updatedLoggers) {
-        this.updatedLoggers = updatedLoggers;
-    }
 
-    public LoggerInfo getNewLogger() {
-        return newLogger;
-    }
+	public List<LoggerInfo> getUpdatedLoggers() {
+		return updatedLoggers;
+	}
 
-    public void setNewLogger(LoggerInfo newLogger) {
-        this.newLogger = newLogger;
-    }
+	public void setUpdatedLoggers(List<LoggerInfo> updatedLoggers) {
+		this.updatedLoggers = updatedLoggers;
+	}
 
-    public String getFileName() {
-        return fileName;
-    }
+	public LoggerInfo getNewLogger() {
+		return newLogger;
+	}
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	public void setNewLogger(LoggerInfo newLogger) {
+		this.newLogger = newLogger;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 }

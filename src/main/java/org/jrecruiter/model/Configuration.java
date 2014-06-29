@@ -1,17 +1,17 @@
 /*
- *	http://www.jrecruiter.org
+ * Copyright 2006-2014 the original author or authors.
  *
- *	Disclaimer of Warranty.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *	Unless required by applicable law or agreed to in writing, Licensor provides
- *	the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
- *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
- *	including, without limitation, any warranties or conditions of TITLE,
- *	NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are
- *	solely responsible for determining the appropriateness of using or
- *	redistributing the Work and assume any risks associated with Your exercise of
- *	permissions under this License.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.jrecruiter.model;
 
@@ -33,7 +33,6 @@ import org.hibernate.annotations.Type;
  * This class represents configuration data.
  *
  * @author Gunnar Hillert
- * @version $Id$
  */
 @Entity
 @Table(uniqueConstraints = {  }
@@ -41,82 +40,82 @@ import org.hibernate.annotations.Type;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Configuration implements Serializable {
 
-    public enum ConfigurationKey {
+	public enum ConfigurationKey {
 
-        SEED_DATA("seed.data.is.setup");
+		SEED_DATA("seed.data.is.setup");
 
-        private String key;
+		private String key;
 
-        private ConfigurationKey(String key) {
-            this.key = key;
-        }
+		private ConfigurationKey(String key) {
+			this.key = key;
+		}
 
-        public String getKey() {
-            return key;
-        }
+		public String getKey() {
+			return key;
+		}
 
-    }
+	}
 
-    /**
-     * serialVersionUID.
-     */
-    private static final long serialVersionUID = 7279232706235477101L;
+	/**
+	 * serialVersionUID.
+	 */
+	private static final long serialVersionUID = 7279232706235477101L;
 
-    // Fields
+	// Fields
 
-    @Id
-    @Column(length=200)
-    private String messageKey;
+	@Id
+	@Column(length=200)
+	private String messageKey;
 
-    @Column(unique=false, nullable=true, insertable=true, updatable=true)
-    @Type(type="text")
-    private String messageText;
+	@Column(unique=false, nullable=true, insertable=true, updatable=true)
+	@Type(type="text")
+	private String messageText;
 
-    @Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModified;
+	@Column(unique=false, nullable=true, insertable=true, updatable=true, length=8)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModified;
 
-    // Constructors
+	// Constructors
 
-    /** default constructor */
-    public Configuration() {
-    }
+	/** default constructor */
+	public Configuration() {
+	}
 
-    /** minimal constructor */
-    public Configuration(String messageKey) {
-        this.messageKey = messageKey;
-    }
-    /** full constructor */
-    public Configuration(String messageKey, String messageText, Date lastModified) {
-        this.messageKey = messageKey;
-        this.messageText = messageText;
-        this.lastModified = lastModified;
-    }
+	/** minimal constructor */
+	public Configuration(String messageKey) {
+		this.messageKey = messageKey;
+	}
+	/** full constructor */
+	public Configuration(String messageKey, String messageText, Date lastModified) {
+		this.messageKey = messageKey;
+		this.messageText = messageText;
+		this.lastModified = lastModified;
+	}
 
-    // Property accessors
+	// Property accessors
 
-    public String getMessageKey() {
-        return this.messageKey;
-    }
+	public String getMessageKey() {
+		return this.messageKey;
+	}
 
-    public void setMessageKey(String messageKey) {
-        this.messageKey = messageKey;
-    }
+	public void setMessageKey(String messageKey) {
+		this.messageKey = messageKey;
+	}
 
-    public String getMessageText() {
-        return this.messageText;
-    }
+	public String getMessageText() {
+		return this.messageText;
+	}
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
-    }
+	public void setMessageText(String messageText) {
+		this.messageText = messageText;
+	}
 
-    public Date getLastModified() {
-        return this.lastModified;
-    }
+	public Date getLastModified() {
+		return this.lastModified;
+	}
 
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
-    }
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
+	}
 }
 
