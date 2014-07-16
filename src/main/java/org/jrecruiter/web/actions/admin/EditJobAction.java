@@ -34,6 +34,7 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
+import org.apache.struts2.convention.annotation.Action;
 import org.jrecruiter.model.Region;
 
 /**
@@ -122,6 +123,7 @@ public class EditJobAction extends JobBaseAction {
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhone",          message = "The phone number must be shorter than ${maxLength} characters."),
                     @StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhoneExtension", message = "The phone number extension must be shorter than ${maxLength} characters.")
             })
+    @Action(value="/admin/saveEditJob", results={@Result(name="input", location="admin/edit-job")})
     public String save() {
 
         final Job jobFromDB = jobService.getJobForId(model.getJob().getId());

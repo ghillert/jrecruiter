@@ -18,7 +18,7 @@
 </fieldset>
 <h2><spring:message code="jsp.admin.edit-job.title"/></h2>
 
-<s:form id="editJobForm">
+<s:form id="editJobForm"  method="post" action="saveEditJob">
     <s:hidden name="job.id"/>
     <jsp:include page="includes/job_header.jsp"/>
     <jsp:include page="includes/job_contact.jsp"/>
