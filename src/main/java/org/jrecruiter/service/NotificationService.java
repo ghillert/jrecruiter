@@ -15,8 +15,9 @@
  */
 package org.jrecruiter.service;
 
-import java.net.URI;
 import java.util.Map;
+
+import org.jrecruiter.service.impl.EmailRequest;
 
 /**
  * Responsible for handling any type of notifications e.g. password reminder email,
@@ -34,7 +35,7 @@ public interface NotificationService {
 	 * @param context Map that contains data that needs to be rendered in the email
 	 * @param templatePrefix Freemarker template
 	 */
-	void sendEmail(String email, String subject, Map context, String templatePrefix);
+	void sendEmail(EmailRequest emailRequest);
 
 	/**
 	 * Sends a tweet to twitter using the global twitter
@@ -42,7 +43,5 @@ public interface NotificationService {
 	 *
 	 * */
 	void sendTweetToTwitter(String tweet);
-
-	URI shortenUrl(String string);
 
 }

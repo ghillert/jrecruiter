@@ -83,7 +83,7 @@
 		</bean>
 		<bean id="contextStartedEventListener" class="org.jrecruiter.spring.ContextStartedEventListener"/>
 		<bean id="seedDataEventListener"       class="org.jrecruiter.spring.ContextRefreshedEventListener"/>
-		<bean id="notificationService" class="org.jrecruiter.service.notification.impl.DemoNotificationServiceImpl"/>
+
 	</beans>
 
 	<beans profile="standalone">
@@ -124,8 +124,6 @@
 				</value> </property -->
 		</bean>
 
-		<bean id="notificationService"
-			class="org.jrecruiter.service.notification.impl.DefaultNotificationServiceImpl" />
 	</beans>
 </beans>
 

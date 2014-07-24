@@ -42,7 +42,7 @@
 				<ul id="loginOptions" style="clear: left;">
 					<li class="registration"><img
 						src="${ctx}/images/icons/crystal/add_user.png" /> <c:url
-							value="/signup.html" var="signupUrl"/>
+							value="/registration/signup.html" var="signupUrl"/>
 						<a href="${signupUrl}"><spring:message
 								code="jsp.login.addUser" /></a></li>
 					<li class="getPassword"><img

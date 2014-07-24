@@ -38,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 locations={
 		"classpath:org/jrecruiter/core/spring/applicationContext-core-basic.xml",
 		"classpath:org/jrecruiter/core/spring/applicationContext-core-services.xml",
-		"classpath:org/jrecruiter/core/spring/test-applicationContext-mail.xml"
+		"classpath:org/jrecruiter/core/spring/applicationContext-notifications.xml"
 		})
 public abstract class BaseServiceIntegrationTest {
 

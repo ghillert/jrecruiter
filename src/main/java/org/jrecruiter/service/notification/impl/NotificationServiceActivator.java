@@ -15,31 +15,21 @@
  */
 package org.jrecruiter.service.notification.impl;
 
-import static com.rosaloves.bitlyj.Bitly.as;
-import static com.rosaloves.bitlyj.Bitly.shorten;
-
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.jrecruiter.common.ApiKeysHolder;
-import org.jrecruiter.service.NotificationService;
+import org.jrecruiter.service.impl.EmailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.MailPreparationException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.rosaloves.bitlyj.Url;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -48,9 +38,7 @@ import freemarker.template.TemplateException;
 /**
  * @author Gunnar Hillert
  */
-@Service("notificationService")
-@Transactional
-public class DefaultNotificationServiceImpl implements NotificationService {
+public class NotificationServiceActivator {
 
 	/**
 	 * Mailsender.
@@ -65,33 +53,32 @@ public class DefaultNotificationServiceImpl implements NotificationService {
 	private @Autowired ApiKeysHolder apiKeysHolder;
 
 	/** {@inheritDoc} */
-	@Override
-	public void sendEmail(final String email, final String subject, final Map context, final String templateName) {
+	public void sendEmail(final EmailRequest request) {
 
 		final MimeMessagePreparator preparator = new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException, IOException {
 
 				final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom("no_reply@jrecruiter.org");
-				message.setTo(email);
-				message.setSubject(subject);
+				message.setTo(request.getEmail());
+				message.setSubject(request.getSubject());
 
 				final Locale locale = LocaleContextHolder.getLocale();
 
-				final Template textTemplate = freemarkerConfiguration.getTemplate(templateName + "-text.ftl", locale);
+				final Template textTemplate = freemarkerConfiguration.getTemplate(request.getTemplatePrefix() + "-text.ftl", locale);
 
 				final StringWriter textWriter = new StringWriter();
 				try {
-					textTemplate.process(context, textWriter);
+					textTemplate.process(request.getContext(), textWriter);
 				} catch (TemplateException e) {
 					throw new MailPreparationException("Can't generate email body.", e);
 				}
 
-				final Template htmlTemplate = freemarkerConfiguration.getTemplate(templateName + "-html.ftl", locale);
+				final Template htmlTemplate = freemarkerConfiguration.getTemplate(request.getTemplatePrefix() + "-html.ftl", locale);
 
 				final StringWriter htmlWriter = new StringWriter();
 				try {
-					htmlTemplate.process(context, htmlWriter);
+					htmlTemplate.process(request.getContext(), htmlWriter);
 				} catch (TemplateException e) {
 					throw new MailPreparationException("Can't generate email body.", e);
 				}
@@ -102,29 +89,6 @@ public class DefaultNotificationServiceImpl implements NotificationService {
 		};
 
 		mailSender.send(preparator);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void sendTweetToTwitter(final String tweet) {
-		//not used
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public URI shortenUrl(final String urlAsString) {
-
-		//FIXME Handle this better
-		Url url = as(apiKeysHolder.getBitlyUsername(),
-					apiKeysHolder.getBitlyPassword())
-				.call(shorten(urlAsString));
-		try {
-			return new URI(url.getShortUrl());
-		} catch (URISyntaxException e) {
-			throw new IllegalArgumentException(
-					String.format("Please provide a valid URI - %s is not valid", urlAsString));
-		}
-
 	}
 
 }

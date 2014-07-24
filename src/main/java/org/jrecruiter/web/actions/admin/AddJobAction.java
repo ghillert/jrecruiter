@@ -18,14 +18,17 @@ package org.jrecruiter.web.actions.admin;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.common.Constants.CommongKeyIds;
 import org.jrecruiter.common.Constants.JobStatus;
 import org.jrecruiter.common.Constants.OfferedBy;
+import org.jrecruiter.common.GoogleMapsUtils;
 import org.jrecruiter.model.Industry;
 import org.jrecruiter.model.Job;
+import org.jrecruiter.model.Region;
 import org.jrecruiter.web.JobForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +43,6 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Results;
-import org.jrecruiter.model.Region;
 
 /**
  * Add a job posting.
@@ -52,7 +52,6 @@ import org.jrecruiter.model.Region;
  */
 @Conversion
 @Results({@Result(name="success", location="index", type="redirectAction")})
-
 public class AddJobAction extends JobBaseAction implements Preparable, ModelDriven<JobForm> {
 
 	/** serialVersionUID. */
@@ -80,7 +79,6 @@ public class AddJobAction extends JobBaseAction implements Preparable, ModelDriv
 		return INPUT;
 	}
 
-
 	/**
 	 * Save the job.
 	 */
@@ -107,7 +105,7 @@ public class AddJobAction extends JobBaseAction implements Preparable, ModelDriv
 					@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "15", fieldName = "model.job.businessPhoneExtension", message = "The phone number extension must be shorter than ${maxLength} characters.")
 					}
 			)
-	@Action(value="/admin/saveAddJob", results={@Result(name="input", location="admin/add-job")})
+	@Action(value="/admin/saveAddJob", results={@Result(name="input", location=JSP_BASE + "admin/add-job.jsp")})
 	public String save() {
 
 		LOGGER.debug("Adding Job...");

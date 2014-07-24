@@ -17,6 +17,7 @@
 
 	<int:gateway service-interface="org.jrecruiter.service.NotificationService">
 		<int:method request-channel="sendToTwitter" name="sendTweetToTwitter"/>
+		<int:method request-channel="sendEmail" name="sendEmail"/>
 	</int:gateway>
 
 	<beans profile="twitter-enabled">
@@ -33,10 +34,27 @@
 		<int-twitter:outbound-channel-adapter channel="sendToTwitter" twitter-template="twitterTemplate">
 			<int:poller fixed-delay="2000"/>
 		</int-twitter:outbound-channel-adapter>
+
 	</beans>
 
 	<beans profile="!twitter-enabled">
 		<int:logging-channel-adapter id="sendToTwitter" level="ERROR" log-full-message="true"/>
+	</beans>
+
+	<beans profile="mail-enabled">
+		<int:channel id="sendEmail">
+			<int:queue/>
+		</int:channel>
+
+		<bean id="NotificationServiceActivator" class="org.jrecruiter.service.notification.impl.NotificationServiceActivator"/>
+
+		<int:service-activator input-channel="sendEmail" ref="NotificationServiceActivator" method="sendEmail">
+			<int:poller fixed-delay="2000"/>
+		</int:service-activator>
+	</beans>
+
+	<beans profile="!mail-enabled">
+		<int:logging-channel-adapter id="sendEmail" level="ERROR" log-full-message="true"/>
 	</beans>
 
 </beans>

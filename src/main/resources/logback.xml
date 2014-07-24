@@ -60,10 +60,10 @@
     <level value="WARN"/>
   </logger>
   <logger name="org.apache.struts">
-    <level value="WARN"/>
+    <level value="INFO"/>
   </logger>
   <logger name="com.opensymphony.xwork2">
-    <level value="WARN"/>
+    <level value="INFO"/>
   </logger>
 
   <logger name="org.apache.commons.validator">

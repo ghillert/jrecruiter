@@ -43,6 +43,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable() //TODO Refactor login form
 
 		.authorizeRequests().antMatchers("/admin/show-users.html**").hasAnyAuthority("ADMIN").and()
+
+		.authorizeRequests().antMatchers("/admin/add-job.html**").hasAnyAuthority("MANAGER,ADMIN").and()
+		.authorizeRequests().antMatchers("/admin/saveAddJob.html**").hasAnyAuthority("MANAGER,ADMIN").and()
+		.authorizeRequests().antMatchers("/admin/show-jobs.html**").hasAnyAuthority("MANAGER,ADMIN").and()
+		.authorizeRequests().antMatchers("/admin/edit-job.html**").hasAnyAuthority("MANAGER,ADMIN").and()
+		.authorizeRequests().antMatchers("/admin/show-statistics.html**").hasAnyAuthority("MANAGER,ADMIN").and()
+		.authorizeRequests().antMatchers("/admin/edit-user.html**").hasAnyAuthority("MANAGER,ADMIN").and()
+		.authorizeRequests().antMatchers("/admin/index.html**").hasAnyAuthority("MANAGER,ADMIN").and()
+
 		.authorizeRequests().antMatchers("/admin/delete-user.html**").hasAnyAuthority("ADMIN").and()
 		.authorizeRequests().antMatchers("/admin/add-user.html**").hasAnyAuthority("ADMIN").and()
 		.authorizeRequests().antMatchers("/admin/**").hasAnyAuthority("ADMIN").and()

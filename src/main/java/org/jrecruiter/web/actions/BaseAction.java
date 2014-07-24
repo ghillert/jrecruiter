@@ -32,6 +32,8 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public abstract class BaseAction extends ActionSupport {
 
+	public static final String JSP_BASE = "/WEB-INF/jsp/";
+
 	/** serialVersionUID. */
 	private static final long serialVersionUID = -2918623405168805282L;
 

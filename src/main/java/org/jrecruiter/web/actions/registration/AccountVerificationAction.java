@@ -29,7 +29,7 @@ import org.springframework.stereotype.Controller;
  * @author Gunnar Hillert
  */
 @Controller
-@Result(name="success", location="index", type="redirectAction")
+@Result(name="success", location="index", type="redirectAction", params={"namespace", ""})
 public class AccountVerificationAction extends BaseAction {
 
 	private @Autowired UserService userService;

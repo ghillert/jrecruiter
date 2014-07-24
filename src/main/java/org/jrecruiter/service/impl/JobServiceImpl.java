@@ -15,6 +15,9 @@
  */
 package org.jrecruiter.service.impl;
 
+import static com.rosaloves.bitlyj.Bitly.as;
+import static com.rosaloves.bitlyj.Bitly.shorten;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Calendar;
@@ -25,6 +28,7 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import org.jrecruiter.common.AcegiUtil;
+import org.jrecruiter.common.ApiKeysHolder;
 import org.jrecruiter.common.CalendarUtils;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants.Roles;
@@ -52,6 +56,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.jrecruiter.model.Region;
+
+import com.rosaloves.bitlyj.Url;
 
 /**
  * @author Gunnar Hillert
@@ -87,6 +93,8 @@ public class JobServiceImpl implements JobService {
 	private @Autowired NotificationService  notificationService;
 
 	private @Autowired ServerSettings serverSettings;
+
+	private @Autowired ApiKeysHolder apiKeysHolder;
 
 	//~~~~~Business Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -205,30 +213,50 @@ public class JobServiceImpl implements JobService {
 		context.put("businessEmail", savedJob.getBusinessEmail());
 		context.put("serverAddress", serverSettings.getServerAddress());
 
-		notificationService.sendEmail(((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(),
-									  savedJob.getJobTitle(),
-									  context, "add-job");
+		final EmailRequest emailRequest = new EmailRequest(
+				((Configuration) this.getJRecruiterSetting("mail.jobposting.email")).getMessageText(), savedJob.getJobTitle(), context, "add-job");
+		notificationService.sendEmail(emailRequest);
 		final String tweetMessage = "New Job: " + savedJob.getJobTitle() + " @ " + savedJob.getBusinessName();
 
 		final URI uri = createShortenedJobDetailUrl(savedJob);
-	  //  notificationService.sendTweetToTwitter(tweetMessage + ": " + uri.toString());
+		notificationService.sendTweetToTwitter(tweetMessage + ": " + uri.toString());
 
 	}
 
 	private URI createShortenedJobDetailUrl(final Job job) {
-		final String jobUrl = this.serverSettings.getServerAddress() + ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
+		final String jobUrlString = this.serverSettings.getServerAddress() + ServerActions.JOB_DETAIL.getPath() + "?jobId=" + job.getId();
 
-		final URI tweetUri;
+		final URI jobUri;
 
 		try {
-			tweetUri = new URI(jobUrl);
+			jobUri = new URI(jobUrlString);
 		} catch (URISyntaxException e) {
-			throw new IllegalStateException("Cannot creat URI for " + jobUrl);
+			throw new IllegalStateException("Cannot create URI for " + jobUrlString);
 		}
 
-		final URI jobDetailUrl = notificationService.shortenUrl(tweetUri.toString());
+		if (this.apiKeysHolder.isBitlyEnabled()) {
+			return this.shortenUrl(jobUri.toString());
+		}
+		else {
+			return jobUri;
+		}
 
-		return jobDetailUrl;
+	}
+
+	/** {@inheritDoc} */
+	public URI shortenUrl(final String urlAsString) {
+
+		//FIXME Handle this better
+		Url url = as(apiKeysHolder.getBitlyUsername(),
+					apiKeysHolder.getBitlyPassword())
+				.call(shorten(urlAsString));
+		try {
+			return new URI(url.getShortUrl());
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(
+					String.format("Please provide a valid URI - %s is not valid", urlAsString));
+		}
+
 	}
 
 	/** {@inheritDoc} */

@@ -1,17 +1,19 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-    "http://struts.apache.org/dtds/struts-2.1.dtd">
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
 
     <!-- Include Struts defaults -->
     <include file="struts-default.xml"/>
 
-    <constant name="struts.convention.result.path" value="/WEB-INF/jsp" />
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+
+    <constant name="struts.convention.result.path" value="/WEB-INF/jsp/" />
     <constant name="struts.convention.action.packages" value="org.jrecruiter.web.actions" />
     <constant name="struts.convention.default.parent.package" value="default" />
     <!-- http://cwiki.apache.org/WW/strutsproperties.html -->
     <constant name="struts.objectFactory" value="spring"/>
-    <constant name="struts.action.extension" value="html,rss,json" />
+    <constant name="struts.action.extension" value="html,rss" />
     <constant name="struts.custom.i18n.resources" value="messages, struts-messages" />
     <constant name="struts.multipart.maxSize" value="2097152" />
 
@@ -81,36 +83,5 @@
             </result>
         </action>
     </package>
-
-    <package name="json" extends="default" namespace="/json">
-        <action name="jobs" class="org.jrecruiter.web.actions.JobsJsonAction">
-            <result type="stream" name="success">
-                <param name="contentType">text/json</param>
-                <param name="inputName">inputStream</param>
-            </result>   
-        </action>
-    </package>
-
-    <package name="chart" extends="jfreechart-default" namespace="/chart">
-            <result-types>
-            <result-type name="customChart" class="org.jrecruiter.web.CustomChartResult"/>
-        </result-types>
-        <action name="viewJobChart" class="org.jrecruiter.web.actions.admin.ShowStatisticsAction"
-                method="chartJobsHits">
-              <result name="success" type="chart">
-                <param name="width">600</param>
-                <param name="height">300</param>
-              </result>
-        </action>
-        <action name="viewJobCountChart" class="org.jrecruiter.web.actions.admin.ShowStatisticsAction"
-                method="chartJobCount">
-              <result name="success" type="customChart">
-                <param name="width">550</param>
-                <param name="height">200</param>
-              </result>
-        </action>
-    </package>
-
-
 
 </struts>

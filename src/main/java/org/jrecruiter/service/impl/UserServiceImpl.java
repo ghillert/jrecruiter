@@ -21,13 +21,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.Resource;
-
 import org.jasypt.digest.StringDigester;
 import org.jrecruiter.common.CollectionUtils;
 import org.jrecruiter.common.Constants;
-import org.jrecruiter.common.PasswordGenerator;
 import org.jrecruiter.common.Constants.ServerActions;
+import org.jrecruiter.common.PasswordGenerator;
 import org.jrecruiter.dao.ConfigurationDao;
 import org.jrecruiter.dao.RoleDao;
 import org.jrecruiter.dao.UserDao;
@@ -147,10 +145,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			context.put("user", savedUser);
 			context.put("registrationCode", savedUser.getVerificationKey());
 			context.put("accountValidationUrl", serverSettings.getServerAddress() + ServerActions.ACCOUNT_VERIFICATION.getPath());
-			notificationService.sendEmail(savedUser.getEmail(), messageSource.getMessage("class.UserServiceImpl.addUser.account.validation.subject", null, LocaleContextHolder.getLocale()), context, "account-validation");
+
+			final EmailRequest emailRequest = new EmailRequest(
+					savedUser.getEmail(), messageSource.getMessage("class.UserServiceImpl.addUser.account.validation.subject", null, LocaleContextHolder.getLocale()), context, "account-validation");
+			notificationService.sendEmail(emailRequest);
 		}
 		return savedUser;
-
 
 	}
 
@@ -197,12 +197,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		context.put("user", user);
 		context.put("password", password);
 
-		this.notificationService.sendEmail(user.getEmail(),
-										   messageSource.getMessage("class.UserServiceImpl.resetPassword.email.subject",
-										   null,
-										   LocaleContextHolder.getLocale()),
-										   context,
-										   "get-password");
+		final EmailRequest emailRequest = new EmailRequest(user.getEmail(),
+				   messageSource.getMessage("class.UserServiceImpl.resetPassword.email.subject",
+				   null,
+				   LocaleContextHolder.getLocale()),
+				   context,
+				   "get-password");
+		this.notificationService.sendEmail(emailRequest);
 
 		LOGGER.info("resetPassword - Email sent to: " + user.getEmail() + "; id: " + user.getId());
 	}

@@ -486,7 +486,7 @@
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
-			<version>2.3.16</version>
+			<version>2.3.16.3</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
@@ -537,19 +537,13 @@
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-convention-plugin</artifactId>
-			<version>2.3.16</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-jfreechart-plugin</artifactId>
-			<version>2.3.16</version>
+			<version>2.3.16.3</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-javatemplates-plugin</artifactId>
-			<version>2.3.16</version>
+			<version>2.3.16.3</version>
 		</dependency>
 
 		<dependency>

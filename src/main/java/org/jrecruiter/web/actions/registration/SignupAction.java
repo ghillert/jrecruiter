@@ -52,7 +52,7 @@ import org.apache.struts2.convention.annotation.Results;
  * @author Gunnar Hillert
  */
 @Conversion
-@Results({@Result(name="success", location="index", type="redirectAction")})
+@Results({@Result( name="success", location="index", type="redirectAction", params={"namespace", ""})})
 
 public class SignupAction extends BaseAction implements SessionAware {
 
@@ -100,8 +100,7 @@ public class SignupAction extends BaseAction implements SessionAware {
 					@StringLengthFieldValidator(type = ValidatorType.SIMPLE, trim = true, maxLength = "25",  fieldName = "user.fax",       message = "The fax number must be shorter than ${maxLength} characters.")
 					}
 			)
-
-	@Action(value="/registration/saveSignup", results={@Result(name="input", location="registration/signup")})
+	@Action(value="/registration/saveSignup", results={@Result(name="input", location=JSP_BASE + "registration/signup.jsp")})
 	public String save() {
 
 		final ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(ServletActionContext.getRequest().getRemoteHost(), recaptcha_challenge_field, recaptcha_response_field);

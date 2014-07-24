@@ -23,7 +23,7 @@
           <c:url value="/admin/edit-settings.html"         var="editSettingsUrl"/>
           <c:url value="/admin/edit-job.html?show-jobs=true" var="editJobUrl"/>
 
-          <c:url value="/admin/logout.html"                var="logoutUrl"/>
+          <c:url value="/logout.html"                var="logoutUrl"/>
           <c:url value="/admin/search-index.html"          var="searchIndexUrl"/>
           <c:url value="/admin/setup-demo.html"            var="setupDemoUrl"/>
           <c:url value="/admin/logging.html"               var="loggingUrl"/>

@@ -56,19 +56,6 @@ public class DefaultApplicationContextInitializer implements ApplicationContextI
 				e.printStackTrace();
 			}
 			System.out.println("Properties for standalone mode loaded");
-
-			Boolean twitterEnabled = environment.getProperty("twitter.enabled", Boolean.class, Boolean.FALSE);
-
-			if (twitterEnabled) {
-				applicationContext.getEnvironment().addActiveProfile("twitter-enabled");
-			}
-
-			Boolean mailEnabled = environment.getProperty("mail.enabled", Boolean.class, Boolean.FALSE);
-
-			if (mailEnabled) {
-				applicationContext.getEnvironment().addActiveProfile("mail-enabled");
-			}
-
 		}
 		else {
 			try {
@@ -80,14 +67,26 @@ public class DefaultApplicationContextInitializer implements ApplicationContextI
 			System.out.println("Properties for demo mode loaded");
 		}
 
-		Boolean twitterEnabled = environment.getProperty("twitter.enabled", Boolean.class, Boolean.FALSE);
+		final Boolean twitterEnabled = environment.getProperty("twitter.enabled", Boolean.class, Boolean.FALSE);
 
 		if (twitterEnabled) {
 			applicationContext.getEnvironment().addActiveProfile("twitter-enabled");
 		}
-		else {
-			applicationContext.getEnvironment().addActiveProfile("twitter-not-enabled");
+		System.out.println("::Twitter enabled: " + twitterEnabled);
+
+		final Boolean mailEnabled = environment.getProperty("mail.enabled", Boolean.class, Boolean.FALSE);
+
+		if (mailEnabled) {
+			applicationContext.getEnvironment().addActiveProfile("mail-enabled");
 		}
+		System.out.println("::Mail enabled: " + mailEnabled);
+
+		final Boolean bitlyEnabled = environment.getProperty("mail.enabled", Boolean.class, Boolean.FALSE);
+
+		if (bitlyEnabled) {
+			applicationContext.getEnvironment().addActiveProfile("bitly-enabled");
+		}
+		System.out.println("::Bitly enabled: " + bitlyEnabled);
 	}
 
 }
