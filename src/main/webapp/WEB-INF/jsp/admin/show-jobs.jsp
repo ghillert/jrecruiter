@@ -31,7 +31,7 @@
     <div class="submit">
       <s:submit method="cancel" value="%{getText('jsp.admin.show-jobs.button.cancel')}"/>
       <s:if test="jobs != null && jobs.size() > 0">
-          <s:submit id="deleteButton" value="%{getText('jsp.admin.show-jobs.button.delete')}"/>
+          <s:submit id="deleteButton" method="delete" value="%{getText('jsp.admin.show-jobs.button.delete')}"/>
       </s:if>
     </div>
   </s:form>
@@ -57,13 +57,13 @@ $(function() {
 
 jQuery(document).ready(function () {
 
-        jQuery('#deleteButton').click(function(event) {
+/*         jQuery('#deleteButton').click(function(event) {
                 event.preventDefault();
                 confirm("Are you sure that you wnat to delete " + jQuery("#jobListForm input:checked").length + " job posting(s)?", function () {
                     $('#jobListForm').submit();
                 });
                 return false;
-         });
+         }); */
 });
 
 function onInvokeAction(id) {

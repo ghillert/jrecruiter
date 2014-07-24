@@ -48,6 +48,8 @@ public class ShowJobsAction extends BaseAction implements Preparable {
 
 	private List<Long> jobsToDelete = CollectionUtils.getArrayList();
 
+	private int maxRows = 15;
+
 	//~~~~~Action Methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	/**
@@ -116,4 +118,19 @@ public class ShowJobsAction extends BaseAction implements Preparable {
 	public void setJobsToDelete(List<Long> jobsToDelete) {
 		this.jobsToDelete = jobsToDelete;
 	}
+
+	/**
+	 * @return the maxRows
+	 */
+	public int getMaxRows() {
+		return maxRows;
+	}
+
+	/**
+	 * @param maxRows the maxRows to set
+	 */
+	public void setMaxRows(int maxRows) {
+		this.maxRows = maxRows;
+	}
+
 }

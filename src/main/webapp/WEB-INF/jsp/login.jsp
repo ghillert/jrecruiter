@@ -1,8 +1,5 @@
 <%@ include file="/WEB-INF/jsp/includes/taglibs.jsp"%>
 
-<script type="text/javascript"
-	src="<c:url value='/js/lib/jquery/jquery.openid.js'/>"></script>
-
 <c:if test="${param.status == 'error'}">
 	<div class="error">
 		<spring:message code="jsp.login.error.errorMessage" />
@@ -34,7 +31,7 @@
 						type="password" name="password" maxlength="120" tabindex="2" />
 				</div>
 
-				<button type="submit" class="btn btn-default"
+				<button type="submit"
 					value="<spring:message code="jsp.login.button.login"/>">
 					<spring:message code="jsp.login.button.login" />
 				</button>
